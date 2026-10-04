@@ -6,6 +6,8 @@ The **About** page credits **Michael Ruffenach** as creator and displays the ver
 
 The 1.2.0 baseline passed 22 .NET tests, 23 installation/update/uninstall checks, and 28 ZIP checks locally. The Windows publisher credit is included in those checks. Reports are written under `build/visual-review`. Version 1.2.1 also passed the GitHub release workflow.
 
+The English 1.3.0 edition passed 22 local .NET tests, 25 installer checks, and 28 ZIP checks. Installer checks also verify removal of the two legacy French Start menu shortcuts during an update.
+
 ## Installation and integration
 
 The English installer runs for the current user, without requesting administrator privileges, in `%LocalAppData%\Programs\seeWallpaper` by default. The destination can be changed.
