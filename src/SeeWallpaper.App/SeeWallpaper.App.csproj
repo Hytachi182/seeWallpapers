@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon></ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SeeWallpaper.Core\SeeWallpaper.Core.csproj" />
+    <ProjectReference Include="..\SeeWallpaper.TemplateEngine\SeeWallpaper.TemplateEngine.csproj" />
+    <ProjectReference Include="..\SeeWallpaper.Infrastructure\SeeWallpaper.Infrastructure.csproj" />
+    <ProjectReference Include="..\SeeWallpaper.Engine\SeeWallpaper.Engine.csproj" />
+    <ProjectReference Include="..\SeeWallpaper.System\SeeWallpaper.System.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\templates\**\*" Link="templates\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

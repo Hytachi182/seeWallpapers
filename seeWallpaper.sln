@@ -1,0 +1,40 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.Core", "src\SeeWallpaper.Core\SeeWallpaper.Core.csproj", "{1E1F6CDD-7C5A-4FBD-A2A6-9C65A327D501}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.TemplateEngine", "src\SeeWallpaper.TemplateEngine\SeeWallpaper.TemplateEngine.csproj", "{2B1F6CDD-7C5A-4FBD-A2A6-9C65A327D502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.Engine", "src\SeeWallpaper.Engine\SeeWallpaper.Engine.csproj", "{3C1F6CDD-7C5A-4FBD-A2A6-9C65A327D503}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.System", "src\SeeWallpaper.System\SeeWallpaper.System.csproj", "{4D1F6CDD-7C5A-4FBD-A2A6-9C65A327D504}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.Infrastructure", "src\SeeWallpaper.Infrastructure\SeeWallpaper.Infrastructure.csproj", "{5E1F6CDD-7C5A-4FBD-A2A6-9C65A327D505}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.App", "src\SeeWallpaper.App\SeeWallpaper.App.csproj", "{6F1F6CDD-7C5A-4FBD-A2A6-9C65A327D506}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.TemplateEngine.Tests", "tests\SeeWallpaper.TemplateEngine.Tests\SeeWallpaper.TemplateEngine.Tests.csproj", "{7A1F6CDD-7C5A-4FBD-A2A6-9C65A327D507}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E1F6CDD-7C5A-4FBD-A2A6-9C65A327D501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E1F6CDD-7C5A-4FBD-A2A6-9C65A327D501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B1F6CDD-7C5A-4FBD-A2A6-9C65A327D502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B1F6CDD-7C5A-4FBD-A2A6-9C65A327D502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1F6CDD-7C5A-4FBD-A2A6-9C65A327D503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1F6CDD-7C5A-4FBD-A2A6-9C65A327D503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1F6CDD-7C5A-4FBD-A2A6-9C65A327D504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1F6CDD-7C5A-4FBD-A2A6-9C65A327D504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1F6CDD-7C5A-4FBD-A2A6-9C65A327D505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1F6CDD-7C5A-4FBD-A2A6-9C65A327D505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F1F6CDD-7C5A-4FBD-A2A6-9C65A327D506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F1F6CDD-7C5A-4FBD-A2A6-9C65A327D506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A1F6CDD-7C5A-4FBD-A2A6-9C65A327D507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A1F6CDD-7C5A-4FBD-A2A6-9C65A327D507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+EndGlobal

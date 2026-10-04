@@ -1,0 +1,9 @@
+<Application x:Class="SeeWallpaper.App.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    <SolidColorBrush x:Key="Canvas" Color="#10121A"/>
+    <SolidColorBrush x:Key="Panel" Color="#181B26"/>
+    <SolidColorBrush x:Key="Muted" Color="#AEB7C9"/>
+    <SolidColorBrush x:Key="Accent" Color="#8B7CFF"/>
+    <Style TargetType="Button"><Setter Property="Foreground" Value="White"/><Setter Property="Background" Value="#292E40"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="Padding" Value="14,9"/><Setter Property="Margin" Value="0,0,0,8"/><Setter Property="Cursor" Value="Hand"/></Style>
+  </Application.Resources>
+</Application>

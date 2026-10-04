@@ -1,0 +1,16 @@
+# .NET build artifacts
+[Bb]in/
+[Oo]bj/
+
+# IDE and user-specific files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test and coverage output
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
