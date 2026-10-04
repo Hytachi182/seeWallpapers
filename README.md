@@ -65,7 +65,17 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 
 ## The scenes
 
-Thirteen procedural wallpapers are included. The images below are captured from the actual scenes.
+Eighteen procedural wallpapers are included. The images below are captured from the actual scenes.
+
+**New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
+
+| Ninja Anime | Hidden Village |
+| --- | --- |
+| ![Masked rooftop guardian and crimson moon](templates/ninja-anime/preview.jpg) | ![Lantern-lit mountain village](templates/hidden-village/preview.jpg) |
+| Shinobi Energy | Orange Ninja |
+| ![Shinobi surrounded by rotating energy seals](templates/shinobi-energy/preview.jpg) | ![Orange-cloaked ninja overlooking a golden valley](templates/orange-ninja/preview.jpg) |
+| Anime Moon Battle | |
+| ![Airborne duel beneath a blue moon](templates/anime-moon-battle/preview.jpg) | |
 
 | Aurora Borealis | Ocean Dusk |
 | --- | --- |
@@ -125,6 +135,8 @@ The **CI** workflow builds and tests every push and pull request. **Windows rele
 The 1.2.0 baseline passed **22 .NET tests**, **23 installer checks**, and **28 ZIP checks** locally. Real loading was also verified on three monitors, including replacement, duplication, spanning, and DPI-context changes. Interactive desktop tests require `SEEWALLPAPER_DESKTOP_TEST=1` and do not run on CI runners. The 1.2.1 public release also passed the GitHub packaging workflow.
 
 The English **1.3.0** edition passed **22 local .NET tests**, **25 installer checks**, and **28 ZIP checks**, including legacy shortcut cleanup and the English launcher filenames. Its screenshots were captured from the translated WPF interface.
+
+The **1.4.0** Anime edition passed **27 local .NET tests**, **25 installer checks**, and **33 ZIP checks**. All five new scenes passed desktop/narrow rendering, customization, and pause/resume checks. Ninja Anime was also loaded on three real monitors, including replacement, duplication, spanning, and DPI-context changes.
 
 Known limits: automatic reconciliation after disconnecting a display is still planned; WebView2 installation on a Windows machine entirely without that runtime still needs clean-machine validation. GPU performance depends on hardware and the number of active scenes.
 

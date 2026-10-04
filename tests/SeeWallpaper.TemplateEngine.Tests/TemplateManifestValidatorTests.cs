@@ -11,6 +11,11 @@ public sealed class TemplateManifestValidatorTests
     [InlineData("digital-rain-3d")]
     [InlineData("sakura-night")]
     [InlineData("ai-core")]
+    [InlineData("ninja-anime")]
+    [InlineData("hidden-village")]
+    [InlineData("shinobi-energy")]
+    [InlineData("orange-ninja")]
+    [InlineData("anime-moon-battle")]
     public async Task Starter_manifest_is_valid(string templateId)
     {
         string root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "templates", templateId));

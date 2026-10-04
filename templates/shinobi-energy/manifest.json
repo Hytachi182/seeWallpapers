@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "shinobi-energy",
+  "name": "Shinobi Energy",
+  "description": "A standing shinobi surrounded by rotating energy seals, rising sparks and luminous ribbons.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Anime",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Energy accent",
+      "default": "#62efda"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "intensity",
+      "type": "slider",
+      "label": "Atmosphere intensity",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    }
+  ]
+}

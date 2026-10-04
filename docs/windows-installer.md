@@ -1,12 +1,14 @@
 # Windows installation
 
-The Windows x64 distribution is built as `dist/installer/seeWallpaper-Setup-1.3.0-x64.exe`. Its neighboring `.sha256` file contains the checksum. .NET 8 is bundled; no separate .NET installation is required. Public downloads are attached to [GitHub Releases](https://github.com/Hytachi182/seeWallpapers/releases/latest).
+The Windows x64 distribution is built as `dist/installer/seeWallpaper-Setup-1.4.0-x64.exe`. Its neighboring `.sha256` file contains the checksum. .NET 8 is bundled; no separate .NET installation is required. Public downloads are attached to [GitHub Releases](https://github.com/Hytachi182/seeWallpapers/releases/latest).
 
 The **About** page credits **Michael Ruffenach** as creator and displays the version and available features. Windows application registration uses the same publisher name. A [ZIP edition](windows-portable.md) is available for launching after extraction.
 
 The 1.2.0 baseline passed 22 .NET tests, 23 installation/update/uninstall checks, and 28 ZIP checks locally. The Windows publisher credit is included in those checks. Reports are written under `build/visual-review`. Version 1.2.1 also passed the GitHub release workflow.
 
 The English 1.3.0 edition passed 22 local .NET tests, 25 installer checks, and 28 ZIP checks. Installer checks also verify removal of the two legacy French Start menu shortcuts during an update.
+
+Version 1.4.0 includes eighteen templates and passed 27 local .NET tests, all 25 installer lifecycle checks, and 33 ZIP checks. Template installation is compared against the repository catalog by ID.
 
 ## Installation and integration
 

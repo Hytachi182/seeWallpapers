@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "hidden-village",
+  "name": "Hidden Village",
+  "description": "A lantern-lit mountain village with tiled rooftops, waterfall mist and floating fireflies.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Anime",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Energy accent",
+      "default": "#ffbe75"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "intensity",
+      "type": "slider",
+      "label": "Atmosphere intensity",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    }
+  ]
+}

@@ -38,7 +38,9 @@ try {
     Invoke-TestSetup 'desktopicon,contextmenu,fileassociation,startup' 'install.log'
     Assert-InstallerCondition (Test-Path (Join-Path $testApplication 'SeeWallpaper.App.exe')) 'application installed'
     Assert-InstallerCondition (Test-Path (Join-Path $testApplication 'coreclr.dll')) 'self-contained .NET runtime installed'
-    Assert-InstallerCondition ((Get-ChildItem (Join-Path $testApplication 'templates') -Directory).Count -eq 13) 'all thirteen templates installed'
+    $expectedTemplates = @(Get-ChildItem (Join-Path $projectRoot 'templates') -Directory | Where-Object { Test-Path (Join-Path $_.FullName 'manifest.json') } | Select-Object -ExpandProperty Name | Sort-Object)
+    $installedTemplates = @(Get-ChildItem (Join-Path $testApplication 'templates') -Directory | Select-Object -ExpandProperty Name | Sort-Object)
+    Assert-InstallerCondition (!(Compare-Object $expectedTemplates $installedTemplates)) 'all built-in template IDs installed'
     Assert-InstallerCondition (Test-Path $desktopShortcut) 'desktop shortcut created'
     Assert-InstallerCondition ((Get-ChildItem $menuDirectory -Filter '*.lnk').Count -eq 3) 'Start menu app, displays and uninstall shortcuts created'
     $shell = New-Object -ComObject WScript.Shell

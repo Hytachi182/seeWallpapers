@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 - 2026-10-04
+
+- Five original animated Anime scenes: Ninja Anime, Hidden Village, Shinobi Energy, Orange Ninja, and Anime Moon Battle.
+- Eighteen built-in wallpapers, with real scene previews and customizable energy color, animation speed, and atmosphere intensity.
+- Offline Canvas artwork with flowing scarves, drifting leaves, illuminated rooftops, energy seals, and moonlit battle trails.
+- Anime rendering respects pause/resume, performance profiles, reduced motion, and desktop resizing.
+- Installer and ZIP checks verify the complete template catalog by ID.
+
 ## 1.3.0 - 2026-10-04
 
 - English app interface, display selection, About page, status messages, and errors.

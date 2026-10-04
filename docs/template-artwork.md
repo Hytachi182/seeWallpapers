@@ -1,9 +1,14 @@
 # Template artwork
 
-The built-in pack contains thirteen original procedural wallpapers. Each directory is an independent package: its HTML, JavaScript, manifest and preview stay inside the template root so import, duplication and export keep working offline.
+The built-in pack contains eighteen original procedural wallpapers. Each directory is an independent package: its HTML, JavaScript, manifest and preview stay inside the template root so import, duplication and export keep working offline.
 
 | Template | Artwork |
 | --- | --- |
+| Ninja Anime | Original masked rooftop guardian, crimson moon, flowing scarf and drifting blossoms |
+| Hidden Village | Terraced tiled rooftops, illuminated windows, waterfall, lanterns and mist |
+| Shinobi Energy | Standing shinobi, rotating energy seals, luminous ribbons and rising sparks |
+| Orange Ninja | Original orange-cloaked guardian, golden valley and wind-blown leaves |
+| Anime Moon Battle | Two airborne shinobi, steel blades, blue moon and animated energy trails |
 | Aurora Borealis | Layered green aurora curtains, stars and a dark mountain ridge |
 | Ocean Dusk | Sunset atmosphere, perspective waves and a moving gold reflection |
 | Moonlit Dunes | Layered moon-lit dunes, sand ripples and drifting dust |
@@ -24,7 +29,10 @@ The Canvas renderer is maintained in `build/template-scene.js`, and the WebGL re
 node build/generate-template-scenes.mjs
 node build/generate-shader-templates.mjs
 node build/generate-nature-templates.mjs
+node build/generate-anime-templates.mjs
 ```
+
+The Anime renderer is maintained in `build/anime-scene.js`. It draws original cel-shaded characters and landscapes using Canvas paths, with no external assets or franchise characters. All five scenes expose energy accent, animation speed, and atmosphere intensity. Its backing store is additionally capped at 2,073,600 pixels and its default is 30 FPS.
 
 Canvas backing stores resize only on viewport changes and are capped at 1.5 device pixels per CSS pixel. WebGL is capped at 2,073,600 fragments per frame; its default is 30 FPS and low profiles also lower rendering resolution. Both renderers stop scheduling frames on SDK pause or document invisibility and cap reduced-motion users at 15 FPS. These limits bound the work; hardware-specific GPU consumption still depends on the computer and number of wallpapers.
 

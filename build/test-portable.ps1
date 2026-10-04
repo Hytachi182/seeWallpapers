@@ -22,7 +22,9 @@ $payload = Join-Path $testDirectory "seeWallpaper-$version-x64"
 foreach ($file in @('SeeWallpaper.App.exe','SeeWallpaper.App.dll','SeeWallpaper.App.deps.json','coreclr.dll','hostfxr.dll','LICENSE','README.txt','Launch seeWallpaper.cmd','launch-portable.ps1','runtime\MicrosoftEdgeWebview2Setup.exe')) {
     Assert-ZipCondition (Test-Path -LiteralPath (Join-Path $payload $file)) "archive contains $file"
 }
-Assert-ZipCondition ((Get-ChildItem (Join-Path $payload 'templates') -Directory).Count -eq 13) 'all thirteen templates extracted'
+$expectedTemplates = @(Get-ChildItem (Join-Path $projectRoot 'templates') -Directory | Where-Object { Test-Path (Join-Path $_.FullName 'manifest.json') } | Select-Object -ExpandProperty Name | Sort-Object)
+$extractedTemplates = @(Get-ChildItem (Join-Path $payload 'templates') -Directory | Select-Object -ExpandProperty Name | Sort-Object)
+Assert-ZipCondition (!(Compare-Object $expectedTemplates $extractedTemplates)) 'all built-in template IDs extracted'
 foreach ($template in Get-ChildItem (Join-Path $payload 'templates') -Directory) {
     $manifest = Get-Content -LiteralPath (Join-Path $template.FullName 'manifest.json') -Raw | ConvertFrom-Json
     Assert-ZipCondition ((Test-Path (Join-Path $template.FullName $manifest.entry)) -and (Test-Path (Join-Path $template.FullName $manifest.preview))) "$($manifest.id) includes its entry and preview"
