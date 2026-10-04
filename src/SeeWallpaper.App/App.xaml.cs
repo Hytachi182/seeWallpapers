@@ -8,6 +8,7 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("en-US");
         base.OnStartup(e);
         try
         {
@@ -27,7 +28,7 @@ public partial class App : Application
         }
         catch (Exception exception)
         {
-            MessageBox.Show(exception.Message, "Démarrage de seeWallpaper", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, "seeWallpaper startup", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown(1);
         }
     }

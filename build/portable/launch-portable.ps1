@@ -22,20 +22,20 @@ function Test-WebViewRuntime {
 try {
     if ($CheckRuntimeOnly) { Test-WebViewRuntime; exit 0 }
     if (!(Test-WebViewRuntime)) {
-        Write-Host 'Premier lancement : installation du moteur Microsoft WebView2 (connexion Internet requise)...'
+        Write-Host 'First launch: installing Microsoft WebView2 (Internet connection required)...'
         $bootstrapper = Join-Path $PSScriptRoot 'runtime\MicrosoftEdgeWebview2Setup.exe'
         $signature = Get-AuthenticodeSignature -LiteralPath $bootstrapper
         if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'O=Microsoft Corporation') {
-            throw 'La signature Microsoft du moteur WebView2 est invalide. Telechargez une nouvelle copie du ZIP.'
+            throw 'The Microsoft WebView2 signature is invalid. Download a fresh copy of the ZIP.'
         }
         $installation = Start-Process -FilePath $bootstrapper -ArgumentList '/silent','/install' -Wait -PassThru -WindowStyle Hidden
         if (!(Test-WebViewRuntime)) {
-            throw "WebView2 n'a pas pu etre installe (code $($installation.ExitCode)). Verifiez la connexion Internet, puis relancez."
+            throw "WebView2 could not be installed (code $($installation.ExitCode)). Check your Internet connection, then try again."
         }
     }
     Start-Process -FilePath (Join-Path $PSScriptRoot 'SeeWallpaper.App.exe') -WorkingDirectory $PSScriptRoot
 } catch {
     Write-Host $_.Exception.Message -ForegroundColor Red
-    Read-Host 'Appuyez sur Entree pour fermer'
+    Read-Host 'Press Enter to close'
     exit 1
 }

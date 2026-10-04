@@ -1,30 +1,30 @@
-name: Signaler un problème
-description: Un problème d'installation, d'affichage ou de screener.
+name: Report a bug
+description: An installation, display, or wallpaper issue.
 labels: ['bug']
 body:
   - type: textarea
     id: problem
     attributes:
-      label: Que se passe-t-il ?
-      description: Décrivez le résultat attendu, ce qui se passe et les étapes pour reproduire.
+      label: What happened?
+      description: Describe the expected result, actual behavior, and steps to reproduce.
     validations:
       required: true
   - type: input
     id: version
     attributes:
-      label: Version de seeWallpaper
-      placeholder: '1.2.0 - installeur ou ZIP'
+      label: seeWallpaper version
+      placeholder: '1.3.0 - installer or ZIP'
     validations:
       required: true
   - type: textarea
     id: environment
     attributes:
-      label: Configuration Windows et écrans
-      description: Version Windows, carte graphique, nombre d'écrans, résolutions et mise à l'échelle.
+      label: Windows and display configuration
+      description: Windows version, graphics card, number of displays, resolutions, and scaling.
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: Capture ou message d'erreur
-      description: Ajoutez une capture ou les lignes utiles du journal. Retirez les informations personnelles avant de partager.
+      label: Screenshot or error message
+      description: Add a screenshot or relevant log lines. Remove personal information before sharing.

@@ -1,95 +1,95 @@
 <p align="center">
-  <img src="seewallpaper.png" alt="Logo seeWallpaper" width="112" />
+  <img src="seewallpaper.png" alt="seeWallpaper logo" width="112" />
 </p>
 <h1 align="center">seeWallpaper</h1>
-<p align="center"><strong>Des scènes animées. Vos écrans. Votre ambiance.</strong><br />Une application Windows créée par <strong>Michael Ruffenach</strong>.</p>
+<p align="center"><strong>Animated scenes. Your displays. Your atmosphere.</strong><br />A Windows application created by <strong>Michael Ruffenach</strong>.</p>
 <p align="center">
-  <a href="https://github.com/Hytachi182/seeWallpapers/actions/workflows/ci.yml"><img src="https://github.com/Hytachi182/seeWallpapers/actions/workflows/ci.yml/badge.svg" alt="Tests Windows" /></a>
-  <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest"><img src="https://img.shields.io/github/v/release/Hytachi182/seeWallpapers?style=flat-square&amp;color=8b7cff" alt="Dernière version" /></a>
-  <a href="https://github.com/Hytachi182/seeWallpapers/releases"><img src="https://img.shields.io/github/downloads/Hytachi182/seeWallpapers/total?style=flat-square&amp;color=38bdf8" alt="Téléchargements" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-22c55e?style=flat-square" alt="Licence MIT" /></a>
-  <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078d4?style=flat-square" alt="Windows 10 et 11" />
-  <a href="https://github.com/Hytachi182/seeWallpapers/stargazers"><img src="https://img.shields.io/github/stars/Hytachi182/seeWallpapers?style=flat-square" alt="Étoiles GitHub" /></a>
+  <a href="https://github.com/Hytachi182/seeWallpapers/actions/workflows/ci.yml"><img src="https://github.com/Hytachi182/seeWallpapers/actions/workflows/ci.yml/badge.svg" alt="Windows tests" /></a>
+  <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest"><img src="https://img.shields.io/github/v/release/Hytachi182/seeWallpapers?style=flat-square&amp;color=8b7cff" alt="Latest release" /></a>
+  <a href="https://github.com/Hytachi182/seeWallpapers/releases"><img src="https://img.shields.io/github/downloads/Hytachi182/seeWallpapers/total?style=flat-square&amp;color=38bdf8" alt="Downloads" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-22c55e?style=flat-square" alt="MIT license" /></a>
+  <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078d4?style=flat-square" alt="Windows 10 and 11" />
+  <a href="https://github.com/Hytachi182/seeWallpapers/stargazers"><img src="https://img.shields.io/github/stars/Hytachi182/seeWallpapers?style=flat-square" alt="GitHub stars" /></a>
 </p>
 <p align="center">
-  <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Setup-x64.exe"><img src="https://img.shields.io/badge/Télécharger-Installeur%20Windows-8b7cff?style=for-the-badge&amp;logo=windows" alt="Télécharger l'installeur Windows" /></a>
-  <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Portable-x64.zip"><img src="https://img.shields.io/badge/Télécharger-ZIP%20portable-292e40?style=for-the-badge" alt="Télécharger le ZIP portable" /></a>
+  <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Setup-x64.exe"><img src="https://img.shields.io/badge/Download-Windows%20installer-8b7cff?style=for-the-badge&amp;logo=windows" alt="Download the Windows installer" /></a>
+  <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Portable-x64.zip"><img src="https://img.shields.io/badge/Download-Portable%20ZIP-292e40?style=for-the-badge" alt="Download the portable ZIP" /></a>
 </p>
 <p align="center">
-  <a href="#démarrer">Démarrer</a> · <a href="#fonctionnalités">Fonctionnalités</a> · <a href="#les-scènes">Aperçus</a> · <a href="docs/template-format.md">SDK</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/Hytachi182/seeWallpapers/issues/new/choose">Signaler un problème</a>
+  <a href="#get-started">Get started</a> · <a href="#features">Features</a> · <a href="#the-scenes">Previews</a> · <a href="docs/template-format.md">SDK</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/Hytachi182/seeWallpapers/issues/new/choose">Report an issue</a>
 </p>
 
-![Galerie seeWallpaper avec aperçus et installation par écran](docs/images/gallery.png)
+![seeWallpaper gallery with scene previews and per-display application](docs/images/gallery.png)
 
-## Démarrer
+## Get started
 
-Les téléchargements ci-dessus pointent toujours vers la **dernière release stable**, sans compte GitHub. Retrouvez toutes les versions et leurs empreintes dans les [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
+The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
 
-| Distribution | Pour qui ? | Démarrage |
+| Distribution | Best for | Getting started |
 | --- | --- | --- |
-| **[Installeur Windows](https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Setup-x64.exe)** | Une installation avec raccourcis et intégration Windows | Ouvrir l'EXE, choisir les options et lancer l'app. |
-| **[ZIP portable](https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Portable-x64.zip)** | Un lancement après extraction | **Extraire tout**, puis ouvrir **Lancer seeWallpaper.cmd** dans le dossier extrait. |
-| **[Empreintes SHA-256](https://github.com/Hytachi182/seeWallpapers/releases/latest/download/SHA256SUMS.txt)** | Vérifier les fichiers téléchargés | Comparer l'empreinte avec `Get-FileHash -Algorithm SHA256`. |
+| **[Windows installer](https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Setup-x64.exe)** | Shortcuts and Windows integration | Open the EXE, choose your options, and launch the app. |
+| **[Portable ZIP](https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Portable-x64.zip)** | Launching after extraction | **Extract all**, then open **Launch seeWallpaper.cmd** in the extracted folder. |
+| **[SHA-256 checksums](https://github.com/Hytachi182/seeWallpapers/releases/latest/download/SHA256SUMS.txt)** | Checking downloaded files | Compare the checksum with `Get-FileHash -Algorithm SHA256`. |
 
-**Configuration :** Windows 10 version 2004 ou ultérieure, ou Windows 11, en 64 bits. .NET est inclus. Le lanceur ZIP et l'installeur vérifient WebView2 ; son installation initiale nécessite Internet s'il est absent. Les scènes intégrées fonctionnent ensuite hors ligne.
+**Requirements:** Windows 10 version 2004 or later, or Windows 11, 64-bit. .NET is included. The ZIP launcher and installer check WebView2; installing it initially requires Internet if it is missing. Built-in scenes then run offline.
 
-**Mise à jour :** fermer l'ancienne application avant d'installer ou d'extraire la nouvelle version. Les scènes personnelles et réglages restent dans `%LocalAppData%\seeWallpaper`, partagés entre les versions ZIP et installée.
+**Updating:** close the previous app before installing or extracting the new version. Personal scenes and settings remain in `%LocalAppData%\seeWallpaper`, shared by the portable and installed editions.
 
-> L'application et l'installeur ne sont pas encore signés avec un certificat éditeur. Téléchargez les fichiers depuis les Releases de ce dépôt. Le bootstrapper WebView2 inclus possède une signature Microsoft vérifiée lors du build.
+> The app and installer are not yet signed with a publisher certificate. Download files from this repository's Releases. The included WebView2 bootstrapper has a Microsoft signature verified during the build.
 
-[Guide de l'installeur](docs/windows-installer.md) · [Guide du ZIP](docs/windows-portable.md)
+[Installer guide](docs/windows-installer.md) · [ZIP guide](docs/windows-portable.md)
 
-## Fonctionnalités
+## Features
 
-| | Disponible aujourd'hui |
+| | Available today |
 | --- | --- |
-| **Votre scène, votre écran** | Installer sur un ou plusieurs moniteurs, avec une scène différente par écran. |
-| **Repères visuels** | Voir la disposition des moniteurs et identifier les écrans avant d'appliquer. |
-| **Dupliquer ou étendre** | Utiliser le même screener partout ou l'étendre sur l'ensemble du bureau. |
-| **Personnaliser** | Prévisualiser les scènes, adapter leurs réglages et conserver ses favoris. |
-| **Partager** | Importer, exporter et dupliquer les packages `.seewall`. |
-| **Régler les performances** | Choisir un profil et configurer la pause en plein écran ou sur batterie ; pause lors du verrouillage de session. |
-| **Retrouver son bureau** | Restaurer les affectations sauvegardées au lancement. |
-| **Intégration Windows** | Raccourcis, menu contextuel du Bureau, ouverture `.seewall`, démarrage à la connexion en option et désinstallation. |
+| **Your scene, your display** | Apply to one or more monitors, with a different scene on each display. |
+| **Visual identification** | View the monitor layout and identify displays before applying. |
+| **Duplicate or span** | Use the same wallpaper everywhere or span it across the entire desktop. |
+| **Customize** | Preview scenes, adjust their settings, and save favorites. |
+| **Share** | Import, export, and duplicate `.seewall` packages. |
+| **Tune performance** | Choose a performance profile and configure fullscreen or battery pauses; wallpapers pause when the session locks. |
+| **Restore your desktop** | Restore saved assignments when the app starts. |
+| **Windows integration** | Shortcuts, desktop context menu, `.seewall` opening, optional sign-in startup, and uninstall. |
 
 <details>
-<summary><strong>Voir la gestion des écrans</strong></summary>
+<summary><strong>See display management</strong></summary>
 
-![Gestion des écrans avec choix indépendant des scènes](docs/images/screens.png)
+![Display management with independent scene selection](docs/images/screens.png)
 
-Choisir **Installer sur mes écrans**, cocher les moniteurs souhaités et cliquer sur **Installer**. La page **Écrans** permet aussi de choisir, remplacer ou retirer le screener d'un seul moniteur.
+Choose **Apply to my displays**, select your monitors, and click **Apply**. The **Displays** page also lets you choose, replace, or remove a wallpaper on a single monitor.
 
-Les numéros sont ceux des repères affichés par l'application. Les modes **Dupliquer** et **Étendre** remplacent l'ensemble des instances. Installer sur un écran après une extension rétablit des affectations indépendantes.
+Numbers match the app's identification labels. **Duplicate** and **Span** replace all instances. Applying to one display after spanning restores independent assignments.
 
 </details>
 
-## Les scènes
+## The scenes
 
-Treize screeners procéduraux sont inclus. Les images ci-dessous proviennent des scènes elles-mêmes.
+Thirteen procedural wallpapers are included. The images below are captured from the actual scenes.
 
 | Aurora Borealis | Ocean Dusk |
 | --- | --- |
-| ![Aurores boréales et montagnes](templates/aurora-borealis/preview.jpg) | ![Vagues et lumière du soleil couchant](templates/ocean-dusk/preview.jpg) |
+| ![Northern lights and mountains](templates/aurora-borealis/preview.jpg) | ![Waves and sunset reflections](templates/ocean-dusk/preview.jpg) |
 | Sakura Night | Event Horizon |
-| ![Cerisiers et pétales sous la lune](templates/sakura-night/preview.jpg) | ![Trou noir et disque d'accrétion](templates/event-horizon/preview.jpg) |
+| ![Cherry blossoms beneath the moon](templates/sakura-night/preview.jpg) | ![Black hole and accretion disk](templates/event-horizon/preview.jpg) |
 
-Également inclus : **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digital Rain 3D**, **Data Tunnel**, **Rainy Window**, **AI Core**, **Neural Network** et **Operations Center**. Ce dernier affiche les mesures CPU, mémoire, batterie et temps de fonctionnement reçues du système.
+Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digital Rain 3D**, **Data Tunnel**, **Rainy Window**, **AI Core**, **Neural Network**, and **Operations Center**. The last displays CPU, memory, battery, and uptime measurements received from the system.
 
-[Découvrir les scènes et leurs outils de rendu](docs/template-artwork.md)
+[Explore the scenes and rendering tools](docs/template-artwork.md)
 
-## Créer un screener
+## Create a wallpaper
 
-Une scène est un dossier autonome avec un `manifest.json`, une page HTML, ses ressources et un aperçu. Le SDK expose les réglages, les informations système documentées, la pause/reprise et le profil de performance. Les imports valident le manifeste, les chemins et les limites du package.
+A scene is a self-contained folder with a `manifest.json`, an HTML page, its assets, and a preview. The SDK exposes settings, documented system information, pause/resume, and the performance profile. Imports validate the manifest, paths, and package limits.
 
-- [Format des templates et SDK](docs/template-format.md)
-- [Moteur et intégration au bureau Windows](docs/wallpaper-engine.md)
-- [Import, export et exemples](templates)
+- [Template format and SDK](docs/template-format.md)
+- [Engine and Windows desktop integration](docs/wallpaper-engine.md)
+- [Import, export, and examples](templates)
 
-L'éditeur visuel de templates est prévu ; la création s'effectue actuellement à partir du SDK et des fichiers d'une scène.
+A visual template editor is planned; scenes are currently created using the SDK and template files.
 
-## Développer
+## Develop
 
-Prérequis : Windows et le SDK .NET 8. Inno Setup 6 est nécessaire pour construire l'installeur. Node.js et Playwright servent uniquement aux outils de génération/capture des scènes.
+Requirements: Windows and the .NET 8 SDK. Inno Setup 6 is needed to build the installer. Node.js and Playwright are only used by scene generation and capture tools.
 
 ```powershell
 git clone https://github.com/Hytachi182/seeWallpapers.git
@@ -100,7 +100,7 @@ dotnet test seeWallpaper.sln
 dotnet run --project src/SeeWallpaper.App
 ```
 
-Pour produire les distributions :
+To build distributions:
 
 ```powershell
 .\build\build-installer.ps1
@@ -108,34 +108,34 @@ Pour produire les distributions :
 .\build\prepare-release.ps1
 ```
 
-Le workflow **CI** construit et teste chaque push et pull request. **Windows release** construit et vérifie les deux distributions ; un tag `vX.Y.Z` correspondant à la version de l'app publie automatiquement les assets. Un lancement manuel produit des artefacts de build sans publication. [Procédure de release](docs/releasing.md).
+The **CI** workflow builds and tests every push and pull request. **Windows release** builds and verifies both distributions; a `vX.Y.Z` tag matching the app version automatically publishes the assets. A manual run produces build artifacts without publishing a release. [Release procedure](docs/releasing.md).
 
 <details>
-<summary><strong>Architecture et validation</strong></summary>
+<summary><strong>Architecture and validation</strong></summary>
 
-| Projet | Rôle |
+| Project | Responsibility |
 | --- | --- |
-| `SeeWallpaper.App` | Interface WPF et composition de l'application |
-| `SeeWallpaper.Core` | Contrats et modèles |
-| `SeeWallpaper.TemplateEngine` | Catalogue, validation, bibliothèque et packages |
-| `SeeWallpaper.Engine` | WebView2, fenêtres et cycle de vie des fonds |
-| `SeeWallpaper.System` | Écrans et mesures système |
-| `SeeWallpaper.Infrastructure` | Configuration locale et journaux |
+| `SeeWallpaper.App` | WPF interface and application composition |
+| `SeeWallpaper.Core` | Contracts and models |
+| `SeeWallpaper.TemplateEngine` | Catalog, validation, library, and packages |
+| `SeeWallpaper.Engine` | WebView2, windows, and wallpaper lifecycle |
+| `SeeWallpaper.System` | Displays and system measurements |
+| `SeeWallpaper.Infrastructure` | Local configuration and logging |
 
-La version 1.2.0 a passé localement **22 tests .NET**, **23 contrôles de l'installeur** et **28 contrôles du ZIP**. Le chargement réel a aussi été vérifié sur trois moniteurs, avec remplacement, duplication, extension et changement de contexte DPI. Les contrôles interactifs du bureau nécessitent `SEEWALLPAPER_DESKTOP_TEST=1` et ne s'exécutent pas sur les runners CI.
+The 1.2.0 baseline passed **22 .NET tests**, **23 installer checks**, and **28 ZIP checks** locally. Real loading was also verified on three monitors, including replacement, duplication, spanning, and DPI-context changes. Interactive desktop tests require `SEEWALLPAPER_DESKTOP_TEST=1` and do not run on CI runners. The 1.2.1 public release also passed the GitHub packaging workflow.
 
-Limites connues : réconciliation automatique après déconnexion d'un écran encore prévue ; installation de WebView2 sur un Windows complètement dépourvu du runtime à valider sur une machine propre. Les performances GPU dépendent du matériel et du nombre de scènes actives.
+Known limits: automatic reconciliation after disconnecting a display is still planned; WebView2 installation on a Windows machine entirely without that runtime still needs clean-machine validation. GPU performance depends on hardware and the number of active scenes.
 
 </details>
 
-## Participer
+## Contribute
 
-Une idée de scène ou une amélioration ? [Proposer une fonctionnalité](https://github.com/Hytachi182/seeWallpapers/issues/new/choose), [signaler un bug](https://github.com/Hytachi182/seeWallpapers/issues/new/choose) ou lire le [guide de contribution](CONTRIBUTING.md).
+Have a scene idea or an improvement? [Request a feature](https://github.com/Hytachi182/seeWallpapers/issues/new/choose), [report a bug](https://github.com/Hytachi182/seeWallpapers/issues/new/choose), or read the [contribution guide](CONTRIBUTING.md).
 
-Si seeWallpaper vous plaît, une [étoile sur GitHub](https://github.com/Hytachi182/seeWallpapers/stargazers) aide à faire connaître le projet.
+If you enjoy seeWallpaper, a [star on GitHub](https://github.com/Hytachi182/seeWallpapers/stargazers) helps others discover the project.
 
-## Créateur et licence
+## Creator and license
 
-**Conception et création : Michael Ruffenach.** Le crédit est également visible dans la page **À propos** de l'application.
+**Designed and created by Michael Ruffenach.** This credit is also displayed on the app's **About** page.
 
-Distribué sous [licence MIT](LICENSE). Les contributions sont les bienvenues dans le respect du [code de conduite](CODE_OF_CONDUCT.md). Pour une vulnérabilité, utiliser le [signalement privé](https://github.com/Hytachi182/seeWallpapers/security/advisories/new) et consulter la [politique de sécurité](SECURITY.md).
+Distributed under the [MIT license](LICENSE). Contributions are welcome under the [code of conduct](CODE_OF_CONDUCT.md). For a vulnerability, use [private reporting](https://github.com/Hytachi182/seeWallpapers/security/advisories/new) and read the [security policy](SECURITY.md).

@@ -76,7 +76,7 @@ internal sealed class WallpaperAssignmentService
         try
         {
             if (_state.Mode == WallpaperAssignmentMode.Span)
-                throw new InvalidOperationException("Installez d'abord un screener sur cet écran pour quitter le mode étendu.");
+                throw new InvalidOperationException("First apply a wallpaper to this display to leave span mode.");
             await _host.StopDisplayAsync(display.Id, cancellationToken);
             _state = _state with { Mode = WallpaperAssignmentMode.Independent, GlobalTemplateId = null, Assignments = IndependentAssignments().Where(item => !string.Equals(item.DisplayKey, display.AssignmentKey, StringComparison.OrdinalIgnoreCase)).ToArray() };
             await _store.SaveAsync(_state, cancellationToken);

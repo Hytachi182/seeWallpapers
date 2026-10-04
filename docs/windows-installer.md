@@ -1,83 +1,78 @@
-# Installation Windows
+# Windows installation
 
-La distribution Windows x64 est disponible dans `dist/installer/seeWallpaper-Setup-1.2.1-x64.exe`. Le fichier `.sha256` voisin contient son empreinte. Le runtime .NET 8 est embarqué : aucune installation séparée de .NET n'est nécessaire.
+The Windows x64 distribution is built as `dist/installer/seeWallpaper-Setup-1.3.0-x64.exe`. Its neighboring `.sha256` file contains the checksum. .NET 8 is bundled; no separate .NET installation is required. Public downloads are attached to [GitHub Releases](https://github.com/Hytachi182/seeWallpapers/releases/latest).
 
-La page **À propos** affiche **Michael Ruffenach** comme créateur, ainsi que la version et les fonctionnalités disponibles. L'inscription Windows de l'application reprend ce nom comme éditeur. Une [version ZIP](windows-portable.md) est également disponible pour un lancement après extraction.
+The **About** page credits **Michael Ruffenach** as creator and displays the version and available features. Windows application registration uses the same publisher name. A [ZIP edition](windows-portable.md) is available for launching after extraction.
 
-Validation 1.2.0 : 22 tests .NET réussis et 23 contrôles du cycle réel installation, changement d'options, mise à jour et désinstallation réussis. Le crédit éditeur Windows est inclus dans ces contrôles. Le ZIP passe 28 contrôles distincts ; les rapports figurent dans `build/visual-review`.
+The 1.2.0 baseline passed 22 .NET tests, 23 installation/update/uninstall checks, and 28 ZIP checks locally. The Windows publisher credit is included in those checks. Reports are written under `build/visual-review`. Version 1.2.1 also passed the GitHub release workflow.
 
-## Installation et intégration
+## Installation and integration
 
-L'installation française ou anglaise fonctionne pour l'utilisateur courant, sans demande de droits administrateur, dans `%LocalAppData%\Programs\seeWallpaper` par défaut. Le dossier cible peut être changé.
+The English installer runs for the current user, without requesting administrator privileges, in `%LocalAppData%\Programs\seeWallpaper` by default. The destination can be changed.
 
-- Menu Démarrer : application, gestion des écrans et désinstallation.
-- Raccourci Bureau, proposé par défaut.
-- Menu contextuel du Bureau, proposé par défaut : **Personnaliser mes écrans avec seeWallpaper**, qui ouvre directement la vue **Écrans**.
-- Association `.seewall`, proposée par défaut : double-clic pour importer un package. Les chemins contenant des espaces sont pris en charge. Une association préexistante n'est pas écrasée ; seeWallpaper est aussi enregistré dans **Ouvrir avec**.
-- Démarrage à l'ouverture de session, facultatif et désactivé par défaut : restauration des choix enregistrés avec fenêtre minimisée.
-- Entrée de désinstallation dans les applications Windows.
+- Start menu: app, display management, and uninstall.
+- Desktop shortcut, selected by default.
+- Desktop context menu, selected by default: **Customize my displays with seeWallpaper**, opening the **Displays** page.
+- `.seewall` association, selected by default: double-click to import a package. Paths containing spaces are supported. Existing default associations are not overwritten; seeWallpaper is also registered under **Open with**.
+- Optional sign-in startup, disabled by default: restore saved choices with a minimized window.
+- Uninstall entry in Windows installed apps.
 
-Le menu contextuel utilise l'intégration classique du shell. Sur Windows 11, les extensions classiques sont accessibles par **Afficher plus d'options**. L'intégration au premier niveau du nouveau menu via `IExplorerCommand` et identité de package n'est pas incluse. Voir la [documentation Microsoft](https://learn.microsoft.com/fr-fr/windows/apps/desktop/modernize/integrate-packaged-app-with-file-explorer).
+The context menu uses classic shell integration. Windows 11 exposes classic extensions through **Show more options**. First-level integration through `IExplorerCommand` and package identity is not included. See [Microsoft's documentation](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/integrate-packaged-app-with-file-explorer).
 
-L'image fournie `seewallpaper.png` est embarquée dans les fenêtres et l'en-tête. `build/generate-icon.ps1` en produit une icône Windows avec sept tailles, de 16 à 256 pixels, utilisée par l'exécutable, les raccourcis et l'installeur.
+The supplied `seewallpaper.png` is embedded in windows and the header. `build/generate-icon.ps1` creates a Windows icon with seven sizes, from 16 to 256 pixels, for the executable, shortcuts, and installer.
 
 ## WebView2
 
-L'installeur vérifie le runtime Evergreen WebView2 dans les clés documentées pour l'utilisateur et la machine. S'il manque, il exécute le bootstrapper Microsoft signé inclus dans l'installeur. Ce cas nécessite Internet. Un échec bloque l'installation avec une indication pour réessayer ; un runtime déjà présent est conservé.
+The installer checks the Evergreen WebView2 runtime in the documented user and machine registry keys. If missing, it runs the included signed Microsoft bootstrapper. This requires Internet. A failure blocks installation with retry guidance; an existing runtime is retained.
 
-Le build vérifie la signature Microsoft du bootstrapper. La désinstallation de seeWallpaper ne retire pas ce runtime partagé. Voir la [documentation Microsoft de distribution WebView2](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
+The build verifies the bootstrapper's Microsoft signature. Uninstalling seeWallpaper does not remove this shared runtime. See [Microsoft's WebView2 distribution documentation](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
 
-## Mise à jour et désinstallation
+## Updating and uninstalling
 
-L'identifiant d'application est stable entre versions. Un nouvel installeur met à jour l'installation existante ; Windows peut demander de fermer l'app pour remplacer les fichiers en cours d'utilisation. Désélectionner une option lors d'une mise à jour retire son intégration ou son raccourci.
+The application ID remains stable between versions. A new installer updates an existing installation; Windows may ask to close the app to replace files in use. Deselecting an option during an update removes that integration or shortcut.
 
-La désinstallation retire fichiers du programme, raccourcis, menu contextuel, ProgID `.seewall`, démarrage automatique et entrée des applications Windows. Elle conserve `%LocalAppData%\seeWallpaper` : scènes personnelles, favoris, réglages et affectations. Une association `.seewall` qui ne désigne plus seeWallpaper est préservée.
+Uninstall removes program files, shortcuts, context menu, `.seewall` ProgID, startup entry, and Windows application registration. It retains `%LocalAppData%\seeWallpaper`: personal scenes, favorites, settings, and assignments. A `.seewall` association no longer pointing to seeWallpaper is preserved.
 
-Les commandes du shell utilisent une seule instance par utilisateur et session Windows. Une deuxième ouverture transmet sa commande à la fenêtre existante par un canal local réservé à l'utilisateur courant. Les packages sont importés après initialisation du catalogue, avec les mêmes validations que depuis l'interface.
+Shell commands use one instance per Windows user/session. A second launch forwards its request over a user-restricted local channel. Packages are imported after catalog initialization using the same validation as imports from the interface.
 
-## Construire et vérifier
+## Build and verify
 
-Prérequis de développement : SDK .NET 8 et compilateur Inno Setup 6.
+Install Inno Setup 6, then run:
 
 ```powershell
 .\build\build-installer.ps1
 ```
 
-Le script génère l'icône, publie l'app autonome Windows x64 avec tous les templates, compile l'installeur et écrit son empreinte. Il lit la version depuis `SeeWallpaper.App.csproj`. Les outils peuvent être fournis explicitement :
+The script generates the icon, publishes a self-contained Windows x64 app with all templates, compiles the installer, and writes its checksum. It reads the version from `SeeWallpaper.App.csproj`. Tools can be supplied explicitly:
 
 ```powershell
 .\build\build-installer.ps1 -IsccPath 'C:\tools\Inno Setup 6\ISCC.exe' -WebViewBootstrapper 'C:\tools\MicrosoftEdgeWebview2Setup.exe'
-```
-
-Le test suivant vérifie installation, mises à jour avec options activées/désactivées et désinstallation dans un dossier temporaire contenant des espaces. Il crée temporairement les vrais raccourcis et clés utilisateur, puis les retire. Il refuse de remplacer une installation ou une intégration seeWallpaper déjà présente.
-
-```powershell
 .\build\test-installer.ps1
 ```
 
-Le rapport est écrit dans `build/visual-review/installer-validation.txt`. Les journaux détaillés restent dans le dossier temporaire indiqué par le script.
+The test verifies installation, updates with options enabled/disabled, and uninstall in a temporary directory containing spaces. It temporarily creates real user shortcuts and registry entries, then removes them. It refuses to replace an existing seeWallpaper installation or integration.
 
-Validation du 4 octobre 2026 : 22 tests .NET réussis avec le test natif du bureau activé ; les quatre nouvelles scènes passent les contrôles de rendu desktop/portrait, réglages et pause/reprise. Le cycle réel install ? options désactivées ? options réactivées ? désinstallation passe 22 contrôles, dont raccourcis, commandes citées, runtime embarqué et nettoyage des intégrations. L'extraction de l'icône native de l'exécutable réussit aussi.
+The report is written to `build/visual-review/installer-validation.txt`; detailed logs remain in the temporary directory reported by the script. The directory is created automatically on clean checkouts.
 
-Le lancement réel de l'exécutable autonome avec `--screens` atteint la vue **Mes écrans**. Un deuxième lancement transmet sa commande, sort avec le code 0 et laisse une seule instance de cette version. Le processus de test est ensuite fermé. Le rapport figure dans `build/visual-review/app-launch-validation.txt`.
+Earlier validation on 4 October 2026 also covered desktop/portrait rendering, customization, pause/resume, and native icon extraction. A packaged executable launched with `--screens` reached **My displays**; a second launch forwarded its command, exited successfully, and left one running instance of that version. See `build/visual-review/app-launch-validation.txt` for the local report.
 
-Le workflow **Windows release** compile et teste l'app, construit et vérifie l'installeur et le ZIP, puis publie les téléchargements pour un tag de version. Un lancement manuel fournit des artefacts sans publication. Voir la [procédure de release](releasing.md).
+The **Windows release** workflow builds and tests the app, builds and verifies the installer and ZIP, and publishes downloads for a version tag. Manual runs provide artifacts without publishing a release. See the [release procedure](releasing.md).
 
-## Distribution publique
+## Multi-display fix introduced in 1.1.1
 
-### Correctif multi-écrans 1.1.1
+`0x8007139F` was reproduced while creating a WebView2 controller with a profile already in use. Local processes showed browsers started with different DPI-awareness modes. The engine now shares an environment per template and DPI mode under `webview-v2`, and explicitly disposes each WebView2 control when closing. Saved settings and assignments are retained.
 
-L'erreur `0x8007139F` a été reproduite lors de la création du contrôleur WebView2 avec un profil déjà utilisé. Les processus locaux montraient des navigateurs démarrés avec des modes DPI différents. Le moteur utilise désormais un environnement partagé par template et mode DPI, dans `webview-v2`, et libère explicitement chaque contrôle WebView2 à la fermeture. Les réglages et affectations sauvegardés ne sont pas effacés.
+Real verification loaded Sakura Night simultaneously on three monitors, changed from system DPI to per-monitor DPI context, replaced one scene, duplicated, spanned, and duplicated again. All loads and expected instance counts passed. Report: `build/visual-review/multi-screen-validation.txt`.
 
-Validation réelle : Sakura Night chargé simultanément sur les trois moniteurs, changement de contexte DPI système vers DPI par écran, remplacement sur un seul écran, duplication, extension puis duplication à nouveau. Tous les chargements et nombres d'instances attendus passent ; rapport `build/visual-review/multi-screen-validation.txt`.
-
-Pour reproduire sur un poste Windows interactif avec au moins deux moniteurs (affiche temporairement les scènes puis ferme ses propres fenêtres, sans écrire les affectations) :
+To reproduce on an interactive Windows workstation with at least two monitors (temporarily displays scenes, then closes its own windows without saving assignments):
 
 ```powershell
 dotnet build build/desktop-check/DesktopCheck.csproj
 dotnet build/desktop-check/bin/Debug/net8.0-windows/DesktopCheck.dll sakura-night --dpi-transition
 ```
 
-L'installeur et l'application ne sont pas signés avec un certificat éditeur. La signature reste à effectuer avec le certificat du propriétaire pour une publication signée. L'empreinte SHA-256 ne remplace pas une signature éditeur.
+## Public distribution limits
 
-La branche d'installation sur une machine dépourvue de WebView2 reste à vérifier sur une machine Windows propre. La validation locale utilise le runtime existant ; aucun composant partagé n'a été supprimé pour simuler son absence.
+The installer and app are not signed with a publisher certificate. Signing requires the owner's certificate. A SHA-256 checksum does not replace a publisher signature.
+
+Installation on a machine without WebView2 still needs validation on a clean Windows system. Local verification used the existing runtime; no shared component was removed to simulate its absence.

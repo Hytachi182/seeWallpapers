@@ -1,22 +1,31 @@
 # Changelog
 
+## 1.3.0 - 2026-10-04
+
+- English app interface, display selection, About page, status messages, and errors.
+- English Windows installer and shell integration.
+- Remove legacy French display-management and uninstall shortcuts during upgrades.
+- English portable launcher and guide: `Launch seeWallpaper.cmd` and `README.txt`.
+- English README, badges, documentation, release notes, and contribution forms.
+- Updated screenshots captured from the English interface.
+
 ## 1.2.1 - 2026-10-04
 
-Première release publique construite et vérifiée par GitHub Actions : [téléchargements](https://github.com/Hytachi182/seeWallpapers/releases/tag/v1.2.1).
+First public release built and verified by GitHub Actions: [downloads](https://github.com/Hytachi182/seeWallpapers/releases/tag/v1.2.1).
 
-- Création automatique du dossier de rapport du test d'installation sur un checkout vierge.
-- Installeur Windows, ZIP portable et empreintes accessibles via les liens permanents du README.
+- Automatically create the installer validation report directory on a clean checkout.
+- Windows installer, portable ZIP, and checksums available through permanent README links.
 
-Les fonctionnalités de la version 1.2.0 sont incluses.
+Includes the features of version 1.2.0.
 
 ## 1.2.0 - 2026-10-04
 
-Version locale initiale ; distribuée publiquement avec le correctif de packaging 1.2.1.
+Initial local version; publicly distributed with the 1.2.1 packaging fix.
 
-- Page À propos et crédit de Michael Ruffenach.
-- Distribution Windows autonome en installeur et ZIP portable.
-- Treize scènes, prévisualisation, personnalisation et favoris.
-- Installation indépendante par écran, duplication et extension.
-- Persistance des affectations, import/export `.seewall` et instance unique.
-- Correction des conflits WebView2 liés au contexte DPI et de la détection WorkerW sur Windows moderne.
-- Raccourcis, intégration au menu contextuel et désinstallation Windows.
+- About page and Michael Ruffenach creator credit.
+- Self-contained Windows installer and portable ZIP.
+- Thirteen scenes, previews, customization, and favorites.
+- Independent display assignments, duplication, and spanning.
+- Persistent assignments, `.seewall` import/export, and single-instance handling.
+- Fix WebView2 DPI-context conflicts and WorkerW detection on modern Windows.
+- Shortcuts, desktop context-menu integration, and Windows uninstall support.

@@ -1,11 +1,11 @@
-## Changement
+## Change
 
-Décrivez le problème et le comportement obtenu.
+Describe the problem and resulting behavior.
 
 ## Validation
 
-Indiquez les tests exécutés. Pour une modification visuelle, ajoutez une capture. Pour un changement du moteur, précisez la configuration Windows et les écrans utilisés.
+List the checks performed. For visual changes, include a screenshot. For engine changes, describe the Windows and monitor configuration used.
 
-## Points à connaître
+## Notes
 
-Mentionnez les limites ou actions nécessaires pour les utilisateurs.
+Mention any limitations or actions users need to take.

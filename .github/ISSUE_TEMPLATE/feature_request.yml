@@ -1,17 +1,17 @@
-name: Proposer une fonctionnalité
-description: Une idée pour l'application ou les screeners.
+name: Request a feature
+description: An idea for the app or its wallpapers.
 labels: ['enhancement']
 body:
   - type: textarea
     id: need
     attributes:
-      label: Quel besoin souhaitez-vous résoudre ?
+      label: What problem would this solve?
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: Votre proposition
-      description: Décrivez le comportement et, si possible, un exemple.
+      label: Your proposal
+      description: Describe the behavior and include an example if possible.
     validations:
       required: true

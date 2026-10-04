@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace SeeWallpaper.Engine.Windows;
@@ -18,25 +18,25 @@ internal static class DesktopSurface
     {
         IntPtr host = GetWallpaperHost();
         Point position = new() { X = bounds.X, Y = bounds.Y };
-        if (!ScreenToClient(host, ref position)) throw NativeFailure("Convertir la position de l'écran");
+        if (!ScreenToClient(host, ref position)) throw NativeFailure("Convert the display position");
 
         long style = GetWindowLongPtr(wallpaperHandle, GwlStyle).ToInt64();
         Marshal.SetLastPInvokeError(0);
         IntPtr previousStyle = SetWindowLongPtr(wallpaperHandle, GwlStyle, new IntPtr((style & ~WsPopup) | WsChild));
-        if (previousStyle == IntPtr.Zero && Marshal.GetLastPInvokeError() != 0) throw NativeFailure("Préparer la fenêtre du screener");
+        if (previousStyle == IntPtr.Zero && Marshal.GetLastPInvokeError() != 0) throw NativeFailure("Prepare the wallpaper window");
         Marshal.SetLastPInvokeError(0);
         IntPtr previousParent = SetParent(wallpaperHandle, host);
-        if (previousParent == IntPtr.Zero && Marshal.GetLastPInvokeError() != 0) throw NativeFailure("Attacher le screener au bureau Windows");
-        if (GetParent(wallpaperHandle) != host) throw new InvalidOperationException("Windows n'a pas confirmé l'attachement du screener au bureau.");
+        if (previousParent == IntPtr.Zero && Marshal.GetLastPInvokeError() != 0) throw NativeFailure("Attach the wallpaper to the Windows desktop");
+        if (GetParent(wallpaperHandle) != host) throw new InvalidOperationException("Windows did not confirm that the wallpaper was attached to the desktop.");
         uint flags = SwpNoActivate | SwpFrameChanged | (showWindow ? SwpShowWindow : 0);
         if (!SetWindowPos(wallpaperHandle, IntPtr.Zero, position.X, position.Y, bounds.Width, bounds.Height, flags))
-            throw NativeFailure("Positionner le screener sur l'écran choisi");
+            throw NativeFailure("Position the wallpaper on the selected display");
     }
 
     internal static IntPtr GetWallpaperHost()
     {
         IntPtr progman = FindWindow("Progman", null);
-        if (progman == IntPtr.Zero) throw new InvalidOperationException("Le bureau Windows est indisponible. Réessayez lorsque l'Explorateur Windows est prêt.");
+        if (progman == IntPtr.Zero) throw new InvalidOperationException("The Windows desktop is unavailable. Try again when Windows Explorer is ready.");
         // Reuse an existing surface before asking Explorer to create one.
         IntPtr host = FindWallpaperHost(progman);
         if (host != IntPtr.Zero) return host;
@@ -49,7 +49,7 @@ internal static class DesktopSurface
             SendMessageTimeout(progman, SpawnWorkerMessage, new IntPtr(0xD), new IntPtr(1), SmtoAbortIfHung, 1000, out _);
             host = FindWallpaperHost(progman);
         }
-        if (host == IntPtr.Zero) throw new InvalidOperationException("Impossible de trouver la surface de fond du bureau Windows. Réessayez lorsque l'Explorateur Windows est prêt.");
+        if (host == IntPtr.Zero) throw new InvalidOperationException("The Windows wallpaper surface could not be found. Try again when Windows Explorer is ready.");
         return host;
     }
 

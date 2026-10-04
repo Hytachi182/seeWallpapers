@@ -1,5 +1,5 @@
 #ifndef AppVersion
-  #define AppVersion "1.2.1"
+  #define AppVersion "1.3.0"
 #endif
 #ifndef PublishDir
   #define PublishDir "..\dist\installer-payload\win-x64"
@@ -36,27 +36,17 @@ VersionInfoVersion={#AppVersion}.0
 VersionInfoDescription=seeWallpaper Windows installer
 
 [Languages]
-Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [CustomMessages]
-french.DesktopIcon=Créer un raccourci sur le Bureau
 english.DesktopIcon=Create a desktop shortcut
-french.ContextMenu=Ajouter seeWallpaper au menu contextuel du Bureau
 english.ContextMenu=Add seeWallpaper to the desktop context menu
-french.FileAssociation=Ouvrir les fichiers .seewall avec seeWallpaper
 english.FileAssociation=Open .seewall packages with seeWallpaper
-french.Startup=Restaurer mes fonds animés à l'ouverture de session
 english.Startup=Restore my live wallpapers when I sign in
-french.Screens=Gérer mes écrans
 english.Screens=Manage my displays
-french.ContextLabel=Personnaliser mes écrans avec seeWallpaper
 english.ContextLabel=Customize my displays with seeWallpaper
-french.Launch=Lancer seeWallpaper
 english.Launch=Launch seeWallpaper
-french.Uninstall=Désinstaller seeWallpaper
 english.Uninstall=Uninstall seeWallpaper
-french.WebViewError=Le moteur WebView2 n'a pas pu être installé. Vérifiez votre connexion Internet, puis relancez l'installation.
 english.WebViewError=WebView2 could not be installed. Check your Internet connection and retry setup.
 
 [Tasks]
@@ -75,6 +65,11 @@ Name: "{autoprograms}\seeWallpaper\seeWallpaper"; Filename: "{app}\SeeWallpaper.
 Name: "{autoprograms}\seeWallpaper\{cm:Screens}"; Filename: "{app}\SeeWallpaper.App.exe"; Parameters: "--screens"; AppUserModelID: "seeWallpaper.App"
 Name: "{autoprograms}\seeWallpaper\{cm:Uninstall}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\seeWallpaper"; Filename: "{app}\SeeWallpaper.App.exe"; Tasks: desktopicon; AppUserModelID: "seeWallpaper.App"
+
+[InstallDelete]
+; Remove the previous French shortcut names when upgrading to the English edition.
+Type: files; Name: "{autoprograms}\seeWallpaper\Gérer mes écrans.lnk"
+Type: files; Name: "{autoprograms}\seeWallpaper\Désinstaller seeWallpaper.lnk"
 
 [Registry]
 Root: HKCU; Subkey: "Software\Classes\DesktopBackground\Shell\seeWallpaper"; ValueType: string; ValueName: ""; ValueData: "{cm:ContextLabel}"; Tasks: contextmenu; Flags: uninsdeletekey

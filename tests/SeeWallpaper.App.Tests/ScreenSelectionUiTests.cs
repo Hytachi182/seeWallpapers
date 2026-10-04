@@ -23,7 +23,7 @@ public sealed class ScreenSelectionUiTests
                 application.InitializeComponent();
                 DisplayCardViewModel[] displays = Enumerable.Range(1, 3).Select(number => new DisplayCardViewModel(
                     new DisplayInfo($"display-{number}", $"display-{number}", number == 1, 1920, 1080, (number - 1) * 1920),
-                    number, number == 2 ? "Actif : Sakura Night" : "Aucun screener installé sur cet écran", [], null, number == 2, false)).ToArray();
+                    number, number == 2 ? "Active: Sakura Night" : "No wallpaper applied to this display", [], null, number == 2, false)).ToArray();
                 int identifications = 0;
                 ApplyModeWindow dialog = new(displays, "Digital Rain 3D", () => identifications++);
                 Assert.NotNull(dialog.Icon);
@@ -38,7 +38,7 @@ public sealed class ScreenSelectionUiTests
                 choices[2].IsChecked = true;
                 Assert.True(install.IsEnabled);
                 Assert.Equal(new[] { "display-2", "display-3" }, dialog.SelectedDisplays.Select(display => display.Id));
-                Descendants(content).OfType<Button>().Single(button => Equals(button.Content, "Identifier les écrans")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                Descendants(content).OfType<Button>().Single(button => Equals(button.Content, "Identify displays")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 Assert.Equal(1, identifications);
                 Capture(content, "screen-selection.png", 552, 560);
 
@@ -78,7 +78,7 @@ public sealed class ScreenSelectionUiTests
                     Capture((FrameworkElement)main.Content, "about-compact.png", 980, 600);
                     ((ScrollViewer)main.FindName("AboutView")).ScrollToEnd();
                     Capture((FrameworkElement)main.Content, "about-features.png", 980, 600);
-                    Descendants((DependencyObject)main.FindName("AboutView")).OfType<Button>().Single(button => Equals(button.Content, "Découvrir les screeners")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    Descendants((DependencyObject)main.FindName("AboutView")).OfType<Button>().Single(button => Equals(button.Content, "Explore wallpapers")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.Equal(Visibility.Collapsed, ((ScrollViewer)main.FindName("AboutView")).Visibility);
                     Assert.Equal(Visibility.Visible, ((ScrollViewer)main.FindName("GalleryView")).Visibility);
                     main.Close();

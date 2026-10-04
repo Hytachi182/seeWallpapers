@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Signaler une vulnérabilité en privé
+  - name: Report a vulnerability privately
     url: https://github.com/Hytachi182/seeWallpapers/security/advisories/new
-    about: Utilisez un signalement privé plutôt qu'une issue publique pour les vulnérabilités.
+    about: Use private reporting rather than a public issue for vulnerabilities.

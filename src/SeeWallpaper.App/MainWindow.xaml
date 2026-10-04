@@ -1,4 +1,4 @@
-﻿<Window x:Class="SeeWallpaper.App.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:SeeWallpaper.App" Title="seeWallpaper" Icon="{StaticResource BrandIcon}" Width="1240" Height="790" MinWidth="980" MinHeight="640" Background="{StaticResource Canvas}" Foreground="White" WindowStartupLocation="CenterScreen">
+<Window x:Class="SeeWallpaper.App.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:SeeWallpaper.App" Title="seeWallpaper" Icon="{StaticResource BrandIcon}" Width="1240" Height="790" MinWidth="980" MinHeight="640" Background="{StaticResource Canvas}" Foreground="White" WindowStartupLocation="CenterScreen">
   <Grid>
     <Grid.ColumnDefinitions><ColumnDefinition Width="220"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
     <Border Background="#141620" Padding="18,24">
@@ -6,11 +6,11 @@
         <StackPanel DockPanel.Dock="Top">
           <StackPanel Orientation="Horizontal" Margin="0,0,0,30"><Image Source="{StaticResource BrandIcon}" Width="28" Height="28"/><TextBlock Text="seeWallpaper" FontSize="22" FontWeight="SemiBold" Margin="8,0,0,0" VerticalAlignment="Center"/></StackPanel>
           <Button Content="Home" Click="Home_Click"/><Button Content="Gallery" Click="Gallery_Click"/>
-          <Button Content="Écrans" Click="Screens_Click"/><Button Content="Installed" Click="Installed_Click"/>
+          <Button Content="Displays" Click="Screens_Click"/><Button Content="Installed" Click="Installed_Click"/>
           <Button Content="Favorites" Click="Favorites_Click"/><Button Content="Create" Click="Create_Click"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom">
-          <Button x:Name="AboutButton" Content="À propos" Click="About_Click"/>
+          <Button x:Name="AboutButton" Content="About" Click="About_Click"/>
           <Button Content="Settings" Click="Settings_Click"/>
         </StackPanel>
       </DockPanel>
@@ -18,10 +18,10 @@
     <Grid Grid.Column="1" Margin="30,26">
       <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
       <StackPanel>
-        <TextBlock x:Name="PageTitle" Text="Choisissez votre screener" FontSize="30" FontWeight="SemiBold"/>
-        <TextBlock x:Name="PageDescription" Text="Choisissez une scène, puis les écrans où l'installer." Foreground="{StaticResource Muted}" Margin="0,7,0,0" TextWrapping="Wrap"/>
+        <TextBlock x:Name="PageTitle" Text="Choose your wallpaper" FontSize="30" FontWeight="SemiBold"/>
+        <TextBlock x:Name="PageDescription" Text="Choose a scene, then select the displays where it should run." Foreground="{StaticResource Muted}" Margin="0,7,0,0" TextWrapping="Wrap"/>
         <StackPanel x:Name="PageActions" Orientation="Horizontal" Margin="0,16,0,0">
-          <Button Content="Gérer mes écrans" Click="Screens_Click" Margin="0,0,10,0"/>
+          <Button Content="Manage my displays" Click="Screens_Click" Margin="0,0,10,0"/>
           <Button Content="Import .seewall" Click="Import_Click" Margin="0"/>
         </StackPanel>
       </StackPanel>
@@ -38,9 +38,9 @@
                   <StackPanel Margin="16">
                     <TextBlock Text="{Binding Name}" FontSize="19" FontWeight="SemiBold" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding Description}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,6,0,12"/>
-                    <Button Content="Installer sur mes écrans" Tag="{Binding}" Click="Apply_Click" Background="{StaticResource Accent}"/>
+                    <Button Content="Apply to my displays" Tag="{Binding}" Click="Apply_Click" Background="{StaticResource Accent}"/>
                     <StackPanel Orientation="Horizontal"><Button Content="Preview" Tag="{Binding}" Click="Preview_Click" Margin="0,0,8,0"/><Button Content="Customize" Tag="{Binding}" Click="Customize_Click" Margin="0"/></StackPanel>
-                    <Expander Header="Plus d'actions" Foreground="{StaticResource Muted}" Margin="0,12,0,0">
+                    <Expander Header="More actions" Foreground="{StaticResource Muted}" Margin="0,12,0,0">
                       <WrapPanel Margin="0,8,0,0">
                         <Button Content="Favorite" Tag="{Binding}" Click="Favorite_Click" Margin="0,0,6,6"/>
                         <Button Content="Export" Tag="{Binding}" Click="Export_Click" Margin="0,0,6,6"/>
@@ -57,8 +57,8 @@
       </ScrollViewer>
       <ScrollViewer x:Name="ScreensView" Grid.Row="1" Visibility="Collapsed" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto">
         <StackPanel>
-          <StackPanel Orientation="Horizontal"><Button Content="Identifier les écrans" Click="Identify_Click" Margin="0,0,10,12"/><Button Content="Actualiser" Click="RefreshScreens_Click"/></StackPanel>
-          <TextBlock Text="Les numéros correspondent aux repères affichés par l'application." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+          <StackPanel Orientation="Horizontal"><Button Content="Identify displays" Click="Identify_Click" Margin="0,0,10,12"/><Button Content="Refresh" Click="RefreshScreens_Click"/></StackPanel>
+          <TextBlock Text="Display numbers match the identification labels shown by this app." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,12"/>
           <Canvas x:Name="DisplayLayout" Height="160" Margin="0,0,0,20"/>
           <TextBlock x:Name="ScreenNotice" TextWrapping="Wrap" Foreground="{StaticResource Muted}" Margin="0,0,0,16"/>
           <ItemsControl x:Name="DisplayList">
@@ -69,12 +69,12 @@
                     <TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold"/>
                     <TextBlock Text="{Binding Details}" Foreground="{StaticResource Muted}" Margin="0,4,0,12"/>
                     <TextBlock Text="{Binding CurrentScene}" TextWrapping="Wrap" Margin="0,0,0,16"/>
-                    <TextBlock Text="Choisir un screener" Margin="0,0,0,6"/>
+                    <TextBlock Text="Choose a wallpaper" Margin="0,0,0,6"/>
                     <Grid>
                       <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                      <ComboBox ItemsSource="{Binding Templates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}" MinHeight="36" VerticalContentAlignment="Center" Margin="0,0,12,0" AutomationProperties.Name="Choisir le screener de cet écran"/>
-                      <Button Grid.Column="1" Content="Installer sur cet écran" Tag="{Binding}" Click="ApplyToScreen_Click" Background="{StaticResource Accent}" Margin="0,0,8,0"/>
-                      <Button Grid.Column="2" Content="Retirer" Tag="{Binding}" Click="RemoveFromScreen_Click" IsEnabled="{Binding CanRemove}" ToolTip="{Binding RemoveHint}" Margin="0"/>
+                      <ComboBox ItemsSource="{Binding Templates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}" MinHeight="36" VerticalContentAlignment="Center" Margin="0,0,12,0" AutomationProperties.Name="Choose the wallpaper for this display"/>
+                      <Button Grid.Column="1" Content="Apply to this display" Tag="{Binding}" Click="ApplyToScreen_Click" Background="{StaticResource Accent}" Margin="0,0,8,0"/>
+                      <Button Grid.Column="2" Content="Remove" Tag="{Binding}" Click="RemoveFromScreen_Click" IsEnabled="{Binding CanRemove}" ToolTip="{Binding RemoveHint}" Margin="0"/>
                     </Grid>
                   </StackPanel>
                 </Border>
@@ -91,39 +91,39 @@
             <StackPanel Grid.Column="1">
               <TextBlock Text="seeWallpaper" FontSize="32" FontWeight="SemiBold"/>
               <TextBlock x:Name="AboutVersion" Foreground="{StaticResource Muted}" Margin="0,4,0,10"/>
-              <TextBlock Text="Des scènes animées pour donner vie à votre bureau Windows." FontSize="16" TextWrapping="Wrap"/>
+              <TextBlock Text="Animated scenes that bring your Windows desktop to life." FontSize="16" TextWrapping="Wrap"/>
             </StackPanel>
           </Grid>
           <Border Background="{StaticResource Panel}" CornerRadius="12" Padding="24" Margin="0,0,0,28">
             <StackPanel>
-              <TextBlock Text="Créateur" Foreground="{StaticResource Muted}" Margin="0,0,0,6"/>
+              <TextBlock Text="Creator" Foreground="{StaticResource Muted}" Margin="0,0,0,6"/>
               <TextBlock Text="Michael Ruffenach" FontSize="26" FontWeight="SemiBold" TextWrapping="Wrap"/>
-              <TextBlock Text="Conception et création de seeWallpaper." Foreground="{StaticResource Muted}" Margin="0,8,0,0" TextWrapping="Wrap"/>
+              <TextBlock Text="Design and creation of seeWallpaper." Foreground="{StaticResource Muted}" Margin="0,8,0,0" TextWrapping="Wrap"/>
             </StackPanel>
           </Border>
-          <TextBlock Text="Ce que vous pouvez faire" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,16"/>
-          <TextBlock Text="Une scène pour chaque écran" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Choisissez les écrans à animer, installez des scènes différentes ou utilisez les modes dupliquer et étendre." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
-          <TextBlock Text="Un bureau à votre image" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Prévisualisez les screeners, adaptez leurs réglages et retrouvez vos favoris." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
-          <TextBlock Text="Des scènes à partager" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Importez et exportez des fichiers .seewall, ou dupliquez une scène pour la personnaliser." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
-          <TextBlock Text="Des performances réglables" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Choisissez votre profil de performance et configurez la pause en plein écran ou sur batterie." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,24"/>
+          <TextBlock Text="What you can do" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,16"/>
+          <TextBlock Text="A scene for every display" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="Choose which displays to animate, apply different scenes, or use duplicate and span modes." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
+          <TextBlock Text="Make your desktop your own" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="Preview wallpapers, adjust their settings, and find your favorites." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
+          <TextBlock Text="Scenes to share" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="Import and export .seewall packages, or duplicate a scene to customize it." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
+          <TextBlock Text="Adjustable performance" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="Choose your performance profile and configure fullscreen or battery pauses." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,24"/>
           <WrapPanel Margin="0,0,0,28">
-            <Button Content="Découvrir les screeners" Click="Gallery_Click" Background="{StaticResource Accent}" Margin="0,0,12,8"/>
-            <Button Content="Choisir mes écrans" Click="Screens_Click"/>
+            <Button Content="Explore wallpapers" Click="Gallery_Click" Background="{StaticResource Accent}" Margin="0,0,12,8"/>
+            <Button Content="Choose my displays" Click="Screens_Click"/>
           </WrapPanel>
           <Border BorderBrush="#292E40" BorderThickness="0,1,0,0" Padding="0,22,0,12">
             <StackPanel>
-              <TextBlock Text="Deux façons de démarrer" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,10"/>
-              <TextBlock Text="Installeur Windows : raccourcis, menu contextuel et désinstallation depuis Windows." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,8"/>
-              <TextBlock Text="Version ZIP : extrayez le dossier, puis lancez seeWallpaper. Le guide de démarrage est inclus." Foreground="{StaticResource Muted}" TextWrapping="Wrap"/>
+              <TextBlock Text="Two ways to get started" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,10"/>
+              <TextBlock Text="Windows installer: shortcuts, desktop context menu, and uninstall from Windows Settings." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,8"/>
+              <TextBlock Text="ZIP edition: extract the folder, then launch seeWallpaper. A getting-started guide is included." Foreground="{StaticResource Muted}" TextWrapping="Wrap"/>
             </StackPanel>
           </Border>
         </StackPanel>
       </ScrollViewer>
-      <TextBlock Grid.Row="2" x:Name="DisplayStatus" Text="Détection des écrans…" TextWrapping="Wrap" Foreground="{StaticResource Muted}" Margin="0,12,0,0" AutomationProperties.LiveSetting="Polite"/>
+      <TextBlock Grid.Row="2" x:Name="DisplayStatus" Text="Detecting displays…" TextWrapping="Wrap" Foreground="{StaticResource Muted}" Margin="0,12,0,0" AutomationProperties.LiveSetting="Polite"/>
     </Grid>
   </Grid>
 </Window>

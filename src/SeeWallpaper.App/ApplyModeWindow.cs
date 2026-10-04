@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using SeeWallpaper.Platform;
@@ -14,7 +14,7 @@ public sealed class ApplyModeWindow : Window
 
     public ApplyModeWindow(IReadOnlyList<DisplayCardViewModel> displays, string sceneName, Action identify)
     {
-        Title = $"Installer {sceneName}";
+        Title = $"Apply {sceneName}";
         Icon = Application.Current.TryFindResource("BrandIcon") as ImageSource;
         Width = 600; Height = 650; MinHeight = 480;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -23,28 +23,28 @@ public sealed class ApplyModeWindow : Window
         DockPanel panel = new() { Margin = new Thickness(24), Background = Background };
         StackPanel heading = new();
         heading.Children.Add(new TextBlock { Text = sceneName, FontSize = 24, FontWeight = FontWeights.SemiBold, TextWrapping = TextWrapping.Wrap });
-        heading.Children.Add(new TextBlock { Text = "Sélectionnez les écrans où installer ce screener.", Margin = new Thickness(0, 8, 0, 16), TextWrapping = TextWrapping.Wrap });
-        Button identifyButton = new() { Content = "Identifier les écrans", HorizontalAlignment = HorizontalAlignment.Left };
+        heading.Children.Add(new TextBlock { Text = "Select the displays for this wallpaper.", Margin = new Thickness(0, 8, 0, 16), TextWrapping = TextWrapping.Wrap });
+        Button identifyButton = new() { Content = "Identify displays", HorizontalAlignment = HorizontalAlignment.Left };
         identifyButton.Click += (_, _) => identify();
         heading.Children.Add(identifyButton);
         DockPanel.SetDock(heading, Dock.Top);
         panel.Children.Add(heading);
 
         StackPanel footer = new();
-        Expander advanced = new() { Header = "Options pour tous les écrans", Margin = new Thickness(0, 12, 0, 12), Foreground = Brushes.White };
+        Expander advanced = new() { Header = "Options for all displays", Margin = new Thickness(0, 12, 0, 12), Foreground = Brushes.White };
         StackPanel options = new();
         _modeSelector = new ComboBox { SelectedValuePath = "Tag", SelectedIndex = 0, Margin = new Thickness(0, 8, 0, 8) };
-        _modeSelector.Items.Add(new ComboBoxItem { Content = "Écrans sélectionnés", Tag = WallpaperApplicationMode.SingleDisplay });
-        _modeSelector.Items.Add(new ComboBoxItem { Content = "Même screener sur tous les écrans", Tag = WallpaperApplicationMode.Clone });
-        _modeSelector.Items.Add(new ComboBoxItem { Content = "Étendre le screener sur tous les écrans", Tag = WallpaperApplicationMode.Span });
+        _modeSelector.Items.Add(new ComboBoxItem { Content = "Selected displays", Tag = WallpaperApplicationMode.SingleDisplay });
+        _modeSelector.Items.Add(new ComboBoxItem { Content = "Duplicate across all displays", Tag = WallpaperApplicationMode.Clone });
+        _modeSelector.Items.Add(new ComboBoxItem { Content = "Span across all displays", Tag = WallpaperApplicationMode.Span });
         options.Children.Add(_modeSelector);
         TextBlock consequence = new() { TextWrapping = TextWrapping.Wrap };
         options.Children.Add(consequence);
         advanced.Content = options;
         footer.Children.Add(advanced);
         StackPanel actions = new() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-        Button cancel = new() { Content = "Annuler", IsCancel = true, Margin = new Thickness(0, 0, 8, 0) };
-        Button apply = new() { Content = "Installer", IsDefault = true, Background = (Brush)Application.Current.FindResource("Accent") };
+        Button cancel = new() { Content = "Cancel", IsCancel = true, Margin = new Thickness(0, 0, 8, 0) };
+        Button apply = new() { Content = "Apply", IsDefault = true, Background = (Brush)Application.Current.FindResource("Accent") };
         apply.Click += (_, _) => DialogResult = true;
         actions.Children.Add(cancel); actions.Children.Add(apply);
         footer.Children.Add(actions);
@@ -72,10 +72,10 @@ public sealed class ApplyModeWindow : Window
             bool local = SelectedMode == WallpaperApplicationMode.SingleDisplay;
             foreach ((_, CheckBox choice) in _choices) choice.IsEnabled = local;
             apply.IsEnabled = displays.Count > 0 && (!local || SelectedDisplays.Count > 0);
-            apply.Content = local ? $"Installer sur {SelectedDisplays.Count} écran(s)" : "Installer sur tous les écrans";
+            apply.Content = local ? $"Apply to {SelectedDisplays.Count} display(s)" : "Apply to all displays";
             consequence.Text = local
-                ? "Les autres écrans conservent leur screener. En mode étendu, ils récupèrent chacun le screener précédent."
-                : "Cette action remplace les screeners de tous les écrans connectés.";
+                ? "Other displays keep their wallpaper. When leaving span mode, each receives the previous wallpaper."
+                : "This replaces the wallpapers on all connected displays.";
         }
     }
 

@@ -19,7 +19,7 @@ New-Item -ItemType Directory -Path $testDirectory | Out-Null
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::ExtractToDirectory($ZipPath, $testDirectory)
 $payload = Join-Path $testDirectory "seeWallpaper-$version-x64"
-foreach ($file in @('SeeWallpaper.App.exe','SeeWallpaper.App.dll','SeeWallpaper.App.deps.json','coreclr.dll','hostfxr.dll','LICENSE','LISEZ-MOI.txt','Lancer seeWallpaper.cmd','launch-portable.ps1','runtime\MicrosoftEdgeWebview2Setup.exe')) {
+foreach ($file in @('SeeWallpaper.App.exe','SeeWallpaper.App.dll','SeeWallpaper.App.deps.json','coreclr.dll','hostfxr.dll','LICENSE','README.txt','Launch seeWallpaper.cmd','launch-portable.ps1','runtime\MicrosoftEdgeWebview2Setup.exe')) {
     Assert-ZipCondition (Test-Path -LiteralPath (Join-Path $payload $file)) "archive contains $file"
 }
 Assert-ZipCondition ((Get-ChildItem (Join-Path $payload 'templates') -Directory).Count -eq 13) 'all thirteen templates extracted'

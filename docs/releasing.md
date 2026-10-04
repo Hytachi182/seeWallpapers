@@ -1,26 +1,26 @@
-# Publier une version
+# Publish a release
 
-Les binaires sont distribués via GitHub Releases ; `dist/` et les caches de build restent hors de l'historique Git.
+Binaries are distributed through GitHub Releases; `dist/` and build caches stay out of Git history.
 
-1. Mettre à jour `Version` dans `src/SeeWallpaper.App/SeeWallpaper.App.csproj` et le changelog.
-2. Ajouter les notes dans `docs/releases/vX.Y.Z.md`.
-3. Construire et tester sur Windows, puis publier le commit sur le dépôt.
-4. Créer et pousser un tag correspondant exactement à la version :
+1. Update `Version` in `src/SeeWallpaper.App/SeeWallpaper.App.csproj` and the changelog.
+2. Add release notes in `docs/releases/vX.Y.Z.md`.
+3. Build and test on Windows, then push the commit to the repository.
+4. Create and push a tag matching the version exactly:
 
 ```powershell
 git tag -a vX.Y.Z -m 'seeWallpaper X.Y.Z'
 git push origin vX.Y.Z
 ```
 
-Le workflow **Windows release** vérifie le tag, construit et teste l'app, produit l'installeur et le ZIP, exécute leurs contrôles puis publie la release. Le job de publication ne démarre qu'après réussite du packaging. Les noms d'assets restent fixes pour les liens du README :
+The **Windows release** workflow checks the tag, builds and tests the app, produces the installer and ZIP, runs their checks, and publishes the release. Publication starts only after packaging succeeds. Asset names stay fixed for README links:
 
 - `seeWallpaper-Setup-x64.exe`
 - `seeWallpaper-Portable-x64.zip`
 - `SHA256SUMS.txt`
 
-Les liens `releases/latest/download/...` suivent la dernière release stable. Ne pas publier une version de test comme stable. Un lancement manuel du workflow produit uniquement un artefact conservé 30 jours.
+The `releases/latest/download/...` links follow the latest stable release. Do not publish a test build as stable. A manual workflow run produces an artifact retained for 30 days without publishing a release.
 
-## Vérification locale
+## Local verification
 
 ```powershell
 dotnet test seeWallpaper.sln
@@ -31,6 +31,6 @@ dotnet test seeWallpaper.sln
 .\build\prepare-release.ps1
 ```
 
-Les scripts de test de l'installeur refusent de remplacer une installation ou une intégration personnelle existante. Les tests du bureau réel et des moniteurs demandent un poste interactif ; ils restent distincts des contrôles CI.
+Installer tests refuse to replace an existing personal installation or integration. Real desktop and monitor checks require an interactive workstation and remain separate from CI checks.
 
-Les notes de release doivent indiquer les limites matérielles ou validations manquantes. La signature éditeur nécessite un certificat appartenant au propriétaire ; les fichiers actuels sont distribués sans cette signature.
+Release notes must state hardware limitations and missing validations. Publisher signing requires a certificate owned by the publisher; current files are distributed without that signature.

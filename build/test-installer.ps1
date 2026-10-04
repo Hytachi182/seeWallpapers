@@ -30,7 +30,7 @@ function Assert-InstallerCondition([bool]$Condition, [string]$Description) {
     $report.Add("PASS: $Description")
 }
 function Invoke-TestSetup([string]$Tasks, [string]$LogName) {
-    $arguments = @('/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/LANG=french',('/DIR="' + $testApplication + '"'),('/TASKS="' + $Tasks + '"'),('/LOG="' + (Join-Path $testDirectory $LogName) + '"'))
+    $arguments = @('/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/LANG=english',('/DIR="' + $testApplication + '"'),('/TASKS="' + $Tasks + '"'),('/LOG="' + (Join-Path $testDirectory $LogName) + '"'))
     $process = Start-Process -FilePath $SetupPath -ArgumentList $arguments -PassThru -Wait -WindowStyle Hidden
     if ($process.ExitCode -ne 0) { throw "Setup exited with $($process.ExitCode). Log: $testDirectory" }
 }
@@ -51,7 +51,14 @@ try {
     Assert-InstallerCondition ((Get-ItemProperty -LiteralPath $uninstallKey).Publisher -eq 'Michael Ruffenach') 'Windows application publisher credits Michael Ruffenach'
     Assert-InstallerCondition ([bool](Get-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper')) 'optional login startup entry created'
 
+    $legacyScreens = Join-Path $menuDirectory ('G' + [char]0xE9 + 'rer mes ' + [char]0xE9 + 'crans.lnk')
+    $legacyUninstall = Join-Path $menuDirectory ('D' + [char]0xE9 + 'sinstaller seeWallpaper.lnk')
+    Copy-Item -LiteralPath (Join-Path $menuDirectory 'Manage my displays.lnk') -Destination $legacyScreens
+    Copy-Item -LiteralPath (Join-Path $menuDirectory 'Uninstall seeWallpaper.lnk') -Destination $legacyUninstall
+
     Invoke-TestSetup '' 'update-without-options.log'
+    Assert-InstallerCondition (!(Test-Path -LiteralPath $legacyScreens)) 'English update removes the legacy display shortcut'
+    Assert-InstallerCondition (!(Test-Path -LiteralPath $legacyUninstall)) 'English update removes the legacy uninstall shortcut'
     Assert-InstallerCondition (!(Test-Path $contextKey)) 'update removes deselected context menu'
     Assert-InstallerCondition (!(Test-Path $classKey)) 'update removes deselected file association'
     Assert-InstallerCondition (!(Test-Path $desktopShortcut)) 'update removes deselected desktop shortcut'
