@@ -17,8 +17,12 @@ public partial class MainWindow : Window
     private readonly TemplateSettingsStore _settingsStore;
     private readonly TemplatePackageService _packageService = new(new TemplateManifestValidator());
     private readonly PerformanceSettingsStore _performanceSettingsStore;
+    private readonly FavoritesStore _favoritesStore;
+    private readonly WallpaperAssignmentsStore _assignmentsStore;
+    private readonly TemplateLibraryService _libraryService = new(new TemplateManifestValidator());
     private readonly DesktopWallpaperHost _wallpaperHost = new();
     private readonly DisplayManagerContract _displayManager = new DisplayManager();
+    private readonly WallpaperAssignmentService _assignmentService;
     private IReadOnlyList<TemplateCardViewModel> _templates = Array.Empty<TemplateCardViewModel>();
     private readonly string _templatesRoot;
     private WallpaperPerformanceProfile _performanceProfile = WallpaperPerformanceProfile.Balanced;
@@ -27,16 +31,30 @@ public partial class MainWindow : Window
     private bool _pauseOnBattery;
     private bool _sessionLocked;
     private SeeWallpaper.Platform.WindowsEnvironmentState _environmentState = new(false, false);
+    private HashSet<string> _favoriteTemplateIds = new(StringComparer.OrdinalIgnoreCase);
+    private string _currentPage = "home";
+    private bool _changingWallpapers;
+    private IReadOnlyList<SeeWallpaper.Platform.DisplayInfo> _displaySnapshot = [];
+    private readonly TaskCompletionSource _initialized = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private readonly SemaphoreSlim _launchGate = new(1, 1);
 
     public MainWindow()
     {
         InitializeComponent();
+        AboutVersion.Text = $"Version {typeof(MainWindow).Assembly.GetName().Version?.ToString(3)} · Windows x64";
         string dataRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "seeWallpaper");
         _logger = new FileApplicationLogger(dataRoot);
         _settingsStore = new TemplateSettingsStore(dataRoot);
         _performanceSettingsStore = new PerformanceSettingsStore(dataRoot);
+        _favoritesStore = new FavoritesStore(dataRoot);
+        _assignmentsStore = new WallpaperAssignmentsStore(dataRoot);
         _templatesRoot = Path.Combine(dataRoot, "templates");
+        _assignmentService = new WallpaperAssignmentService(
+            _wallpaperHost, _displayManager, _assignmentsStore,
+            id => _templates.Select(item => item.Template).FirstOrDefault(item => string.Equals(item.Manifest.Id, id, StringComparison.OrdinalIgnoreCase)),
+            template => _settingsStore.LoadAsync(template.Manifest.Id, template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default)));
         SystemEvents.SessionSwitch += OnSessionSwitch;
+        SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
         _environmentMonitor.StateChanged += OnEnvironmentStateChanged;
         Loaded += OnLoaded;
     }
@@ -46,6 +64,7 @@ public partial class MainWindow : Window
         try
         {
             await EnsureStarterTemplatesAsync();
+            _favoriteTemplateIds = new HashSet<string>(await _favoritesStore.LoadAsync(), StringComparer.OrdinalIgnoreCase);
             PerformanceSettings configuration = await _performanceSettingsStore.LoadAsync();
             if (Enum.TryParse(configuration.Profile, true, out WallpaperPerformanceProfile profile)) _performanceProfile = profile;
             _pauseOnFullscreen = configuration.PauseOnFullscreen;
@@ -53,9 +72,11 @@ public partial class MainWindow : Window
             await _wallpaperHost.SetPerformanceProfileAsync(_performanceProfile);
             IReadOnlyList<SeeWallpaper.Core.InstalledTemplate> discovered = await _catalog.DiscoverAsync(_templatesRoot);
             Brush[] visuals = [new LinearGradientBrush(Color.FromRgb(0, 28, 17), Color.FromRgb(0, 160, 94), 25), new LinearGradientBrush(Color.FromRgb(23, 14, 46), Color.FromRgb(173, 71, 121), 35), new LinearGradientBrush(Color.FromRgb(8, 27, 54), Color.FromRgb(82, 67, 218), 45)];
-            _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length])).ToArray();
+            _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length], _favoriteTemplateIds.Contains(template.Manifest.Id))).ToArray();
             TemplateList.ItemsSource = _templates;
-            DisplayStatus.Text = $"{_displayManager.GetDisplays().Count} display(s) detected";
+            await _assignmentService.RestoreAsync(discovered.ToDictionary(template => template.Manifest.Id, StringComparer.OrdinalIgnoreCase), template => _settingsStore.LoadAsync(template.Manifest.Id, template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default)));
+            RefreshScreens();
+            DisplayStatus.Text = $"{_displaySnapshot.Count} écran(s) détecté(s). Choisissez une scène pour l'installer.";
             await _logger.InfoAsync($"Started with {_templates.Count} local templates.");
         }
         catch (Exception exception)
@@ -63,12 +84,29 @@ public partial class MainWindow : Window
             DisplayStatus.Text = "Gallery could not be loaded";
             await _logger.ErrorAsync("Template discovery failed.", exception);
         }
+        finally { _initialized.TrySetResult(); }
     }
 
-    private void Home_Click(object sender, RoutedEventArgs e) => ShowPage("A desktop that moves with you", "Featured original scenes ready to preview.", _templates);
-    private void Gallery_Click(object sender, RoutedEventArgs e) => ShowPage("Gallery", "Browse templates installed with seeWallpaper.", _templates);
-    private void Installed_Click(object sender, RoutedEventArgs e) => ShowPage("Installed", $"{_templates.Count} templates available locally.", _templates);
-    private void Favorites_Click(object sender, RoutedEventArgs e) => ShowPage("Favorites", "Your saved scenes will appear here.", Array.Empty<TemplateCardViewModel>());
+    internal async Task HandleLaunchAsync(LaunchRequest request)
+    {
+        await _initialized.Task;
+        await _launchGate.WaitAsync();
+        try
+        {
+            if (request.Minimized) { WindowState = WindowState.Minimized; return; }
+            if (WindowState == WindowState.Minimized) WindowState = WindowState.Normal;
+            Show();
+            Activate();
+            if (request.ShowScreens) { _currentPage = "screens"; ShowScreens(); }
+            if (request.PackagePath is not null) await ImportPackageAsync(request.PackagePath);
+        }
+        finally { _launchGate.Release(); }
+    }
+
+    private void Home_Click(object sender, RoutedEventArgs e) { _currentPage = "home"; ShowPage("Choisissez votre screener", "Choisissez une scène, puis les écrans où l'installer.", _templates); }
+    private void Gallery_Click(object sender, RoutedEventArgs e) { _currentPage = "gallery"; ShowPage("Gallery", "Browse templates installed with seeWallpaper.", _templates); }
+    private void Installed_Click(object sender, RoutedEventArgs e) { _currentPage = "installed"; ShowPage("Installed", $"{_templates.Count} templates available locally.", _templates); }
+    private void Favorites_Click(object sender, RoutedEventArgs e) { _currentPage = "favorites"; ShowPage("Favorites", "Your saved scenes.", _templates.Where(template => template.IsFavorite).ToArray()); }
     private void Create_Click(object sender, RoutedEventArgs e) => ShowPage("Create", "The visual template editor is planned after the engine and SDK are stable.", Array.Empty<TemplateCardViewModel>());
     private async void Settings_Click(object sender, RoutedEventArgs e)
     {
@@ -102,27 +140,34 @@ public partial class MainWindow : Window
 
     private async void Apply_Click(object sender, RoutedEventArgs e)
     {
-        if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
+        if (_changingWallpapers || ((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
+        List<string> completed = [];
         try
         {
-            IReadOnlyList<SeeWallpaper.Platform.DisplayInfo> displays = _displayManager.GetDisplays();
-            ApplyModeWindow dialog = new(displays) { Owner = this };
+            RefreshScreens();
+            ApplyModeWindow dialog = new(CreateDisplayCards(), template.Name, IdentifyDisplays) { Owner = this };
             if (dialog.ShowDialog() != true) return;
+            _changingWallpapers = true;
+            SetWallpaperControlsEnabled(false);
+            DisplayStatus.Text = $"Installation de {template.Name} en cours…";
             IReadOnlyDictionary<string, object?> settings = await LoadSettingsAsync(template);
             switch (dialog.SelectedMode)
             {
                 case WallpaperApplicationMode.Clone:
-                    await _wallpaperHost.ApplyCloneAsync(template.Template, settings);
-                    DisplayStatus.Text = $"Cloned: {template.Name}";
+                    await _assignmentService.ApplyGlobalAsync(template.Template, settings, WallpaperAssignmentMode.Clone);
+                    DisplayStatus.Text = $"{template.Name} installé sur tous les écrans.";
                     break;
                 case WallpaperApplicationMode.Span:
-                    await _wallpaperHost.ApplySpanAsync(template.Template, settings);
-                    DisplayStatus.Text = $"Spanning: {template.Name}";
+                    await _assignmentService.ApplyGlobalAsync(template.Template, settings, WallpaperAssignmentMode.Span);
+                    DisplayStatus.Text = $"{template.Name} étendu sur tous les écrans.";
                     break;
                 default:
-                    if (dialog.SelectedDisplay is null) throw new InvalidOperationException("Choose an available display.");
-                    await _wallpaperHost.ApplyAsync(template.Template, dialog.SelectedDisplay.Id, settings);
-                    DisplayStatus.Text = $"Applied: {template.Name}";
+                    foreach (SeeWallpaper.Platform.DisplayInfo display in dialog.SelectedDisplays)
+                    {
+                        await _assignmentService.ApplyAsync(template.Template, display, settings);
+                        completed.Add(DisplayTitle(display));
+                    }
+                    DisplayStatus.Text = $"{template.Name} installé : {string.Join(", ", completed)}.";
                     break;
             }
             await _logger.InfoAsync($"Wallpaper applied: {template.Template.Manifest.Id}.");
@@ -130,18 +175,27 @@ public partial class MainWindow : Window
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Wallpaper application failed.", exception);
-            MessageBox.Show(exception.Message, "Wallpaper could not be applied", MessageBoxButton.OK, MessageBoxImage.Error);
+            DisplayStatus.Text = completed.Count > 0 ? $"Installation partielle : {string.Join(", ", completed)}. {exception.Message}" : $"Installation interrompue : {exception.Message}";
+            MessageBox.Show(DisplayStatus.Text, "Installation du screener", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
     }
     private async void Import_Click(object sender, RoutedEventArgs e)
     {
         OpenFileDialog dialog = new() { Filter = "seeWallpaper package (*.seewall)|*.seewall", Multiselect = false };
         if (dialog.ShowDialog(this) != true) return;
+        await ImportPackageAsync(dialog.FileName);
+    }
+
+    private async Task ImportPackageAsync(string packagePath)
+    {
         try
         {
-            SeeWallpaper.Core.InstalledTemplate imported = await _packageService.ImportAsync(dialog.FileName, _templatesRoot);
+            SeeWallpaper.Core.InstalledTemplate imported = await _packageService.ImportAsync(packagePath, _templatesRoot);
             await _logger.InfoAsync($"Template imported: {imported.Manifest.Id}.");
             await RefreshTemplatesAsync();
+            _currentPage = "installed";
+            ShowCurrentPage();
             DisplayStatus.Text = $"Imported: {imported.Manifest.Name}";
         }
         catch (Exception exception)
@@ -168,16 +222,75 @@ public partial class MainWindow : Window
             MessageBox.Show(exception.Message, "Export failed", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    private void ShowPage(string title, string description, IReadOnlyList<TemplateCardViewModel> templates) { PageTitle.Text = title; PageDescription.Text = description; TemplateList.ItemsSource = templates; }
-    protected override async void OnClosed(EventArgs e) { SystemEvents.SessionSwitch -= OnSessionSwitch; _environmentMonitor.StateChanged -= OnEnvironmentStateChanged; _environmentMonitor.Dispose(); await _wallpaperHost.DisposeAsync(); base.OnClosed(e); }
+    private async void Favorite_Click(object sender, RoutedEventArgs e)
+    {
+        if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
+        if (!_favoriteTemplateIds.Add(template.Template.Manifest.Id)) _favoriteTemplateIds.Remove(template.Template.Manifest.Id);
+        await _favoritesStore.SaveAsync(_favoriteTemplateIds);
+        await RefreshTemplatesAsync();
+        ShowCurrentPage();
+    }
+
+    private async void Duplicate_Click(object sender, RoutedEventArgs e)
+    {
+        if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
+        try
+        {
+            SeeWallpaper.Core.InstalledTemplate duplicate = await _libraryService.DuplicateAsync(template.Template, _templatesRoot);
+            await _logger.InfoAsync($"Template duplicated: {template.Template.Manifest.Id} -> {duplicate.Manifest.Id}.");
+            await RefreshTemplatesAsync();
+            DisplayStatus.Text = $"Duplicated: {duplicate.Manifest.Name}";
+            ShowCurrentPage();
+        }
+        catch (Exception exception)
+        {
+            await _logger.ErrorAsync("Template duplication failed.", exception);
+            MessageBox.Show(exception.Message, "Duplicate failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private async void Uninstall_Click(object sender, RoutedEventArgs e)
+    {
+        if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
+        if (MessageBox.Show($"Uninstall {template.Name}?", "Confirm uninstall", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+        try
+        {
+            await _libraryService.UninstallAsync(template.Template, _templatesRoot);
+            _favoriteTemplateIds.Remove(template.Template.Manifest.Id);
+            await _favoritesStore.SaveAsync(_favoriteTemplateIds);
+            await _logger.InfoAsync($"Template uninstalled: {template.Template.Manifest.Id}.");
+            await RefreshTemplatesAsync();
+            DisplayStatus.Text = $"Uninstalled: {template.Name}";
+            ShowCurrentPage();
+        }
+        catch (Exception exception)
+        {
+            await _logger.ErrorAsync("Template uninstall failed.", exception);
+            MessageBox.Show(exception.Message, "Uninstall failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+    private void ShowPage(string title, string description, IReadOnlyList<TemplateCardViewModel> templates) { GalleryView.Visibility = Visibility.Visible; ScreensView.Visibility = Visibility.Collapsed; AboutView.Visibility = Visibility.Collapsed; PageActions.Visibility = Visibility.Visible; DisplayStatus.Visibility = Visibility.Visible; PageTitle.Text = title; PageDescription.Text = description; TemplateList.ItemsSource = templates; }
+    private void About_Click(object sender, RoutedEventArgs e) { _currentPage = "about"; ShowAbout(); }
+    private void ShowAbout()
+    {
+        PageTitle.Text = "À propos";
+        PageDescription.Text = "Le créateur, les fonctionnalités et les façons de démarrer.";
+        GalleryView.Visibility = Visibility.Collapsed;
+        ScreensView.Visibility = Visibility.Collapsed;
+        AboutView.Visibility = Visibility.Visible;
+        PageActions.Visibility = Visibility.Collapsed;
+        DisplayStatus.Visibility = Visibility.Collapsed;
+    }
+    protected override async void OnClosed(EventArgs e) { SystemEvents.SessionSwitch -= OnSessionSwitch; SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged; _environmentMonitor.StateChanged -= OnEnvironmentStateChanged; _environmentMonitor.Dispose(); await _wallpaperHost.DisposeAsync(); base.OnClosed(e); }
     private static IReadOnlyDictionary<string, object?> CreateDefaultSettings(TemplateCardViewModel template) => template.Template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default);
     private Task<IReadOnlyDictionary<string, object?>> LoadSettingsAsync(TemplateCardViewModel template) => _settingsStore.LoadAsync(template.Template.Manifest.Id, CreateDefaultSettings(template));
     private async Task RefreshTemplatesAsync()
     {
         IReadOnlyList<SeeWallpaper.Core.InstalledTemplate> discovered = await _catalog.DiscoverAsync(_templatesRoot);
         Brush[] visuals = [new LinearGradientBrush(Color.FromRgb(0, 28, 17), Color.FromRgb(0, 160, 94), 25), new LinearGradientBrush(Color.FromRgb(23, 14, 46), Color.FromRgb(173, 71, 121), 35), new LinearGradientBrush(Color.FromRgb(8, 27, 54), Color.FromRgb(82, 67, 218), 45)];
-        _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length])).ToArray();
+        _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length], _favoriteTemplateIds.Contains(template.Manifest.Id))).ToArray();
         TemplateList.ItemsSource = _templates;
+        RefreshScreens();
     }
     private async Task EnsureStarterTemplatesAsync()
     {
@@ -219,4 +332,137 @@ public partial class MainWindow : Window
     }
     private void OnEnvironmentStateChanged(object? sender, SeeWallpaper.Platform.WindowsEnvironmentState state) => _ = Dispatcher.InvokeAsync(async () => { _environmentState = state; await ApplyPauseStateAsync(); });
     private Task ApplyPauseStateAsync() => _wallpaperHost.SetPausedAsync(_sessionLocked || (_pauseOnFullscreen && _environmentState.IsFullscreenApplicationActive) || (_pauseOnBattery && _environmentState.IsOnBattery));
+    private void ShowCurrentPage()
+    {
+        if (_currentPage == "favorites") ShowPage("Favorites", "Your saved scenes.", _templates.Where(template => template.IsFavorite).ToArray());
+        else if (_currentPage == "installed") ShowPage("Installed", $"{_templates.Count} templates available locally.", _templates);
+        else if (_currentPage == "gallery") ShowPage("Gallery", "Browse templates installed with seeWallpaper.", _templates);
+        else if (_currentPage == "screens") ShowScreens();
+        else if (_currentPage == "about") ShowAbout();
+        else ShowPage("Choisissez votre screener", "Choisissez une scène, puis les écrans où l'installer.", _templates);
+    }
+
+    private void Screens_Click(object sender, RoutedEventArgs e) { _currentPage = "screens"; ShowScreens(); }
+    private void ShowScreens()
+    {
+        PageTitle.Text = "Mes écrans";
+        PageDescription.Text = "Choisissez un screener pour chaque écran, puis cliquez sur Installer sur cet écran.";
+        GalleryView.Visibility = Visibility.Collapsed;
+        ScreensView.Visibility = Visibility.Visible;
+        AboutView.Visibility = Visibility.Collapsed;
+        PageActions.Visibility = Visibility.Visible;
+        DisplayStatus.Visibility = Visibility.Visible;
+        RefreshScreens();
+    }
+
+    private IReadOnlyList<DisplayCardViewModel> CreateDisplayCards()
+    {
+        WallpaperAssignmentsDocument state = _assignmentService.State;
+        bool span = state.Mode == WallpaperAssignmentMode.Span;
+        return _displaySnapshot.Select((display, index) =>
+        {
+            string? templateId = state.Mode == WallpaperAssignmentMode.Independent
+                ? state.Assignments.FirstOrDefault(item => string.Equals(item.DisplayKey, display.AssignmentKey, StringComparison.OrdinalIgnoreCase))?.TemplateId
+                : state.GlobalTemplateId;
+            TemplateCardViewModel? template = _templates.FirstOrDefault(item => string.Equals(item.Template.Manifest.Id, templateId, StringComparison.OrdinalIgnoreCase));
+            bool active = _wallpaperHost.ActiveDisplayIds.Contains(display.Id) || (span && _wallpaperHost.ActiveDisplayIds.Contains("span"));
+            string scene = active ? $"Actif : {template?.Name ?? templateId}" + (span ? " · Étendu" : "")
+                : templateId is null ? "Aucun screener installé sur cet écran" : $"Choix enregistré, inactif : {template?.Name ?? templateId}";
+            return new DisplayCardViewModel(display, index + 1, scene, _templates, templateId, active, span);
+        }).ToArray();
+    }
+
+    private void RefreshScreens()
+    {
+        _displaySnapshot = _displayManager.GetDisplays().OrderBy(display => display.Id, StringComparer.OrdinalIgnoreCase).ToArray();
+        DisplayList.ItemsSource = CreateDisplayCards();
+        WallpaperAssignmentsDocument state = _assignmentService.State;
+        int disconnected = state.Assignments.Count(saved => !_displaySnapshot.Any(display => string.Equals(display.AssignmentKey, saved.DisplayKey, StringComparison.OrdinalIgnoreCase)));
+        ScreenNotice.Text = _displaySnapshot.Count == 0 ? "Aucun écran détecté. Connectez un écran, puis cliquez sur Actualiser."
+            : state.Mode == WallpaperAssignmentMode.Span ? "Mode étendu : installer sur un écran revient au mode indépendant ; les autres reprennent le screener précédent."
+            : disconnected > 0 ? $"{disconnected} affectation(s) conservée(s) pour des écrans déconnectés."
+            : "Chaque installation remplace uniquement le screener de l'écran choisi. Vos choix sont sauvegardés automatiquement.";
+        DrawDisplayLayout();
+    }
+
+    private void DrawDisplayLayout()
+    {
+        DisplayLayout.Children.Clear();
+        if (_displaySnapshot.Count == 0) return;
+        int left = _displaySnapshot.Min(display => display.X), top = _displaySnapshot.Min(display => display.Y);
+        double width = _displaySnapshot.Max(display => display.X + display.Width) - left;
+        double height = _displaySnapshot.Max(display => display.Y + display.Height) - top;
+        double scale = Math.Min(620 / Math.Max(width, 1), 140 / Math.Max(height, 1));
+        foreach (DisplayCardViewModel card in CreateDisplayCards())
+        {
+            System.Windows.Controls.Border monitor = new()
+            {
+                Width = Math.Max(1, card.Display.Width * scale - 4), Height = Math.Max(1, card.Display.Height * scale - 4),
+                Background = (Brush)FindResource("Panel"), BorderBrush = (Brush)FindResource(card.Display.IsPrimary ? "Accent" : "Muted"), BorderThickness = new Thickness(2), CornerRadius = new CornerRadius(6),
+                ToolTip = $"{card.Title} · {card.CurrentScene}",
+                Child = new System.Windows.Controls.Viewbox { Child = new System.Windows.Controls.TextBlock { Text = $"Écran {card.Number}", Foreground = Brushes.White, Margin = new Thickness(12) } }
+            };
+            System.Windows.Controls.Canvas.SetLeft(monitor, (card.Display.X - left) * scale);
+            System.Windows.Controls.Canvas.SetTop(monitor, (card.Display.Y - top) * scale);
+            DisplayLayout.Children.Add(monitor);
+        }
+    }
+
+    private string DisplayTitle(SeeWallpaper.Platform.DisplayInfo display)
+    {
+        int index = _displaySnapshot.ToList().FindIndex(item => item.Id == display.Id);
+        return index < 0 ? display.Label : $"Écran {index + 1}";
+    }
+
+    private void Identify_Click(object sender, RoutedEventArgs e) => IdentifyDisplays();
+    private void IdentifyDisplays()
+    {
+        foreach ((SeeWallpaper.Platform.DisplayInfo display, int index) in _displaySnapshot.Select((display, index) => (display, index)))
+            new DisplayIdentificationWindow(display, index + 1) { Owner = this }.Show();
+    }
+    private void RefreshScreens_Click(object sender, RoutedEventArgs e) => RefreshScreens();
+    private void OnDisplaySettingsChanged(object? sender, EventArgs e) => _ = Dispatcher.InvokeAsync(RefreshScreens);
+    private void SetWallpaperControlsEnabled(bool enabled) { GalleryView.IsEnabled = enabled; DisplayList.IsEnabled = enabled; }
+
+    private async void ApplyToScreen_Click(object sender, RoutedEventArgs e)
+    {
+        if (_changingWallpapers || ((FrameworkElement)sender).Tag is not DisplayCardViewModel card) return;
+        if (card.SelectedTemplate is null) { DisplayStatus.Text = $"Choisissez un screener pour {card.Title}."; return; }
+        _changingWallpapers = true;
+        SetWallpaperControlsEnabled(false);
+        try
+        {
+            DisplayStatus.Text = $"Installation de {card.SelectedTemplate.Name} sur {card.Title}…";
+            await _assignmentService.ApplyAsync(card.SelectedTemplate.Template, card.Display, await LoadSettingsAsync(card.SelectedTemplate));
+            DisplayStatus.Text = $"{card.SelectedTemplate.Name} installé sur {card.Title}.";
+            await _logger.InfoAsync($"Wallpaper {card.SelectedTemplate.Template.Manifest.Id} applied to {card.Display.Id}.");
+        }
+        catch (Exception exception)
+        {
+            DisplayStatus.Text = $"{card.Title} : {exception.Message}";
+            await _logger.ErrorAsync("Display wallpaper application failed.", exception);
+            MessageBox.Show(exception.Message, $"Installation sur {card.Title}", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
+    }
+
+    private async void RemoveFromScreen_Click(object sender, RoutedEventArgs e)
+    {
+        if (_changingWallpapers || ((FrameworkElement)sender).Tag is not DisplayCardViewModel card) return;
+        _changingWallpapers = true;
+        SetWallpaperControlsEnabled(false);
+        try
+        {
+            await _assignmentService.RemoveAsync(card.Display);
+            DisplayStatus.Text = $"Screener retiré de {card.Title}.";
+            await _logger.InfoAsync($"Wallpaper removed from {card.Display.Id}.");
+        }
+        catch (Exception exception)
+        {
+            DisplayStatus.Text = $"{card.Title} : {exception.Message}";
+            await _logger.ErrorAsync("Display wallpaper removal failed.", exception);
+            MessageBox.Show(exception.Message, "Retrait du screener", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
+    }
 }

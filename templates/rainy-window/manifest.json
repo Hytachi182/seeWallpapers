@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "rainy-window",
+  "name": "Rainy Window",
+  "description": "A cinematic neon skyline through rain-streaked glass, with refracted droplets and city reflections.",
+  "author": "seeWallpaper",
+  "version": "1.1.0",
+  "category": "Manga",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "rain",
+      "type": "slider",
+      "label": "Rain density",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "warmth",
+      "type": "color",
+      "label": "City light",
+      "default": "#ff9b6a"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Event Horizon</title>
+<style>:root{color-scheme:dark}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03060b}canvas{display:block;width:100%;height:100%}[hidden]{display:none!important}#fallback{position:fixed;inset:0;display:grid;place-content:center;color:#dbe9f7;background:#07101d;font:16px 'Segoe UI',sans-serif;padding:32px}#fallback img{width:min(80vw,960px);max-height:70vh;object-fit:contain}#fallback p{max-width:60ch}::selection{background:#ffb35c;color:#03060b}</style></head>
+<body><canvas aria-label="Event Horizon animated wallpaper"></canvas><div id="fallback" hidden><img src="preview.jpg" alt="Event Horizon static preview"><p>WebGL is unavailable. Enable graphics acceleration to animate this wallpaper.</p></div>
+<script type="application/json" id="defaults">{"color":"#ffb35c","speed":1,"intensity":1}</script><script id="fragment" type="x-shader/x-fragment">precision highp float;
+uniform vec2 resolution;uniform float time;uniform vec3 accent;uniform float intensity;
+#define PI 3.14159265359
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
+mat2 rot(float a){float s=sin(a),c=cos(a);return mat2(c,-s,s,c);}
+
+void main(){
+ vec2 uv=(gl_FragCoord.xy-.5*resolution)/resolution.y;uv.x-=.12;
+ float r=length(uv),angle=atan(uv.y,uv.x);
+ vec3 col=vec3(.005,.008,.014);
+ // Sparse stars distorted by the gravity well; an artistic lens, not a simulation.
+ vec2 sky=uv*(1.+.020/(r*r+.025));vec2 cell=floor(sky*260.);
+ float star=pow(max(0.,1.-length(fract(sky*260.)-.5)*2.),14.)*step(.993,hash(cell));
+ col+=vec3(.65,.77,.92)*star*smoothstep(.22,.32,r);
+ float neb=noise(sky*4.+vec2(.3,0))*noise(sky*11.-vec2(0,time*.003));
+ col+=accent*neb*.075*smoothstep(.23,.9,r);
+ // Tilted accretion disk, filament turbulence and Doppler-side brightness.
+ vec2 disk=vec2(uv.x,uv.y*4.8);float dr=length(disk);float da=atan(disk.y,disk.x);
+ float mask=smoothstep(.245,.285,dr)*(1.-smoothstep(.52,.95,dr));
+ float turbulence=noise(vec2(da*8.+time*.24,dr*55.-time*.16));
+ float filaments=.35+.65*pow(.5+.5*sin(dr*180.+turbulence*7.-time*.65),2.);
+ float diskLight=mask*filaments/(.09+abs(uv.y)*10.);
+ float visibility=uv.y>0.?smoothstep(.223,.25,r):1.;
+ vec3 heat=mix(accent,vec3(1.,.92,.74),pow(max(0.,1.-(dr-.24)*2.8),3.));
+ col+=heat*diskLight*visibility*(.10+.25*smoothstep(-.5,.6,uv.x))*intensity;
+ // Secondary image of the disk wrapped above and below the event horizon.
+ float photon=exp(-abs(r-.245)*150.);
+ float halo=exp(-abs(r-.253)*30.);
+ float arc=.5+.5*sin(angle*3.+noise(vec2(angle*6.,time*.08))*3.);
+ col+=mix(accent,vec3(1.,.89,.65),.6)*photon*(.65+arc*.65)*intensity;
+ col+=accent*halo*.12*intensity;
+ col+=accent*exp(-abs(uv.y)*35.)*exp(-abs(uv.x)*1.8)*.055;
+ col*=smoothstep(.224,.239,r);
+ col=vec3(1.)-exp(-col*1.4);col=pow(col,vec3(.88));
+ float vignette=1.-smoothstep(.5,1.3,length(uv*vec2(.65,1.)));col*=vignette;
+ col+=(hash(gl_FragCoord.xy+mod(time,10.))-.5)*.007;
+ gl_FragColor=vec4(max(col,0.),1.);
+}</script><script src="scene.js"></script></body></html>

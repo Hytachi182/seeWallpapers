@@ -1,0 +1,35 @@
+seeWallpaper — Version ZIP pour Windows x64
+Créateur : Michael Ruffenach
+
+DÉMARRAGE
+1. Cliquez avec le bouton droit sur le ZIP, puis « Extraire tout ».
+2. Ouvrez le dossier extrait.
+3. Double-cliquez sur « Lancer seeWallpaper.cmd ».
+4. Choisissez un screener, puis les écrans où l'installer.
+
+Le lanceur vérifie Microsoft WebView2 et l'installe s'il est absent.
+Une connexion Internet est alors nécessaire. Le runtime .NET est inclus.
+Si WebView2 est déjà installé, vous pouvez ouvrir directement SeeWallpaper.App.exe.
+Windows 10 (version 2004 ou ultérieure) ou Windows 11, 64 bits.
+
+NE LANCEZ PAS L'APPLICATION DEPUIS L'APERÇU DU ZIP.
+Gardez les fichiers du dossier extrait ensemble.
+
+VERSION ZIP OU INSTALLEUR ?
+Le ZIP se lance après extraction, sans installer seeWallpaper dans Windows.
+L'installeur .exe ajoute les raccourcis, le menu contextuel et la désinstallation
+depuis les paramètres Windows. Utilisez-le si vous souhaitez ces intégrations.
+Le moteur Microsoft WebView2 est un composant partagé installé séparément.
+
+RÉGLAGES ET MISES À JOUR
+Les réglages, scènes importées et affectations sont conservés dans
+%LocalAppData%\seeWallpaper, comme avec la version installée.
+Ils restent sur ce compte Windows si vous déplacez le dossier sur une clé USB.
+Fermez l'application avant de changer de version.
+Pour mettre à jour, extrayez le nouveau ZIP dans un nouveau dossier et lancez-le.
+Les versions ZIP et installée partagent les réglages et une seule instance.
+
+RETRAIT
+Fermez seeWallpaper, puis supprimez son dossier extrait.
+Vos réglages personnels restent conservés. Le ZIP n'ajoute aucun raccourci,
+aucune association de fichier et aucune entrée de désinstallation seeWallpaper.

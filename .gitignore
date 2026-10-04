@@ -14,3 +14,13 @@ TestResults/
 coverage/
 *.coverage
 *.coveragexml
+
+# Local AI-assistant workspace
+.serena/
+
+# Downloaded packaging prerequisites
+build/cache/
+
+# Distribution files live in GitHub Releases, not Git history
+dist/
+build/visual-review/

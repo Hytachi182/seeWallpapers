@@ -12,7 +12,7 @@ public sealed class FileApplicationLogger
     }
 
     public Task InfoAsync(string message) => WriteAsync("INFO", message);
-    public Task ErrorAsync(string message, Exception exception) => WriteAsync("ERROR", $"{message} {exception.GetType().Name}: {exception.Message}");
+    public Task ErrorAsync(string message, Exception exception) => WriteAsync("ERROR", $"{message} {exception}");
 
     private Task WriteAsync(string level, string message) => File.AppendAllTextAsync(_logPath, $"{DateTimeOffset.UtcNow:O} [{level}] {message}{Environment.NewLine}");
 }

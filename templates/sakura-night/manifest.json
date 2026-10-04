@@ -2,13 +2,29 @@
   "schemaVersion": 1,
   "id": "sakura-night",
   "name": "Sakura Night",
-  "description": "An original moonlit garden with drifting petals and mist.",
+  "description": "A moonlit Japanese landscape with a branching cherry canopy, mountain silhouettes, a torii and drifting petals.",
   "author": "seeWallpaper",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "category": "Manga",
   "engine": "web",
   "entry": "index.html",
   "preview": "preview.jpg",
-  "performance": "low",
-  "settings": [{"id":"petalDensity","type":"slider","label":"Petal density","min":0.2,"max":2,"step":0.1,"default":1},{"id":"moonlight","type":"color","label":"Moonlight","default":"#f0ddff"}]
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "petalDensity",
+      "type": "slider",
+      "label": "Petal density",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "moonlight",
+      "type": "color",
+      "label": "Moonlight",
+      "default": "#f0ddff"
+    }
+  ]
 }

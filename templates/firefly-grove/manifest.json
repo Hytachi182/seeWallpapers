@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "firefly-grove",
+  "name": "Firefly Grove",
+  "description": "Fireflies drift between shadowed trees and soft shafts of light in a misty grove.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Nature",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Scene accent",
+      "default": "#b3ef78"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "intensity",
+      "type": "slider",
+      "label": "Light intensity",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    }
+  ]
+}

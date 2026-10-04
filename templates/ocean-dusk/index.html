@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ocean Dusk</title>
+<style>:root{color-scheme:dark}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03060b}canvas{display:block;width:100%;height:100%}[hidden]{display:none!important}#fallback{position:fixed;inset:0;display:grid;place-content:center;background:#07101d;color:#dbe9f7;font:16px 'Segoe UI',sans-serif;padding:32px}#fallback img{width:min(80vw,960px);max-height:70vh;object-fit:contain}::selection{background:#4e9cbb;color:#03060b}</style></head>
+<body><canvas aria-label="Ocean Dusk animated wallpaper"></canvas><div id="fallback" hidden><img src="preview.jpg" alt="Ocean Dusk static preview"><p>WebGL is unavailable. Enable graphics acceleration to animate this wallpaper.</p></div>
+<script type="application/json" id="defaults">{"color":"#4e9cbb","speed":1,"intensity":1}</script><script id="fragment" type="x-shader/x-fragment">precision highp float;
+uniform vec2 resolution;uniform float time;uniform vec3 accent;uniform float intensity;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.)),f.x),f.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p=p*2.03+vec2(7.2,4.1);a*=.5;}return v;}
+vec3 finish(vec3 c,vec2 uv){c*=1.-.2*smoothstep(.3,.9,length(uv-.5));return pow(max(c,0.),vec3(.93));}
+
+void main(){
+ vec2 uv=gl_FragCoord.xy/resolution,p=(gl_FragCoord.xy-.5*resolution)/resolution.y;
+ float horizon=.49;vec2 sun=vec2(.27,.16);float sunDist=length(p-sun);
+ vec3 sky=mix(vec3(.88,.36,.2),vec3(.12,.18,.3),smoothstep(horizon,1.,uv.y));
+ sky+=vec3(.75,.38,.1)*exp(-sunDist*5.);
+ float cloud=fbm(vec2(p.x*3.-time*.012,uv.y*9.));
+ sky=mix(sky,vec3(.32,.19,.28),smoothstep(.53,.73,cloud)*smoothstep(.56,.83,uv.y)*.48);
+ sky+=vec3(1.,.82,.48)*(1.-smoothstep(.054,.057,sunDist))*intensity;
+ vec3 col=sky;
+ if(uv.y<horizon){
+  float depth=horizon-uv.y;vec2 sea=vec2(p.x/(depth+.035),1./(depth+.035));
+  float wave=sin(sea.y*2.2-time*.8+noise(sea*.6)*4.)*.5+.5;
+  float ripples=pow(wave,14.)*(.45+.55*noise(vec2(sea.x*3.,sea.y)));
+  vec3 water=mix(accent*.13,vec3(.045,.06,.085),depth*1.3);
+  float reflection=exp(-pow((p.x-sun.x)/(depth*.7+.04),2.))*ripples;
+  water+=vec3(1.,.59,.23)*reflection*1.5*intensity;
+  water+=accent*ripples*.10;
+  float foam=pow(fbm(sea*2.+vec2(time*.05,time*.18)),12.)*8.;
+  water+=vec3(.35,.5,.57)*foam*smoothstep(.05,.4,depth);
+  col=water;
+ }
+ gl_FragColor=vec4(finish(col,uv),1.);
+}</script><script src="scene.js"></script></body></html>

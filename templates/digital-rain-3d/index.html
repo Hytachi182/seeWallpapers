@@ -1,1 +1,25 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Digital Rain 3D</title><style>html,body,canvas{margin:0;width:100%;height:100%;overflow:hidden;background:#020806}canvas{filter:drop-shadow(0 0 6px #00ff66)}</style></head><body><canvas></canvas><script>const c=document.querySelector('canvas'),x=c.getContext('2d');let speed=1,color='#00ff66',paused=false,fps=60;const schedule=()=>setTimeout(()=>requestAnimationFrame(draw),1000/fps);function draw(t){if(!paused){c.width=innerWidth;c.height=innerHeight;x.fillStyle='rgba(2,8,6,.11)';x.fillRect(0,0,c.width,c.height);x.fillStyle=color;x.font='15px monospace';for(let i=0;i<150;i++){let z=(i*71+t*.05*speed)%c.height;x.globalAlpha=.25+(i%5)/6;x.fillText(String.fromCharCode(0x30A0+(i*13)%96),i*23%c.width,z)}}schedule()}schedule();window.seeWallpaper?.onSettingsChanged(s=>{speed=s.speed??speed;color=s.color??color});window.seeWallpaper?.onPause(()=>paused=true);window.seeWallpaper?.onResume(()=>paused=false);window.seeWallpaper?.onPerformanceChanged(value=>fps=value)</script></body></html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Rain 3D</title>
+<style>
+:root{color-scheme:dark;--accent:#58d5ff}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03060b}
+canvas{display:block;width:100%;height:100%}::selection{background:var(--accent);color:#03060b}
+main{position:absolute;top:17%;left:9%;width:32%;color:#eaf6ff;font-family:'Segoe UI',sans-serif;pointer-events:none}
+.identity{display:flex;align-items:center;gap:10px;color:var(--accent);font:12px Consolas,monospace;overflow-wrap:anywhere}
+.signal{width:5px;height:5px;background:var(--accent);flex:none}
+h1{font-size:clamp(48px,7vw,116px);font-weight:200;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1.15;margin:22px 0 4px}
+#date{font-size:14px;color:#adc3d4;margin:0 0 42px;text-transform:capitalize}
+dl{display:flex;gap:40px;margin:0 0 26px}dl>div{min-width:0}dt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#adc3d4;margin-bottom:8px}
+dd{margin:0;font-size:clamp(24px,2.7vw,44px);font-weight:300;font-variant-numeric:tabular-nums}
+.secondary dd{font:14px Consolas,monospace;color:#c1d4e3}.legend{position:fixed;top:89%;left:9%;display:flex;gap:20px;font:10px Consolas,monospace;color:var(--accent)}
+.legend span:nth-child(2){color:#ffe0ac}.legend small{color:#adc3d4;font-size:10px}
+[hidden]{display:none!important}
+@media(max-width:900px){dl{gap:24px}#date{margin-bottom:26px}.legend small{display:none}}
+@media(max-width:699px){main{top:8%;left:7%;width:86%}h1{font-size:64px;margin-top:14px}#date{margin-bottom:22px}dl{gap:36px;margin-bottom:16px}dd{font-size:30px}.legend{display:none}}
+@media(max-height:500px) and (min-width:700px){main{top:8%}h1{font-size:48px;margin:10px 0}#date{margin-bottom:16px}dl{margin-bottom:14px}dd{font-size:25px}}
+</style></head>
+<body data-scene="digital-rain-3d"><canvas aria-label="Digital Rain 3D animated wallpaper"></canvas>
+
+<script type="application/json" id="defaults">{"color":"#00ff66","speed":1,"glow":true}</script>
+<script src="scene.js"></script></body></html>

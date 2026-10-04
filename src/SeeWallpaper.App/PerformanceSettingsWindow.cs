@@ -14,6 +14,7 @@ public sealed class PerformanceSettingsWindow : Window
     public PerformanceSettingsWindow(WallpaperPerformanceProfile selectedProfile, bool pauseOnFullscreen, bool pauseOnBattery)
     {
         Title = "Performance settings";
+        Icon = Application.Current.TryFindResource("BrandIcon") as System.Windows.Media.ImageSource;
         Width = 360;
         Height = 295;
         ResizeMode = ResizeMode.NoResize;

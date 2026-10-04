@@ -18,6 +18,7 @@ public sealed class TemplateSettingsWindow : Window
     public TemplateSettingsWindow(InstalledTemplate template, WebWallpaperWindow preview, TemplateSettingsStore settingsStore, IReadOnlyDictionary<string, object?> settings)
     {
         _template = template;
+        Icon = Application.Current.TryFindResource("BrandIcon") as System.Windows.Media.ImageSource;
         _preview = preview;
         _settingsStore = settingsStore;
         _settings = new Dictionary<string, object?>(settings);

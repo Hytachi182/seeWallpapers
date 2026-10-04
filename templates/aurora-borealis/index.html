@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aurora Borealis</title>
+<style>:root{color-scheme:dark}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03060b}canvas{display:block;width:100%;height:100%}[hidden]{display:none!important}#fallback{position:fixed;inset:0;display:grid;place-content:center;background:#07101d;color:#dbe9f7;font:16px 'Segoe UI',sans-serif;padding:32px}#fallback img{width:min(80vw,960px);max-height:70vh;object-fit:contain}::selection{background:#54e8ad;color:#03060b}</style></head>
+<body><canvas aria-label="Aurora Borealis animated wallpaper"></canvas><div id="fallback" hidden><img src="preview.jpg" alt="Aurora Borealis static preview"><p>WebGL is unavailable. Enable graphics acceleration to animate this wallpaper.</p></div>
+<script type="application/json" id="defaults">{"color":"#54e8ad","speed":1,"intensity":1}</script><script id="fragment" type="x-shader/x-fragment">precision highp float;
+uniform vec2 resolution;uniform float time;uniform vec3 accent;uniform float intensity;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.)),f.x),f.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p=p*2.03+vec2(7.2,4.1);a*=.5;}return v;}
+vec3 finish(vec3 c,vec2 uv){c*=1.-.2*smoothstep(.3,.9,length(uv-.5));return pow(max(c,0.),vec3(.93));}
+
+void main(){
+ vec2 uv=gl_FragCoord.xy/resolution, p=(gl_FragCoord.xy-.5*resolution)/resolution.y;
+ vec3 col=mix(vec3(.012,.027,.052),vec3(.016,.052,.08),uv.y);
+ vec2 cell=floor(p*260.);float star=pow(max(0.,1.-length(fract(p*260.)-.5)*2.),18.)*step(.988,hash(cell));
+ col+=vec3(.65,.8,1.)*star*smoothstep(.28,.7,uv.y);
+ for(int i=0;i<4;i++){
+  float f=float(i),x=p.x*1.4+f*.8;
+  float ribbon=.44+.14*sin(x*2.1+time*.13+f)+.045*sin(x*7.-time*.21);
+  float dist=uv.y-ribbon;
+  float curtain=exp(-abs(dist)*10.)*smoothstep(-.018,.09,dist);
+  float strands=.45+.55*pow(noise(vec2(x*95.+time*.12,f*5.)),2.);
+  vec3 hue=mix(accent,vec3(.38,.23,.78),smoothstep(.02,.28,dist));
+  col+=hue*curtain*strands*(.55-.07*f)*intensity;
+ }
+ for(int i=0;i<4;i++){
+  float f=float(i);float ridge=.14+f*.035+fbm(vec2(p.x*3.+f*11.,f*3.))*(.11-f*.018);
+  float snow=pow(noise(vec2(p.x*48.,uv.y*75.)),2.);
+  vec3 mountain=mix(vec3(.009,.023,.03),vec3(.038,.075,.09),f/4.);
+  mountain+=vec3(.09,.15,.18)*snow*smoothstep(ridge-.035,ridge,uv.y);
+  col=mix(col,mountain,1.-smoothstep(ridge-.001,ridge+.001,uv.y));
+ }
+ gl_FragColor=vec4(finish(col,uv),1.);
+}</script><script src="scene.js"></script></body></html>

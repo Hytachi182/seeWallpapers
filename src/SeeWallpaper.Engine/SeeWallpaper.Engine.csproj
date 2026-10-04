@@ -5,7 +5,9 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="SeeWallpaper.App.Tests" />
     <ProjectReference Include="..\SeeWallpaper.Core\SeeWallpaper.Core.csproj" />
+    <ProjectReference Include="..\SeeWallpaper.System\SeeWallpaper.System.csproj" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
   </ItemGroup>
 </Project>

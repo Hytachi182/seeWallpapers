@@ -1,5 +1,7 @@
-<Application x:Class="SeeWallpaper.App.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StartupUri="MainWindow.xaml">
+<Application x:Class="SeeWallpaper.App.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Application.Resources>
+    <BitmapImage x:Key="BrandIcon" UriSource="/SeeWallpaper.App;component/Assets/seewallpaper.png"/>
+    <Style TargetType="Window"><Setter Property="Icon" Value="{StaticResource BrandIcon}"/></Style>
     <SolidColorBrush x:Key="Canvas" Color="#10121A"/>
     <SolidColorBrush x:Key="Panel" Color="#181B26"/>
     <SolidColorBrush x:Key="Muted" Color="#AEB7C9"/>

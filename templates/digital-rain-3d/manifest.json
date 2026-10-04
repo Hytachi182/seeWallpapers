@@ -2,13 +2,35 @@
   "schemaVersion": 1,
   "id": "digital-rain-3d",
   "name": "Digital Rain 3D",
-  "description": "Layered glyph rain with depth, glow and parallax.",
+  "description": "Three layers of animated Matrix glyphs with luminous heads, independent depth and dark desktop space.",
   "author": "seeWallpaper",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "category": "Matrix",
   "engine": "web",
   "entry": "index.html",
   "preview": "preview.jpg",
   "performance": "medium",
-  "settings": [{"id":"color","type":"color","label":"Main color","default":"#00ff66"},{"id":"speed","type":"slider","label":"Animation speed","min":0.1,"max":3,"step":0.1,"default":1},{"id":"glow","type":"boolean","label":"Glow","default":true}]
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Main color",
+      "default": "#00ff66"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 3,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "glow",
+      "type": "boolean",
+      "label": "Glow",
+      "default": true
+    }
+  ]
 }
