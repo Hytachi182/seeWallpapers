@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>..\..\assets\seewallpaper.ico</ApplicationIcon>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <Authors>Michael Ruffenach</Authors>
   </PropertyGroup>
   <ItemGroup>

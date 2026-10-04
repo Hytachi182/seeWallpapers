@@ -2,12 +2,12 @@
 
 Créateur : **Michael Ruffenach**. La page **À propos** de l'app affiche ce crédit, la version issue de l'assembly et les fonctionnalités disponibles.
 
-Livrable : `dist/portable/seeWallpaper-1.2.0-Portable-x64.zip`, accompagné de son empreinte SHA-256.
+Livrable : `dist/portable/seeWallpaper-1.2.1-Portable-x64.zip`, accompagné de son empreinte SHA-256.
 
 ## Démarrage
 
 1. Extraire tout le ZIP dans un dossier accessible en écriture.
-2. Ouvrir le dossier `seeWallpaper-1.2.0-x64` extrait.
+2. Ouvrir le dossier `seeWallpaper-1.2.1-x64` extrait.
 3. Double-cliquer sur **Lancer seeWallpaper.cmd**.
 
 Le lanceur vérifie le runtime Microsoft WebView2 dans les vues du registre 32 et 64 bits, pour l'utilisateur et la machine. S'il manque, il vérifie la signature Microsoft du bootstrapper embarqué, puis l'exécute. Ce premier démarrage nécessite alors Internet. Avec WebView2 présent, `SeeWallpaper.App.exe` peut aussi être lancé directement.

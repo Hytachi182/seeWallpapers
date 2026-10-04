@@ -1,6 +1,6 @@
 # Installation Windows
 
-La distribution Windows x64 est disponible dans `dist/installer/seeWallpaper-Setup-1.2.0-x64.exe`. Le fichier `.sha256` voisin contient son empreinte. Le runtime .NET 8 est embarqué : aucune installation séparée de .NET n'est nécessaire.
+La distribution Windows x64 est disponible dans `dist/installer/seeWallpaper-Setup-1.2.1-x64.exe`. Le fichier `.sha256` voisin contient son empreinte. Le runtime .NET 8 est embarqué : aucune installation séparée de .NET n'est nécessaire.
 
 La page **À propos** affiche **Michael Ruffenach** comme créateur, ainsi que la version et les fonctionnalités disponibles. L'inscription Windows de l'application reprend ce nom comme éditeur. Une [version ZIP](windows-portable.md) est également disponible pour un lancement après extraction.
 

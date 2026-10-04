@@ -78,6 +78,7 @@ Assert-InstallerCondition (!(Test-Path $menuDirectory)) 'uninstall removes Start
 $finalAssociation = if (Test-Path -LiteralPath $extensionKey) { (Get-Item -LiteralPath $extensionKey).GetValue('') } else { $null }
 Assert-InstallerCondition ($finalAssociation -eq $originalAssociation) 'pre-existing extension default is preserved'
 $reportPath = Join-Path $projectRoot 'build\visual-review\installer-validation.txt'
+New-Item -ItemType Directory -Path (Split-Path -Parent $reportPath) -Force | Out-Null
 $report | Set-Content -LiteralPath $reportPath -Encoding utf8
 $report
 Write-Host "Installer lifecycle validated. Logs: $testDirectory"
