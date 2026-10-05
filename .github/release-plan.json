@@ -1,12 +1,16 @@
 {
-  "version": "1.7.0",
-  "tag": "v1.7.0",
+  "version": "1.8.0",
+  "tag": "v1.8.0",
   "base_tag": "v1.7.0",
-  "release_required": false,
-  "template_count": 30,
-  "added": [],
-  "updated": [],
+  "release_required": true,
+  "template_count": 31,
+  "added": [
+    "biker-road"
+  ],
+  "updated": [
+    "pirate-cove"
+  ],
   "removed": [],
-  "source_commit": "a6764ab552de2514fd0bb4fbf36b9fb02a5e684e",
-  "title": "Sync devops documentation"
+  "source_commit": "43752012de169263fdfe9b9bed0d5dbf68325a64",
+  "title": "Release seeWallpaper 1.8.0"
 }
