@@ -24,6 +24,12 @@
 
 ![seeWallpaper gallery with scene previews and per-display application](docs/images/gallery.png)
 
+## Watch the demo
+
+[![Watch the seeWallpaper video demo](docs/images/demo.jpg)](docs/videos/seeWallpaper.mp4)
+
+[Watch or download the full video](docs/videos/seeWallpaper.mp4) (2 min 3 sec, 1080p). Click the preview to open the MP4.
+
 ## Get started
 
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
