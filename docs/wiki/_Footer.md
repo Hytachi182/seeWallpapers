@@ -1,0 +1,1 @@
+[seeWallpaper repository](https://github.com/Hytachi182/seeWallpapers) · [Submit a wallpaper](https://github.com/Hytachi182/seeWallpapers/issues/new?template=template_submission.yml) · [Support the project](https://buymeacoffee.com/hytachi182)
