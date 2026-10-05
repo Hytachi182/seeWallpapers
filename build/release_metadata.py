@@ -16,7 +16,8 @@ def git(root, *args, optional=False):
     result = subprocess.run(["git", "-c", "core.quotepath=false", *args], cwd=root, text=True, encoding="utf-8",
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if result.returncode and not optional:
-        raise RuntimeError(result.stderr.strip())
+        details = "\n".join(part.strip() for part in (result.stdout, result.stderr) if part.strip())
+        raise RuntimeError(f"git {' '.join(args)} failed (exit {result.returncode}):\n{details}")
     return result.stdout if result.returncode == 0 else None
 
 

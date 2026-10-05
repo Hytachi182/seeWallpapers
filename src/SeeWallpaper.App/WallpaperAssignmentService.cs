@@ -51,10 +51,10 @@ internal sealed class WallpaperAssignmentService
                 PersistedWallpaperAssignment? saved = _state.Assignments.FirstOrDefault(item => string.Equals(item.DisplayKey, display.AssignmentKey, StringComparison.OrdinalIgnoreCase));
                 if (saved is null) continue;
                 if (display.PersistentId is null && !_activeDisplays.ContainsKey(display.Id))
-                { errors.Add($"{display.Name}: monitor identity unavailable. Select its wallpaper again to restore safely."); continue; }
+                { errors.Add(Localization.F("MonitorIdentityUnavailableSelectItsWallpaperAgainToRestoreSafelyFormat", display.Name)); continue; }
                 if (_activeDisplays.TryGetValue(display.Id, out DisplayInfo? previous) && previous == display && _host.ActiveDisplayIds.Contains(display.Id)) continue;
                 InstalledTemplate? template = _templateResolver(saved.TemplateId);
-                if (template is null) { errors.Add($"{display.Name}: saved wallpaper '{saved.TemplateId}' is no longer installed."); continue; }
+                if (template is null) { errors.Add(Localization.F("SavedWallpaperIsNoLongerInstalledFormat", display.Name, saved.TemplateId)); continue; }
                 try
                 {
                     await _host.ApplyAsync(template, display.Id, await _settingsLoader(template), cancellationToken);
@@ -114,7 +114,7 @@ internal sealed class WallpaperAssignmentService
             }
             if (display.PersistentId is null)
             {
-                warnings.Add($"{display.Name}: monitor identity unavailable. Select its wallpaper again to restore safely.");
+                warnings.Add(Localization.F("MonitorIdentityUnavailableSelectItsWallpaperAgainToRestoreSafelyFormat", display.Name));
                 continue;
             }
             if (display is not null && templates.TryGetValue(saved.TemplateId, out InstalledTemplate? template))
@@ -140,8 +140,8 @@ internal sealed class WallpaperAssignmentService
             {
                 // A local change exits span: first give every connected display the former
                 // global template, then replace only the requested display.
-                if (_state.GlobalTemplateId is null) throw new InvalidOperationException("The spanning wallpaper has no template reference.");
-                InstalledTemplate previous = _templateResolver(_state.GlobalTemplateId) ?? throw new InvalidOperationException("The spanning wallpaper is no longer installed.");
+                if (_state.GlobalTemplateId is null) throw new InvalidOperationException(Localization.T("TheSpanningWallpaperHasNoTemplateReference"));
+                InstalledTemplate previous = _templateResolver(_state.GlobalTemplateId) ?? throw new InvalidOperationException(Localization.T("TheSpanningWallpaperIsNoLongerInstalled"));
                 await _host.ApplyCloneAsync(previous, await _settingsLoader(previous), cancellationToken);
                 RememberDisplays(_displays.GetDisplays());
                 _state = new WallpaperAssignmentsDocument(1, WallpaperAssignmentMode.Independent, null,
@@ -154,7 +154,7 @@ internal sealed class WallpaperAssignmentService
             _state = new WallpaperAssignmentsDocument(1, WallpaperAssignmentMode.Independent, null, assignments);
             try { await _store.SaveAsync(_state, cancellationToken); }
             catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
-            { throw new InvalidOperationException("The wallpaper is active, but its assignment could not be saved. Apply it again to retry saving.", exception); }
+            { throw new InvalidOperationException(Localization.T("TheWallpaperIsActiveButItsAssignmentCouldNotBeSavedApplyItAgainToRetrySaving"), exception); }
         }
         finally { _gate.Release(); }
     }
@@ -165,7 +165,7 @@ internal sealed class WallpaperAssignmentService
         try
         {
             if (_state.Mode == WallpaperAssignmentMode.Span)
-                throw new InvalidOperationException("First apply a wallpaper to this display to leave span mode.");
+                throw new InvalidOperationException(Localization.T("FirstApplyAWallpaperToThisDisplayToLeaveSpanMode"));
             await _host.StopDisplayAsync(display.Id, cancellationToken);
             _activeDisplays.Remove(display.Id);
             _state = _state with { Mode = WallpaperAssignmentMode.Independent, GlobalTemplateId = null, Assignments = IndependentAssignments().Where(item => !MatchesSelectedDisplay(item, display)).ToArray() };

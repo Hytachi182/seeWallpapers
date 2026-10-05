@@ -39,11 +39,11 @@ python build/release_metadata.py --base-ref v1.4.0 --repository Hytachi182/seeWa
 python -m unittest discover -s build/tests -p test_release_automation.py
 ```
 
-Automation installation does not publish the pending 1.5.0 application. That release still requires reviewing [release readiness](release-readiness.md) and merging its prepared promotion PR.
+The current published application version is 1.6.0; the local source prepares 1.7.0. Promotion keeps this pending version when the automatic increment from 1.6.0 is 1.7.0 or lower. Future releases still require reviewing the validation recorded in [release readiness](release-readiness.md) and merging their prepared promotion PR.
 
 ## Manual tags and package verification
 
-The app's **Check update** button compares the installed assembly version with `Version` in the app project on GitHub `main`. A newer version displays a warning. **Download update** opens that version's official release page when a stable release with Windows binaries exists. Users choose the installer or ZIP and install it themselves; the app does not replace running files. A version present only on `main` is shown as awaiting publication. Changes without a version bump are not considered a new application version. Network or GitHub errors show retry guidance.
+The local app's **Check update** button compares the installed assembly version with the latest published stable GitHub release containing Windows packages and checksums. **Install and restart** downloads the matching installer or portable ZIP, verifies SHA-256, applies the update after exit, and reopens the app. Versions present only in source are not offered. See [application updates](application-updates.md) for the update flow and the one-time manual upgrade required by older binaries.
 
 1. Update `Version` in `src/SeeWallpaper.App/SeeWallpaper.App.csproj` and the changelog.
 2. Add release notes in `docs/releases/vX.Y.Z.md`.
@@ -78,4 +78,4 @@ Installer tests refuse to replace an existing personal installation or integrati
 
 Release notes must state hardware limitations and missing validations. Publisher signing requires a certificate owned by the publisher; current files are distributed without that signature.
 
-Before promoting 1.5.0 broadly, complete the outstanding checks in [release readiness](release-readiness.md). Legacy independent display assignments require a new wallpaper selection once after upgrading to monitor device interface identities; mention this in the release notes. After publication, remove the pending-release notice in the README and update the readiness publication status.
+Before broadly promoting future releases, complete the outstanding checks in [release readiness](release-readiness.md). Legacy independent display assignments require a new wallpaper selection once after upgrading to monitor device interface identities; mention this in the release notes. Keep the README source version and publication status current after each release.

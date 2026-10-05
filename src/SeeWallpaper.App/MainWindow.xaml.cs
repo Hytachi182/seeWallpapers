@@ -48,68 +48,160 @@ public partial class MainWindow : Window
     private IReadOnlyList<OnlineTemplate> _onlineCatalog = [];
     private IReadOnlyList<OnlineTemplateCardViewModel> _onlineOffers = [];
     private readonly HashSet<string> _notifiedOnlineIds = new(StringComparer.Ordinal);
-    private string _onlineNotice = "Checking GitHub for new wallpapers…";
+    private Func<string> _onlineNotice = () => Localization.T("CheckingGitHubForNewWallpapers");
     private bool _checkingOnline;
     private readonly StartupRegistration _startup = new();
     private bool _startupBannerDismissed;
     private readonly ApplicationUpdateService _applicationUpdates = new(OnlineHttp);
-    private Uri? _updateReleaseUrl;
+    private ApplicationUpdateResult? _availableUpdate;
+    private CancellationTokenSource? _updateDownload;
+
+    private void Language_Click(object sender, RoutedEventArgs e)
+    {
+        System.Windows.Controls.ContextMenu menu = new()
+        {
+            PlacementTarget = LanguageButton,
+            Placement = System.Windows.Controls.Primitives.PlacementMode.Top,
+            Background = (Brush)FindResource("Panel"), Foreground = Brushes.White
+        };
+        foreach (AppLanguage language in SupportedLanguages.All)
+        {
+            System.Windows.Controls.MenuItem item = new()
+            {
+                Header = language.NativeName, IsCheckable = true, IsChecked = Localization.Current.Language == language.Code,
+                Padding = new Thickness(12, 8, 12, 8)
+            };
+            item.Click += (_, _) =>
+            {
+                try { Localization.Current.ChangeLanguage(language.Code); }
+                catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+                {
+                    MessageBox.Show(Localization.T("LanguageCouldNotBeSavedCheckAccessToYourLocalApplicationDataAndTryAgain"),
+                        Localization.T("Language"), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            };
+            menu.Items.Add(item);
+        }
+        LanguageButton.ContextMenu = menu;
+        menu.IsOpen = true;
+    }
+
+    private void OnLanguageChanged(object? sender, EventArgs e)
+    {
+        // Keep pending per-display choices while refreshing translated view models.
+        Dictionary<string, string?> selections = (DisplayList.ItemsSource as IEnumerable<DisplayCardViewModel> ?? [])
+            .ToDictionary(card => card.Display.Id, card => card.SelectedTemplate?.Template.Manifest.Id);
+        ShowCurrentPage();
+        if (DisplayList.ItemsSource is IEnumerable<DisplayCardViewModel> cards)
+            foreach (DisplayCardViewModel card in cards)
+                if (selections.TryGetValue(card.Display.Id, out string? id))
+                    card.SelectedTemplate = card.Templates.FirstOrDefault(template => template.Template.Manifest.Id == id);
+        // Rebind card getters without reloading templates or restarting the desktop hosts.
+        System.Collections.IEnumerable? gallery = TemplateList.ItemsSource;
+        TemplateList.ItemsSource = null;
+        TemplateList.ItemsSource = gallery;
+        OnlineList.ItemsSource = null;
+        OnlineList.ItemsSource = _onlineOffers;
+    }
 
     private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
     {
         if (!CheckUpdateButton.IsEnabled) return;
         CheckUpdateButton.IsEnabled = false;
-        CheckUpdateButton.Content = "Checking...";
+        Localization.Set(CheckUpdateButton, System.Windows.Controls.ContentControl.ContentProperty, () => Localization.T("Checking"));
         UpdateBanner.Visibility = Visibility.Visible;
-        UpdateTitle.Text = "Checking for updates";
-        UpdateDescription.Text = "Comparing your installed version with GitHub main...";
+        Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("CheckingForUpdates"));
+        Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ComparingYourInstalledVersionWithGitHubMain"));
         DownloadUpdateButton.Visibility = Visibility.Collapsed;
-        _updateReleaseUrl = null;
+        _availableUpdate = null;
         try
         {
             Version installed = typeof(MainWindow).Assembly.GetName().Version ?? throw new InvalidOperationException("Installed version unavailable.");
             ApplicationUpdateResult result = await _applicationUpdates.CheckAsync(installed);
             if (result.UpdateAvailable)
             {
-                UpdateTitle.Text = $"Update available: {result.MainVersion.ToString(3)}";
-                _updateReleaseUrl = result.ReleaseUrl;
-                UpdateDescription.Text = result.ReleaseUrl is null
-                    ? $"You have {result.InstalledVersion.ToString(3)}. The newer version on main has no published Windows download yet. Check again later."
-                    : $"You have {result.InstalledVersion.ToString(3)}. Download the installer or ZIP from the official release. Before updating, choose 'Quit and remove wallpapers' from the tray menu. Your settings are kept.";
+                Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("UpdateAvailableFormat", result.MainVersion.ToString(3)));
+                _availableUpdate = result;
+                Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("AutomaticUpdateReady"));
                 DownloadUpdateButton.Visibility = result.ReleaseUrl is null ? Visibility.Collapsed : Visibility.Visible;
             }
             else
             {
-                UpdateTitle.Text = "You are up to date";
-                UpdateDescription.Text = $"Installed: {result.InstalledVersion.ToString(3)}. GitHub main: {result.MainVersion.ToString(3)}. No newer version is available.";
+                Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("YouAreUpToDate"));
+                Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("InstalledGitHubMainNoNewerVersionIsAvailableFormat", result.InstalledVersion.ToString(3), result.MainVersion.ToString(3)));
             }
         }
         catch (Exception exception)
         {
-            UpdateTitle.Text = "Update check failed";
-            UpdateDescription.Text = "Could not verify updates on GitHub. Check your connection and click Check update to retry.";
+            Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("UpdateCheckFailed"));
+            Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("CouldNotVerifyUpdatesOnGitHubCheckYourConnectionAndClickCheckUpdateToRetry"));
             await _logger.ErrorAsync("Application update check failed.", exception);
         }
         finally
         {
-            CheckUpdateButton.Content = "Check update";
+            Localization.Set(CheckUpdateButton, System.Windows.Controls.ContentControl.ContentProperty, () => Localization.T("CheckUpdate"));
             CheckUpdateButton.IsEnabled = true;
         }
     }
 
     private async void DownloadUpdate_Click(object sender, RoutedEventArgs e)
     {
-        if (_updateReleaseUrl is null) return;
+        if (_availableUpdate is null || _updateDownload is not null) return;
+        using CancellationTokenSource lifetime = new(TimeSpan.FromMinutes(15));
+        _updateDownload = lifetime;
+        CheckUpdateButton.IsEnabled = false;
+        DownloadUpdateButton.IsEnabled = false;
+        DownloadUpdateButton.Visibility = Visibility.Collapsed;
+        CancelUpdateButton.Visibility = Visibility.Visible;
+        UpdateProgress.Visibility = Visibility.Visible;
+        UpdateProgress.Value = 0;
+        Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("DownloadingApplicationUpdate"));
         try
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(_updateReleaseUrl.AbsoluteUri) { UseShellExecute = true });
+            using HttpClient downloadHttp = CreateOnlineHttpClient();
+            downloadHttp.Timeout = Timeout.InfiniteTimeSpan;
+            Progress<int> progress = new(percent =>
+            {
+                UpdateProgress.Value = percent;
+                Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("UpdateDownloadProgressFormat", percent));
+            });
+            string work = await new ApplicationUpdateInstaller(downloadHttp).PrepareAsync(_availableUpdate, AppContext.BaseDirectory,
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "seeWallpaper", "updates"), progress, lifetime.Token,
+                Localization.T("AutomaticUpdateFailedAfterExit"), Localization.T("ApplicationUpdates"));
+            lifetime.Token.ThrowIfCancellationRequested();
+            CancelUpdateButton.Visibility = Visibility.Collapsed;
+            Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("InstallingApplicationUpdate"));
+            Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ApplicationUpdateRestarting"));
+            await _logger.InfoAsync("Starting verified application update helper: " + work);
+            await ApplicationUpdateInstaller.StartAsync(work, lifetime.Token);
+            Quit();
+        }
+        catch (OperationCanceledException)
+        {
+            Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ApplicationUpdateCancelled"));
+            Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ApplicationUpdateRetry"));
         }
         catch (Exception exception)
         {
-            UpdateDescription.Text = $"Could not open your browser. Visit {_updateReleaseUrl.AbsoluteUri} to download the update.";
-            await _logger.ErrorAsync("Could not open the application release page.", exception);
+            Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ApplicationUpdateFailed"));
+            Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => exception is UnauthorizedAccessException
+                ? Localization.T("ApplicationUpdateAccessDenied")
+                : exception is InvalidOperationException ? Localization.T("ApplicationUpdateOfficialEditionRequired")
+                : Localization.T("ApplicationUpdateRetry"));
+            await _logger.ErrorAsync("Automatic application update failed.", exception);
+        }
+        finally
+        {
+            _updateDownload = null;
+            CheckUpdateButton.IsEnabled = true;
+            DownloadUpdateButton.IsEnabled = true;
+            DownloadUpdateButton.Visibility = Visibility.Visible;
+            CancelUpdateButton.Visibility = Visibility.Collapsed;
+            UpdateProgress.Visibility = Visibility.Collapsed;
         }
     }
+
+    private void CancelUpdate_Click(object sender, RoutedEventArgs e) => _updateDownload?.Cancel();
 
     /// <summary>Starts hidden in the notification area, used by the sign-in startup entry.</summary>
     internal bool StartHidden { get; init; }
@@ -117,7 +209,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        AboutVersion.Text = $"Version {typeof(MainWindow).Assembly.GetName().Version?.ToString(3)} · Windows x64";
+        Localization.Set(LanguageButton, System.Windows.Controls.ContentControl.ContentProperty,
+            () => Localization.F("LanguageFormat", SupportedLanguages.Get(Localization.Current.Language).NativeName));
+        Localization.Current.LanguageChanged += OnLanguageChanged;
+        Localization.Set(AboutVersion, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("VersionWindowsXFormat", typeof(MainWindow).Assembly.GetName().Version?.ToString(3)));
         string dataRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "seeWallpaper");
         _logger = new FileApplicationLogger(dataRoot);
         _settingsStore = new TemplateSettingsStore(dataRoot);
@@ -133,7 +228,8 @@ public partial class MainWindow : Window
         SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
         _displayChangeTimer.Tick += async (_, _) => await ReconcileDisplayChangesAsync();
         _environmentMonitor.StateChanged += OnEnvironmentStateChanged;
-        _trayIcon = new TrayIcon(() => _ = HandleLaunchAsync(new()), () => _ = HandleLaunchAsync(new(ShowScreens: true)), Quit);
+        _trayIcon = new TrayIcon(() => _ = HandleLaunchAsync(new()), () => _ = HandleLaunchAsync(new(ShowScreens: true)), Quit,
+            () => _ = RotateAllNowAsync(), () => _rotation.Document.Paused, () => _ = ToggleRotationPauseAsync());
         Loaded += OnLoaded;
     }
 
@@ -156,20 +252,21 @@ public partial class MainWindow : Window
             await _assignmentService.RestoreAsync(discovered.ToDictionary(template => template.Manifest.Id, StringComparer.OrdinalIgnoreCase), template => _settingsStore.LoadAsync(template.Manifest.Id, template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default)));
             RefreshScreens();
             RefreshStartupBanner();
-            DisplayStatus.Text = $"{_displaySnapshot.Count} display(s) detected. Choose a scene to apply.";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("DisplaySDetectedChooseASceneToApplyFormat", _displaySnapshot.Count));
             if (_assignmentService.RestoreWarnings.Count > 0)
             {
-                DisplayStatus.Text = string.Join(" ", _assignmentService.RestoreWarnings);
+                Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => string.Join(" ", _assignmentService.RestoreWarnings));
                 await _logger.InfoAsync("Wallpaper restoration incomplete: " + DisplayStatus.Text);
             }
             await _logger.InfoAsync($"Started with {_templates.Count} local templates.");
+            await InitializeRotationAsync();
             _onlineTimer.Tick += async (_, _) => await CheckOnlineAsync(notify: true);
             _onlineTimer.Start();
             _ = CheckOnlineAsync(notify: true);
         }
         catch (Exception exception)
         {
-            DisplayStatus.Text = "Gallery could not be loaded";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("GalleryCouldNotBeLoaded"));
             await _logger.ErrorAsync("Template discovery failed.", exception);
         }
         finally { _initialized.TrySetResult(); }
@@ -193,9 +290,9 @@ public partial class MainWindow : Window
         finally { _launchGate.Release(); }
     }
 
-    private void Home_Click(object sender, RoutedEventArgs e) { _currentPage = "home"; ShowPage("Choose your wallpaper", "Choose a scene, then select the displays where it should run.", _templates); }
-    private void Gallery_Click(object sender, RoutedEventArgs e) { _currentPage = "gallery"; ShowPage("Gallery", "Browse templates installed with seeWallpaper.", _templates); }
-    private void Installed_Click(object sender, RoutedEventArgs e) { _currentPage = "installed"; ShowPage("Installed", $"{_templates.Count} templates available locally.", _templates); }
+    private void Home_Click(object sender, RoutedEventArgs e) { _currentPage = "home"; ShowPage(Localization.T("ChooseYourWallpaper"), Localization.T("ChooseASceneThenSelectTheDisplaysWhereItShouldRun"), _templates); }
+    private void Gallery_Click(object sender, RoutedEventArgs e) { _currentPage = "gallery"; ShowPage(Localization.T("Gallery"), Localization.T("BrowseTemplatesInstalledWithSeeWallpaper"), _templates); }
+    private void Installed_Click(object sender, RoutedEventArgs e) { _currentPage = "installed"; ShowPage(Localization.T("Installed"), Localization.F("TemplatesAvailableLocallyFormat", _templates.Count), _templates); }
     private void RefreshStartupBanner() => StartupBanner.Visibility = _startup.IsEnabled || _startupBannerDismissed ? Visibility.Collapsed : Visibility.Visible;
     private async void EnableStartup_Click(object sender, RoutedEventArgs e) => await SetStartupAsync(true);
     private void DismissStartup_Click(object sender, RoutedEventArgs e) { _startupBannerDismissed = true; RefreshStartupBanner(); }
@@ -203,15 +300,15 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (enabled) _startup.Enable(Environment.ProcessPath ?? throw new InvalidOperationException("The app location could not be determined."));
+            if (enabled) _startup.Enable(Environment.ProcessPath ?? throw new InvalidOperationException(Localization.T("TheAppLocationCouldNotBeDetermined")));
             else _startup.Disable();
             await _logger.InfoAsync($"Sign-in startup {(enabled ? "enabled" : "disabled")}.");
-            DisplayStatus.Text = enabled ? "seeWallpaper now starts with Windows and restores your wallpapers." : "seeWallpaper no longer starts with Windows.";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => enabled ? Localization.T("SeeWallpaperNowStartsWithWindowsAndRestoresYourWallpapers") : Localization.T("SeeWallpaperNoLongerStartsWithWindows"));
         }
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Sign-in startup could not be changed.", exception);
-            MessageBox.Show(exception.Message, "Startup setting", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.T("StartupSetting"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
         RefreshStartupBanner();
     }
@@ -219,16 +316,17 @@ public partial class MainWindow : Window
     private async void OnlineRefresh_Click(object sender, RoutedEventArgs e) => await CheckOnlineAsync(notify: false);
     private void ShowOnline()
     {
-        PageTitle.Text = "Online";
-        PageDescription.Text = "New wallpapers published on the seeWallpaper GitHub repository. Every file is verified before installation.";
+        Localization.Set(PageTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("Online"));
+        Localization.Set(PageDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("NewWallpapersPublishedOnTheSeeWallpaperGitHubRepositoryEveryFileIsVerifiedBefore"));
         GalleryView.Visibility = Visibility.Collapsed;
         ScreensView.Visibility = Visibility.Collapsed;
         AboutView.Visibility = Visibility.Collapsed;
         OnlineView.Visibility = Visibility.Visible;
+        RotationView.Visibility = Visibility.Collapsed;
         PageActions.Visibility = Visibility.Collapsed;
         DisplayStatus.Visibility = Visibility.Visible;
         OnlineList.ItemsSource = _onlineOffers;
-        OnlineNotice.Text = _onlineNotice;
+        Localization.Set(OnlineNotice, System.Windows.Controls.TextBlock.TextProperty, () => _onlineNotice());
         OnlineRefreshButton.IsEnabled = !_checkingOnline;
     }
 
@@ -237,7 +335,7 @@ public partial class MainWindow : Window
     {
         if (_checkingOnline) return;
         _checkingOnline = true;
-        _onlineNotice = "Checking GitHub for new wallpapers…";
+        _onlineNotice = () => Localization.T("CheckingGitHubForNewWallpapers");
         if (_currentPage == "online") ShowOnline();
         try
         {
@@ -245,12 +343,12 @@ public partial class MainWindow : Window
             UpdateOnlineOffers();
             OnlineTemplateCardViewModel[] fresh = _onlineOffers.Where(offer => !offer.IsUpdate && _notifiedOnlineIds.Add(offer.Template.Manifest.Id)).ToArray();
             if (notify && fresh.Length > 0 && !IsVisible)
-                _trayIcon.ShowNotification(fresh.Length == 1 ? $"New wallpaper: {fresh[0].Name}" : $"{fresh.Length} new wallpapers available", "Click to see them in seeWallpaper.", () => _ = HandleLaunchAsync(new(ShowOnline: true)));
+                _trayIcon.ShowNotification(fresh.Length == 1 ? Localization.F("NewWallpaperFormat", fresh[0].Name) : Localization.F("NewWallpapersAvailableFormat", fresh.Length), Localization.T("ClickToSeeThemInSeeWallpaper"), () => _ = HandleLaunchAsync(new(ShowOnline: true)));
             await _logger.InfoAsync($"Online check: {_onlineCatalog.Count} published, {_onlineOffers.Count} offered.");
         }
         catch (Exception exception)
         {
-            _onlineNotice = "GitHub could not be reached. Check your connection and try again.";
+            _onlineNotice = () => Localization.T("GitHubCouldNotBeReachedCheckYourConnectionAndTryAgain");
             await _logger.ErrorAsync("Online template check failed.", exception);
         }
         finally
@@ -264,8 +362,9 @@ public partial class MainWindow : Window
     {
         Dictionary<string, SeeWallpaper.Core.TemplateManifest> installed = _templates.ToDictionary(card => card.Template.Manifest.Id, card => card.Template.Manifest, StringComparer.OrdinalIgnoreCase);
         _onlineOffers = _onlineCatalog.Select(template => OnlineTemplateCardViewModel.Offer(template, installed.GetValueOrDefault(template.Manifest.Id))).OfType<OnlineTemplateCardViewModel>().ToArray();
-        _onlineNotice = _onlineOffers.Count == 0 ? $"You already have every wallpaper published online. Last checked at {DateTime.Now:t}." : $"{_onlineOffers.Count} wallpaper(s) to download. Last checked at {DateTime.Now:t}.";
-        OnlineButton.Content = _onlineOffers.Count == 0 ? "Online" : $"Online ({_onlineOffers.Count})";
+        DateTime lastChecked = DateTime.Now;
+        _onlineNotice = () => _onlineOffers.Count == 0 ? Localization.F("YouAlreadyHaveEveryWallpaperPublishedOnlineLastCheckedAtTFormat", lastChecked) : Localization.F("WallpaperSToDownloadLastCheckedAtTFormat", _onlineOffers.Count, lastChecked);
+        Localization.Set(OnlineButton, System.Windows.Controls.ContentControl.ContentProperty, () => _onlineOffers.Count == 0 ? Localization.T("Online") : Localization.F("OnlineFormat", _onlineOffers.Count));
     }
 
     private async void DownloadOnline_Click(object sender, RoutedEventArgs e)
@@ -273,8 +372,8 @@ public partial class MainWindow : Window
         if (((FrameworkElement)sender).Tag is not OnlineTemplateCardViewModel offer) return;
         System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
         button.IsEnabled = false;
-        button.Content = "Downloading…";
-        DisplayStatus.Text = $"Downloading {offer.Name}…";
+        Localization.Set(button, System.Windows.Controls.ContentControl.ContentProperty, () => Localization.T("Downloading"));
+        Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("DownloadingFormat", offer.Name));
         try
         {
             await _onlineStore.InstallAsync(offer.Template, _templatesRoot);
@@ -282,16 +381,16 @@ public partial class MainWindow : Window
             await RefreshTemplatesAsync();
             UpdateOnlineOffers();
             ShowOnline();
-            DisplayStatus.Text = offer.IsUpdate ? $"Updated: {offer.Name}. Reapply it to see the new version." : $"Installed: {offer.Name}. Find it in the gallery.";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => offer.IsUpdate ? Localization.F("UpdatedReapplyItToSeeTheNewVersionFormat", offer.Name) : Localization.F("InstalledFindItInTheGalleryFormat", offer.Name));
         }
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Online template download failed.", exception);
             button.IsEnabled = true;
-            button.Content = offer.ActionLabel;
-            DisplayStatus.Text = $"{offer.Name} could not be installed.";
-            string hint = exception is IOException or UnauthorizedAccessException ? " If this wallpaper is running, remove it from your displays and try again." : "";
-            MessageBox.Show(exception.Message + hint, "Download failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            Localization.Set(button, System.Windows.Controls.ContentControl.ContentProperty, () => offer.ActionLabel);
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("CouldNotBeInstalledFormat", offer.Name));
+            string hint = exception is IOException or UnauthorizedAccessException ? Localization.T("IfThisWallpaperIsRunningRemoveItFromYourDisplaysAndTryAgain") : "";
+            MessageBox.Show(exception.Message + hint, Localization.T("DownloadFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -303,8 +402,8 @@ public partial class MainWindow : Window
         return client;
     }
 
-    private void Favorites_Click(object sender, RoutedEventArgs e) { _currentPage = "favorites"; ShowPage("Favorites", "Your saved scenes.", _templates.Where(template => template.IsFavorite).ToArray()); }
-    private void Create_Click(object sender, RoutedEventArgs e) => ShowPage("Create", "The visual template editor is planned after the engine and SDK are stable.", Array.Empty<TemplateCardViewModel>());
+    private void Favorites_Click(object sender, RoutedEventArgs e) { _currentPage = "favorites"; ShowPage(Localization.T("Favorites"), Localization.T("YourSavedScenes"), _templates.Where(template => template.IsFavorite).ToArray()); }
+    private void Create_Click(object sender, RoutedEventArgs e) { _currentPage = "create"; ShowPage(Localization.T("Create"), Localization.T("TheVisualTemplateEditorIsPlannedAfterTheEngineAndSDKAreStable"), Array.Empty<TemplateCardViewModel>()); }
     private async void Settings_Click(object sender, RoutedEventArgs e)
     {
         bool startupEnabled = _startup.IsEnabled;
@@ -317,7 +416,7 @@ public partial class MainWindow : Window
         await _performanceSettingsStore.SaveAsync(new PerformanceSettings(_performanceProfile.ToString(), _pauseOnFullscreen, _pauseOnBattery));
         await _wallpaperHost.SetPerformanceProfileAsync(_performanceProfile);
         await ApplyPauseStateAsync();
-        DisplayStatus.Text = $"Performance: {_performanceProfile}";
+        Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("PerformanceFormat", Localization.T(_performanceProfile.ToString())));
         await _logger.InfoAsync($"Performance profile changed to {_performanceProfile}.");
     }
     private async void Preview_Click(object sender, RoutedEventArgs e)
@@ -325,6 +424,7 @@ public partial class MainWindow : Window
         if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
         IReadOnlyDictionary<string, object?> settings = await LoadSettingsAsync(template);
         WallpaperPreviewWindow preview = new(template.Template, settings) { Owner = this };
+        Localization.Set(preview, TitleProperty, () => Localization.F("PreviewFormat", template.Name));
         preview.Show();
     }
 
@@ -333,8 +433,10 @@ public partial class MainWindow : Window
         if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
         IReadOnlyDictionary<string, object?> settings = await LoadSettingsAsync(template);
         WallpaperPreviewWindow preview = new(template.Template, settings) { Owner = this };
+        Localization.Set(preview, TitleProperty, () => Localization.F("PreviewFormat", template.Name));
         preview.Show();
-        new TemplateSettingsWindow(template.Template, preview, _settingsStore, settings).Show();
+        new TemplateSettingsWindow(template.Template, preview, _settingsStore, settings,
+            values => _wallpaperHost.UpdateTemplateSettingsAsync(template.Template.Manifest.Id, values)).Show();
     }
 
     private async void Apply_Click(object sender, RoutedEventArgs e)
@@ -348,17 +450,17 @@ public partial class MainWindow : Window
             if (dialog.ShowDialog() != true) return;
             _changingWallpapers = true;
             SetWallpaperControlsEnabled(false);
-            DisplayStatus.Text = $"Applying {template.Name}…";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("ApplyingFormat", template.Name));
             IReadOnlyDictionary<string, object?> settings = await LoadSettingsAsync(template);
             switch (dialog.SelectedMode)
             {
                 case WallpaperApplicationMode.Clone:
                     await _assignmentService.ApplyGlobalAsync(template.Template, settings, WallpaperAssignmentMode.Clone);
-                    DisplayStatus.Text = $"{template.Name} applied to all displays.";
+                    Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("AppliedToAllDisplaysFormat", template.Name));
                     break;
                 case WallpaperApplicationMode.Span:
                     await _assignmentService.ApplyGlobalAsync(template.Template, settings, WallpaperAssignmentMode.Span);
-                    DisplayStatus.Text = $"{template.Name} spanning all displays.";
+                    Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("SpanningAllDisplaysFormat", template.Name));
                     break;
                 default:
                     foreach (SeeWallpaper.Platform.DisplayInfo display in dialog.SelectedDisplays)
@@ -366,7 +468,7 @@ public partial class MainWindow : Window
                         await _assignmentService.ApplyAsync(template.Template, display, settings);
                         completed.Add(DisplayTitle(display));
                     }
-                    DisplayStatus.Text = $"{template.Name} applied to: {string.Join(", ", completed)}.";
+                    Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("AppliedToSelectedDisplaysFormat", template.Name, string.Join(", ", completed)));
                     break;
             }
             await _logger.InfoAsync($"Wallpaper applied: {template.Template.Manifest.Id}.");
@@ -374,8 +476,8 @@ public partial class MainWindow : Window
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Wallpaper application failed.", exception);
-            DisplayStatus.Text = completed.Count > 0 ? $"Partially applied: {string.Join(", ", completed)}. {exception.Message}" : $"Application interrupted: {exception.Message}";
-            MessageBox.Show(DisplayStatus.Text, "Apply wallpaper", MessageBoxButton.OK, MessageBoxImage.Error);
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => completed.Count > 0 ? Localization.F("PartiallyAppliedFormat", string.Join(", ", completed), exception.Message) : Localization.F("ApplicationInterruptedFormat", exception.Message));
+            MessageBox.Show(DisplayStatus.Text, Localization.T("ApplyWallpaper"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
     }
@@ -395,12 +497,12 @@ public partial class MainWindow : Window
             await RefreshTemplatesAsync();
             _currentPage = "installed";
             ShowCurrentPage();
-            DisplayStatus.Text = $"Imported: {imported.Manifest.Name}";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("ImportedFormat", imported.Manifest.Name));
         }
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Template import failed.", exception);
-            MessageBox.Show(exception.Message, "Import failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.T("ImportFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -413,12 +515,12 @@ public partial class MainWindow : Window
         {
             await _packageService.ExportAsync(template.Template, dialog.FileName);
             await _logger.InfoAsync($"Template exported: {template.Template.Manifest.Id}.");
-            DisplayStatus.Text = $"Exported: {Path.GetFileName(dialog.FileName)}";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("ExportedFormat", Path.GetFileName(dialog.FileName)));
         }
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Template export failed.", exception);
-            MessageBox.Show(exception.Message, "Export failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.T("ExportFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
     private async void Favorite_Click(object sender, RoutedEventArgs e)
@@ -438,20 +540,20 @@ public partial class MainWindow : Window
             SeeWallpaper.Core.InstalledTemplate duplicate = await _libraryService.DuplicateAsync(template.Template, _templatesRoot);
             await _logger.InfoAsync($"Template duplicated: {template.Template.Manifest.Id} -> {duplicate.Manifest.Id}.");
             await RefreshTemplatesAsync();
-            DisplayStatus.Text = $"Duplicated: {duplicate.Manifest.Name}";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("DuplicatedFormat", duplicate.Manifest.Name));
             ShowCurrentPage();
         }
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Template duplication failed.", exception);
-            MessageBox.Show(exception.Message, "Duplicate failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.T("DuplicateFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private async void Uninstall_Click(object sender, RoutedEventArgs e)
     {
         if (((FrameworkElement)sender).Tag is not TemplateCardViewModel template) return;
-        if (MessageBox.Show($"Uninstall {template.Name}?", "Confirm uninstall", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+        if (MessageBox.Show(Localization.F("UninstallFormat", template.Name), Localization.T("ConfirmUninstall"), MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
         try
         {
             await _libraryService.UninstallAsync(template.Template, _templatesRoot);
@@ -459,25 +561,26 @@ public partial class MainWindow : Window
             await _favoritesStore.SaveAsync(_favoriteTemplateIds);
             await _logger.InfoAsync($"Template uninstalled: {template.Template.Manifest.Id}.");
             await RefreshTemplatesAsync();
-            DisplayStatus.Text = $"Uninstalled: {template.Name}";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("UninstalledFormat", template.Name));
             ShowCurrentPage();
         }
         catch (Exception exception)
         {
             await _logger.ErrorAsync("Template uninstall failed.", exception);
-            MessageBox.Show(exception.Message, "Uninstall failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.T("UninstallFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    private void ShowPage(string title, string description, IReadOnlyList<TemplateCardViewModel> templates) { GalleryView.Visibility = Visibility.Visible; ScreensView.Visibility = Visibility.Collapsed; OnlineView.Visibility = Visibility.Collapsed; AboutView.Visibility = Visibility.Collapsed; PageActions.Visibility = Visibility.Visible; DisplayStatus.Visibility = Visibility.Visible; PageTitle.Text = title; PageDescription.Text = description; TemplateList.ItemsSource = templates; }
+    private void ShowPage(string title, string description, IReadOnlyList<TemplateCardViewModel> templates) { GalleryView.Visibility = Visibility.Visible; ScreensView.Visibility = Visibility.Collapsed; OnlineView.Visibility = Visibility.Collapsed; AboutView.Visibility = Visibility.Collapsed; RotationView.Visibility = Visibility.Collapsed; PageActions.Visibility = Visibility.Visible; DisplayStatus.Visibility = Visibility.Visible; Localization.Set(PageTitle, System.Windows.Controls.TextBlock.TextProperty, () => title); Localization.Set(PageDescription, System.Windows.Controls.TextBlock.TextProperty, () => description); TemplateList.ItemsSource = templates; }
     private void About_Click(object sender, RoutedEventArgs e) { _currentPage = "about"; ShowAbout(); }
     private void ShowAbout()
     {
-        PageTitle.Text = "About";
-        PageDescription.Text = "The creator, available features, and ways to get started.";
+        Localization.Set(PageTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("About"));
+        Localization.Set(PageDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("TheCreatorAvailableFeaturesAndWaysToGetStarted"));
         GalleryView.Visibility = Visibility.Collapsed;
         ScreensView.Visibility = Visibility.Collapsed;
         OnlineView.Visibility = Visibility.Collapsed;
         AboutView.Visibility = Visibility.Visible;
+        RotationView.Visibility = Visibility.Collapsed;
         PageActions.Visibility = Visibility.Collapsed;
         DisplayStatus.Visibility = Visibility.Collapsed;
     }
@@ -492,8 +595,8 @@ public partial class MainWindow : Window
         }
         base.OnClosing(e);
     }
-    private void Quit() { _quitting = true; _displayChangeLifetime.Cancel(); Close(); }
-    protected override async void OnClosed(EventArgs e) { _displayChangeTimer.Stop(); _onlineTimer.Stop(); _trayIcon.Dispose(); SystemEvents.SessionSwitch -= OnSessionSwitch; SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged; _environmentMonitor.StateChanged -= OnEnvironmentStateChanged; _environmentMonitor.Dispose(); await _wallpaperHost.DisposeAsync(); base.OnClosed(e); }
+    private void Quit() { _quitting = true; _updateDownload?.Cancel(); _displayChangeLifetime.Cancel(); Close(); }
+    protected override async void OnClosed(EventArgs e) { Localization.Current.LanguageChanged -= OnLanguageChanged; _displayChangeTimer.Stop(); _onlineTimer.Stop(); _rotationTimer.Stop(); _trayIcon.Dispose(); SystemEvents.SessionSwitch -= OnSessionSwitch; SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged; _environmentMonitor.StateChanged -= OnEnvironmentStateChanged; _environmentMonitor.Dispose(); await _wallpaperHost.DisposeAsync(); base.OnClosed(e); }
     private static IReadOnlyDictionary<string, object?> CreateDefaultSettings(TemplateCardViewModel template) => template.Template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default);
     private Task<IReadOnlyDictionary<string, object?>> LoadSettingsAsync(TemplateCardViewModel template) => _settingsStore.LoadAsync(template.Template.Manifest.Id, CreateDefaultSettings(template));
     private async Task RefreshTemplatesAsync()
@@ -543,25 +646,28 @@ public partial class MainWindow : Window
         await ApplyPauseStateAsync();
     }
     private void OnEnvironmentStateChanged(object? sender, SeeWallpaper.Platform.WindowsEnvironmentState state) => _ = Dispatcher.InvokeAsync(async () => { _environmentState = state; await ApplyPauseStateAsync(); });
-    private Task ApplyPauseStateAsync() => _wallpaperHost.SetPausedAsync(_sessionLocked || (_pauseOnFullscreen && _environmentState.IsFullscreenApplicationActive) || (_pauseOnBattery && _environmentState.IsOnBattery));
+    private Task ApplyPauseStateAsync() => _wallpaperHost.SetPausedAsync(IsPausedByEnvironment);
     private void ShowCurrentPage()
     {
-        if (_currentPage == "favorites") ShowPage("Favorites", "Your saved scenes.", _templates.Where(template => template.IsFavorite).ToArray());
-        else if (_currentPage == "installed") ShowPage("Installed", $"{_templates.Count} templates available locally.", _templates);
-        else if (_currentPage == "gallery") ShowPage("Gallery", "Browse templates installed with seeWallpaper.", _templates);
+        if (_currentPage == "create") { ShowPage(Localization.T("Create"), Localization.T("TheVisualTemplateEditorIsPlannedAfterTheEngineAndSDKAreStable"), []); return; }
+        if (_currentPage == "favorites") ShowPage(Localization.T("Favorites"), Localization.T("YourSavedScenes"), _templates.Where(template => template.IsFavorite).ToArray());
+        else if (_currentPage == "installed") ShowPage(Localization.T("Installed"), Localization.F("TemplatesAvailableLocallyFormat", _templates.Count), _templates);
+        else if (_currentPage == "gallery") ShowPage(Localization.T("Gallery"), Localization.T("BrowseTemplatesInstalledWithSeeWallpaper"), _templates);
         else if (_currentPage == "screens") ShowScreens();
         else if (_currentPage == "about") ShowAbout();
         else if (_currentPage == "online") ShowOnline();
-        else ShowPage("Choose your wallpaper", "Choose a scene, then select the displays where it should run.", _templates);
+        else if (_currentPage == "rotation") ShowRotation();
+        else ShowPage(Localization.T("ChooseYourWallpaper"), Localization.T("ChooseASceneThenSelectTheDisplaysWhereItShouldRun"), _templates);
     }
 
     private void Screens_Click(object sender, RoutedEventArgs e) { _currentPage = "screens"; ShowScreens(); }
     private void ShowScreens()
     {
-        PageTitle.Text = "My displays";
-        PageDescription.Text = "Choose a wallpaper for each display, then click Apply to this display.";
+        Localization.Set(PageTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("MyDisplays"));
+        Localization.Set(PageDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ChooseAWallpaperForEachDisplayThenClickApplyToThisDisplay"));
         GalleryView.Visibility = Visibility.Collapsed;
         ScreensView.Visibility = Visibility.Visible;
+        RotationView.Visibility = Visibility.Collapsed;
         OnlineView.Visibility = Visibility.Collapsed;
         AboutView.Visibility = Visibility.Collapsed;
         PageActions.Visibility = Visibility.Visible;
@@ -580,8 +686,8 @@ public partial class MainWindow : Window
                 : state.GlobalTemplateId;
             TemplateCardViewModel? template = _templates.FirstOrDefault(item => string.Equals(item.Template.Manifest.Id, templateId, StringComparison.OrdinalIgnoreCase));
             bool active = _wallpaperHost.ActiveDisplayIds.Contains(display.Id) || (span && _wallpaperHost.ActiveDisplayIds.Contains("span"));
-            string scene = active ? $"Active: {template?.Name ?? templateId}" + (span ? " · Spanning" : "")
-                : templateId is null ? "No wallpaper applied to this display" : $"Saved choice, inactive: {template?.Name ?? templateId}";
+            string scene = active ? Localization.F("ActiveFormat", template?.Name ?? templateId) + (span ? Localization.T("Spanning") : "")
+                : templateId is null ? Localization.T("NoWallpaperAppliedToThisDisplay") : Localization.F("SavedChoiceInactiveFormat", template?.Name ?? templateId);
             return new DisplayCardViewModel(display, index + 1, scene, _templates, templateId, active, span);
         }).ToArray();
     }
@@ -592,10 +698,10 @@ public partial class MainWindow : Window
         DisplayList.ItemsSource = CreateDisplayCards();
         WallpaperAssignmentsDocument state = _assignmentService.State;
         int disconnected = state.Assignments.Count(saved => !_displaySnapshot.Any(display => string.Equals(display.AssignmentKey, saved.DisplayKey, StringComparison.OrdinalIgnoreCase)));
-        ScreenNotice.Text = _displaySnapshot.Count == 0 ? "No displays detected. Connect a display, then click Refresh."
-            : state.Mode == WallpaperAssignmentMode.Span ? "Span mode: applying to one display restores independent mode; other displays receive the previous wallpaper."
-            : disconnected > 0 ? $"{disconnected} assignment(s) retained for disconnected displays."
-            : "Applying replaces only the chosen display's wallpaper. Your choices are saved automatically.";
+        Localization.Set(ScreenNotice, System.Windows.Controls.TextBlock.TextProperty, () => _displaySnapshot.Count == 0 ? Localization.T("NoDisplaysDetectedConnectADisplayThenClickRefresh")
+            : state.Mode == WallpaperAssignmentMode.Span ? Localization.T("SpanModeApplyingToOneDisplayRestoresIndependentModeOtherDisplaysReceiveThePrevio")
+            : disconnected > 0 ? Localization.F("AssignmentSRetainedForDisconnectedDisplaysFormat", disconnected)
+            : Localization.T("ApplyingReplacesOnlyTheChosenDisplaySWallpaperYourChoicesAreSavedAutomatically"));
         DrawDisplayLayout();
     }
 
@@ -614,7 +720,7 @@ public partial class MainWindow : Window
                 Width = Math.Max(1, card.Display.Width * scale - 4), Height = Math.Max(1, card.Display.Height * scale - 4),
                 Background = (Brush)FindResource("Panel"), BorderBrush = (Brush)FindResource(card.Display.IsPrimary ? "Accent" : "Muted"), BorderThickness = new Thickness(2), CornerRadius = new CornerRadius(6),
                 ToolTip = $"{card.Title} · {card.CurrentScene}",
-                Child = new System.Windows.Controls.Viewbox { Child = new System.Windows.Controls.TextBlock { Text = $"Display {card.Number}", Foreground = Brushes.White, Margin = new Thickness(12) } }
+                Child = new System.Windows.Controls.Viewbox { Child = new System.Windows.Controls.TextBlock { Text = Localization.F("DisplayFormat", card.Number), Foreground = Brushes.White, Margin = new Thickness(12) } }
             };
             System.Windows.Controls.Canvas.SetLeft(monitor, (card.Display.X - left) * scale);
             System.Windows.Controls.Canvas.SetTop(monitor, (card.Display.Y - top) * scale);
@@ -625,7 +731,7 @@ public partial class MainWindow : Window
     private string DisplayTitle(SeeWallpaper.Platform.DisplayInfo display)
     {
         int index = _displaySnapshot.ToList().FindIndex(item => item.Id == display.Id);
-        return index < 0 ? display.Label : $"Display {index + 1}";
+        return index < 0 ? display.Label : Localization.F("DisplayFormat", index + 1);
     }
 
     private void Identify_Click(object sender, RoutedEventArgs e) => IdentifyDisplays();
@@ -652,13 +758,13 @@ public partial class MainWindow : Window
         try
         {
             IReadOnlyList<string> errors = await _assignmentService.ReconcileDisplaysAsync(_displayChangeLifetime.Token);
-            DisplayStatus.Text = errors.Count == 0 ? "Displays updated. Saved wallpapers restored where available." : string.Join(" ", errors);
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => errors.Count == 0 ? Localization.T("DisplaysUpdatedSavedWallpapersRestoredWhereAvailable") : string.Join(" ", errors));
             await _logger.InfoAsync(errors.Count == 0 ? "Display topology reconciled." : "Display reconciliation incomplete: " + string.Join("; ", errors));
         }
         catch (OperationCanceledException) when (_quitting) { }
         catch (Exception exception)
         {
-            DisplayStatus.Text = "Could not restore wallpapers after a display change. Refresh displays to retry.";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("CouldNotRestoreWallpapersAfterADisplayChangeRefreshDisplaysToRetry"));
             await _logger.ErrorAsync("Display reconciliation failed.", exception);
         }
         finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
@@ -668,21 +774,22 @@ public partial class MainWindow : Window
     private async void ApplyToScreen_Click(object sender, RoutedEventArgs e)
     {
         if (_changingWallpapers || ((FrameworkElement)sender).Tag is not DisplayCardViewModel card) return;
-        if (card.SelectedTemplate is null) { DisplayStatus.Text = $"Choose a wallpaper for {card.Title}."; return; }
+        if (card.SelectedTemplate is null) { Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("ChooseAWallpaperForFormat", card.Title)); return; }
+        TemplateCardViewModel selected = card.SelectedTemplate;
         _changingWallpapers = true;
         SetWallpaperControlsEnabled(false);
         try
         {
-            DisplayStatus.Text = $"Applying {card.SelectedTemplate.Name} to {card.Title}…";
-            await _assignmentService.ApplyAsync(card.SelectedTemplate.Template, card.Display, await LoadSettingsAsync(card.SelectedTemplate));
-            DisplayStatus.Text = $"{card.SelectedTemplate.Name} applied to {card.Title}.";
-            await _logger.InfoAsync($"Wallpaper {card.SelectedTemplate.Template.Manifest.Id} applied to {card.Display.Id}.");
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("ApplyingToFormat", selected.Name, card.Title));
+            await _assignmentService.ApplyAsync(selected.Template, card.Display, await LoadSettingsAsync(selected));
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("AppliedToFormat", selected.Name, card.Title));
+            await _logger.InfoAsync($"Wallpaper {selected.Template.Manifest.Id} applied to {card.Display.Id}.");
         }
         catch (Exception exception)
         {
-            DisplayStatus.Text = $"{card.Title} : {exception.Message}";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => $"{card.Title} : {exception.Message}");
             await _logger.ErrorAsync("Display wallpaper application failed.", exception);
-            MessageBox.Show(exception.Message, $"Apply to {card.Title}", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.F("ApplyToFormat", card.Title), MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
     }
@@ -695,14 +802,14 @@ public partial class MainWindow : Window
         try
         {
             await _assignmentService.RemoveAsync(card.Display);
-            DisplayStatus.Text = $"Wallpaper removed from {card.Title}.";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("WallpaperRemovedFromFormat", card.Title));
             await _logger.InfoAsync($"Wallpaper removed from {card.Display.Id}.");
         }
         catch (Exception exception)
         {
-            DisplayStatus.Text = $"{card.Title} : {exception.Message}";
+            Localization.Set(DisplayStatus, System.Windows.Controls.TextBlock.TextProperty, () => $"{card.Title} : {exception.Message}");
             await _logger.ErrorAsync("Display wallpaper removal failed.", exception);
-            MessageBox.Show(exception.Message, "Remove wallpaper", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(exception.Message, Localization.T("RemoveWallpaper"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
     }

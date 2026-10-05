@@ -9,15 +9,17 @@ internal static class WebViewEnvironmentProvider
 {
     private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Dispatcher, Dictionary<string, Task<CoreWebView2Environment>>> Environments = new();
 
-    internal static async Task<CoreWebView2Environment> GetAsync(string templateId)
+    internal static async Task<CoreWebView2Environment> GetAsync()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         dispatcher.VerifyAccess();
         // SetParent to Explorer can change the caller's DPI awareness. WebView2
         // rejects a controller sharing a browser started with different DPI options.
         int awareness = GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext());
+        // One profile per DPI mode, shared by every template: a new wallpaper reuses the
+        // browser process of the one it replaces instead of cold-starting its own.
         string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "seeWallpaper", "webview-v2", templateId, $"dpi-{awareness}");
+            "seeWallpaper", "webview-v3", $"dpi-{awareness}");
         Dictionary<string, Task<CoreWebView2Environment>> environments = Environments.GetOrCreateValue(dispatcher);
         if (!environments.TryGetValue(folder, out Task<CoreWebView2Environment>? pending))
         {

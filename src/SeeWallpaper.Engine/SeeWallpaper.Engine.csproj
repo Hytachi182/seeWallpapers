@@ -5,6 +5,7 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SystemMetricsOverlay.js" />
     <InternalsVisibleTo Include="SeeWallpaper.App.Tests" />
     <ProjectReference Include="..\SeeWallpaper.Core\SeeWallpaper.Core.csproj" />
     <ProjectReference Include="..\SeeWallpaper.System\SeeWallpaper.System.csproj" />

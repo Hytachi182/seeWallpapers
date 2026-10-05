@@ -54,7 +54,7 @@ public class WebWallpaperWindow : Window
     {
         try
         {
-            CoreWebView2Environment environment = await WebViewEnvironmentProvider.GetAsync(_template.Manifest.Id);
+            CoreWebView2Environment environment = await WebViewEnvironmentProvider.GetAsync();
             _lifetime.Token.ThrowIfCancellationRequested();
             await _webView.EnsureCoreWebView2Async(environment);
             _lifetime.Token.ThrowIfCancellationRequested();
@@ -64,6 +64,9 @@ public class WebWallpaperWindow : Window
             _webView.CoreWebView2.Settings.IsStatusBarEnabled = false;
             _webView.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
             await _webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("(()=>{let systemInfoRequested=false;const requestSystemInfo=()=>{if(!systemInfoRequested){window.chrome.webview.postMessage('seeWallpaper:system-info');systemInfoRequested=true;}};window.seeWallpaper={getSettings:()=>window.__seeWallpaperSettings||{},getSystemInfo:()=>{requestSystemInfo();return window.__seeWallpaperSystemInfo||{};},onSettingsChanged:(callback)=>window.__seeWallpaperSettingsChanged=callback,onSystemInfoChanged:(callback)=>{window.__seeWallpaperSystemInfoChanged=callback;requestSystemInfo();},onPause:(callback)=>window.__seeWallpaperPaused=callback,onResume:(callback)=>window.__seeWallpaperResumed=callback,onPerformanceChanged:(callback)=>window.__seeWallpaperPerformanceChanged=callback};})();");
+            using (Stream stream = typeof(WebWallpaperWindow).Assembly.GetManifestResourceStream("SeeWallpaper.Engine.SystemMetricsOverlay.js")!)
+            using (StreamReader reader = new(stream))
+                await _webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(await reader.ReadToEndAsync());
             TaskCompletionSource navigation = new(TaskCreationOptions.RunContinuationsAsynchronously);
             _webView.CoreWebView2.NavigationCompleted += (_, args) =>
             {
@@ -96,14 +99,18 @@ public class WebWallpaperWindow : Window
     private Task PushSettingsAsync()
     {
         string settings = JsonSerializer.Serialize(_settings);
-        return _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperSettings={settings};window.__seeWallpaperSettingsChanged?.(window.__seeWallpaperSettings);");
+        return _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperSettings={settings};window.__seeWallpaperMetricsOverlay?.settings(window.__seeWallpaperSettings);window.__seeWallpaperSettingsChanged?.(window.__seeWallpaperSettings);");
     }
 
     public async Task UpdateSettingsAsync(IReadOnlyDictionary<string, object?> settings)
     {
         _settings.Clear();
         foreach ((string key, object? value) in settings) _settings[key] = value;
-        if (_isWebViewReady) await PushSettingsAsync();
+        if (_documentReady && _isWebViewReady)
+        {
+            await PushSettingsAsync();
+            await EnsureSystemInfoSubscriptionAsync();
+        }
     }
 
     public Task SetPausedAsync(bool isPaused)
@@ -120,6 +127,7 @@ public class WebWallpaperWindow : Window
     }
 
     internal bool IsAttachedToDesktop => _attachToDesktop && _ready.Task.IsCompletedSuccessfully;
+    internal string TemplateId => _template.Manifest.Id;
 
     internal IntPtr Handle => new System.Windows.Interop.WindowInteropHelper(this).Handle;
 
@@ -158,7 +166,16 @@ public class WebWallpaperWindow : Window
 
     private async Task EnsureSystemInfoSubscriptionAsync()
     {
-        if (!_usesSystemInfo || !_documentReady || !_isWebViewReady || _metricsSubscribed) return;
+        bool overlayEnabled = _settings.TryGetValue("__seeMetricsEnabled", out object? enabled) &&
+            (enabled is true || enabled is JsonElement { ValueKind: JsonValueKind.True });
+        if (!_documentReady || !_isWebViewReady) return;
+        if (!_usesSystemInfo && !overlayEnabled)
+        {
+            if (_metricsSubscribed) _metricsSource.Unsubscribe(OnSystemMetrics);
+            _metricsSubscribed = false;
+            return;
+        }
+        if (_metricsSubscribed) return;
         _metricsSubscribed = true;
         _metricsSource.Subscribe(OnSystemMetrics);
         await PushSystemInfoAsync(_metricsSource.GetSnapshotJson());
@@ -179,6 +196,6 @@ public class WebWallpaperWindow : Window
 
     private Task PushSystemInfoAsync(string metrics)
     {
-        return _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperSystemInfo={metrics};window.__seeWallpaperSystemInfoChanged?.(window.__seeWallpaperSystemInfo);");
+        return _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperSystemInfo={metrics};window.__seeWallpaperMetricsOverlay?.metrics(window.__seeWallpaperSystemInfo);window.__seeWallpaperSystemInfoChanged?.(window.__seeWallpaperSystemInfo);");
     }
 }

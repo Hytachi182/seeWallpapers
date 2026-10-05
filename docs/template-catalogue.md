@@ -1,6 +1,6 @@
 # Wallpaper catalogue
 
-**26 built-in wallpapers.** Generated from the scene manifests.
+**30 built-in wallpapers.** Generated from the scene manifests.
 
 | Preview | Wallpaper | Category | Creator | Version |
 | --- | --- | --- | --- | --- |
@@ -10,7 +10,9 @@
 | <img src="../templates/neon-ronin/preview.jpg" alt="Neon Ronin" width="160" /> | **Neon Ronin**<br />A hooded samurai and his cat watching a neon megacity at night, with rain and puddle ripples, flickering signs, a glowing katana, flying traffic, highway light trails, rotating targets, waterfalls, sakura petals and distant lightning. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/ninja-anime/preview.jpg" alt="Ninja Anime" width="160" /> | **Ninja Anime**<br />A masked rooftop guardian, flowing scarf, crimson moon and drifting cherry blossoms. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/orange-ninja/preview.jpg" alt="Orange Ninja" width="160" /> | **Orange Ninja**<br />An original orange-cloaked ninja overlooking a golden mountain valley, with wind-blown leaves. | Anime | seeWallpaper | 1.0.0 |
+| <img src="../templates/pirate-cove/preview.jpg" alt="Pirate Cove" width="160" /> | **Pirate Cove**<br />A young pirate overlooking a sunset cove, with a rocking galleon and its wake, a flapping red banner and cloak, swaying foliage, a flickering lantern, harbour lights, waterfalls, glittering sea and gliding seagulls. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/shinobi-energy/preview.jpg" alt="Shinobi Energy" width="160" /> | **Shinobi Energy**<br />A standing shinobi surrounded by rotating energy seals, rising sparks and luminous ribbons. | Anime | seeWallpaper | 1.0.0 |
+| <img src="../templates/neon-tetris/preview.jpg" alt="Neon Tetris" width="160" /> | **Neon Tetris**<br />A neon falling-blocks game that plays itself: an AI places every piece, clears lines with particles, chains combos, levels up and starts a new game when it tops out. | Games | seeWallpaper | 1.1.0 |
 | <img src="../templates/rainy-window/preview.jpg" alt="Rainy Window" width="160" /> | **Rainy Window**<br />A cinematic neon skyline through rain-streaked glass, with refracted droplets and city reflections. | Manga | seeWallpaper | 1.1.0 |
 | <img src="../templates/sakura-night/preview.jpg" alt="Sakura Night" width="160" /> | **Sakura Night**<br />A moonlit Japanese landscape with a branching cherry canopy, mountain silhouettes, a torii and drifting petals. | Manga | seeWallpaper | 1.1.0 |
 | <img src="../templates/data-tunnel/preview.jpg" alt="Data Tunnel" width="160" /> | **Data Tunnel**<br />An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry. | Matrix | seeWallpaper | 1.1.0 |
@@ -20,10 +22,12 @@
 | <img src="../templates/moonlit-dunes/preview.jpg" alt="Moonlit Dunes" width="160" /> | **Moonlit Dunes**<br />Sculpted dunes, wind-blown sand and a crescent moon in a quiet desert night. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/ocean-dusk/preview.jpg" alt="Ocean Dusk" width="160" /> | **Ocean Dusk**<br />A low sun, slowly rolling waves and a shimmering golden reflection across the ocean. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/astral-frontier/preview.jpg" alt="Astral Frontier" width="160" /> | **Astral Frontier**<br />An astronaut on a rocky ridge facing a spiral galaxy, a ringed giant and a night-side Earth, with a sunrise flare, glowing atmosphere, twinkling city lights, drifting asteroids and shooting stars. | Space | seeWallpaper | 1.0.0 |
+| <img src="../templates/desert-wanderer/preview.jpg" alt="Desert Wanderer" width="160" /> | **Desert Wanderer**<br />A cloaked wanderer on a rocky ridge above an endless desert at sunset, with a cloak rippling in the wind, heat haze on the horizon, blowing sand, sun rays, a giant planet and an occasional worm sign in the dunes. | Space | seeWallpaper | 1.0.0 |
 | <img src="../templates/lunar-silence/preview.jpg" alt="Lunar Silence" width="160" /> | **Lunar Silence**<br />A lone astronaut on the lunar surface beneath a slowly turning blue Earth, with twinkling stars, shooting stars, a passing satellite and drifting moon dust. | Space | seeWallpaper | 1.0.0 |
 | <img src="../templates/orbital-earth/preview.jpg" alt="Orbital Earth" width="160" /> | **Orbital Earth**<br />The Earth surrounded by satellites, with a sunrise on its limb, glowing atmosphere, twinkling city lights, orbiting satellites, radar pings and data links beamed down to the surface. | Space | seeWallpaper | 1.0.0 |
 | <img src="../templates/pure-cosmos/preview.jpg" alt="Pure Cosmos" width="160" /> | **Pure Cosmos**<br />A spiral galaxy and a giant ringed horizon over a mirror sea, with orbiting stars, shooting stars, a pulsing sunrise and drifting cosmic dust. | Space | seeWallpaper | 1.0.0 |
 | <img src="../templates/solar-system/preview.jpg" alt="Solar System" width="160" /> | **Solar System**<br />The Sun and the eight planets in an artistic composition, with turning planets, orbiting moons, solar prominences, a drifting asteroid belt, orbit lights and a passing comet. | Space | seeWallpaper | 1.0.0 |
+| <img src="../templates/stellar-drift/preview.jpg" alt="Stellar Drift" width="160" /> | **Stellar Drift**<br />A golden particle sphere surrounded by a violet stardust disk, slowly rotating against deep plum space. No text or overlays. | Space | seeWallpaper | 1.0.0 |
 | <img src="../templates/ai-core/preview.jpg" alt="AI Core" width="160" /> | **AI Core**<br />A holographic reactor with a rotating spherical lattice, orbital machinery and a pulsing energy core. | Tech | seeWallpaper | 1.1.0 |
 | <img src="../templates/event-horizon/preview.jpg" alt="Event Horizon" width="160" /> | **Event Horizon**<br />A cinematic black hole with a turbulent accretion disk, gravitational lens artwork and a luminous photon ring. | Tech | seeWallpaper | 1.0.0 |
 | <img src="../templates/neural-network/preview.jpg" alt="Neural Network" width="160" /> | **Neural Network**<br />A rotating three-dimensional neural constellation with connected nodes and traveling synaptic pulses. | Tech | seeWallpaper | 1.1.0 |

@@ -26,8 +26,10 @@
 
 ## Get started
 
+**System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
+
 <!-- release-info:start -->
-Source version: **1.6.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.7.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -41,6 +43,10 @@ The download buttons always point to the **latest stable release**, with no GitH
 **Requirements:** Windows 10 version 2004 or later, or Windows 11, 64-bit. .NET is included. The ZIP launcher and installer check WebView2; installing it initially requires Internet if it is missing. Built-in scenes then run offline.
 
 **Updating:** quit the previous app (right-click its notification area icon, then **Quit and remove wallpapers**) before installing or extracting the new version. Personal scenes and settings remain in `%LocalAppData%\seeWallpaper`, shared by the portable and installed editions.
+
+**Automatic updates (unreleased):** choose **Check update**, then **Install and restart**. The app downloads the package for your installed or portable edition, shows progress, verifies SHA-256, closes, installs and restarts automatically. You can cancel before installation. The first version containing this feature must be installed manually once. See [Application updates](docs/application-updates.md).
+
+**Language (unreleased):** use the **Language** button near Settings to switch immediately between **Français**, **English**, **Deutsch**, **Español**, **Lëtzebuergesch**, **Română**, **Polski** and **Italiano**. The app remembers your choice in `%LocalAppData%\seeWallpaper\language.json`, including after a Windows restart. On first launch it follows the Windows UI language when supported, otherwise English. Switching languages keeps your page and wallpapers active.
 
 > The app and installer are not yet signed with a publisher certificate. Download files from this repository's Releases. The included WebView2 bootstrapper has a Microsoft signature verified during the build.
 
@@ -75,10 +81,8 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 ## The scenes
 
 <!-- template-summary:start -->
-**26 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**30 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
-
-
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
 
@@ -97,8 +101,10 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 | ![The Sun and the eight planets](templates/solar-system/preview.jpg) | ![Three robots in a quiet hangar](templates/robot-workshop/preview.jpg) |
 | Astral Frontier | Orbital Earth |
 | ![Astronaut facing a galaxy and the night side of the Earth](templates/astral-frontier/preview.jpg) | ![The Earth surrounded by satellites](templates/orbital-earth/preview.jpg) |
-| Neon Ronin | |
-| ![Hooded samurai and his cat facing a neon megacity](templates/neon-ronin/preview.jpg) | |
+| Neon Ronin | Desert Wanderer |
+| ![Hooded samurai and his cat facing a neon megacity](templates/neon-ronin/preview.jpg) | ![Cloaked wanderer above a desert at sunset](templates/desert-wanderer/preview.jpg) |
+| Pirate Cove | |
+| ![Young pirate overlooking a sunset cove](templates/pirate-cove/preview.jpg) | |
 
 | Aurora Borealis | Ocean Dusk |
 | --- | --- |
@@ -168,9 +174,9 @@ The English **1.3.0** edition passed **22 local .NET tests**, **25 installer che
 
 The **1.4.0** Anime edition passed **27 local .NET tests**, **25 installer checks**, and **33 ZIP checks**. All five new scenes passed desktop/narrow rendering, customization, and pause/resume checks. Ninja Anime was also loaded on three real monitors, including replacement, duplication, spanning, and DPI-context changes.
 
-The **1.5.0** source adds automatic reconciliation when displays connect, disconnect, or change geometry. Monitor assignments use the Windows monitor device interface. Upgrading from earlier independent assignments requires selecting each monitor's wallpaper once; changing ports or docks can also require a new selection. Personal scenes and customization remain available.
+Since **1.5.0**, the application automatically reconciles displays when they connect, disconnect, or change geometry. Monitor assignments use the Windows monitor device interface. Upgrading from earlier independent assignments requires selecting each monitor's wallpaper once; changing ports or docks can also require a new selection. Personal scenes and customization remain available.
 
-Known limits: physical unplug/replug and dock/port acceptance for 1.5.0 remains pending; WebView2 installation on a Windows machine entirely without that runtime still needs clean-machine validation. GPU performance depends on hardware and the number of active scenes.
+Known limits: physical unplug/replug and dock/port acceptance remains pending; WebView2 installation on a Windows machine entirely without that runtime still needs clean-machine validation. GPU performance depends on hardware and the number of active scenes.
 
 </details>
 
