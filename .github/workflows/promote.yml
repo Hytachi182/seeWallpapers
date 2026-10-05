@@ -1,4 +1,5 @@
-name: Prepare and publish devops release
+name: 1 - Prepare version
+run-name: Prepare devops version (${{ inputs.bump || 'auto' }})
 
 on:
   push:
@@ -14,21 +15,18 @@ on:
         description: Preview metadata without pushing commits or publishing a release
         type: boolean
         default: false
-  pull_request:
-    branches: [main]
-    types: [closed]
 
 permissions:
   contents: read
 
 concurrency:
-  group: devops-release-${{ github.event_name == 'pull_request' && 'publish' || 'prepare' }}
+  group: devops-release-prepare
   cancel-in-progress: false
 
 jobs:
   prepare:
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: write
       actions: write
@@ -64,52 +62,4 @@ jobs:
             docs/releases/*.md
             docs/template-catalogue.md
           if-no-files-found: ignore
-
-  publication-plan:
-    if: >-
-      github.event_name == 'pull_request' && github.event.pull_request.merged == true &&
-      github.event.pull_request.head.repo.full_name == github.repository &&
-      github.event.pull_request.head.ref == 'devops'
-    runs-on: ubuntu-latest
-    outputs:
-      required: ${{ steps.plan.outputs.required }}
-      version: ${{ steps.plan.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha }}
-          fetch-depth: 0
-          persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Read the reviewed release plan
-        id: plan
-        env:
-          PR_HEAD: ${{ github.event.pull_request.head.sha }}
-        run: |
-          python - <<'PY'
-          import os, re, sys
-          from pathlib import Path
-          sys.path.insert(0, 'build')
-          from promote_release import verify
-          plan = verify(Path.cwd(), os.environ['PR_HEAD'])
-          assert re.fullmatch(r'\d+\.\d+\.\d+', plan['version'])
-          assert plan['tag'] == 'v' + plan['version']
-          assert isinstance(plan['release_required'], bool)
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-              output.write('required=' + str(plan['release_required']).lower() + '\n')
-              output.write('version=' + plan['version'] + '\n')
-          PY
-
-  publish:
-    needs: publication-plan
-    if: needs.publication-plan.outputs.required == 'true'
-    permissions:
-      contents: write
-      actions: write
-    uses: ./.github/workflows/release.yml
-    with:
-      release_ref: ${{ github.event.pull_request.merge_commit_sha }}
-      release_version: ${{ needs.publication-plan.outputs.version }}
-      publish_release: true
+          include-hidden-files: true
