@@ -4,28 +4,58 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      release_ref:
+        required: true
+        type: string
+      release_version:
+        required: true
+        type: string
+      publish_release:
+        required: true
+        type: boolean
 
 permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: windows-release
   cancel-in-progress: false
 
 jobs:
   package:
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_ref || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
       - name: Check version and run tests
+        id: version
         shell: pwsh
+        env:
+          EXPECTED_VERSION: ${{ inputs.release_version }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release || startsWith(github.ref, 'refs/tags/v') }}
         run: |
           [xml]$project = Get-Content src/SeeWallpaper.App/SeeWallpaper.App.csproj
           $version = [string]$project.Project.PropertyGroup.Version
           if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag and application version must match.' }
+          if ($env:EXPECTED_VERSION -and $env:EXPECTED_VERSION -ne $version) { throw 'Reviewed release plan and application version must match.' }
+          if ($version -notmatch '^\d+\.\d+\.\d+$') { throw 'A stable X.Y.Z application version is required.' }
+          if ($env:PUBLISH_RELEASE -eq 'true' -and !(Test-Path "docs/releases/v$version.md")) { throw 'Release notes are missing.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          python -m unittest discover -s build/tests -p 'test_release_automation.py'
+          if ($LASTEXITCODE -ne 0) { throw 'Release automation tests failed.' }
           dotnet restore seeWallpaper.sln
           if ($LASTEXITCODE -ne 0) { throw 'Restore failed.' }
           dotnet build seeWallpaper.sln --configuration Release --no-restore
@@ -51,25 +81,35 @@ jobs:
           ./build/prepare-release.ps1
       - uses: actions/upload-artifact@v4
         with:
-          name: seeWallpaper-Windows-x64
+          name: seeWallpaper-Windows-${{ steps.version.outputs.version }}-x64
           path: dist/release/*
           if-no-files-found: error
           retention-days: 30
 
   publish:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: inputs.publish_release == true || startsWith(github.ref, 'refs/tags/v')
     needs: package
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_ref || github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/download-artifact@v4
         with:
-          name: seeWallpaper-Windows-x64
+          name: seeWallpaper-Windows-${{ needs.package.outputs.version }}-x64
           path: release-assets
       - name: Publish downloads
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ needs.package.outputs.version }}
         run: |
-          gh release create "$GITHUB_REF_NAME" release-assets/* --repo "$GITHUB_REPOSITORY" --verify-tag --title "seeWallpaper ${GITHUB_REF_NAME#v}" --notes-file "docs/releases/$GITHUB_REF_NAME.md"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python build/publish_release.py --repository "$GITHUB_REPOSITORY" --version "$RELEASE_VERSION" --assets release-assets
