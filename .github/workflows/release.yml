@@ -62,6 +62,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Build failed.' }
           dotnet test seeWallpaper.sln --configuration Release --no-build
           if ($LASTEXITCODE -ne 0) { throw 'Tests failed.' }
+          ./build/test-application-update.ps1
       - name: Install the signed Inno Setup compiler
         shell: pwsh
         run: |

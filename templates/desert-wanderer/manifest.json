@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "desert-wanderer",
+  "name": "Desert Wanderer",
+  "description": "A cloaked wanderer on a rocky ridge above an endless desert at sunset, with a cloak rippling in the wind, heat haze on the horizon, blowing sand, sun rays, a giant planet and an occasional worm sign in the dunes.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Space",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Sun glow",
+      "default": "#ffb04a"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "intensity",
+      "type": "slider",
+      "label": "Light intensity",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "wind",
+      "type": "slider",
+      "label": "Wind and sand",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    }
+  ]
+}

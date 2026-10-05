@@ -5,15 +5,16 @@
       <DockPanel LastChildFill="False">
         <StackPanel DockPanel.Dock="Top">
           <StackPanel Orientation="Horizontal" Margin="0,0,0,30"><Image Source="{StaticResource BrandIcon}" Width="28" Height="28"/><TextBlock Text="seeWallpaper" FontSize="22" FontWeight="SemiBold" Margin="8,0,0,0" VerticalAlignment="Center"/></StackPanel>
-          <Button Content="Home" Click="Home_Click"/><Button Content="Gallery" Click="Gallery_Click"/>
-          <Button x:Name="OnlineButton" Content="Online" Click="Online_Click" ToolTip="New wallpapers published on GitHub"/>
-          <Button Content="Displays" Click="Screens_Click"/><Button Content="Installed" Click="Installed_Click"/>
-          <Button Content="Favorites" Click="Favorites_Click"/><Button Content="Create" Click="Create_Click"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE80F;" Content="{local:Translate Key=Home}" Click="Home_Click"/><Button Style="{StaticResource NavButton}" Tag="&#xE8B9;" Content="{local:Translate Key=Gallery}" Click="Gallery_Click"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE774;" x:Name="OnlineButton" Content="{local:Translate Key=Online}" Click="Online_Click" ToolTip="{local:Translate Key=NewWallpapersPublishedOnGitHub}"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE7F4;" Content="{local:Translate Key=Displays}" Click="Screens_Click"/><Button Style="{StaticResource NavButton}" Tag="&#xE8EE;" Content="{local:Translate Key=Rotation}" Click="Rotation_Click" ToolTip="{local:Translate Key=ChangeWallpapersAutomatically}"/><Button Style="{StaticResource NavButton}" Tag="&#xE896;" Content="{local:Translate Key=Installed}" Click="Installed_Click"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE734;" Content="{local:Translate Key=Favorites}" Click="Favorites_Click"/><Button Style="{StaticResource NavButton}" Tag="&#xE710;" Content="{local:Translate Key=Create}" Click="Create_Click"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom">
-          <Button x:Name="CheckUpdateButton" Content="Check update" Click="CheckUpdate_Click" ToolTip="Compare your version with GitHub main"/>
-          <Button x:Name="AboutButton" Content="About" Click="About_Click"/>
-          <Button Content="Settings" Click="Settings_Click"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE774;" x:Name="LanguageButton" Click="Language_Click" ToolTip="{local:Translate Key=ChangeTheApplicationLanguage}" AutomationProperties.Name="{local:Translate Key=ChangeTheApplicationLanguage}"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE895;" x:Name="CheckUpdateButton" Content="{local:Translate Key=CheckUpdate}" Click="CheckUpdate_Click" ToolTip="{local:Translate Key=CompareYourVersionWithGitHubMain}"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE946;" x:Name="AboutButton" Content="{local:Translate Key=About}" Click="About_Click"/>
+          <Button Style="{StaticResource NavButton}" Tag="&#xE713;" Content="{local:Translate Key=Settings}" Click="Settings_Click"/>
         </StackPanel>
       </DockPanel>
     </Border>
@@ -24,28 +25,32 @@
           <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
-              <TextBlock x:Name="UpdateTitle" Text="Application updates" FontWeight="SemiBold" Foreground="#F5B84B" TextWrapping="Wrap"/>
+              <TextBlock x:Name="UpdateTitle" Text="{local:Translate Key=ApplicationUpdates}" FontWeight="SemiBold" Foreground="#F5B84B" TextWrapping="Wrap"/>
               <TextBlock x:Name="UpdateDescription" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+              <ProgressBar x:Name="UpdateProgress" Minimum="0" Maximum="100" Height="5" Margin="0,10,0,0" Visibility="Collapsed" Foreground="{StaticResource Accent}" Background="{StaticResource Panel}" BorderThickness="0" AutomationProperties.Name="{local:Translate Key=DownloadingApplicationUpdate}"/>
             </StackPanel>
-            <Button x:Name="DownloadUpdateButton" Grid.Column="1" Content="Download update" Click="DownloadUpdate_Click" Background="{StaticResource Accent}" VerticalAlignment="Center" Margin="0" Visibility="Collapsed"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+              <Button x:Name="DownloadUpdateButton" Content="{local:Translate Key=InstallApplicationUpdate}" Click="DownloadUpdate_Click" Background="{StaticResource Accent}" Margin="0" Visibility="Collapsed"/>
+              <Button x:Name="CancelUpdateButton" Content="{local:Translate Key=Cancel}" Click="CancelUpdate_Click" Margin="0,6,0,0" Visibility="Collapsed"/>
+            </StackPanel>
           </Grid>
         </Border>
         <Border x:Name="StartupBanner" Visibility="Collapsed" Background="#2A2238" BorderBrush="#F5B84B" BorderThickness="1" CornerRadius="10" Padding="16,12" Margin="0,0,0,18">
           <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
-              <TextBlock Text="⚠ seeWallpaper does not start with Windows" FontWeight="SemiBold" Foreground="#F5B84B"/>
-              <TextBlock Text="After a restart, your wallpapers stay off until you open the app. With startup enabled, they come back on every display automatically." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+              <TextBlock Text="{local:Translate Key=SeeWallpaperDoesNotStartWithWindows}" FontWeight="SemiBold" Foreground="#F5B84B"/>
+              <TextBlock Text="{local:Translate Key=AfterARestartYourWallpapersStayOffUntilYouOpenTheAppWithStartupEnabledTheyComeBa}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
             </StackPanel>
-            <Button Grid.Column="1" Content="Start with Windows" Click="EnableStartup_Click" Background="{StaticResource Accent}" VerticalAlignment="Center" Margin="0,0,8,0"/>
-            <Button Grid.Column="2" Content="Not now" Click="DismissStartup_Click" VerticalAlignment="Center" Margin="0"/>
+            <Button Grid.Column="1" Content="{local:Translate Key=StartWithWindows}" Click="EnableStartup_Click" Background="{StaticResource Accent}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <Button Grid.Column="2" Content="{local:Translate Key=NotNow}" Click="DismissStartup_Click" VerticalAlignment="Center" Margin="0"/>
           </Grid>
         </Border>
-        <TextBlock x:Name="PageTitle" Text="Choose your wallpaper" FontSize="30" FontWeight="SemiBold"/>
-        <TextBlock x:Name="PageDescription" Text="Choose a scene, then select the displays where it should run." Foreground="{StaticResource Muted}" Margin="0,7,0,0" TextWrapping="Wrap"/>
+        <TextBlock x:Name="PageTitle" Text="{local:Translate Key=ChooseYourWallpaper}" FontSize="30" FontWeight="SemiBold"/>
+        <TextBlock x:Name="PageDescription" Text="{local:Translate Key=ChooseASceneThenSelectTheDisplaysWhereItShouldRun}" Foreground="{StaticResource Muted}" Margin="0,7,0,0" TextWrapping="Wrap"/>
         <StackPanel x:Name="PageActions" Orientation="Horizontal" Margin="0,16,0,0">
-          <Button Content="Manage my displays" Click="Screens_Click" Margin="0,0,10,0"/>
-          <Button Content="Import .seewall" Click="Import_Click" Margin="0"/>
+          <Button Content="{local:Translate Key=ManageMyDisplays}" Click="Screens_Click" Margin="0,0,10,0"/>
+          <Button Content="{local:Translate Key=ImportSeewall}" Click="Import_Click" Margin="0"/>
         </StackPanel>
       </StackPanel>
       <ScrollViewer x:Name="GalleryView" Grid.Row="1" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto">
@@ -61,14 +66,14 @@
                   <StackPanel Margin="16">
                     <TextBlock Text="{Binding Name}" FontSize="19" FontWeight="SemiBold" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding Description}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,6,0,12"/>
-                    <Button Content="Apply to my displays" Tag="{Binding}" Click="Apply_Click" Background="{StaticResource Accent}"/>
-                    <StackPanel Orientation="Horizontal"><Button Content="Preview" Tag="{Binding}" Click="Preview_Click" Margin="0,0,8,0"/><Button Content="Customize" Tag="{Binding}" Click="Customize_Click" Margin="0"/></StackPanel>
-                    <Expander Header="More actions" Foreground="{StaticResource Muted}" Margin="0,12,0,0">
+                    <Button Content="{local:Translate Key=ApplyToMyDisplays}" Tag="{Binding}" Click="Apply_Click" Background="{StaticResource Accent}"/>
+                    <StackPanel Orientation="Horizontal"><Button Content="{local:Translate Key=Preview}" Tag="{Binding}" Click="Preview_Click" Margin="0,0,8,0"/><Button Content="{local:Translate Key=Customize}" Tag="{Binding}" Click="Customize_Click" Margin="0"/></StackPanel>
+                    <Expander Header="{local:Translate Key=MoreActions}" Foreground="{StaticResource Muted}" Margin="0,12,0,0">
                       <WrapPanel Margin="0,8,0,0">
-                        <Button Content="Favorite" Tag="{Binding}" Click="Favorite_Click" Margin="0,0,6,6"/>
-                        <Button Content="Export" Tag="{Binding}" Click="Export_Click" Margin="0,0,6,6"/>
-                        <Button Content="Duplicate" Tag="{Binding}" Click="Duplicate_Click" Margin="0,0,6,6"/>
-                        <Button Content="Uninstall" Tag="{Binding}" Click="Uninstall_Click" Margin="0,0,6,6"/>
+                        <Button Content="{local:Translate Key=Favorite}" Tag="{Binding}" Click="Favorite_Click" Margin="0,0,6,6"/>
+                        <Button Content="{local:Translate Key=Export}" Tag="{Binding}" Click="Export_Click" Margin="0,0,6,6"/>
+                        <Button Content="{local:Translate Key=Duplicate}" Tag="{Binding}" Click="Duplicate_Click" Margin="0,0,6,6"/>
+                        <Button Content="{local:Translate Key=Uninstall}" Tag="{Binding}" Click="Uninstall_Click" Margin="0,0,6,6"/>
                       </WrapPanel>
                     </Expander>
                   </StackPanel>
@@ -81,7 +86,7 @@
       <ScrollViewer x:Name="OnlineView" Grid.Row="1" Visibility="Collapsed" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto">
         <StackPanel>
           <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-            <Button x:Name="OnlineRefreshButton" Content="Check again" Click="OnlineRefresh_Click" Margin="0,0,12,0"/>
+            <Button x:Name="OnlineRefreshButton" Content="{local:Translate Key=CheckAgain}" Click="OnlineRefresh_Click" Margin="0,0,12,0"/>
             <TextBlock x:Name="OnlineNotice" Foreground="{StaticResource Muted}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,8"/>
           </StackPanel>
           <ItemsControl x:Name="OnlineList">
@@ -108,8 +113,8 @@
       </ScrollViewer>
       <ScrollViewer x:Name="ScreensView" Grid.Row="1" Visibility="Collapsed" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto">
         <StackPanel>
-          <StackPanel Orientation="Horizontal"><Button Content="Identify displays" Click="Identify_Click" Margin="0,0,10,12"/><Button Content="Refresh" Click="RefreshScreens_Click"/></StackPanel>
-          <TextBlock Text="Display numbers match the identification labels shown by this app." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+          <StackPanel Orientation="Horizontal"><Button Content="{local:Translate Key=IdentifyDisplays}" Click="Identify_Click" Margin="0,0,10,12"/><Button Content="{local:Translate Key=Refresh}" Click="RefreshScreens_Click"/></StackPanel>
+          <TextBlock Text="{local:Translate Key=DisplayNumbersMatchTheIdentificationLabelsShownByThisApp}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,12"/>
           <Canvas x:Name="DisplayLayout" Height="160" Margin="0,0,0,20"/>
           <TextBlock x:Name="ScreenNotice" TextWrapping="Wrap" Foreground="{StaticResource Muted}" Margin="0,0,0,16"/>
           <ItemsControl x:Name="DisplayList">
@@ -120,12 +125,12 @@
                     <TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold"/>
                     <TextBlock Text="{Binding Details}" Foreground="{StaticResource Muted}" Margin="0,4,0,12"/>
                     <TextBlock Text="{Binding CurrentScene}" TextWrapping="Wrap" Margin="0,0,0,16"/>
-                    <TextBlock Text="Choose a wallpaper" Margin="0,0,0,6"/>
+                    <TextBlock Text="{local:Translate Key=ChooseAWallpaper}" Margin="0,0,0,6"/>
                     <Grid>
                       <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                      <ComboBox ItemsSource="{Binding Templates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}" MinHeight="36" VerticalContentAlignment="Center" Margin="0,0,12,0" AutomationProperties.Name="Choose the wallpaper for this display"/>
-                      <Button Grid.Column="1" Content="Apply to this display" Tag="{Binding}" Click="ApplyToScreen_Click" Background="{StaticResource Accent}" Margin="0,0,8,0"/>
-                      <Button Grid.Column="2" Content="Remove" Tag="{Binding}" Click="RemoveFromScreen_Click" IsEnabled="{Binding CanRemove}" ToolTip="{Binding RemoveHint}" Margin="0"/>
+                      <ComboBox ItemsSource="{Binding Templates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTemplate, Mode=TwoWay}" MinHeight="36" VerticalContentAlignment="Center" Margin="0,0,12,0" AutomationProperties.Name="{local:Translate Key=ChooseTheWallpaperForThisDisplay}"/>
+                      <Button Grid.Column="1" Content="{local:Translate Key=ApplyToThisDisplay}" Tag="{Binding}" Click="ApplyToScreen_Click" Background="{StaticResource Accent}" Margin="0,0,8,0"/>
+                      <Button Grid.Column="2" Content="{local:Translate Key=Remove}" Tag="{Binding}" Click="RemoveFromScreen_Click" IsEnabled="{Binding CanRemove}" ToolTip="{Binding RemoveHint}" Margin="0"/>
                     </Grid>
                   </StackPanel>
                 </Border>
@@ -133,6 +138,9 @@
             </ItemsControl.ItemTemplate>
           </ItemsControl>
         </StackPanel>
+      </ScrollViewer>
+      <ScrollViewer x:Name="RotationView" Grid.Row="1" Visibility="Collapsed" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel x:Name="RotationPanel" MaxWidth="920" HorizontalAlignment="Left"/>
       </ScrollViewer>
       <ScrollViewer x:Name="AboutView" Grid.Row="1" Visibility="Collapsed" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
         <StackPanel MaxWidth="780">
@@ -142,39 +150,39 @@
             <StackPanel Grid.Column="1">
               <TextBlock Text="seeWallpaper" FontSize="32" FontWeight="SemiBold"/>
               <TextBlock x:Name="AboutVersion" Foreground="{StaticResource Muted}" Margin="0,4,0,10"/>
-              <TextBlock Text="Animated scenes that bring your Windows desktop to life." FontSize="16" TextWrapping="Wrap"/>
+              <TextBlock Text="{local:Translate Key=AnimatedScenesThatBringYourWindowsDesktopToLife}" FontSize="16" TextWrapping="Wrap"/>
             </StackPanel>
           </Grid>
           <Border Background="{StaticResource Panel}" CornerRadius="12" Padding="24" Margin="0,0,0,28">
             <StackPanel>
-              <TextBlock Text="Creator" Foreground="{StaticResource Muted}" Margin="0,0,0,6"/>
+              <TextBlock Text="{local:Translate Key=Creator}" Foreground="{StaticResource Muted}" Margin="0,0,0,6"/>
               <TextBlock Text="Michael Ruffenach" FontSize="26" FontWeight="SemiBold" TextWrapping="Wrap"/>
-              <TextBlock Text="Design and creation of seeWallpaper." Foreground="{StaticResource Muted}" Margin="0,8,0,0" TextWrapping="Wrap"/>
+              <TextBlock Text="{local:Translate Key=DesignAndCreationOfSeeWallpaper}" Foreground="{StaticResource Muted}" Margin="0,8,0,0" TextWrapping="Wrap"/>
             </StackPanel>
           </Border>
-          <TextBlock Text="What you can do" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,16"/>
-          <TextBlock Text="A scene for every display" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Choose which displays to animate, apply different scenes, or use duplicate and span modes." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
-          <TextBlock Text="Make your desktop your own" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Preview wallpapers, adjust their settings, and find your favorites." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
-          <TextBlock Text="Scenes to share" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Import and export .seewall packages, or duplicate a scene to customize it." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
-          <TextBlock Text="Adjustable performance" FontSize="17" FontWeight="SemiBold"/>
-          <TextBlock Text="Choose your performance profile and configure fullscreen or battery pauses." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,24"/>
+          <TextBlock Text="{local:Translate Key=WhatYouCanDo}" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,16"/>
+          <TextBlock Text="{local:Translate Key=ASceneForEveryDisplay}" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="{local:Translate Key=ChooseWhichDisplaysToAnimateApplyDifferentScenesOrUseDuplicateAndSpanModes}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
+          <TextBlock Text="{local:Translate Key=MakeYourDesktopYourOwn}" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="{local:Translate Key=PreviewWallpapersAdjustTheirSettingsAndFindYourFavorites}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
+          <TextBlock Text="{local:Translate Key=ScenesToShare}" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="{local:Translate Key=ImportAndExportSeewallPackagesOrDuplicateASceneToCustomizeIt}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,16"/>
+          <TextBlock Text="{local:Translate Key=AdjustablePerformance}" FontSize="17" FontWeight="SemiBold"/>
+          <TextBlock Text="{local:Translate Key=ChooseYourPerformanceProfileAndConfigureFullscreenOrBatteryPauses}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,5,0,24"/>
           <WrapPanel Margin="0,0,0,28">
-            <Button Content="Explore wallpapers" Click="Gallery_Click" Background="{StaticResource Accent}" Margin="0,0,12,8"/>
-            <Button Content="Choose my displays" Click="Screens_Click"/>
+            <Button Content="{local:Translate Key=ExploreWallpapers}" Click="Gallery_Click" Background="{StaticResource Accent}" Margin="0,0,12,8"/>
+            <Button Content="{local:Translate Key=ChooseMyDisplays}" Click="Screens_Click"/>
           </WrapPanel>
           <Border BorderBrush="#292E40" BorderThickness="0,1,0,0" Padding="0,22,0,12">
             <StackPanel>
-              <TextBlock Text="Two ways to get started" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,10"/>
-              <TextBlock Text="Windows installer: shortcuts, desktop context menu, and uninstall from Windows Settings." Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,8"/>
-              <TextBlock Text="ZIP edition: extract the folder, then launch seeWallpaper. A getting-started guide is included." Foreground="{StaticResource Muted}" TextWrapping="Wrap"/>
+              <TextBlock Text="{local:Translate Key=TwoWaysToGetStarted}" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,10"/>
+              <TextBlock Text="{local:Translate Key=WindowsInstallerShortcutsDesktopContextMenuAndUninstallFromWindowsSettings}" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,8"/>
+              <TextBlock Text="{local:Translate Key=ZIPEditionExtractTheFolderThenLaunchSeeWallpaperAGettingStartedGuideIsIncluded}" Foreground="{StaticResource Muted}" TextWrapping="Wrap"/>
             </StackPanel>
           </Border>
         </StackPanel>
       </ScrollViewer>
-      <TextBlock Grid.Row="2" x:Name="DisplayStatus" Text="Detecting displays…" TextWrapping="Wrap" Foreground="{StaticResource Muted}" Margin="0,12,0,0" AutomationProperties.LiveSetting="Polite"/>
+      <TextBlock Grid.Row="2" x:Name="DisplayStatus" Text="{local:Translate Key=DetectingDisplays}" TextWrapping="Wrap" Foreground="{StaticResource Muted}" Margin="0,12,0,0" AutomationProperties.LiveSetting="Polite"/>
     </Grid>
   </Grid>
 </Window>

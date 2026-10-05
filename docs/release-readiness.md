@@ -1,6 +1,6 @@
-# Public release readiness - 1.5.0
+# Release validation record - 1.5.0
 
-Prepared locally on 5 October 2026. Publication is a separate step; the public 1.4.0 download does not contain the 1.5.0 changes.
+Historical local validation recorded on 5 October 2026 for 1.5.0. Versions 1.5.0 and [1.6.0](https://github.com/Hytachi182/seeWallpapers/releases/tag/v1.6.0) have since been published; the local source now prepares 1.7.0. The checks below describe the original 1.5.0 build, not validation of later local additions.
 
 ## Implemented
 
@@ -28,4 +28,4 @@ Monitor identity uses [`EnumDisplayDevicesW` with `EDD_GET_DEVICE_INTERFACE_NAME
 3. Check sleep/resume, lock/unlock, sign-in startup, quit during loading, and a long-running session on representative GPUs. Record CPU/GPU/memory consumption with several scenes.
 4. Publisher signing requires the owner's trusted signing certificate. Checksums and the signed Microsoft bootstrapper do not sign seeWallpaper itself.
 
-Publish as a public beta while these acceptance checks remain outstanding. Build checks alone do not certify broad hardware compatibility.
+The physical-hardware acceptance checks above remain outstanding in this local record. Build checks alone do not certify broad hardware compatibility.

@@ -9,12 +9,12 @@ public sealed class OnlineTemplateCardViewModel(OnlineTemplate template, string?
     public bool IsUpdate => installedVersion is not null;
     public string Name => Template.Manifest.Name;
     public string PreviewUrl => Template.PreviewUrl;
-    public string Category => Template.Manifest.Category;
-    public string Description => Template.Manifest.Description;
+    public string Category => Localization.Metadata(Template.Manifest.Category);
+    public string Description => Localization.Metadata(Template.Manifest.Description);
     public string Status => IsUpdate
-        ? $"Update available · v{installedVersion} → v{Template.Manifest.Version}"
-        : $"New · v{Template.Manifest.Version} · {Template.SizeBytes / (1024d * 1024):0.#} MB";
-    public string ActionLabel => IsUpdate ? "Update" : "Download";
+        ? Localization.F("UpdateAvailableVVFormat", installedVersion, Template.Manifest.Version)
+        : Localization.F("NewVMBFormat", Template.Manifest.Version, Template.SizeBytes / (1024d * 1024));
+    public string ActionLabel => IsUpdate ? Localization.T("Update") : Localization.T("Download");
 
     /// <summary>Returns the card to offer, or null when the local copy is current or belongs to another author.</summary>
     public static OnlineTemplateCardViewModel? Offer(OnlineTemplate template, SeeWallpaper.Core.TemplateManifest? installed)

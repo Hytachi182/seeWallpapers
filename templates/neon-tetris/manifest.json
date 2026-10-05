@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "neon-tetris",
+  "name": "Neon Tetris",
+  "description": "A neon falling-blocks game that plays itself: an AI places every piece, clears lines with particles, chains combos, levels up and starts a new game when it tops out.",
+  "author": "seeWallpaper",
+  "version": "1.1.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Neon accent",
+      "default": "#b46bff"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Game speed",
+      "min": 0.3,
+      "max": 3,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "skill",
+      "type": "slider",
+      "label": "AI skill",
+      "min": 0.5,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.9
+    },
+    {
+      "id": "intensity",
+      "type": "slider",
+      "label": "Glow intensity",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "glow",
+      "type": "boolean",
+      "label": "Block glow",
+      "default": true
+    },
+    {
+      "id": "stats",
+      "type": "boolean",
+      "label": "Show score and next pieces",
+      "default": true
+    }
+  ]
+}

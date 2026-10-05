@@ -1,6 +1,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using SeeWallpaper.App;
 using Xunit;
 
@@ -9,62 +10,56 @@ namespace SeeWallpaper.App.Tests;
 public sealed class ApplicationUpdateServiceTests
 {
     [Theory]
-    [InlineData("1.4.0", "1.4.0.0")]
-    [InlineData("1.3.9", "1.4.0.0")]
-    public async Task Current_or_older_main_does_not_offer_an_update(string main, string installed)
+    [InlineData("1.4.0", "1.4.0.0", false)]
+    [InlineData("1.3.9", "1.4.0.0", false)]
+    [InlineData("1.10.0", "1.9.0.0", true)]
+    public async Task Compares_published_versions_numerically(string published, string installed, bool available)
     {
-        using HttpClient http = CreateClient(main, (_, _) => throw new InvalidOperationException("No release request expected."));
+        using HttpClient http = CreateClient(published);
         ApplicationUpdateResult result = await new ApplicationUpdateService(http).CheckAsync(new Version(installed));
+        Assert.Equal(available, result.UpdateAvailable);
+        Assert.Equal($"https://github.com/Hytachi182/seeWallpapers/releases/tag/v{published}", result.ReleaseUrl!.AbsoluteUri);
+        Assert.Equal("seeWallpaper-Setup-x64.exe", result.Installer!.Name);
+        Assert.NotNull(result.Portable);
+        Assert.NotNull(result.ChecksumsUrl);
+    }
+
+    [Fact]
+    public async Task No_published_release_does_not_offer_an_unreleased_main_version()
+    {
+        using HttpClient http = new(new FakeHandler(_ => new(HttpStatusCode.NotFound)));
+        ApplicationUpdateResult result = await new ApplicationUpdateService(http).CheckAsync(new Version("1.4.0"));
         Assert.False(result.UpdateAvailable);
         Assert.Null(result.ReleaseUrl);
     }
 
-    [Fact]
-    public async Task Newer_main_offers_its_matching_published_release()
+    [Theory]
+    [InlineData(true, false, false, false)]
+    [InlineData(false, true, false, false)]
+    [InlineData(false, false, true, false)]
+    [InlineData(false, false, false, true)]
+    public async Task Unusable_releases_are_not_offered(bool draft, bool prerelease, bool missingWindows, bool missingChecksums)
     {
-        using HttpClient http = CreateClient("1.10.0", (request, _) =>
-        {
-            Assert.Equal("https://api.github.com/repos/Hytachi182/seeWallpapers/releases/tags/v1.10.0", request.RequestUri!.AbsoluteUri);
-            return new(HttpStatusCode.OK) { Content = new StringContent("""
-                {"draft":false,"prerelease":false,"assets":[{"name":"seeWallpaper-Setup-x64.exe"}]}
-                """) };
-        });
-        ApplicationUpdateResult result = await new ApplicationUpdateService(http).CheckAsync(new Version("1.9.0.0"));
-        Assert.True(result.UpdateAvailable);
-        Assert.Equal("https://github.com/Hytachi182/seeWallpapers/releases/tag/v1.10.0", result.ReleaseUrl!.AbsoluteUri);
-    }
-
-    [Fact]
-    public async Task Unpublished_main_still_reports_newer_version_without_a_download()
-    {
-        using HttpClient http = CreateClient("1.5.0", (_, _) => new(HttpStatusCode.NotFound));
+        using HttpClient http = CreateClient("1.5.0", draft, prerelease, missingWindows, missingChecksums);
         ApplicationUpdateResult result = await new ApplicationUpdateService(http).CheckAsync(new Version("1.4.0"));
-        Assert.True(result.UpdateAvailable);
+        Assert.False(result.UpdateAvailable);
         Assert.Null(result.ReleaseUrl);
     }
 
     [Theory]
-    [InlineData(true, false, "seeWallpaper-Setup-x64.exe")]
-    [InlineData(false, true, "seeWallpaper-Setup-x64.exe")]
-    [InlineData(false, false, "source.zip")]
-    public async Task Draft_prerelease_or_missing_windows_assets_do_not_offer_a_download(bool draft, bool prerelease, string asset)
+    [InlineData("http://github.com/Hytachi182/seeWallpapers/releases/download/v1.5.0/")]
+    [InlineData("https://example.org/Hytachi182/seeWallpapers/releases/download/v1.5.0/")]
+    [InlineData("https://github.com/other/repo/releases/download/v1.5.0/")]
+    public async Task Rejects_downloads_outside_the_official_release(string prefix)
     {
-        using HttpClient http = CreateClient("1.5.0", (_, _) => new(HttpStatusCode.OK)
-        {
-            Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(new
-            {
-                draft, prerelease, assets = new[] { new { name = asset } }
-            }))
-        });
-        ApplicationUpdateResult result = await new ApplicationUpdateService(http).CheckAsync(new Version("1.4.0"));
-        Assert.True(result.UpdateAvailable);
-        Assert.Null(result.ReleaseUrl);
+        using HttpClient http = CreateClient("1.5.0", prefix: prefix);
+        await Assert.ThrowsAsync<InvalidDataException>(() => new ApplicationUpdateService(http).CheckAsync(new Version("1.4.0")));
     }
 
     [Fact]
-    public async Task Invalid_remote_version_is_an_error_instead_of_up_to_date()
+    public async Task Invalid_release_version_is_an_error()
     {
-        using HttpClient http = CreateClient("unknown", (_, _) => new(HttpStatusCode.NotFound));
+        using HttpClient http = CreateClient("unknown");
         await Assert.ThrowsAsync<InvalidDataException>(() => new ApplicationUpdateService(http).CheckAsync(new Version("1.4.0")));
     }
 
@@ -73,18 +68,27 @@ public sealed class ApplicationUpdateServiceTests
     [InlineData(HttpStatusCode.ServiceUnavailable)]
     public async Task Github_errors_are_not_reported_as_no_update(HttpStatusCode status)
     {
-        using HttpClient http = new(new FakeHandler((_, _) => new(status)));
+        using HttpClient http = new(new FakeHandler(_ => new(status)));
         await Assert.ThrowsAsync<HttpRequestException>(() => new ApplicationUpdateService(http).CheckAsync(new Version("1.4.0")));
     }
 
-    private static HttpClient CreateClient(string main, Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> release) =>
-        new(new FakeHandler((request, token) => request.RequestUri!.Host == "raw.githubusercontent.com"
-            ? new(HttpStatusCode.OK) { Content = new StringContent($"<Project><PropertyGroup><Version>{main}</Version></PropertyGroup></Project>") }
-            : release(request, token)));
-
-    private sealed class FakeHandler(Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> respond) : HttpMessageHandler
+    private static HttpClient CreateClient(string version, bool draft = false, bool prerelease = false,
+        bool missingWindows = false, bool missingChecksums = false, string? prefix = null) => new(new FakeHandler(request =>
     {
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
-            Task.FromResult(respond(request, cancellationToken));
+        Assert.Equal("https://api.github.com/repos/Hytachi182/seeWallpapers/releases/latest", request.RequestUri!.AbsoluteUri);
+        string[] names = missingWindows ? ["source.zip", "SHA256SUMS.txt"] : ["seeWallpaper-Setup-x64.exe", "seeWallpaper-Portable-x64.zip", "SHA256SUMS.txt"];
+        return new(HttpStatusCode.OK) { Content = new StringContent(JsonSerializer.Serialize(new
+        {
+            tag_name = "v" + version, draft, prerelease,
+            assets = names.Where(name => !missingChecksums || name != "SHA256SUMS.txt").Select(name => new
+            {
+                name, size = 100, browser_download_url = (prefix ?? $"https://github.com/Hytachi182/seeWallpapers/releases/download/v{version}/") + name
+            })
+        })) };
+    }));
+
+    private sealed class FakeHandler(Func<HttpRequestMessage, HttpResponseMessage> respond) : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(respond(request));
     }
 }

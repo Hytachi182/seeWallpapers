@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>..\..\assets\seewallpaper.ico</ApplicationIcon>
-    <Version>1.5.0</Version>
+    <Version>1.7.0</Version>
     <Authors>Michael Ruffenach</Authors>
   </PropertyGroup>
   <ItemGroup>
@@ -23,6 +23,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="..\..\seewallpaper.png" Link="Assets\seewallpaper.png" />
+    <EmbeddedResource Include="Languages\*.json" />
+    <EmbeddedResource Include="UpdateRunner.ps1" />
     <Content Include="..\..\templates\**\*" Link="templates\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -56,9 +56,9 @@ try {
       const before = await page.screenshot();
       const alternative = setting.type === 'color' ? '#ff4455' : setting.type === 'boolean' ? !setting.default : setting.max;
       await page.evaluate(([id, value]) => window.callbacks.settings({ [id]: value }), [setting.id, alternative]);
-      if (setting.id === 'speed' && await page.locator('#fragment').count()) {
+      if (setting.id === 'speed' || (id === 'neon-tetris' && setting.id === 'skill')) {
         await page.evaluate(() => window.callbacks.resume());
-        await page.waitForTimeout(120);
+        await page.waitForTimeout(id === 'neon-tetris' ? 350 : 120);
         await page.evaluate(() => window.callbacks.pause());
       }
       const after = await page.screenshot();

@@ -39,3 +39,6 @@ jobs:
       - run: dotnet restore seeWallpaper.sln
       - run: dotnet build seeWallpaper.sln --configuration Release --no-restore
       - run: dotnet test seeWallpaper.sln --configuration Release --no-build
+      - name: Test automatic update helper
+        shell: pwsh
+        run: ./build/test-application-update.ps1
