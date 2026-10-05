@@ -1,12 +1,12 @@
 {
   "version": "1.8.0",
   "tag": "v1.8.0",
-  "base_tag": "v1.7.0",
+  "base_tag": "v1.8.0",
   "release_required": false,
   "template_count": 31,
   "added": [],
   "updated": [],
   "removed": [],
-  "source_commit": "27c539319745e642d9f6d60baf543273eddffb9d",
+  "source_commit": "4024643088f1ab333186a85a742816125da4358f",
   "title": "Sync devops documentation"
 }
