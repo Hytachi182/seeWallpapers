@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "digital-rain-3d",
   "name": "Digital Rain 3D",
-  "description": "Three layers of animated Matrix glyphs with luminous heads, independent depth and dark desktop space.",
+  "description": "Matrix code rain in three depth planes with focus blur, mirrored glyphs that mutate as they fall, a clock revealed by the rain, CRT scanlines and occasional glitches.",
   "author": "seeWallpaper",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "category": "Matrix",
   "engine": "web",
   "entry": "index.html",
@@ -27,9 +27,30 @@
       "default": 1
     },
     {
+      "id": "density",
+      "type": "slider",
+      "label": "Rain density",
+      "min": 0.3,
+      "max": 1.5,
+      "step": 0.1,
+      "default": 1
+    },
+    {
       "id": "glow",
       "type": "boolean",
       "label": "Glow",
+      "default": true
+    },
+    {
+      "id": "clock",
+      "type": "boolean",
+      "label": "Show the time in the rain",
+      "default": true
+    },
+    {
+      "id": "glitch",
+      "type": "boolean",
+      "label": "Glitch effects",
       "default": true
     }
   ]
