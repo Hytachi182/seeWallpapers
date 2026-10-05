@@ -122,6 +122,16 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 [Explore the scenes and rendering tools](docs/template-artwork.md)
 
+**Crystal Run** is an original self-playing pixel platform adventure: a survey robot jumps between floating ruins, collects crystals and reaches beacons across dawn, twilight and moonlight trails. [Theme details](docs/crystal-run.md).
+
+**Orbital Defender** is an original self-playing retro space shooter with drone formations, dodging autopilot, destructible shields and escalating waves. [Theme details](docs/orbital-defender.md).
+
+**Amber Maze** is an original self-playing maze chase with a lantern robot, collectible shards, patrolling sentinels, overcharge bonuses and freshly generated labyrinths. [Theme details](docs/amber-maze.md).
+
+**Rooftop Rivals** is an original self-playing arcade robot fight with punches, kicks, guards, jumps, energy pulses and best-of-three matches on a rooftop at dusk. [Theme details](docs/rooftop-rivals.md).
+
+**Neon Rally** is a self-playing retro paddle duel with predictive autopilots, spin, accelerating rallies, mint/coral lighting and first-to-seven matches. [Theme details](docs/neon-rally.md).
+
 ## Create a wallpaper
 
 A scene is a self-contained folder with a `manifest.json`, an HTML page, its assets, and a preview. The SDK exposes settings, documented system information, pause/resume, and the performance profile. Imports validate the manifest, paths, and package limits.

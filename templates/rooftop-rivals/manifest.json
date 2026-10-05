@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "rooftop-rivals",
+  "name": "Rooftop Rivals",
+  "description": "An original self-playing arcade robot fight on an industrial rooftop at dusk. Two autonomous fighters exchange punches, kicks, jumps, guards and energy pulses. Real health, combos, timed rounds and best-of-three matches restart automatically. Procedural pixel art, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Ion armor and energy color","default":"#69e6ce"},
+    {"id":"speed","type":"slider","label":"Fight speed","min":0.3,"max":2,"step":0.1,"default":1},
+    {"id":"rain","type":"boolean","label":"Rooftop rain","default":true},
+    {"id":"effects","type":"boolean","label":"Impact sparks and energy trails","default":true},
+    {"id":"stats","type":"boolean","label":"Show health, timer and rounds","default":true}
+  ]
+}

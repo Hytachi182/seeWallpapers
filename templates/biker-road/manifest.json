@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "biker-road",
   "name": "Biker Road",
-  "description": "A coastal motorcycle ride at sunset, with perspective road trails, drifting clouds, golden sea reflections and a breathing tail light. Based on the supplied biker_road_wallpaper.svg artwork.",
+  "description": "A coastal motorcycle ride at sunset, with moving asphalt, drifting clouds, golden sea reflections, passing birds, exhaust smoke, roadside dust, moving sun rays and a pulsing tail light. Based on the supplied biker_road_wallpaper.svg artwork.",
   "author": "seeWallpaper",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "category": "Nature",
   "engine": "web",
   "entry": "index.html",
@@ -16,6 +16,10 @@
     { "id": "road", "type": "boolean", "label": "Road motion", "default": true },
     { "id": "clouds", "type": "boolean", "label": "Drifting clouds", "default": true },
     { "id": "water", "type": "boolean", "label": "Sea reflections", "default": true },
-    { "id": "tailLight", "type": "boolean", "label": "Tail light glow", "default": true }
+    { "id": "tailLight", "type": "boolean", "label": "Tail light glow", "default": true },
+    { "id": "birds", "type": "boolean", "label": "Passing birds", "default": true },
+    { "id": "exhaust", "type": "boolean", "label": "Exhaust smoke", "default": true },
+    { "id": "dust", "type": "boolean", "label": "Roadside dust", "default": true },
+    { "id": "sunRays", "type": "boolean", "label": "Moving sun rays", "default": true }
   ]
 }

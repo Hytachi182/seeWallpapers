@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "orbital-defender",
+  "name": "Orbital Defender",
+  "description": "An original self-playing retro space shooter. An autopilot intercepts waves of geometric drones, dodges fire and defends an orbital outpost behind destructible shields. Includes scores, escalating waves and automatic game restarts. Original procedural pixel art, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Ship and laser color","default":"#72f4d1"},
+    {"id":"speed","type":"slider","label":"Battle speed","min":0.3,"max":2,"step":0.1,"default":1},
+    {"id":"particles","type":"boolean","label":"Explosion particles","default":true},
+    {"id":"stars","type":"boolean","label":"Moving starfield","default":true},
+    {"id":"stats","type":"boolean","label":"Show score and wave","default":true}
+  ]
+}
