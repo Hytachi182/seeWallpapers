@@ -1,6 +1,7 @@
 """Prepare release metadata on devops; never create a second promotion PR."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -40,19 +41,23 @@ def run(root, repository, bump="auto", dry_run=False, expected_source=None):
     if latest["draft"] or latest["prerelease"]:
         raise ValueError("The release baseline must be a published stable release")
     base_tag = latest["tag_name"]
+    git(root, "checkout", "-B", BRANCH, "origin/devops")
+    plan_path = Path(root, ".github/release-plan.json")
+    if bump == "auto" and plan_path.exists():
+        try:
+            existing = verify(root, source)
+        except (ValueError, RuntimeError):
+            existing = None
+        if existing and existing["base_tag"] == base_tag:
+            print("devops already contains valid prepared metadata; no additional commit")
+            if not dry_run:
+                dispatch_validation(repository, source)
+            return existing
     previous = git(root, "show", "origin/main:.github/release-plan.json", optional=True)
     if previous:
         pending = json.loads(previous)
         if pending["release_required"] and version(pending["version"]) > version(base_tag.removeprefix("v")):
             raise ValueError("main is awaiting publication; rerun preparation after that release finishes")
-    git(root, "checkout", "-B", BRANCH, "origin/devops")
-    subject = git(root, "log", "-1", "--format=%s").strip()
-    plan_path = Path(root, ".github/release-plan.json")
-    if bump == "auto" and subject.startswith("chore(release): prepare ") and plan_path.exists():
-        existing = json.loads(plan_path.read_text(encoding="utf-8"))
-        if existing["base_tag"] == base_tag:
-            print("devops already contains prepared metadata; no additional commit or PR")
-            return existing
     plan = prepare(root, base_tag, repository, bump=bump, source_commit=source)
     print(json.dumps(plan, indent=2))
     if dry_run:
@@ -67,8 +72,25 @@ def run(root, repository, bump="auto", dry_run=False, expected_source=None):
         raise RuntimeError("devops changed during preparation; retry with the newest source")
     git(root, "push", "origin", "HEAD:refs/heads/devops")
     # GITHUB_TOKEN commits do not start push/PR workflows. Check the new immutable head.
-    gh("workflow", "run", "ci.yml", "--repo", repository, "--ref", BRANCH, "-f", f"check_ref={head}")
+    dispatch_validation(repository, head)
     return plan
+
+
+def dispatch_validation(repository, head):
+    gh("workflow", "run", "ci.yml", "--repo", repository, "--ref", BRANCH, "-f", f"check_ref={head}")
+
+
+def summarize(plan, dry_run):
+    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not summary_path:
+        return
+    with open(summary_path, "a", encoding="utf-8") as summary:
+        summary.write(f"## {plan['title']}\n\n")
+        summary.write(f"Version: **{plan['version']}** - baseline: {plan['base_tag']} - wallpapers: {plan['template_count']}\n\n")
+        summary.write("Dry run: no commit, validation dispatch or publication.\n" if dry_run else
+                      "Validation has been started for the prepared devops commit. Merge **devops into main** after the required check passes.\n")
+        summary.write("Windows downloads publish automatically after merge.\n" if plan["release_required"] else
+                      "Documentation only: no new release will be published.\n")
 
 
 if __name__ == "__main__":
@@ -87,7 +109,8 @@ if __name__ == "__main__":
         else:
             if not args.repository:
                 parser.error("--repository is required for preparation")
-            run(root, args.repository, args.bump, args.dry_run, args.expected_source)
+            plan = run(root, args.repository, args.bump, args.dry_run, args.expected_source)
+            summarize(plan, args.dry_run)
     except (RuntimeError, ValueError) as error:
         print(f"Release preparation failed: {error}", file=sys.stderr)
         sys.exit(1)

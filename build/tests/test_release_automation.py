@@ -13,6 +13,7 @@ sys.path.insert(0, str(BUILD))
 from release_metadata import prepare, read_project_version
 from publish_release import publish
 from promote_release import run as prepare_devops, verify
+from check_release_readiness import readiness
 
 
 class ReleaseMetadataTests(unittest.TestCase):
@@ -271,10 +272,52 @@ class ReleaseMetadataTests(unittest.TestCase):
     def test_preparation_refuses_a_main_release_still_awaiting_publication(self):
         pending = json.dumps({"release_required": True, "version": "1.1.0"})
         latest = json.dumps({"tag_name": "v1.0.0", "draft": False, "prerelease": False})
-        with patch("promote_release.git", side_effect=["", "source\n", pending]) as git_call, patch("promote_release.gh", return_value=latest):
+        with patch("promote_release.git", side_effect=["", "source\n", "", pending]) as git_call, patch("promote_release.gh", return_value=latest):
             with self.assertRaisesRegex(ValueError, "awaiting publication"):
                 prepare_devops(self.root, "owner/repo")
             self.assertFalse(any(call.args[1] == "push" for call in git_call.call_args_list))
+
+    def test_unprepared_pr_waits_without_issuing_required_validation(self):
+        ready, message = readiness(self.root, True, "HEAD")
+        self.assertFalse(ready)
+        self.assertIn("release-plan.json", message)
+        self.assertTrue(readiness(self.root, False, "HEAD")[0])
+
+    def test_dispatch_refuses_to_validate_a_different_commit(self):
+        with self.assertRaisesRegex(ValueError, "changed before dispatch"):
+            readiness(self.root, False, "HEAD", "expected", "newer")
+
+    def test_merge_only_push_reuses_prepared_metadata_while_publication_is_pending(self):
+        self.write("src/feature.cs", "feature")
+        self.commit("feat: feature")
+        source = self.git("rev-parse", "HEAD").strip()
+        plan = prepare(self.root, "v1.0.0", "owner/repo", source_commit=source)
+        self.commit("chore(release): prepare v1.1.0 on devops")
+        prepared_branch = self.git("branch", "--show-current").strip()
+        self.git("branch", "other", source)
+        self.git("checkout", "other")
+        self.git("merge", "--no-ff", prepared_branch, "-m", "Merge prepared devops into main")
+        self.git("checkout", prepared_branch)
+        self.git("merge", "--no-ff", "other", "-m", "Merge main into devops")
+        head = self.git("rev-parse", "HEAD").strip()
+        self.assertEqual(plan, verify(self.root, head))
+        self.git("branch", "-M", "devops")
+        self.git("update-ref", "refs/remotes/origin/devops", head)
+        latest = json.dumps({"tag_name": "v1.0.0", "draft": False, "prerelease": False})
+        with patch("promote_release.gh", return_value=latest) as gh_call, patch("promote_release.git", wraps=__import__('release_metadata').git) as git_call:
+            # Fetch is the only network operation in this fixture.
+            def local_git(root, *args, **kwargs):
+                if args[0] == "fetch":
+                    return ""
+                return __import__('release_metadata').git(root, *args, **kwargs)
+            git_call.side_effect = local_git
+            self.assertEqual(plan, prepare_devops(self.root, "owner/repo"))
+            self.assertEqual(head, self.git("rev-parse", "HEAD").strip())
+            self.assertFalse(any(call.args[1] in {"push", "commit"} for call in git_call.call_args_list))
+            self.assertTrue(any(call.args[:2] == ("workflow", "run") for call in gh_call.call_args_list))
+            gh_call.reset_mock()
+            self.assertEqual(plan, prepare_devops(self.root, "owner/repo", dry_run=True))
+            self.assertFalse(any(call.args[0] == "workflow" for call in gh_call.call_args_list))
 
     def test_publication_does_not_restart_preparation_or_create_a_pr(self):
         assets = self.release_assets()

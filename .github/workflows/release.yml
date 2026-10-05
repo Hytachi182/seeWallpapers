@@ -1,8 +1,12 @@
-name: Windows release
+name: 3 - Publish Windows release
+run-name: Windows release - ${{ inputs.release_version || github.ref_name }}
 
 on:
   push:
     tags: ['v*']
+  pull_request:
+    branches: [main]
+    types: [closed]
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -24,14 +28,60 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  publication-plan:
+    if: >-
+      github.event_name == 'pull_request' && github.event.pull_request.merged == true &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'devops'
+    runs-on: ubuntu-latest
+    outputs:
+      required: ${{ steps.plan.outputs.required }}
+      version: ${{ steps.plan.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read the reviewed release plan
+        id: plan
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import os, re, sys
+          from pathlib import Path
+          sys.path.insert(0, 'build')
+          from promote_release import verify
+          plan = verify(Path.cwd(), os.environ['PR_HEAD'])
+          assert re.fullmatch(r'\d+\.\d+\.\d+', plan['version'])
+          assert plan['tag'] == 'v' + plan['version']
+          assert isinstance(plan['release_required'], bool)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('required=' + str(plan['release_required']).lower() + '\n')
+              output.write('version=' + plan['version'] + '\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('## ' + plan['title'] + '\n\n')
+              summary.write('Windows packaging and publication will follow.\n' if plan['release_required'] else 'Documentation only: no new release or Windows packaging.\n')
+          PY
+
+
   package:
+    needs: publication-plan
+    if: >-
+      always() &&
+      (github.event_name != 'pull_request' ||
+       (needs.publication-plan.result == 'success' && needs.publication-plan.outputs.required == 'true'))
     runs-on: windows-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.release_ref || github.sha }}
+          ref: ${{ inputs.release_ref || github.event.pull_request.merge_commit_sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -44,8 +94,8 @@ jobs:
         id: version
         shell: pwsh
         env:
-          EXPECTED_VERSION: ${{ inputs.release_version }}
-          PUBLISH_RELEASE: ${{ inputs.publish_release || startsWith(github.ref, 'refs/tags/v') }}
+          EXPECTED_VERSION: ${{ inputs.release_version || needs.publication-plan.outputs.version }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release || github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v') }}
         run: |
           [xml]$project = Get-Content src/SeeWallpaper.App/SeeWallpaper.App.csproj
           $version = [string]$project.Project.PropertyGroup.Version
@@ -88,16 +138,17 @@ jobs:
           retention-days: 30
 
   publish:
-    if: inputs.publish_release == true || startsWith(github.ref, 'refs/tags/v')
+    if: >-
+      always() && needs.package.result == 'success' &&
+      (inputs.publish_release == true || github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v'))
     needs: package
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.release_ref || github.sha }}
+          ref: ${{ inputs.release_ref || github.event.pull_request.merge_commit_sha || github.sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -114,3 +165,8 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           python build/publish_release.py --repository "$GITHUB_REPOSITORY" --version "$RELEASE_VERSION" --assets release-assets
+      - name: Publication summary
+        if: always()
+        run: |
+          echo "## Windows release: ${{ job.status }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Version: ${{ needs.package.outputs.version }}. [Downloads](https://github.com/$GITHUB_REPOSITORY/releases/tag/v${{ needs.package.outputs.version }})." >> "$GITHUB_STEP_SUMMARY"
