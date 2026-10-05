@@ -27,7 +27,7 @@
 ## Get started
 
 <!-- release-info:start -->
-Source version: **1.5.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.6.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -74,7 +74,9 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 
 ## The scenes
 
-Twenty-six wallpapers are included. The images below are captured from the actual scenes.
+<!-- template-summary:start -->
+**26 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+<!-- template-summary:end -->
 
 
 
