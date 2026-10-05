@@ -2,44 +2,32 @@
 
 Binaries are distributed through GitHub Releases; `dist/` and build caches stay out of Git history.
 
-## Automatic devops promotion
+## One PR from devops to main
 
-Push your completed work to `devops`. **Promote devops to main** prepares or updates a pull request from `release/devops-to-main` into protected `main`; it never merges the PR for you. The preparation branch contains a reviewed snapshot of both `main` and `devops`, so community contributions already on `main` are retained. Conflicting edits stop preparation instead of discarding either branch's changes.
+Push your completed work to `devops` and open one pull request from **devops into main**. **Prepare and publish devops release** commits the version, template versions, catalogue, README, changelog, release notes and release plan directly to `devops`. These changes appear in your existing PR. The workflow does not create another PR or merge yours.
 
-The pipeline compares the snapshot with the latest published stable tag and updates:
+Preparation compares the source with the latest published stable tag. A new wallpaper or `feat:` commit increments the minor version; other application/package/template changes increment the patch version; `feat!:` or `BREAKING CHANGE:` requests a major version. A higher pending application version is retained. Documentation-only changes do not publish an application release. Authored notes and hardware limitations are preserved outside generated markers.
 
-- Application `Version` and the future `vX.Y.Z` tag recorded in the release plan.
-- Versions of changed existing wallpapers, so installed copies can receive Online update offers; explicit higher template versions are retained.
-- The generated catalogue in `docs/template-catalogue.md`, including all scene previews, names, categories, creators, and versions.
-- README source version and catalogue count, changelog, and `docs/releases/vX.Y.Z.md`.
-- The promotion PR title and description, including the source commit and publication behavior.
+Wait for preparation and the required **build-and-test** check before merging. CI verifies that the PR includes prepared metadata and has no newer source changes awaiting preparation. GitHub-token pushes do not automatically start CI, so preparation dispatches CI for the exact generated commit on `devops`. Pull the generated commit before your next local push; no force push is needed.
 
-Notes list added, updated, and removed wallpapers using their manifests, plus development commit subjects and a comparison link. Authored release notes and hardware acceptance limitations remain outside the generated markers and are preserved. Commit messages therefore contribute to the description: use descriptive subjects; `feat:` requests a minor version and `feat!:` or `BREAKING CHANGE:` requests a major version.
+After you merge that **devops ? main** PR, the same workflow builds and checks the installer, ZIP and checksums at its merged commit. Only after packaging succeeds does it create the tag and publish the GitHub release. There is no second PR and publication does not start another preparation. Pushes to `devops` prepare metadata; they do not publish downloads. Closing an unmerged PR or merging another branch does not publish a release.
 
-Version selection in **auto** mode: a new wallpaper or a conventional feature commit increments the minor version; other application/package/template changes increment the patch version; breaking changes increment the major version. An already authored higher pending application version is retained. Documentation-only changes do not produce a new application release. You can override the increment with `patch`, `minor`, or `major` in the workflow's **Run workflow** form on `main`.
+Existing tags and stable assets remain immutable. A failed draft publication can be retried using the original workflow run and commit. A released older version never replaces a newer latest release. Preparation fails with a clear message while an earlier version on `main` is still awaiting publication; rerun its failed job once that publication finishes. Concurrent source changes stop a stale preparation before it can push.
 
-Review the generated PR, notes, and outstanding real-desktop acceptance. After you merge the promotion PR, the reusable **Windows release** workflow builds and checks the installer, portable ZIP, and checksums at that exact merged commit. Only after those checks pass does it create the matching tag, upload files to a draft release, and publish the stable release. Local documentation links in the notes are converted into links to files at that release's tag.
-
-Existing tags are never moved, and published stable assets are never overwritten. A failed draft publication can be retried at its original commit. An older release cannot replace a newer release as **latest**. Devops changes arriving during packaging are picked up after successful publication; another preparation waits while a reviewed version on `main` is still awaiting publication.
-
-The required CI check remains `build-and-test`. Because pushes made with `GITHUB_TOKEN` do not automatically start push workflows, preparation explicitly dispatches CI on the promotion branch at its recorded immutable SHA. A changed branch tip fails that dispatched check rather than checking a different revision.
-
-When GitHub holds the bot-created PR workflow for execution approval, preparation authorizes only the CI workflow for its own repository, reserved promotion branch, exact head SHA, and PR number. That allows the PR merge-commit checks to run as well as the explicitly dispatched head checks. It does not approve a code review, merge a PR, or authorize workflows from forks.
-
-The repository must allow GitHub Actions to create pull requests. The workflow uses the short-lived `GITHUB_TOKEN` with job-specific permissions, without a personal token secret. Main protection, user-controlled merge, and CI requirements still apply. The workflow does not automatically approve or merge pull requests.
+Main protection and review remain in place. The workflow needs contents/actions write permissions for its generated `devops` commit and CI dispatch, plus publication permissions after merge. It does not require permission to create pull requests.
 
 ### Preview without publishing
 
-Run **Promote devops to main** on `main` with **dry_run** enabled. Metadata is generated in the runner and uploaded as a review artifact; no branch push, PR, tag, release, or download is published. This can also prepare the first pending version when there are no new devops commits to merge.
+Run **Prepare and publish devops release** on `main` with **dry_run** enabled to preview `devops` metadata in an artifact. No commit is pushed and nothing is published. The manual form also supports an explicit patch, minor or major increment.
 
-For a local preview, use a disposable checkout, since generation updates files there:
+For a local preview, use a disposable checkout because generation updates its files:
 
 ```powershell
-python build/release_metadata.py --base-ref v1.4.0 --repository Hytachi182/seeWallpapers
+python build/release_metadata.py --base-ref vX.Y.Z --repository Hytachi182/seeWallpapers
 python -m unittest discover -s build/tests -p test_release_automation.py
 ```
 
-The current published application version is 1.6.0; the local source prepares 1.7.0. Promotion keeps this pending version when the automatic increment from 1.6.0 is 1.7.0 or lower. Future releases still require reviewing the validation recorded in [release readiness](release-readiness.md) and merging their prepared promotion PR.
+The base ref must be the latest published stable tag. Review the [release validation record](release-readiness.md) and current notes before merging your PR.
 
 ## Manual tags and package verification
 
@@ -47,7 +35,7 @@ The local app's **Check update** button compares the installed assembly version 
 
 1. Update `Version` in `src/SeeWallpaper.App/SeeWallpaper.App.csproj` and the changelog.
 2. Add release notes in `docs/releases/vX.Y.Z.md`.
-3. Build and test on Windows, then merge the reviewed commit into `main` through a pull request.
+3. Build and test on Windows, then merge the reviewed commit into `main` through a pull request. For the normal devops PR path, the workflow publishes automatically; do not create an additional manual tag.
 4. Create and push a tag matching the version exactly:
 
 ```powershell

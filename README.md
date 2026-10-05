@@ -154,7 +154,7 @@ To build distributions:
 .\build\prepare-release.ps1
 ```
 
-The **CI** workflow builds and tests every push and pull request. **Windows release** builds and verifies both distributions; a `vX.Y.Z` tag matching the app version automatically publishes the assets. A manual run produces build artifacts without publishing a release. [Release procedure](docs/releasing.md).
+The **CI** workflow builds and tests every push and pull request. Push to `devops` to prepare version and catalogue metadata in your single **devops ? main** PR. Merging that PR builds, verifies and publishes the Windows installer and portable ZIP automatically. A manual **Windows release** run produces build artifacts without publishing a release. [Release procedure](docs/releasing.md).
 
 <details>
 <summary><strong>Architecture and validation</strong></summary>

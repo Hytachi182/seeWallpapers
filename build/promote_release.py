@@ -1,121 +1,93 @@
-"""Prepare/update the devops promotion PR without bypassing main protection."""
+"""Prepare release metadata on devops; never create a second promotion PR."""
 import argparse
 import json
-import os
 from pathlib import Path
 import subprocess
 import sys
-import time
 
-from release_metadata import git, prepare, read_project_version, version
+from release_metadata import git, prepare, version
 
-BRANCH = "release/devops-to-main"
+BRANCH = "devops"
+METADATA_PATHS = ("src/SeeWallpaper.App/SeeWallpaper.App.csproj", "templates", "README.md", "CHANGELOG.md",
+                  "docs/releases", "docs/template-catalogue.md", ".github/release-plan.json")
 
 
 def gh(*args, optional=False):
     result = subprocess.run(["gh", *args], text=True, encoding="utf-8", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if result.returncode and not optional:
-        raise RuntimeError(result.stderr.strip())
+        raise RuntimeError(result.stderr.strip() or result.stdout.strip())
     return result.stdout if result.returncode == 0 else None
 
 
-def start_promotion_ci(repository, head, pr_number, attempts=20):
-    # GitHub may hold a GITHUB_TOKEN-created PR workflow for approval. Approve
-    # only this repository's own reserved promotion branch, exact SHA and CI
-    # workflow; no fork or other PR is eligible. This is workflow execution,
-    # not a code-review approval or permission to merge the promotion PR.
-    for attempt in range(attempts):
-        runs = json.loads(gh("api", f"repos/{repository}/actions/runs?event=pull_request&head_sha={head}&per_page=100"))["workflow_runs"]
-        eligible = [run for run in runs if run["head_sha"] == head and run["head_branch"] == BRANCH
-                    and run["head_repository"]["full_name"] == repository
-                    and run["path"] == ".github/workflows/ci.yml"
-                    and any(pr["number"] == pr_number for pr in run.get("pull_requests", []))]
-        if eligible:
-            for run in eligible:
-                if run["conclusion"] == "action_required":
-                    gh("api", "--method", "POST", f"repos/{repository}/actions/runs/{run['id']}/approve")
-            return
-        if attempt + 1 < attempts:
-            time.sleep(2)
+def verify(root, head="HEAD"):
+    """Reject a PR merged before preparation, or changed after its preparation."""
+    plan = json.loads(Path(root, ".github/release-plan.json").read_text(encoding="utf-8"))
+    source = plan["source_commit"]
+    if git(root, "merge-base", "--is-ancestor", source, head, optional=True) is None:
+        raise ValueError("Release metadata does not belong to this PR; wait for preparation on devops")
+    commits = git(root, "log", "--ancestry-path", "--no-merges", "--format=%s", f"{source}..{head}").splitlines()
+    if not commits or any(not message.startswith("chore(release): prepare ") for message in commits):
+        raise ValueError("devops changed after release preparation; wait for the new preparation and CI")
+    return plan
 
 
-def run(root, repository, bump, dry_run, manual):
+def run(root, repository, bump="auto", dry_run=False, expected_source=None):
     git(root, "fetch", "origin", "main", "devops", "--tags")
     source = git(root, "rev-parse", "origin/devops").strip()
-    if not manual and git(root, "merge-base", "--is-ancestor", source, "origin/main", optional=True) is not None:
-        print("devops has no commits to promote; nothing changed.")
-        return
+    if expected_source and source != expected_source:
+        raise RuntimeError("devops changed before preparation; the newer push will prepare its own metadata")
     latest = json.loads(gh("api", f"repos/{repository}/releases/latest"))
     if latest["draft"] or latest["prerelease"]:
         raise ValueError("The release baseline must be a published stable release")
     base_tag = latest["tag_name"]
     previous = git(root, "show", "origin/main:.github/release-plan.json", optional=True)
     if previous:
-        plan = json.loads(previous)
-        if plan["release_required"] and version(plan["version"]) > version(base_tag.removeprefix("v")):
-            print(f"main version {plan['version']} is awaiting publication. Promotion resumes after publishing.")
-            return
-    prs = json.loads(gh("pr", "list", "--repo", repository, "--base", "main", "--head", BRANCH,
-                        "--state", "open", "--json", "number,headRefOid"))
-    if prs:
-        git(root, "fetch", "origin", BRANCH)
-        git(root, "checkout", "-B", BRANCH, f"origin/{BRANCH}")
-        git(root, "merge", "--no-edit", "origin/main")
-    else:
-        # A previous closed promotion branch is never overwritten or force-pushed.
-        existing = git(root, "ls-remote", "--heads", "origin", f"refs/heads/{BRANCH}")
-        if existing.strip():
-            git(root, "fetch", "origin", BRANCH)
-            git(root, "checkout", "-B", BRANCH, f"origin/{BRANCH}")
-            git(root, "merge", "--no-edit", "origin/main")
-        else:
-            git(root, "checkout", "-b", BRANCH, "origin/main")
-    git(root, "merge", "--no-edit", "origin/devops")
+        pending = json.loads(previous)
+        if pending["release_required"] and version(pending["version"]) > version(base_tag.removeprefix("v")):
+            raise ValueError("main is awaiting publication; rerun preparation after that release finishes")
+    git(root, "checkout", "-B", BRANCH, "origin/devops")
+    subject = git(root, "log", "-1", "--format=%s").strip()
+    plan_path = Path(root, ".github/release-plan.json")
+    if bump == "auto" and subject.startswith("chore(release): prepare ") and plan_path.exists():
+        existing = json.loads(plan_path.read_text(encoding="utf-8"))
+        if existing["base_tag"] == base_tag:
+            print("devops already contains prepared metadata; no additional commit or PR")
+            return existing
     plan = prepare(root, base_tag, repository, bump=bump, source_commit=source)
     print(json.dumps(plan, indent=2))
     if dry_run:
-        print("Dry run: metadata generated locally; no push, PR, tag, or release.")
-        return
-    git(root, "add", "src/SeeWallpaper.App/SeeWallpaper.App.csproj", "templates", "README.md", "CHANGELOG.md",
-        "docs/releases", "docs/template-catalogue.md", ".github/release-plan.json")
+        print("Dry run: no branch push, PR, tag or release")
+        return plan
+    git(root, "add", *METADATA_PATHS)
     if git(root, "diff", "--cached", "--quiet", optional=True) is None:
-        git(root, "commit", "-m", f"chore(release): prepare {plan['tag']} from devops")
+        git(root, "commit", "-m", f"chore(release): prepare {plan['tag']} on devops")
     head = git(root, "rev-parse", "HEAD").strip()
-    # Never promote a superseded snapshot unnoticed; the newer push will rerun this job.
     remote_source = git(root, "ls-remote", "origin", "refs/heads/devops").split()[0]
     if remote_source != source:
-        raise RuntimeError("devops changed while preparing this release; retry with the newest source")
-    git(root, "push", "origin", f"HEAD:refs/heads/{BRANCH}")
-    body_file = Path(os.environ.get("RUNNER_TEMP", root)) / "promotion-pr.md"
-    body = (f"Promotes devops snapshot `{source}` to main.\n\n"
-            f"Application version: **{plan['version']}**; catalogue: **{plan['template_count']} wallpapers**.\n\n"
-            "Automatically updates the application version, changed template versions, catalogue, README, changelog, "
-            "and release notes. Existing authored notes and validation limitations are preserved.\n\n"
-            + (f"After you merge this PR, Windows packages are built and checked before tag **{plan['tag']}** "
-               "and its release are published. Review the notes and outstanding desktop acceptance before merging.\n"
-               if plan["release_required"] else "Documentation-only promotion: no application tag or release is published.\n"))
-    body_file.write_text(body, encoding="utf-8")
-    if prs:
-        gh("pr", "edit", str(prs[0]["number"]), "--repo", repository, "--title", plan["title"], "--body-file", str(body_file))
-    else:
-        print(gh("pr", "create", "--repo", repository, "--base", "main", "--head", BRANCH,
-                 "--title", plan["title"], "--body-file", str(body_file)))
-    pr_number = json.loads(gh("pr", "view", BRANCH, "--repo", repository, "--json", "number"))["number"]
-    start_promotion_ci(repository, head, pr_number)
-    # GITHUB_TOKEN pushes do not start CI. Explicit dispatch checks this exact head;
-    # checkout uses an immutable SHA and CI keeps its existing required check name.
+        raise RuntimeError("devops changed during preparation; retry with the newest source")
+    git(root, "push", "origin", "HEAD:refs/heads/devops")
+    # GITHUB_TOKEN commits do not start push/PR workflows. Check the new immutable head.
     gh("workflow", "run", "ci.yml", "--repo", repository, "--ref", BRANCH, "-f", f"check_ref={head}")
+    return plan
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repository", required=True)
+    parser.add_argument("--repository")
     parser.add_argument("--bump", choices=["auto", "patch", "minor", "major"], default="auto")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--manual", action="store_true")
+    parser.add_argument("--expected-source")
+    parser.add_argument("--verify", action="store_true")
+    parser.add_argument("--head", default="HEAD")
     args = parser.parse_args()
     try:
-        run(Path(__file__).resolve().parent.parent, args.repository, args.bump, args.dry_run, args.manual)
+        root = Path(__file__).resolve().parent.parent
+        if args.verify:
+            verify(root, args.head)
+        else:
+            if not args.repository:
+                parser.error("--repository is required for preparation")
+            run(root, args.repository, args.bump, args.dry_run, args.expected_source)
     except (RuntimeError, ValueError) as error:
-        print(f"Promotion failed: {error}", file=sys.stderr)
+        print(f"Release preparation failed: {error}", file=sys.stderr)
         sys.exit(1)

@@ -12,7 +12,7 @@ BUILD = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BUILD))
 from release_metadata import prepare, read_project_version
 from publish_release import publish
-from promote_release import start_promotion_ci
+from promote_release import run as prepare_devops, verify
 
 
 class ReleaseMetadataTests(unittest.TestCase):
@@ -223,20 +223,70 @@ class ReleaseMetadataTests(unittest.TestCase):
             final = next(call.args for call in gh_call.call_args_list if "--draft=false" in call.args)
             self.assertIn("--latest=false", final)
 
-    def test_only_exact_promotion_ci_workflow_is_authorized(self):
-        matching = {"id": 1, "head_sha": "reviewed", "head_branch": "release/devops-to-main",
-                    "head_repository": {"full_name": "owner/repo"}, "path": ".github/workflows/ci.yml",
-                    "pull_requests": [{"number": 4}], "conclusion": "action_required"}
-        runs = [matching, dict(matching, id=2, head_sha="another-commit"),
-                dict(matching, id=3, head_repository={"full_name": "someone/fork"}),
-                dict(matching, id=4, path=".github/workflows/other.yml"),
-                dict(matching, id=5, pull_requests=[{"number": 99}])]
-        def fake_gh(*args, **kwargs):
-            return json.dumps({"workflow_runs": runs}) if args[0] == "api" and len(args) == 2 else "{}"
-        with patch("promote_release.gh", side_effect=fake_gh) as gh_call:
-            start_promotion_ci("owner/repo", "reviewed", 4, attempts=1)
-            approvals = [call.args for call in gh_call.call_args_list if "POST" in call.args]
-            self.assertEqual([("api", "--method", "POST", "repos/owner/repo/actions/runs/1/approve")], approvals)
+    def test_preparation_pushes_metadata_to_devops_without_creating_another_pr(self):
+        with tempfile.TemporaryDirectory(prefix="seeWallpaper-bare-remote-") as remote:
+            subprocess.run(["git", "init", "--bare", remote], check=True, capture_output=True)
+            self.git("branch", "-M", "main")
+            self.git("checkout", "-b", "devops")
+            self.git("remote", "add", "origin", remote)
+            self.write("src/feature.cs", "feature")
+            self.commit("feat: new application feature")
+            self.git("push", "origin", "main", "devops", "--tags")
+            source = self.git("rev-parse", "HEAD").strip()
+            def fake_gh(*args, **kwargs):
+                if args[0] == "api":
+                    return json.dumps({"tag_name": "v1.0.0", "draft": False, "prerelease": False})
+                return ""
+            with patch("promote_release.gh", side_effect=fake_gh) as gh_call:
+                plan = prepare_devops(self.root, "owner/repo", expected_source=source)
+                self.assertEqual("1.1.0", plan["version"])
+                head = self.git("rev-parse", "HEAD").strip()
+                self.assertNotEqual(source, head)
+                self.assertEqual(head, self.git("rev-parse", "origin/devops").strip())
+                self.assertEqual(plan, verify(self.root))
+                # Squash merges rewrite source ancestry. Validate the reviewed PR
+                # head while reading the metadata from the merged main snapshot.
+                self.git("checkout", "main")
+                self.git("merge", "--squash", "devops")
+                self.git("commit", "-m", "Merge devops PR using squash")
+                self.assertEqual(plan, verify(self.root, head))
+                self.git("checkout", "devops")
+                self.assertFalse(any(call.args[0] == "pr" for call in gh_call.call_args_list))
+                self.assertIn(("workflow", "run", "ci.yml", "--repo", "owner/repo", "--ref", "devops",
+                               "-f", "check_ref=" + head), [call.args for call in gh_call.call_args_list])
+                prepare_devops(self.root, "owner/repo")
+                self.assertEqual(head, self.git("rev-parse", "HEAD").strip())
+                self.write("src/feature.cs", "another change")
+                self.commit("Change feature after preparation")
+                with self.assertRaisesRegex(ValueError, "changed after"):
+                    verify(self.root)
+
+    def test_preparation_refuses_a_superseded_push(self):
+        with patch("promote_release.git", side_effect=["", "newer-source\n"]) as git_call, patch("promote_release.gh") as gh_call:
+            with self.assertRaisesRegex(RuntimeError, "newer push"):
+                prepare_devops(self.root, "owner/repo", expected_source="old-source")
+            gh_call.assert_not_called()
+            self.assertFalse(any(call.args[1] == "push" for call in git_call.call_args_list))
+
+    def test_preparation_refuses_a_main_release_still_awaiting_publication(self):
+        pending = json.dumps({"release_required": True, "version": "1.1.0"})
+        latest = json.dumps({"tag_name": "v1.0.0", "draft": False, "prerelease": False})
+        with patch("promote_release.git", side_effect=["", "source\n", pending]) as git_call, patch("promote_release.gh", return_value=latest):
+            with self.assertRaisesRegex(ValueError, "awaiting publication"):
+                prepare_devops(self.root, "owner/repo")
+            self.assertFalse(any(call.args[1] == "push" for call in git_call.call_args_list))
+
+    def test_publication_does_not_restart_preparation_or_create_a_pr(self):
+        assets = self.release_assets()
+        def fake_git(root, *args, **kwargs):
+            if args[:2] == ("rev-parse", "HEAD"):
+                return "reviewed-commit\n"
+            if args[:2] == ("rev-parse", "--verify"):
+                return None
+            return ""
+        with patch("publish_release.git", side_effect=fake_git), patch("publish_release.gh", return_value=None) as gh_call:
+            publish(self.root, "owner/repo", "1.0.0", assets)
+            self.assertFalse(any(call.args[0] in {"workflow", "pr"} for call in gh_call.call_args_list))
 
 
 if __name__ == "__main__":

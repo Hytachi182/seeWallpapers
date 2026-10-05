@@ -53,7 +53,6 @@ def publish(root, repository, release_version, assets):
                 if Path(directory, "SHA256SUMS.txt").read_text(encoding="ascii") != checksums:
                     raise ValueError("Existing stable assets differ; create a new version instead of overwriting them")
             print(f"{tag} is already published with the expected assets; nothing overwritten.")
-            gh("workflow", "run", "promote.yml", "--repo", repository, "--ref", "main", "-f", "bump=auto", "-f", "dry_run=false")
             return
     # Resolve local documentation links for the GitHub release page.
     def link(match):
@@ -82,8 +81,6 @@ def publish(root, repository, release_version, assets):
         gh("release", "edit", tag, "--repo", repository, "--draft=false", "--prerelease=false",
            "--latest=" + str(make_latest).lower())
     print(f"Published {tag} from reviewed commit {head}.")
-    # Catch up changes queued on devops while the previous version was packaging.
-    gh("workflow", "run", "promote.yml", "--repo", repository, "--ref", "main", "-f", "bump=auto", "-f", "dry_run=false")
 
 
 if __name__ == "__main__":

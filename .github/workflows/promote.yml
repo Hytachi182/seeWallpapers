@@ -1,4 +1,4 @@
-name: Promote devops to main
+name: Prepare and publish devops release
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
         options: [auto, patch, minor, major]
         default: auto
       dry_run:
-        description: Preview metadata without creating a PR, tag, or release
+        description: Preview metadata without pushing commits or publishing a release
         type: boolean
         default: false
   pull_request:
@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: promotion-${{ github.event_name == 'pull_request' && 'publish' || 'prepare' }}
+  group: devops-release-${{ github.event_name == 'pull_request' && 'publish' || 'prepare' }}
   cancel-in-progress: false
 
 jobs:
@@ -31,35 +31,34 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
       actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Prepare release metadata and promotion PR
+      - name: Prepare release metadata on devops
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
           BUMP: ${{ inputs.bump || 'auto' }}
           DRY_RUN: ${{ inputs.dry_run || false }}
-          MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+          EXPECTED_SOURCE: ${{ github.event_name == 'push' && github.sha || '' }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           args=(--repository "$REPOSITORY" --bump "$BUMP")
           if [ "$DRY_RUN" = 'true' ]; then args+=(--dry-run); fi
-          if [ "$MANUAL" = 'true' ]; then args+=(--manual); fi
+          if [ -n "$EXPECTED_SOURCE" ]; then args+=(--expected-source "$EXPECTED_SOURCE"); fi
           python build/promote_release.py "${args[@]}"
       - name: Upload prepared metadata for review
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: promotion-metadata
+          name: devops-release-metadata
           path: |
             .github/release-plan.json
             docs/releases/*.md
@@ -70,7 +69,7 @@ jobs:
     if: >-
       github.event_name == 'pull_request' && github.event.pull_request.merged == true &&
       github.event.pull_request.head.repo.full_name == github.repository &&
-      github.event.pull_request.head.ref == 'release/devops-to-main'
+      github.event.pull_request.head.ref == 'devops'
     runs-on: ubuntu-latest
     outputs:
       required: ${{ steps.plan.outputs.required }}
@@ -79,14 +78,22 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
           persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Read the reviewed release plan
         id: plan
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: |
           python - <<'PY'
-          import json, os, re
+          import os, re, sys
           from pathlib import Path
-          plan = json.loads(Path('.github/release-plan.json').read_text())
+          sys.path.insert(0, 'build')
+          from promote_release import verify
+          plan = verify(Path.cwd(), os.environ['PR_HEAD'])
           assert re.fullmatch(r'\d+\.\d+\.\d+', plan['version'])
           assert plan['tag'] == 'v' + plan['version']
           assert isinstance(plan['release_required'], bool)
