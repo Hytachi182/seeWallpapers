@@ -160,7 +160,7 @@ To build distributions:
 .\build\prepare-release.ps1
 ```
 
-The **CI** workflow builds and tests every push and pull request. Push to `devops` to prepare version and catalogue metadata in your single **devops ? main** PR. Merging that PR builds, verifies and publishes the Windows installer and portable ZIP automatically. A manual **Windows release** run produces build artifacts without publishing a release. [Release procedure](docs/releasing.md).
+The pipeline has three stages: **1 - Prepare version** on a push to `devops`, **2 - Validate changes** for the prepared commit and pull requests, and **3 - Publish Windows release** after merging your single **devops into main** PR. Version and release notes are automatic; Windows downloads appear after packaging succeeds. Each run includes a status summary. A manual Windows release run produces artifacts without publishing. [Release procedure](docs/releasing.md).
 
 <details>
 <summary><strong>Architecture and validation</strong></summary>

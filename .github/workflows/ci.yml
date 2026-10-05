@@ -1,8 +1,9 @@
-name: CI
+name: 2 - Validate changes
+run-name: "Validate ${{ github.event.pull_request.number && format('PR #{0}', github.event.pull_request.number) || inputs.check_ref || github.ref_name }}"
 
 on:
-  push:
   pull_request:
+    branches: [main, devops]
   workflow_dispatch:
     inputs:
       check_ref:
@@ -13,8 +14,37 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check release preparation
+        id: check
+        env:
+          CHECK_RELEASE: ${{ (github.event_name == 'pull_request' && github.head_ref == 'devops' && github.base_ref == 'main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/devops') }}
+          CHECK_REF: ${{ github.event.pull_request.head.sha || github.sha }}
+          EXPECTED_SHA: ${{ inputs.check_ref }}
+        run: python build/check_release_readiness.py
   build-and-test:
+    needs: readiness
+    # A skipped check called build-and-test would satisfy branch protection.
+    # Keep that required name exclusively for a commit ready for validation.
+    name: ${{ needs.readiness.outputs.ready == 'true' && 'build-and-test' || 'Waiting for release preparation' }}
+    if: needs.readiness.outputs.ready == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,3 +84,9 @@ jobs:
       - name: Test automatic update helper
         shell: pwsh
         run: ./build/test-application-update.ps1
+      - name: Validation summary
+        if: always()
+        shell: pwsh
+        run: |
+          "## Validation: ${{ job.status }}" >> $env:GITHUB_STEP_SUMMARY
+          "Validated commit: $env:GITHUB_SHA. Downloads are published by **3 - Publish Windows release** after merging devops into main." >> $env:GITHUB_STEP_SUMMARY
