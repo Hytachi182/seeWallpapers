@@ -24,6 +24,12 @@
 
 ![seeWallpaper gallery with scene previews and per-display application](docs/images/gallery.png)
 
+## Watch the demo
+
+[![Watch the seeWallpaper video demo](docs/images/demo.jpg)](docs/videos/seeWallpaper.mp4)
+
+[Watch or download the full video](docs/videos/seeWallpaper.mp4) (2 min 3 sec, 1080p). Click the preview to open the MP4.
+
 ## Get started
 
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
@@ -154,7 +160,7 @@ To build distributions:
 .\build\prepare-release.ps1
 ```
 
-The **CI** workflow builds and tests every push and pull request. **Windows release** builds and verifies both distributions; a `vX.Y.Z` tag matching the app version automatically publishes the assets. A manual run produces build artifacts without publishing a release. [Release procedure](docs/releasing.md).
+The **CI** workflow builds and tests every push and pull request. Push to `devops` to prepare version and catalogue metadata in your single **devops ? main** PR. Merging that PR builds, verifies and publishes the Windows installer and portable ZIP automatically. A manual **Windows release** run produces build artifacts without publishing a release. [Release procedure](docs/releasing.md).
 
 <details>
 <summary><strong>Architecture and validation</strong></summary>

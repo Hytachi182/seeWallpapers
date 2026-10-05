@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       check_ref:
-        description: Immutable promotion commit to check
+        description: Immutable prepared devops commit to check
         required: true
         type: string
 
@@ -20,17 +20,29 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
+          fetch-depth: 0
           persist-credentials: false
-      - name: Verify dispatched promotion commit
+      - name: Verify dispatched prepared commit
         if: github.event_name == 'workflow_dispatch'
         shell: pwsh
         env:
           EXPECTED_SHA: ${{ inputs.check_ref }}
         run: |
-          if ($env:EXPECTED_SHA -ne $env:GITHUB_SHA) { throw 'Promotion branch changed before dispatch; check the latest promotion commit.' }
+          if ($env:EXPECTED_SHA -ne $env:GITHUB_SHA) { throw 'devops changed before dispatch; check the latest prepared commit.' }
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify prepared devops release
+        if: >-
+          (github.event_name == 'pull_request' && github.head_ref == 'devops' && github.base_ref == 'main') ||
+          (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/devops')
+        shell: pwsh
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          $head = if ($env:PR_HEAD) { $env:PR_HEAD } else { $env:GITHUB_SHA }
+          python build/promote_release.py --verify --head $head
+          if ($LASTEXITCODE -ne 0) { throw 'Wait for release metadata preparation on devops before merging.' }
       - name: Test release automation
         run: python -m unittest discover -s build/tests -p 'test_release_automation.py'
       - uses: actions/setup-dotnet@v4
