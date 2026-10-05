@@ -12,6 +12,7 @@ BUILD = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BUILD))
 from release_metadata import prepare, read_project_version
 from publish_release import publish
+from promote_release import start_promotion_ci
 
 
 class ReleaseMetadataTests(unittest.TestCase):
@@ -221,6 +222,21 @@ class ReleaseMetadataTests(unittest.TestCase):
             publish(self.root, "owner/repo", "1.0.0", assets)
             final = next(call.args for call in gh_call.call_args_list if "--draft=false" in call.args)
             self.assertIn("--latest=false", final)
+
+    def test_only_exact_promotion_ci_workflow_is_authorized(self):
+        matching = {"id": 1, "head_sha": "reviewed", "head_branch": "release/devops-to-main",
+                    "head_repository": {"full_name": "owner/repo"}, "path": ".github/workflows/ci.yml",
+                    "pull_requests": [{"number": 4}], "conclusion": "action_required"}
+        runs = [matching, dict(matching, id=2, head_sha="another-commit"),
+                dict(matching, id=3, head_repository={"full_name": "someone/fork"}),
+                dict(matching, id=4, path=".github/workflows/other.yml"),
+                dict(matching, id=5, pull_requests=[{"number": 99}])]
+        def fake_gh(*args, **kwargs):
+            return json.dumps({"workflow_runs": runs}) if args[0] == "api" and len(args) == 2 else "{}"
+        with patch("promote_release.gh", side_effect=fake_gh) as gh_call:
+            start_promotion_ci("owner/repo", "reviewed", 4, attempts=1)
+            approvals = [call.args for call in gh_call.call_args_list if "POST" in call.args]
+            self.assertEqual([("api", "--method", "POST", "repos/owner/repo/actions/runs/1/approve")], approvals)
 
 
 if __name__ == "__main__":

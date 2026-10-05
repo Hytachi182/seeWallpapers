@@ -24,6 +24,8 @@ Existing tags are never moved, and published stable assets are never overwritten
 
 The required CI check remains `build-and-test`. Because pushes made with `GITHUB_TOKEN` do not automatically start push workflows, preparation explicitly dispatches CI on the promotion branch at its recorded immutable SHA. A changed branch tip fails that dispatched check rather than checking a different revision.
 
+When GitHub holds the bot-created PR workflow for execution approval, preparation authorizes only the CI workflow for its own repository, reserved promotion branch, exact head SHA, and PR number. That allows the PR merge-commit checks to run as well as the explicitly dispatched head checks. It does not approve a code review, merge a PR, or authorize workflows from forks.
+
 The repository must allow GitHub Actions to create pull requests. The workflow uses the short-lived `GITHUB_TOKEN` with job-specific permissions, without a personal token secret. Main protection, user-controlled merge, and CI requirements still apply. The workflow does not automatically approve or merge pull requests.
 
 ### Preview without publishing
@@ -45,7 +47,7 @@ The app's **Check update** button compares the installed assembly version with `
 
 1. Update `Version` in `src/SeeWallpaper.App/SeeWallpaper.App.csproj` and the changelog.
 2. Add release notes in `docs/releases/vX.Y.Z.md`.
-3. Build and test on Windows, then push the commit to the repository.
+3. Build and test on Windows, then merge the reviewed commit into `main` through a pull request.
 4. Create and push a tag matching the version exactly:
 
 ```powershell

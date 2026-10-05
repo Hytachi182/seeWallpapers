@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 from release_metadata import git, prepare, read_project_version, version
 
@@ -16,6 +17,26 @@ def gh(*args, optional=False):
     if result.returncode and not optional:
         raise RuntimeError(result.stderr.strip())
     return result.stdout if result.returncode == 0 else None
+
+
+def start_promotion_ci(repository, head, pr_number, attempts=20):
+    # GitHub may hold a GITHUB_TOKEN-created PR workflow for approval. Approve
+    # only this repository's own reserved promotion branch, exact SHA and CI
+    # workflow; no fork or other PR is eligible. This is workflow execution,
+    # not a code-review approval or permission to merge the promotion PR.
+    for attempt in range(attempts):
+        runs = json.loads(gh("api", f"repos/{repository}/actions/runs?event=pull_request&head_sha={head}&per_page=100"))["workflow_runs"]
+        eligible = [run for run in runs if run["head_sha"] == head and run["head_branch"] == BRANCH
+                    and run["head_repository"]["full_name"] == repository
+                    and run["path"] == ".github/workflows/ci.yml"
+                    and any(pr["number"] == pr_number for pr in run.get("pull_requests", []))]
+        if eligible:
+            for run in eligible:
+                if run["conclusion"] == "action_required":
+                    gh("api", "--method", "POST", f"repos/{repository}/actions/runs/{run['id']}/approve")
+            return
+        if attempt + 1 < attempts:
+            time.sleep(2)
 
 
 def run(root, repository, bump, dry_run, manual):
@@ -79,6 +100,8 @@ def run(root, repository, bump, dry_run, manual):
     else:
         print(gh("pr", "create", "--repo", repository, "--base", "main", "--head", BRANCH,
                  "--title", plan["title"], "--body-file", str(body_file)))
+    pr_number = json.loads(gh("pr", "view", BRANCH, "--repo", repository, "--json", "number"))["number"]
+    start_promotion_ci(repository, head, pr_number)
     # GITHUB_TOKEN pushes do not start CI. Explicit dispatch checks this exact head;
     # checkout uses an immutable SHA and CI keeps its existing required check name.
     gh("workflow", "run", "ci.yml", "--repo", repository, "--ref", BRANCH, "-f", f"check_ref={head}")
