@@ -1,6 +1,6 @@
 # Wallpaper catalogue
 
-**30 built-in wallpapers.** Generated from the scene manifests.
+**31 built-in wallpapers.** Generated from the scene manifests.
 
 | Preview | Wallpaper | Category | Creator | Version |
 | --- | --- | --- | --- | --- |
@@ -18,6 +18,7 @@
 | <img src="../templates/data-tunnel/preview.jpg" alt="Data Tunnel" width="160" /> | **Data Tunnel**<br />An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry. | Matrix | seeWallpaper | 1.1.0 |
 | <img src="../templates/digital-rain-3d/preview.jpg" alt="Digital Rain 3D" width="160" /> | **Digital Rain 3D**<br />Matrix code rain in three depth planes with focus blur, mirrored glyphs that mutate as they fall, a clock revealed by the rain, CRT scanlines and occasional glitches. | Matrix | seeWallpaper | 2.0.0 |
 | <img src="../templates/aurora-borealis/preview.jpg" alt="Aurora Borealis" width="160" /> | **Aurora Borealis**<br />Northern lights ripple above a silent mountain range and a crisp star field. | Nature | seeWallpaper | 1.0.0 |
+| <img src="../templates/biker-road/preview.jpg" alt="Biker Road" width="160" /> | **Biker Road**<br />A coastal motorcycle ride at sunset, with perspective road trails, drifting clouds, golden sea reflections and a breathing tail light. Based on the supplied biker_road_wallpaper.svg artwork. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/firefly-grove/preview.jpg" alt="Firefly Grove" width="160" /> | **Firefly Grove**<br />Fireflies drift between shadowed trees and soft shafts of light in a misty grove. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/moonlit-dunes/preview.jpg" alt="Moonlit Dunes" width="160" /> | **Moonlit Dunes**<br />Sculpted dunes, wind-blown sand and a crescent moon in a quiet desert night. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/ocean-dusk/preview.jpg" alt="Ocean Dusk" width="160" /> | **Ocean Dusk**<br />A low sun, slowly rolling waves and a shimmering golden reflection across the ocean. | Nature | seeWallpaper | 1.0.0 |
