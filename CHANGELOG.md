@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Neon Ronin: an illustrated cyberpunk wallpaper with a hooded samurai and his cat, animated with rain and puddle ripples, flickering neon signs, a pulsing katana with a running glint, flying traffic, highway light trails, rotating holographic targets, waterfalls, mist, sakura petals, and distant lightning. Katana color, speed, neon intensity, and rain are adjustable.
+- Orbital Earth: an illustrated Space wallpaper of the Earth and its satellites, animated with a sunrise flare, a breathing atmosphere, city lights, satellites orbiting in front of and behind the globe, beacons and panel glints, radar pings, and data links beamed to the surface. Signal color, speed, glow intensity, and star density are adjustable.
+- Astral Frontier: an illustrated Space wallpaper with an astronaut facing a galaxy and a night-side Earth, animated with a sunrise flare and lens ghosts, a breathing atmosphere rim, twinkling city lights, orbiting galaxy stars, star flares, shooting stars, drifting asteroids, and pulsing suit lights. Atmosphere color, speed, glow intensity, and star density are adjustable.
+- Digital Rain 3D 2.0: redesigned Matrix rain with mirrored glyphs that mutate as they fall, three depth planes with focus blur, luminous heads, the current time revealed in the rain, CRT scanlines, vignette, and occasional glitches. New settings: rain density, clock, and glitch effects.
+
 ## 1.5.0 - 2026-10-05
 
 - Automatically reconcile connected displays after topology changes: stop disconnected instances, restore recognized monitors, update changed geometry, and recompute clone/span modes. Events are coalesced and wallpaper operations serialized.

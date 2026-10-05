@@ -72,7 +72,7 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 
 ## The scenes
 
-Twenty-three wallpapers are included. The images below are captured from the actual scenes.
+Twenty-six wallpapers are included. The images below are captured from the actual scenes.
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
 
@@ -89,6 +89,10 @@ Twenty-three wallpapers are included. The images below are captured from the act
 | ![Spiral galaxy and giant planet over a mirror sea](templates/pure-cosmos/preview.jpg) | ![Astronaut on the Moon beneath a blue Earth](templates/lunar-silence/preview.jpg) |
 | Solar System | Robot Workshop |
 | ![The Sun and the eight planets](templates/solar-system/preview.jpg) | ![Three robots in a quiet hangar](templates/robot-workshop/preview.jpg) |
+| Astral Frontier | Orbital Earth |
+| ![Astronaut facing a galaxy and the night side of the Earth](templates/astral-frontier/preview.jpg) | ![The Earth surrounded by satellites](templates/orbital-earth/preview.jpg) |
+| Neon Ronin | |
+| ![Hooded samurai and his cat facing a neon megacity](templates/neon-ronin/preview.jpg) | |
 
 | Aurora Borealis | Ocean Dusk |
 | --- | --- |
