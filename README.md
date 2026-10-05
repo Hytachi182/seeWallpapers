@@ -16,7 +16,7 @@
   <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Portable-x64.zip"><img src="https://img.shields.io/badge/Download-Portable%20ZIP-292e40?style=for-the-badge" alt="Download the portable ZIP" /></a>
 </p>
 <p align="center">
-  <a href="https://buymeacoffee.com/hytachi182"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-Support%20the%20project-FFDD00?style=for-the-badge&amp;logo=buymeacoffee&amp;logoColor=black" alt="Buy Michael a coffee and support seeWallpaper" /></a>
+  <a href="https://buymeacoffee.com/hytachi182"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee — Support seeWallpaper" height="50" width="180" /></a>
 </p>
 <p align="center">
   <a href="#get-started">Get started</a> · <a href="#features">Features</a> · <a href="#the-scenes">Previews</a> · <a href="docs/template-format.md">SDK</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/Hytachi182/seeWallpapers/issues/new/choose">Report an issue</a>
@@ -109,6 +109,13 @@ A scene is a self-contained folder with a `manifest.json`, an HTML page, its ass
 - [Import, export, and examples](templates)
 
 A visual template editor is planned; scenes are currently created using the SDK and template files.
+
+**Share your creation:** community wallpapers are welcome! [Submit your wallpaper](https://github.com/Hytachi182/seeWallpapers/issues/new?template=template_submission.yml) with a ZIP and a screenshot, directly in your browser. No Git or fork required. The maintainer reviews it before publication; once merged, it appears in the app's **Online** catalogue. Read the [creation and sharing guides](docs/wiki/Home.md), or follow the [pull request route](CONTRIBUTING.md#create-and-share-a-wallpaper).
+
+<p align="center">
+  <a href="https://github.com/Hytachi182/seeWallpapers/issues/new?template=template_submission.yml"><img src="https://img.shields.io/badge/Share-Your%20wallpaper-8b7cff?style=for-the-badge" alt="Submit your wallpaper with a ZIP and screenshot" /></a>
+  <a href="docs/wiki/Home.md"><img src="https://img.shields.io/badge/Read-Creator%20guides-292e40?style=for-the-badge" alt="Read the wallpaper creation and sharing guides" /></a>
+</p>
 
 ## Develop
 

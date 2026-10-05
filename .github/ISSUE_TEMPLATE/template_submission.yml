@@ -1,0 +1,92 @@
+name: Share a wallpaper template
+description: Submit your wallpaper with a ZIP and a preview. No Git or fork required.
+title: "[Template] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for creating a wallpaper for seeWallpaper!
+
+        Attach your ZIP and a screenshot below. A maintainer will review and test your scene before publishing it in the official Online catalogue.
+
+        Need help? Read the [sharing guide](https://github.com/Hytachi182/seeWallpapers/blob/main/docs/wiki/Share-your-template.md) or the [template format](https://github.com/Hytachi182/seeWallpapers/blob/main/docs/template-format.md).
+  - type: input
+    id: template_name
+    attributes:
+      label: Wallpaper name
+      placeholder: My animated scene
+    validations:
+      required: true
+  - type: input
+    id: template_id
+    attributes:
+      label: Template ID
+      description: Use the ID from your manifest.json.
+      placeholder: my-animated-scene
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Creator name
+      description: The name to display in the catalogue and manifest.
+    validations:
+      required: true
+  - type: dropdown
+    id: submission_type
+    attributes:
+      label: Submission type
+      options:
+        - New wallpaper
+        - Update to my existing wallpaper
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your wallpaper
+      description: Explain the atmosphere, animation, and available settings.
+    validations:
+      required: true
+  - type: textarea
+    id: package
+    attributes:
+      label: Template ZIP
+      description: |
+        Drag and drop a ZIP here (maximum 25 MB). Include the template files, or put your exported .seewall package inside the ZIP.
+        For larger templates, provide a download link from your own GitHub repository or release. A text description alone is not a package.
+      placeholder: Attach your ZIP or paste a download link here.
+    validations:
+      required: true
+  - type: textarea
+    id: preview
+    attributes:
+      label: Screenshot or short recording
+      description: Drag and drop an image showing your wallpaper running in seeWallpaper.
+    validations:
+      required: true
+  - type: textarea
+    id: assets
+    attributes:
+      label: Asset sources and licences
+      description: List sources, licences, and included notices for any reused assets. Write "All original" if you created everything.
+    validations:
+      required: true
+  - type: textarea
+    id: test_environment
+    attributes:
+      label: Test environment and known limitations
+      description: Include your Windows version, display resolution, and what you tested (preview, desktop, settings, pause/resume, performance profiles).
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Before submitting
+      options:
+        - label: I permit this wallpaper to be redistributed in the public seeWallpaper catalogue and have permission to redistribute all included assets.
+          required: true
+        - label: The wallpaper and its dependencies work offline.
+          required: true
+        - label: I tested this template in seeWallpaper and attached its package and a preview.
+          required: true

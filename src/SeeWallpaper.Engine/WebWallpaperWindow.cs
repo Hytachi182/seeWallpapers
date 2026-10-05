@@ -1,12 +1,10 @@
 using System.Text.Json;
 using System.IO;
 using System.Windows;
-using System.Windows.Threading;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using SeeWallpaper.Core;
 using SeeWallpaper.Engine.Windows;
-using SeeWallpaper.Platform;
 
 namespace SeeWallpaper.Engine;
 
@@ -19,9 +17,14 @@ public class WebWallpaperWindow : Window
     private readonly WebView2 _webView = new();
     private bool _isWebViewReady;
     private bool _isPaused;
+    private bool _isOccluded;
     private WallpaperPerformanceProfile _performanceProfile = WallpaperPerformanceProfile.Balanced;
-    private readonly WindowsSystemMetricsService _metricsService = new();
-    private readonly DispatcherTimer _metricsTimer = new() { Interval = TimeSpan.FromSeconds(2) };
+    private readonly SharedSystemMetricsSource _metricsSource = SharedSystemMetricsSource.Current;
+    private bool _usesSystemInfo;
+    private bool _documentReady;
+    private bool _metricsSubscribed;
+    private bool? _sentPauseState;
+    private WallpaperPerformanceProfile? _sentPerformanceProfile;
     private readonly TaskCompletionSource _ready = new(TaskCreationOptions.RunContinuationsAsynchronously);
     private readonly CancellationTokenSource _lifetime = new();
 
@@ -39,16 +42,11 @@ public class WebWallpaperWindow : Window
         Loaded += OnLoaded;
         Closed += (_, _) =>
         {
-            _metricsTimer.Stop();
+            _metricsSource.Unsubscribe(OnSystemMetrics);
             _lifetime.Cancel();
             _isWebViewReady = false;
             _webView.Dispose();
             _ready.TrySetException(new InvalidOperationException($"Wallpaper '{_template.Manifest.Name}' closed before it was ready."));
-        };
-        _metricsTimer.Tick += async (_, _) =>
-        {
-            try { if (_isWebViewReady) await PushSystemInfoAsync(); }
-            catch (Exception) when (_lifetime.IsCancellationRequested) { }
         };
     }
 
@@ -64,7 +62,8 @@ public class WebWallpaperWindow : Window
             _webView.CoreWebView2.Settings.AreDevToolsEnabled = false;
             _webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
             _webView.CoreWebView2.Settings.IsStatusBarEnabled = false;
-            await _webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.seeWallpaper={getSettings:()=>window.__seeWallpaperSettings||{},getSystemInfo:()=>window.__seeWallpaperSystemInfo||{},onSettingsChanged:(callback)=>window.__seeWallpaperSettingsChanged=callback,onSystemInfoChanged:(callback)=>window.__seeWallpaperSystemInfoChanged=callback,onPause:(callback)=>window.__seeWallpaperPaused=callback,onResume:(callback)=>window.__seeWallpaperResumed=callback,onPerformanceChanged:(callback)=>window.__seeWallpaperPerformanceChanged=callback};");
+            _webView.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
+            await _webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("(()=>{let systemInfoRequested=false;const requestSystemInfo=()=>{if(!systemInfoRequested){window.chrome.webview.postMessage('seeWallpaper:system-info');systemInfoRequested=true;}};window.seeWallpaper={getSettings:()=>window.__seeWallpaperSettings||{},getSystemInfo:()=>{requestSystemInfo();return window.__seeWallpaperSystemInfo||{};},onSettingsChanged:(callback)=>window.__seeWallpaperSettingsChanged=callback,onSystemInfoChanged:(callback)=>{window.__seeWallpaperSystemInfoChanged=callback;requestSystemInfo();},onPause:(callback)=>window.__seeWallpaperPaused=callback,onResume:(callback)=>window.__seeWallpaperResumed=callback,onPerformanceChanged:(callback)=>window.__seeWallpaperPerformanceChanged=callback};})();");
             TaskCompletionSource navigation = new(TaskCreationOptions.RunContinuationsAsynchronously);
             _webView.CoreWebView2.NavigationCompleted += (_, args) =>
             {
@@ -73,16 +72,16 @@ public class WebWallpaperWindow : Window
             };
             _webView.CoreWebView2.Navigate(new Uri(Path.Combine(_template.RootPath, _template.Manifest.Entry)).AbsoluteUri);
             await navigation.Task.WaitAsync(TimeSpan.FromSeconds(30), _lifetime.Token);
+            _documentReady = true;
             await PushSettingsAsync();
-            await PushSystemInfoAsync();
+            await EnsureSystemInfoSubscriptionAsync();
             await PushPerformanceAsync();
-            await SetPausedAsync(_isPaused);
+            await ApplyPauseStateAsync();
             if (_attachToDesktop)
             {
                 IntPtr handle = new System.Windows.Interop.WindowInteropHelper(this).Handle;
                 DesktopSurface.AttachBehindDesktopIcons(handle, _desktopBounds ?? new WallpaperBounds(0, 0, (int)SystemParameters.PrimaryScreenWidth, (int)SystemParameters.PrimaryScreenHeight));
             }
-            _metricsTimer.Start();
             _ready.TrySetResult();
         }
         catch (Exception exception)
@@ -107,22 +106,79 @@ public class WebWallpaperWindow : Window
         if (_isWebViewReady) await PushSettingsAsync();
     }
 
-    public async Task SetPausedAsync(bool isPaused)
+    public Task SetPausedAsync(bool isPaused)
     {
         _isPaused = isPaused;
-        if (_isWebViewReady) await _webView.CoreWebView2.ExecuteScriptAsync(isPaused ? "window.__seeWallpaperPaused?.();" : "window.__seeWallpaperResumed?.();");
+        return ApplyPauseStateAsync();
+    }
+
+    /// <summary>Pauses rendering while application windows completely hide this wallpaper.</summary>
+    internal Task SetOccludedAsync(bool isOccluded)
+    {
+        _isOccluded = isOccluded;
+        return ApplyPauseStateAsync();
+    }
+
+    internal bool IsAttachedToDesktop => _attachToDesktop && _ready.Task.IsCompletedSuccessfully;
+
+    internal IntPtr Handle => new System.Windows.Interop.WindowInteropHelper(this).Handle;
+
+    private async Task ApplyPauseStateAsync()
+    {
+        bool isPaused = _isPaused || _isOccluded;
+        if (_documentReady && _isWebViewReady && _sentPauseState != isPaused)
+        {
+            _sentPauseState = isPaused;
+            await _webView.CoreWebView2.ExecuteScriptAsync(isPaused ? "window.__seeWallpaperPaused?.();" : "window.__seeWallpaperResumed?.();");
+        }
     }
 
     public async Task SetPerformanceProfileAsync(WallpaperPerformanceProfile profile)
     {
         _performanceProfile = profile;
-        if (_isWebViewReady) await PushPerformanceAsync();
+        if (_documentReady && _isWebViewReady) await PushPerformanceAsync();
     }
 
-    private Task PushPerformanceAsync() => _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperPerformanceChanged?.({WallpaperPerformanceProfiles.GetTargetFramesPerSecond(_performanceProfile)});");
-    private Task PushSystemInfoAsync()
+    private async Task PushPerformanceAsync()
     {
-        string metrics = JsonSerializer.Serialize(_metricsService.GetSnapshot(), new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        WallpaperPerformanceProfile profile = _performanceProfile;
+        if (_sentPerformanceProfile == profile) return;
+        await _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperPerformanceChanged?.({WallpaperPerformanceProfiles.GetTargetFramesPerSecond(profile)});");
+        _sentPerformanceProfile = profile;
+    }
+
+    private async void OnWebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs args)
+    {
+        // Other template messages are not part of the metrics subscription protocol.
+        if (args.WebMessageAsJson != "\"seeWallpaper:system-info\"") return;
+        _usesSystemInfo = true;
+        try { await EnsureSystemInfoSubscriptionAsync(); }
+        catch (Exception exception) { ReportMetricsError(exception); }
+    }
+
+    private async Task EnsureSystemInfoSubscriptionAsync()
+    {
+        if (!_usesSystemInfo || !_documentReady || !_isWebViewReady || _metricsSubscribed) return;
+        _metricsSubscribed = true;
+        _metricsSource.Subscribe(OnSystemMetrics);
+        await PushSystemInfoAsync(_metricsSource.GetSnapshotJson());
+    }
+
+    private async void OnSystemMetrics(string metrics)
+    {
+        if (!_isWebViewReady) return;
+        try { await PushSystemInfoAsync(metrics); }
+        catch (Exception exception) { ReportMetricsError(exception); }
+    }
+
+    private void ReportMetricsError(Exception exception)
+    {
+        if (!_lifetime.IsCancellationRequested)
+            System.Diagnostics.Trace.TraceError($"System metrics for '{_template.Manifest.Id}': {exception}");
+    }
+
+    private Task PushSystemInfoAsync(string metrics)
+    {
         return _webView.CoreWebView2.ExecuteScriptAsync($"window.__seeWallpaperSystemInfo={metrics};window.__seeWallpaperSystemInfoChanged?.(window.__seeWallpaperSystemInfo);");
     }
 }

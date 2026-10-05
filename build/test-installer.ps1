@@ -64,10 +64,20 @@ try {
     Assert-InstallerCondition (!(Test-Path $contextKey)) 'update removes deselected context menu'
     Assert-InstallerCondition (!(Test-Path $classKey)) 'update removes deselected file association'
     Assert-InstallerCondition (!(Test-Path $desktopShortcut)) 'update removes deselected desktop shortcut'
-    Assert-InstallerCondition (!(Get-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper' -ErrorAction SilentlyContinue)) 'update removes deselected startup option'
+    $expectedStartup = '"' + (Join-Path $testApplication 'SeeWallpaper.App.exe') + '" --minimized'
+    Assert-InstallerCondition ((Get-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper').seeWallpaper -eq $expectedStartup) 'silent update preserves enabled login startup and its minimized command'
+
+    # Simulate the user disabling startup from the app. The entry is owned by
+    # this fixture: existing personal startup entries were rejected above.
+    Remove-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper'
 
     Invoke-TestSetup 'desktopicon,contextmenu,fileassociation' 'update-with-options.log'
     Assert-InstallerCondition (!(Get-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper' -ErrorAction SilentlyContinue)) 'login startup remains opt-in'
+
+    # Simulate enabling startup from app Settings, then update without tasks.
+    New-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper' -PropertyType String -Value $expectedStartup | Out-Null
+    Invoke-TestSetup '' 'update-with-app-startup.log'
+    Assert-InstallerCondition ((Get-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper').seeWallpaper -eq $expectedStartup) 'silent update preserves startup enabled from app Settings'
 } finally {
     $uninstaller = Join-Path $testApplication 'unins000.exe'
     if (Test-Path $uninstaller) {
@@ -84,6 +94,7 @@ Assert-InstallerCondition (!(Test-Path $contextKey)) 'uninstall removes context 
 Assert-InstallerCondition (!(Test-Path $classKey)) 'uninstall removes package ProgID'
 Assert-InstallerCondition (!(Test-Path $desktopShortcut)) 'uninstall removes desktop shortcut'
 Assert-InstallerCondition (!(Test-Path $menuDirectory)) 'uninstall removes Start menu shortcuts'
+Assert-InstallerCondition (!(Get-ItemProperty -LiteralPath $startupKey -Name 'seeWallpaper' -ErrorAction SilentlyContinue)) 'uninstall removes the fixture login startup entry'
 $finalAssociation = if (Test-Path -LiteralPath $extensionKey) { (Get-Item -LiteralPath $extensionKey).GetValue('') } else { $null }
 Assert-InstallerCondition ($finalAssociation -eq $originalAssociation) 'pre-existing extension default is preserved'
 $reportPath = Join-Path $projectRoot 'build\visual-review\installer-validation.txt'
