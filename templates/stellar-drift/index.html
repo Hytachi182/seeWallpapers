@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stellar Drift</title>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #160016; }
+    canvas { display: block; width: 100%; height: 100%; }
+    [hidden] { display: none !important; }
+    #fallback { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  </style>
+</head>
+<body>
+  <canvas aria-label="Slowly rotating golden particle sphere and violet stardust disk"></canvas>
+  <img id="fallback" src="preview.jpg" alt="Golden particle sphere surrounded by violet stardust" hidden>
+  <script id="fragment" type="x-shader/x-fragment">
+    precision mediump float;
+    varying vec3 tint;
+    uniform float intensity;
+    void main() {
+      float radius = length(gl_PointCoord - vec2(0.5));
+      float light = 1.0 - smoothstep(0.1, 0.5, radius);
+      gl_FragColor = vec4(tint * intensity, light);
+    }
+  </script>
+  <script src="scene.js"></script>
+</body>
+</html>

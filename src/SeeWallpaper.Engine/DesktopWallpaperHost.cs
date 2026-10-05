@@ -17,6 +17,17 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
 
     public IReadOnlyCollection<string> ActiveDisplayIds => _wallpaperWindows.Keys.ToArray();
 
+    public async Task UpdateTemplateSettingsAsync(string templateId, IReadOnlyDictionary<string, object?> settings)
+    {
+        await _operationLock.WaitAsync();
+        try
+        {
+            foreach (WebWallpaperWindow window in _wallpaperWindows.Values.Where(window => window.TemplateId == templateId))
+                await window.UpdateSettingsAsync(settings);
+        }
+        finally { _operationLock.Release(); }
+    }
+
     public async Task ApplyAsync(InstalledTemplate template, string displayId, IReadOnlyDictionary<string, object?> settings, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();

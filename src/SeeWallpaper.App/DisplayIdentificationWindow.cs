@@ -20,7 +20,7 @@ internal sealed class DisplayIdentificationWindow : Window
         Width = 240;
         Height = 150;
         Background = new SolidColorBrush(Color.FromRgb(24, 27, 38));
-        Content = new TextBlock { Text = $"Display {number}", FontSize = 40, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+        Content = new TextBlock { Text = Localization.F("DisplayFormat", number), FontSize = 40, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
         DispatcherTimer timer = new() { Interval = TimeSpan.FromSeconds(3) };
         timer.Tick += (_, _) => Close();
         Loaded += (_, _) =>

@@ -1,5 +1,5 @@
 #ifndef AppVersion
-  #define AppVersion "1.4.0"
+  #error AppVersion must be supplied from SeeWallpaper.App.csproj by build/build-installer.ps1
 #endif
 #ifndef PublishDir
   #define PublishDir "..\dist\installer-payload\win-x64"

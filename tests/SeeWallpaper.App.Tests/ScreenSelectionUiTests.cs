@@ -61,10 +61,36 @@ public sealed class ScreenSelectionUiTests
                     Assert.NotNull(main.Icon);
                     string templatesRoot = Path.Combine(AppContext.BaseDirectory, "templates");
                     var catalog = new SeeWallpaper.TemplateEngine.FileTemplateCatalog(new SeeWallpaper.TemplateEngine.TemplateManifestValidator());
-                    TemplateCardViewModel[] templates = catalog.DiscoverAsync(templatesRoot).GetAwaiter().GetResult()
+                    TemplateCardViewModel[] templates = Task.Run(() => catalog.DiscoverAsync(templatesRoot)).GetAwaiter().GetResult()
                         .Select(template => new TemplateCardViewModel(template, Brushes.Black, false)).ToArray();
                     typeof(MainWindow).GetField("_templates", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.SetValue(main, templates);
                     ((ItemsControl)main.FindName("TemplateList")).ItemsSource = templates;
+                    // Inspect the real update banner without downloading or installing anything.
+                    Border updateBanner = (Border)main.FindName("UpdateBanner");
+                    Button installUpdate = (Button)main.FindName("DownloadUpdateButton");
+                    ProgressBar updateProgress = (ProgressBar)main.FindName("UpdateProgress");
+                    Button cancelUpdate = (Button)main.FindName("CancelUpdateButton");
+                    updateBanner.Visibility = installUpdate.Visibility = Visibility.Visible;
+                    Localization.Set((TextBlock)main.FindName("UpdateTitle"), TextBlock.TextProperty, () => Localization.F("UpdateAvailableFormat", "1.7.0"));
+                    Localization.Set((TextBlock)main.FindName("UpdateDescription"), TextBlock.TextProperty, () => Localization.T("AutomaticUpdateReady"));
+                    Localization.Current.ChangeLanguage("fr");
+                    Assert.Equal("Installer et redémarrer", installUpdate.Content);
+                    Capture((FrameworkElement)main.Content, "update-ready-fr.png", 1240, 750);
+                    Localization.Current.ChangeLanguage("de");
+                    Capture((FrameworkElement)main.Content, "update-ready-de-compact.png", 980, 600);
+                    installUpdate.IsEnabled = false;
+                    installUpdate.Visibility = Visibility.Collapsed;
+                    updateProgress.Visibility = cancelUpdate.Visibility = Visibility.Visible;
+                    updateProgress.Value = 42;
+                    Localization.Set((TextBlock)main.FindName("UpdateTitle"), TextBlock.TextProperty, () => Localization.T("DownloadingApplicationUpdate"));
+                    Localization.Set((TextBlock)main.FindName("UpdateDescription"), TextBlock.TextProperty, () => Localization.F("UpdateDownloadProgressFormat", 42));
+                    Localization.Current.ChangeLanguage("fr");
+                    Capture((FrameworkElement)main.Content, "update-progress-fr-compact.png", 980, 600);
+                    updateBanner.Visibility = Visibility.Collapsed;
+                    installUpdate.IsEnabled = true;
+                    installUpdate.Visibility = Visibility.Visible;
+                    updateProgress.Visibility = cancelUpdate.Visibility = Visibility.Collapsed;
+                    Localization.Current.ChangeLanguage("en");
                     Capture((FrameworkElement)main.Content, "screen-gallery.png", 1240, 750);
                     typeof(MainWindow).GetMethod("ShowScreens", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(main, null);
                     Capture((FrameworkElement)main.Content, "screen-management.png", 980, 600);
@@ -81,7 +107,68 @@ public sealed class ScreenSelectionUiTests
                     Descendants((DependencyObject)main.FindName("AboutView")).OfType<Button>().Single(button => Equals(button.Content, "Explore wallpapers")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.Equal(Visibility.Collapsed, ((ScrollViewer)main.FindName("AboutView")).Visibility);
                     Assert.Equal(Visibility.Visible, ((ScrollViewer)main.FindName("GalleryView")).Visibility);
-                    main.Close();
+                    try
+                    {
+                        Localization.Current.ChangeLanguage("fr");
+                        Assert.Equal("Galerie", ((TextBlock)main.FindName("PageTitle")).Text);
+                        Button language = (Button)main.FindName("LanguageButton");
+                        Assert.Equal("Langue : Français", language.Content);
+                        Capture((FrameworkElement)main.Content, "language-gallery-fr.png", 1240, 750);
+                        Capture((FrameworkElement)main.Content, "language-gallery-fr-compact.png", 980, 600);
+                        Descendants((DependencyObject)main.Content).OfType<Button>().Single(button => Equals(button.Content, "Écrans"))
+                            .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        Assert.Equal("Mes écrans", ((TextBlock)main.FindName("PageTitle")).Text);
+                        ItemsControl list = (ItemsControl)main.FindName("DisplayList");
+                        DisplayCardViewModel? selected = list.Items.Cast<DisplayCardViewModel>().FirstOrDefault();
+                        if (selected is not null) selected.SelectedTemplate = templates.Last();
+                        Capture((FrameworkElement)main.Content, "language-displays-fr.png", 980, 600);
+                        language.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        ContextMenu menu = language.ContextMenu;
+                        Assert.True(menu.IsOpen);
+                        Assert.True(menu.Items.Cast<MenuItem>().Single(item => Equals(item.Header, "Français")).IsChecked);
+                        menu.Items.Cast<MenuItem>().Single(item => Equals(item.Header, "English"))
+                            .RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
+                        menu.IsOpen = false;
+                        Assert.Equal("My displays", ((TextBlock)main.FindName("PageTitle")).Text);
+                        Assert.Equal("Language: English", language.Content);
+                        if (selected is not null) Assert.Equal(templates.Last().Template.Manifest.Id,
+                            list.Items.Cast<DisplayCardViewModel>().First().SelectedTemplate?.Template.Manifest.Id);
+                        Localization.Current.ChangeLanguage("fr");
+                        PerformanceSettingsWindow settings = new(SeeWallpaper.Engine.WallpaperPerformanceProfile.Balanced, true, false, false);
+                        Assert.Equal(SeeWallpaper.Engine.WallpaperPerformanceProfile.Balanced, settings.SelectedProfile);
+                        Capture((FrameworkElement)settings.Content, "language-settings-fr.png", 440, 460);
+                        settings.Close();
+                        foreach ((string code, string nativeName, string displayTitle) in new[]
+                        {
+                            ("de", "Deutsch", "Meine Bildschirme"), ("es", "Español", "Mis pantallas"),
+                            ("lb", "Lëtzebuergesch", "Meng Bildschiermer"), ("ro", "Română", "Ecranele mele"),
+                            ("pl", "Polski", "Moje ekrany"), ("it", "Italiano", "I miei schermi")
+                        })
+                        {
+                            language.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            menu = language.ContextMenu;
+                            Assert.Equal(SupportedLanguages.All.Count, menu.Items.Count);
+                            menu.Items.Cast<MenuItem>().Single(item => Equals(item.Header, nativeName))
+                                .RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
+                            menu.IsOpen = false;
+                            Assert.Equal(code, Localization.Current.Language);
+                            Assert.Equal(Localization.F("LanguageFormat", nativeName), language.Content);
+                            Descendants((DependencyObject)main.Content).OfType<Button>().Single(button => Equals(button.Content, Localization.T("Displays")))
+                                .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            Assert.Equal(displayTitle, ((TextBlock)main.FindName("PageTitle")).Text);
+                            Capture((FrameworkElement)main.Content, $"language-displays-{code}.png", 980, 600);
+                            Descendants((DependencyObject)main.Content).OfType<Button>().Single(button => Equals(button.Content, Localization.T("Gallery")))
+                                .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            Capture((FrameworkElement)main.Content, $"language-gallery-{code}.png", 980, 600);
+                            settings = new(SeeWallpaper.Engine.WallpaperPerformanceProfile.Balanced, true, false, false);
+                            Assert.Equal(SeeWallpaper.Engine.WallpaperPerformanceProfile.Balanced, settings.SelectedProfile);
+                            Capture((FrameworkElement)settings.Content, $"language-settings-{code}.png", 440, 460);
+                            settings.Close();
+                        }
+                    }
+                    finally { Localization.Current.ChangeLanguage("en"); }
+                    // Close normally hides the app; explicitly quit so language listeners and tray resources are released.
+                    typeof(MainWindow).GetMethod("Quit", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(main, null);
                 }
                 application.Shutdown();
             }
