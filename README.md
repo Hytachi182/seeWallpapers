@@ -26,7 +26,9 @@
 
 ## Get started
 
-The repository now targets **1.5.0**. Until that release is published, the download buttons deliver the previous stable version; the additional scenes, Online page, background operation, and display recovery described here belong to 1.5.0.
+<!-- release-info:start -->
+Source version: **1.5.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+<!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
 
@@ -72,7 +74,9 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 
 ## The scenes
 
-Twenty-three wallpapers are included. The images below are captured from the actual scenes.
+<!-- template-summary:start -->
+**23 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+<!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
 
