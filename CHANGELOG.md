@@ -37,6 +37,30 @@
 - Sign-in startup now restores wallpapers silently in the notification area, with no window or taskbar button.
 - When seeWallpaper does not start with Windows, a warning offers a **Start with Windows** button, in the installed and ZIP editions alike. Startup can also be turned on or off in **Settings**, and installer updates keep the choice made in the app.
 
+<!-- generated-release:start -->
+### Changes since v1.4.0
+
+Built-in catalogue: **23 wallpapers**.
+
+#### New wallpapers
+
+- **Crimson Valley** (`crimson-valley`): A lone warrior beneath a crimson maple overlooking a sunset valley, with falling leaves, flowing waterfalls, flickering pagoda lights and drifting mist.
+- **Lunar Silence** (`lunar-silence`): A lone astronaut on the lunar surface beneath a slowly turning blue Earth, with twinkling stars, shooting stars, a passing satellite and drifting moon dust.
+- **Pure Cosmos** (`pure-cosmos`): A spiral galaxy and a giant ringed horizon over a mirror sea, with orbiting stars, shooting stars, a pulsing sunrise and drifting cosmic dust.
+- **Robot Workshop** (`robot-workshop`): Three articulated robots in a quiet hangar: one keeps watch, one welds in a shower of sparks, one scans the hall, under flickering lights, drifting fog and floating dust.
+- **Solar System** (`solar-system`): The Sun and the eight planets in an artistic composition, with turning planets, orbiting moons, solar prominences, a drifting asteroid belt, orbit lights and a passing comet.
+
+#### Development changes
+
+- améliorations
+- Align installer validation with persisted startup and start promotion CI
+- Automate devops promotion, release metadata and verified publication
+- Add community wallpaper submissions and creator guides
+- Create FUNDING.yml
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.4.0...v1.5.0)
+<!-- generated-release:end -->
+
 ## 1.4.0 - 2026-10-04
 
 - Five original animated Anime scenes: Ninja Anime, Hidden Village, Shinobi Energy, Orange Ninja, and Anime Moon Battle.
