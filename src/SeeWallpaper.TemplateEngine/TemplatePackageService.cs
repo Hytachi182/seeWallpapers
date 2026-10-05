@@ -97,7 +97,7 @@ public sealed class TemplatePackageService(TemplateManifestValidator validator)
         }
     }
 
-    private static string ResolveSafePath(string root, string archivePath)
+    internal static string ResolveSafePath(string root, string archivePath)
     {
         if (string.IsNullOrWhiteSpace(archivePath) || Path.IsPathRooted(archivePath) || archivePath.Split('/', '\\').Any(segment => segment is ".." or "")) throw new InvalidDataException("The package contains an unsafe path.");
         string normalizedRoot = Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;

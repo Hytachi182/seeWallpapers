@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- Crimson Valley: an illustrated Anime wallpaper animated with falling maple leaves, flowing waterfalls, flickering pagoda lights, river sparkles, drifting mist, gliding birds, and a slow camera drift. Leaf color, speed, atmosphere intensity, and leaf density are adjustable.
+- Pure Cosmos: an illustrated Space wallpaper animated with orbiting galaxy stars, twinkling and shooting stars, a breathing planet atmosphere, a pulsing sunrise, a shimmering mirror sea, drifting mist and cosmic dust. Nebula accent, speed, glow intensity, and star density are adjustable.
+- Solar System: a layered vector Space wallpaper with a turning Sun and solar prominences, rotating planets, drifting cloud bands, orbiting moons, an asteroid belt in motion, lights travelling along the orbits, and a passing comet. Orbit light color, speed, glow intensity, and star density are adjustable.
+- Lunar Silence: a layered vector Space wallpaper with a rotating Earth, breathing astronaut with visor glint and suit light, twinkling and shooting stars, a passing satellite, and drifting moon dust. Earth glow, speed, glow intensity, and star density are adjustable.
+- Wallpapers keep running when the window is closed: seeWallpaper stays in the notification area. Click the icon to reopen the app, or right-click it and choose **Quit and remove wallpapers** to stop it.
+- Online page: discover and download new wallpapers published in the GitHub repository, with update offers for newer versions. Downloads are verified file by file before installation. seeWallpaper checks at startup and every six hours, and notifies you from the notification area.
+- Sign-in startup now restores wallpapers silently in the notification area, with no window or taskbar button.
+- When seeWallpaper does not start with Windows, a warning offers a **Start with Windows** button, in the installed and ZIP editions alike. Startup can also be turned on or off in **Settings**, and installer updates keep the choice made in the app.
+
 ## 1.4.0 - 2026-10-04
 
 - Five original animated Anime scenes: Ninja Anime, Hidden Village, Shinobi Energy, Orange Ninja, and Anime Moon Battle.

@@ -1,3 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup><ProjectReference Include="..\SeeWallpaper.Core\SeeWallpaper.Core.csproj" /></ItemGroup>
+  <ItemGroup><InternalsVisibleTo Include="SeeWallpaper.TemplateEngine.Tests" /></ItemGroup>
 </Project>

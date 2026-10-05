@@ -125,6 +125,24 @@ begin
   RegDeleteKeyIfEmpty(HKCU, 'Software\Classes\.seewall');
 end;
 
+var
+  StartupWasEnabled: Boolean;
+  StartupTaskSynced: Boolean;
+
+{ The app can enable sign-in startup itself; keep that choice when updating. }
+procedure InitializeWizard();
+begin
+  StartupWasEnabled := RegValueExists(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'seeWallpaper');
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  if (CurPageID = wpSelectTasks) and StartupWasEnabled and not StartupTaskSynced then begin
+    WizardSelectTasks('startup');
+    StartupTaskSynced := True;
+  end;
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then begin
@@ -137,7 +155,7 @@ begin
       RegDeleteKeyIfEmpty(HKCU, 'Software\Classes\.seewall');
       RegDeleteKeyIncludingSubkeys(HKCU, 'Software\Classes\seeWallpaper.Template');
     end;
-    if not WizardIsTaskSelected('startup') then
+    if not WizardIsTaskSelected('startup') and not (WizardSilent() and StartupWasEnabled) then
       RegDeleteValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'seeWallpaper');
     if not WizardIsTaskSelected('desktopicon') then
       DeleteFile(ExpandConstant('{autodesktop}\seeWallpaper.lnk'));

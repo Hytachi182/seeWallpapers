@@ -1,6 +1,6 @@
 # Template artwork
 
-The built-in pack contains eighteen original procedural wallpapers. Each directory is an independent package: its HTML, JavaScript, manifest and preview stay inside the template root so import, duplication and export keep working offline.
+The built-in pack contains twenty-two wallpapers: eighteen original procedural scenes and four animated illustrations. Each directory is an independent package: its HTML, JavaScript, manifest and preview stay inside the template root so import, duplication and export keep working offline.
 
 | Template | Artwork |
 | --- | --- |
@@ -9,6 +9,10 @@ The built-in pack contains eighteen original procedural wallpapers. Each directo
 | Shinobi Energy | Standing shinobi, rotating energy seals, luminous ribbons and rising sparks |
 | Orange Ninja | Original orange-cloaked guardian, golden valley and wind-blown leaves |
 | Anime Moon Battle | Two airborne shinobi, steel blades, blue moon and animated energy trails |
+| Crimson Valley | Bundled illustration (`artwork.jpg`) animated with maple leaves, waterfalls, pagoda lights, river sparkles, mist, birds and a slow camera drift |
+| Pure Cosmos | Bundled illustration (`artwork.jpg`) animated with orbiting galaxy stars, shooting stars, planet rim glow, sunrise flare, sea shimmer, mist and dust |
+| Lunar Silence | Layered vector artwork (`layers/*.svg`) with a rotating Earth, breathing astronaut, visor glint, twinkling and shooting stars, satellite and moon dust |
+| Solar System | Layered vector artwork with a turning Sun, prominences, rotating planets, orbiting moons, moving asteroid belt, orbit lights and a comet |
 | Aurora Borealis | Layered green aurora curtains, stars and a dark mountain ridge |
 | Ocean Dusk | Sunset atmosphere, perspective waves and a moving gold reflection |
 | Moonlit Dunes | Layered moon-lit dunes, sand ripples and drifting dust |
@@ -37,6 +41,10 @@ The Anime renderer is maintained in `build/anime-scene.js`. It draws original ce
 Canvas backing stores resize only on viewport changes and are capped at 1.5 device pixels per CSS pixel. WebGL is capped at 2,073,600 fragments per frame; its default is 30 FPS and low profiles also lower rendering resolution. Both renderers stop scheduling frames on SDK pause or document invisibility and cap reduced-motion users at 15 FPS. These limits bound the work; hardware-specific GPU consumption still depends on the computer and number of wallpapers.
 
 Operations Center only graphs CPU and memory samples received from the system SDK. Missing values appear as em dashes, including unknown battery status. The retained history is 90 samples (three minutes with the host's two-second polling interval). No synthetic measurements populate the wallpaper or its gallery preview.
+
+Crimson Valley and Pure Cosmos are hand-maintained in their own `scene.js` and are not produced by a generator. It cover-fits `artwork.jpg` and positions every overlay in normalized artwork coordinates, so effects stay on the painted waterfalls, pagodas, galaxy and planet at any aspect ratio. It uses the same frame scheduling, pixel cap and SDK hooks as the Anime renderer.
+
+Lunar Silence is also hand-maintained. Its source SVG is split into `layers/` (Earth, Earth surface, terminator shade, ground, astronaut); the 560 original stars are inlined in `index.html`. Each layer is rasterized into its own bitmap only on resize, then composed per frame: the Earth surface scrolls under a circular clip, and the astronaut breathes around its boots. Solar System uses the same approach: the backdrop, Sun and each planet (base, surface, shade or rings) are separate layers. Rocky planets scroll their surface under a clip; gas giants keep their bands still and show drifting cloud wisps (and Jupiter's moving spot) to avoid seams. Stars and asteroid-belt data are inlined in its index.html.
 
 ## Capture previews and check rendering
 

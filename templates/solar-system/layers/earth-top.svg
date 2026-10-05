@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><defs>
+<radialGradient id="space" cx=".2" cy=".55" r="1"><stop stop-color="#192238"/><stop offset=".5" stop-color="#080f21"/><stop offset="1" stop-color="#02050e"/></radialGradient>
+<radialGradient id="glow"><stop stop-color="#ffb448" stop-opacity=".45"/><stop offset=".45" stop-color="#f58c2a" stop-opacity=".15"/><stop offset="1" stop-color="#ec6421" stop-opacity="0"/></radialGradient>
+<radialGradient id="sun" cx=".65" cy=".4"><stop stop-color="#fffbc3"/><stop offset=".4" stop-color="#ffdf68"/><stop offset=".8" stop-color="#fba32d"/><stop offset="1" stop-color="#d95020"/></radialGradient>
+<radialGradient id="shade" cx=".24" cy=".25" r=".95"><stop stop-color="#ffffff" stop-opacity=".22"/><stop offset=".38" stop-color="#000" stop-opacity="0"/><stop offset=".75" stop-color="#020714" stop-opacity=".35"/><stop offset="1" stop-color="#01030b" stop-opacity=".95"/></radialGradient>
+<linearGradient id="rings" x2="1" y2="1"><stop stop-color="#8e7355"/><stop offset=".3" stop-color="#e8d3ad"/><stop offset=".5" stop-color="#a58b68"/><stop offset=".7" stop-color="#e3cba5"/><stop offset="1" stop-color="#66596a"/></linearGradient>
+</defs><circle cx="557" cy="567" r="39" fill="url(#shade)"/></svg>

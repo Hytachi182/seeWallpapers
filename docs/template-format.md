@@ -24,3 +24,12 @@ For lifecycle-aware animation, templates can register `seeWallpaper.onPause(call
   "settings": []
 }
 ```
+
+## Publishing online
+
+The app's **Online** page reads the `templates/` folder of the repository's default branch on GitHub. It checks at startup and every six hours, then offers wallpapers that are missing locally. When seeWallpaper is running in the notification area, it also shows a notification.
+
+- **New wallpaper:** push a template folder `templates/<id>/` whose folder name equals the manifest `id`, with its `entry` and `preview` files. It appears online without a new app release.
+- **Update:** increase `version` in the manifest and keep the same `author`. Installed copies with a lower version get an **Update** button.
+- **Integrity:** each file is checked against the size and Git blob hash in the repository tree before installation. A folder is installed only if its manifest passes validation, and an update replaces the previous copy only after a successful download.
+- **Limits:** 500 files and 250 MB per template. Folders without a `manifest.json` are ignored.

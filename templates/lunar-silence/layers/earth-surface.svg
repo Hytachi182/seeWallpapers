@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><defs>
+<linearGradient id="sky" x2="0.8" y2="1"><stop stop-color="#02050c"/><stop offset="1" stop-color="#101c30"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#528ec5" stop-opacity=".25"/><stop offset="1" stop-color="#528ec5" stop-opacity="0"/></radialGradient>
+<radialGradient id="earth" cx=".28" cy=".22" r=".85"><stop stop-color="#64d2ee"/><stop offset=".48" stop-color="#236bb0"/><stop offset=".8" stop-color="#0d294a"/><stop offset="1" stop-color="#030912"/></radialGradient>
+<linearGradient id="land" x2=".2" y2="1"><stop stop-color="#a7b4c4"/><stop offset=".4" stop-color="#657389"/><stop offset="1" stop-color="#172438"/></linearGradient>
+<linearGradient id="front" x2=".5" y2="1"><stop stop-color="#8090a4"/><stop offset="1" stop-color="#263346"/></linearGradient>
+<radialGradient id="crater"><stop stop-color="#131e30"/><stop offset=".65" stop-color="#344359"/><stop offset=".85" stop-color="#7b8ba0"/><stop offset="1" stop-color="#46566d" stop-opacity="0"/></radialGradient>
+<linearGradient id="suit" x2="1" y2=".5"><stop stop-color="#eef5f8"/><stop offset=".5" stop-color="#c1cdd6"/><stop offset="1" stop-color="#627387"/></linearGradient>
+<linearGradient id="visor" x2="1" y2="1"><stop stop-color="#ffe3a0"/><stop offset=".4" stop-color="#a9702c"/><stop offset="1" stop-color="#2c2531"/></linearGradient>
+<clipPath id="globe"><circle cx="1390" cy="282" r="119"/></clipPath>
+</defs><g>
+<path d="M1285 191L1320 175 1349 193 1354 219 1372 234 1363 250 1378 273 1357 292 1334 290 1320 274 1300 262 1296 240 1270 230Z M1360 293L1384 302 1399 323 1388 350 1386 370 1363 399 1350 384 1351 358 1339 339 1341 313Z M1441 194L1467 208 1488 240 1474 266 1453 261 1444 236 1427 224Z" fill="#69a7a0" opacity=".7"/>
+<g fill="none" stroke="#e7f7ff" stroke-linecap="round" opacity=".65"><path d="M1287 223Q1339 193 1396 225T1494 245" stroke-width="9"/><path d="M1280 278Q1313 264 1353 277M1392 277Q1441 293 1497 270" stroke-width="6"/><path d="M1310 333Q1346 348 1373 332T1442 338" stroke-width="8"/><path d="M1342 183Q1388 193 1422 185" stroke-width="5"/></g>
+</g></svg>

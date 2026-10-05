@@ -20,7 +20,8 @@ public partial class App : Application
                 Shutdown();
                 return;
             }
-            MainWindow window = new();
+            MainWindow window = new() { StartHidden = request.Minimized };
+            if (request.Minimized) { window.ShowInTaskbar = false; window.WindowState = WindowState.Minimized; }
             MainWindow = window;
             _ = _instance.ReceiveAsync(arguments => Dispatcher.InvokeAsync(() => window.HandleLaunchAsync(LaunchRequest.Parse(arguments))).Task.Unwrap());
             window.Show();

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><defs>
+<linearGradient id="sky" x2="0.8" y2="1"><stop stop-color="#02050c"/><stop offset="1" stop-color="#101c30"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#528ec5" stop-opacity=".25"/><stop offset="1" stop-color="#528ec5" stop-opacity="0"/></radialGradient>
+<radialGradient id="earth" cx=".28" cy=".22" r=".85"><stop stop-color="#64d2ee"/><stop offset=".48" stop-color="#236bb0"/><stop offset=".8" stop-color="#0d294a"/><stop offset="1" stop-color="#030912"/></radialGradient>
+<linearGradient id="land" x2=".2" y2="1"><stop stop-color="#a7b4c4"/><stop offset=".4" stop-color="#657389"/><stop offset="1" stop-color="#172438"/></linearGradient>
+<linearGradient id="front" x2=".5" y2="1"><stop stop-color="#8090a4"/><stop offset="1" stop-color="#263346"/></linearGradient>
+<radialGradient id="crater"><stop stop-color="#131e30"/><stop offset=".65" stop-color="#344359"/><stop offset=".85" stop-color="#7b8ba0"/><stop offset="1" stop-color="#46566d" stop-opacity="0"/></radialGradient>
+<linearGradient id="suit" x2="1" y2=".5"><stop stop-color="#eef5f8"/><stop offset=".5" stop-color="#c1cdd6"/><stop offset="1" stop-color="#627387"/></linearGradient>
+<linearGradient id="visor" x2="1" y2="1"><stop stop-color="#ffe3a0"/><stop offset=".4" stop-color="#a9702c"/><stop offset="1" stop-color="#2c2531"/></linearGradient>
+<clipPath id="globe"><circle cx="1390" cy="282" r="119"/></clipPath>
+</defs><g transform="translate(1170 745)"><rect x="20" y="41" width="44" height="62" rx="11" fill="#72869b"/><path d="M28 94L23 133 21 147 38 148 46 102M48 100L54 136 55 148 72 148 67 129 62 91" fill="url(#suit)" stroke="#62758c" stroke-width="2"/><rect x="26" y="47" width="39" height="53" rx="13" fill="url(#suit)"/><path d="M29 52L16 62 9 86 18 92 31 70M61 53L74 68 80 90 71 95 58 72" fill="url(#suit)" stroke="#718499" stroke-width="2"/><circle cx="45" cy="28" r="25" fill="url(#suit)"/><rect x="27" y="12" width="39" height="31" rx="14" fill="url(#visor)"/><path d="M32 20Q43 13 55 17" fill="none" stroke="#fff1c7" stroke-width="3" opacity=".8"/><rect x="35" y="58" width="21" height="19" rx="3" fill="#76899c"/><circle cx="41" cy="64" r="2" fill="#92e4ec"/><path d="M22 148H40M55 148H74" stroke="#ced8e1" stroke-width="7" stroke-linecap="round"/></g></svg>

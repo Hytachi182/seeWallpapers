@@ -33,7 +33,7 @@ The download buttons always point to the **latest stable release**, with no GitH
 
 **Requirements:** Windows 10 version 2004 or later, or Windows 11, 64-bit. .NET is included. The ZIP launcher and installer check WebView2; installing it initially requires Internet if it is missing. Built-in scenes then run offline.
 
-**Updating:** close the previous app before installing or extracting the new version. Personal scenes and settings remain in `%LocalAppData%\seeWallpaper`, shared by the portable and installed editions.
+**Updating:** quit the previous app (right-click its notification area icon, then **Quit and remove wallpapers**) before installing or extracting the new version. Personal scenes and settings remain in `%LocalAppData%\seeWallpaper`, shared by the portable and installed editions.
 
 > The app and installer are not yet signed with a publisher certificate. Download files from this repository's Releases. The included WebView2 bootstrapper has a Microsoft signature verified during the build.
 
@@ -47,8 +47,10 @@ The download buttons always point to the **latest stable release**, with no GitH
 | **Visual identification** | View the monitor layout and identify displays before applying. |
 | **Duplicate or span** | Use the same wallpaper everywhere or span it across the entire desktop. |
 | **Customize** | Preview scenes, adjust their settings, and save favorites. |
+| **New scenes online** | The **Online** page offers wallpapers newly published on GitHub and updates to installed ones, verified before installation. |
 | **Share** | Import, export, and duplicate `.seewall` packages. |
 | **Tune performance** | Choose a performance profile and configure fullscreen or battery pauses; wallpapers pause when the session locks. |
+| **Runs in the background** | Closing the window keeps wallpapers running from the notification area; right-click the icon to quit. |
 | **Restore your desktop** | Restore saved assignments when the app starts. |
 | **Windows integration** | Shortcuts, desktop context menu, `.seewall` opening, optional sign-in startup, and uninstall. |
 
@@ -65,7 +67,7 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 
 ## The scenes
 
-Eighteen procedural wallpapers are included. The images below are captured from the actual scenes.
+Twenty-two wallpapers are included. The images below are captured from the actual scenes.
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
 
@@ -74,8 +76,14 @@ Eighteen procedural wallpapers are included. The images below are captured from 
 | ![Masked rooftop guardian and crimson moon](templates/ninja-anime/preview.jpg) | ![Lantern-lit mountain village](templates/hidden-village/preview.jpg) |
 | Shinobi Energy | Orange Ninja |
 | ![Shinobi surrounded by rotating energy seals](templates/shinobi-energy/preview.jpg) | ![Orange-cloaked ninja overlooking a golden valley](templates/orange-ninja/preview.jpg) |
-| Anime Moon Battle | |
-| ![Airborne duel beneath a blue moon](templates/anime-moon-battle/preview.jpg) | |
+| Anime Moon Battle | Crimson Valley |
+| ![Airborne duel beneath a blue moon](templates/anime-moon-battle/preview.jpg) | ![Lone warrior beneath a crimson maple overlooking a sunset valley](templates/crimson-valley/preview.jpg) |
+
+| Pure Cosmos | Lunar Silence |
+| --- | --- |
+| ![Spiral galaxy and giant planet over a mirror sea](templates/pure-cosmos/preview.jpg) | ![Astronaut on the Moon beneath a blue Earth](templates/lunar-silence/preview.jpg) |
+| Solar System | |
+| ![The Sun and the eight planets](templates/solar-system/preview.jpg) | |
 
 | Aurora Borealis | Ocean Dusk |
 | --- | --- |
