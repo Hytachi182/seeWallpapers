@@ -12,13 +12,15 @@ Build output: `dist/portable/seeWallpaper-1.4.0-Portable-x64.zip` with its SHA-2
 
 The launcher checks Microsoft WebView2 in the 32-bit and 64-bit user/machine registry views. If missing, it verifies the bundled bootstrapper's Microsoft signature and runs it. This first launch then requires Internet. With WebView2 installed, `SeeWallpaper.App.exe` can also be opened directly.
 
+Closing the window keeps wallpapers running from the notification area. Right-click the seeWallpaper icon and choose **Quit and remove wallpapers** to stop the app. To restore wallpapers after every sign-in, click **Start with Windows** in the app's warning banner or enable it in **Settings**. The entry points to the extracted folder, so turn it off before moving or deleting that folder.
+
 .NET is included. Keep all extracted files together. The ZIP does not create Windows integrations; use the [installer](windows-installer.md) for shortcuts, context menu, file associations, and uninstall support.
 
 ## Settings, updates, and removal
 
 Personal scenes and settings stay in `%LocalAppData%\seeWallpaper`, shared with the installed edition. They do not automatically follow the ZIP to another Windows account or USB drive. Close the old version before launching a new one; otherwise, single-instance handling forwards the request to the already running process.
 
-To update, extract the new archive into a new folder. To remove the ZIP edition, close the app and delete its extracted folder. Settings and the shared Microsoft runtime are retained.
+To update, extract the new archive into a new folder. To remove the ZIP edition, quit the app and delete its extracted folder. Settings and the shared Microsoft runtime are retained.
 
 ## Build and verify
 

@@ -10,13 +10,14 @@ public sealed class PerformanceSettingsWindow : Window
 
     private readonly CheckBox _pauseFullscreen;
     private readonly CheckBox _pauseBattery;
+    private readonly CheckBox _startWithWindows;
 
-    public PerformanceSettingsWindow(WallpaperPerformanceProfile selectedProfile, bool pauseOnFullscreen, bool pauseOnBattery)
+    public PerformanceSettingsWindow(WallpaperPerformanceProfile selectedProfile, bool pauseOnFullscreen, bool pauseOnBattery, bool startWithWindows)
     {
         Title = "Performance settings";
         Icon = Application.Current.TryFindResource("BrandIcon") as System.Windows.Media.ImageSource;
         Width = 360;
-        Height = 295;
+        Height = 380;
         ResizeMode = ResizeMode.NoResize;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         StackPanel panel = new() { Margin = new Thickness(22) };
@@ -28,6 +29,9 @@ public sealed class PerformanceSettingsWindow : Window
         _pauseBattery = new CheckBox { Content = "Pause on battery", IsChecked = pauseOnBattery, Margin = new Thickness(0, 0, 0, 16) };
         panel.Children.Add(_pauseFullscreen);
         panel.Children.Add(_pauseBattery);
+        panel.Children.Add(new TextBlock { Text = "Startup", FontSize = 16, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 0, 0, 8) });
+        _startWithWindows = new CheckBox { Content = "Start with Windows and restore my wallpapers", IsChecked = startWithWindows, Margin = new Thickness(0, 0, 0, 16) };
+        panel.Children.Add(_startWithWindows);
         Button save = new() { Content = "Save", HorizontalAlignment = HorizontalAlignment.Right, Padding = new Thickness(18, 8, 18, 8) };
         save.Click += (_, _) => DialogResult = true;
         panel.Children.Add(save);
@@ -37,4 +41,5 @@ public sealed class PerformanceSettingsWindow : Window
     public WallpaperPerformanceProfile SelectedProfile => _profile.SelectedItem is WallpaperPerformanceProfile profile ? profile : WallpaperPerformanceProfile.Balanced;
     public bool PauseOnFullscreen => _pauseFullscreen.IsChecked == true;
     public bool PauseOnBattery => _pauseBattery.IsChecked == true;
+    public bool StartWithWindows => _startWithWindows.IsChecked == true;
 }

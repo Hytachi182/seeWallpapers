@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><defs>
+<radialGradient id="space" cx=".2" cy=".55" r="1"><stop stop-color="#192238"/><stop offset=".5" stop-color="#080f21"/><stop offset="1" stop-color="#02050e"/></radialGradient>
+<radialGradient id="glow"><stop stop-color="#ffb448" stop-opacity=".45"/><stop offset=".45" stop-color="#f58c2a" stop-opacity=".15"/><stop offset="1" stop-color="#ec6421" stop-opacity="0"/></radialGradient>
+<radialGradient id="sun" cx=".65" cy=".4"><stop stop-color="#fffbc3"/><stop offset=".4" stop-color="#ffdf68"/><stop offset=".8" stop-color="#fba32d"/><stop offset="1" stop-color="#d95020"/></radialGradient>
+<radialGradient id="shade" cx=".24" cy=".25" r=".95"><stop stop-color="#ffffff" stop-opacity=".22"/><stop offset=".38" stop-color="#000" stop-opacity="0"/><stop offset=".75" stop-color="#020714" stop-opacity=".35"/><stop offset="1" stop-color="#01030b" stop-opacity=".95"/></radialGradient>
+<linearGradient id="rings" x2="1" y2="1"><stop stop-color="#8e7355"/><stop offset=".3" stop-color="#e8d3ad"/><stop offset=".5" stop-color="#a58b68"/><stop offset=".7" stop-color="#e3cba5"/><stop offset="1" stop-color="#66596a"/></linearGradient>
+</defs><path d="M1168 276.0 Q1256 288.0 1344 272.0" fill="none" stroke="#a87859" stroke-width="5.5" opacity=".45"/>
+<path d="M1168 287.1 Q1256 299.1 1344 283.1" fill="none" stroke="#ead7b7" stroke-width="8.7" opacity=".45"/>
+<path d="M1168 298.3 Q1256 310.3 1344 294.3" fill="none" stroke="#a87859" stroke-width="5.3" opacity=".45"/>
+<path d="M1168 309.4 Q1256 321.4 1344 305.4" fill="none" stroke="#f5deba" stroke-width="3.1" opacity=".45"/>
+<path d="M1168 320.6 Q1256 332.6 1344 316.6" fill="none" stroke="#7f6056" stroke-width="4.8" opacity=".45"/>
+<path d="M1168 331.7 Q1256 343.7 1344 327.7" fill="none" stroke="#a87859" stroke-width="8.2" opacity=".45"/>
+<path d="M1168 342.9 Q1256 354.9 1344 338.9" fill="none" stroke="#ead7b7" stroke-width="6.4" opacity=".45"/>
+<path d="M1168 354.0 Q1256 366.0 1344 350.0" fill="none" stroke="#f5deba" stroke-width="6.4" opacity=".45"/>
+<path d="M1168 365.1 Q1256 377.1 1344 361.1" fill="none" stroke="#7f6056" stroke-width="8.9" opacity=".45"/>
+<path d="M1168 376.3 Q1256 388.3 1344 372.3" fill="none" stroke="#f5deba" stroke-width="5.5" opacity=".45"/>
+<path d="M1168 387.4 Q1256 399.4 1344 383.4" fill="none" stroke="#7f6056" stroke-width="5.8" opacity=".45"/>
+<path d="M1168 398.6 Q1256 410.6 1344 394.6" fill="none" stroke="#a87859" stroke-width="9.0" opacity=".45"/>
+<path d="M1168 409.7 Q1256 421.7 1344 405.7" fill="none" stroke="#f5deba" stroke-width="8.3" opacity=".45"/>
+<path d="M1168 420.9 Q1256 432.9 1344 416.9" fill="none" stroke="#a87859" stroke-width="8.3" opacity=".45"/></svg>

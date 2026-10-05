@@ -18,7 +18,7 @@ The English installer runs for the current user, without requesting administrato
 - Desktop shortcut, selected by default.
 - Desktop context menu, selected by default: **Customize my displays with seeWallpaper**, opening the **Displays** page.
 - `.seewall` association, selected by default: double-click to import a package. Paths containing spaces are supported. Existing default associations are not overwritten; seeWallpaper is also registered under **Open with**.
-- Optional sign-in startup, disabled by default: restore saved choices with a minimized window.
+- Optional sign-in startup, disabled by default: restore saved wallpapers silently in the notification area. Select it so your wallpapers come back after every sign-in. It can also be enabled later from the app's warning banner or **Settings**; updates keep that choice.
 - Uninstall entry in Windows installed apps.
 
 The context menu uses classic shell integration. Windows 11 exposes classic extensions through **Show more options**. First-level integration through `IExplorerCommand` and package identity is not included. See [Microsoft's documentation](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/integrate-packaged-app-with-file-explorer).
@@ -36,6 +36,8 @@ The build verifies the bootstrapper's Microsoft signature. Uninstalling seeWallp
 The application ID remains stable between versions. A new installer updates an existing installation; Windows may ask to close the app to replace files in use. Deselecting an option during an update removes that integration or shortcut.
 
 Uninstall removes program files, shortcuts, context menu, `.seewall` ProgID, startup entry, and Windows application registration. It retains `%LocalAppData%\seeWallpaper`: personal scenes, favorites, settings, and assignments. A `.seewall` association no longer pointing to seeWallpaper is preserved.
+
+Live wallpapers are drawn by the running app. Closing the window hides it in the notification area and keeps wallpapers active; click the icon to reopen it, or right-click it and choose **Quit and remove wallpapers** to stop.
 
 Shell commands use one instance per Windows user/session. A second launch forwards its request over a user-restricted local channel. Packages are imported after catalog initialization using the same validation as imports from the interface.
 

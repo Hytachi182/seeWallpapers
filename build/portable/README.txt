@@ -7,6 +7,13 @@ GET STARTED
 3. Double-click "Launch seeWallpaper.cmd".
 4. Choose a wallpaper and the displays where it should run.
 
+CLOSING THE WINDOW
+Wallpapers keep running in the notification area, next to the clock.
+Click the seeWallpaper icon to reopen the app. To stop it, right-click
+the icon and choose "Quit and remove wallpapers".
+To restore wallpapers after a restart, click "Start with Windows" in the app.
+Turn it off in Settings before moving or deleting this folder.
+
 The launcher checks Microsoft WebView2 and installs it if missing.
 An Internet connection is required in that case. The .NET runtime is included.
 If WebView2 is already installed, you can open SeeWallpaper.App.exe directly.
@@ -25,11 +32,11 @@ SETTINGS AND UPDATES
 Settings, imported scenes, and assignments are kept in
 %LocalAppData%\seeWallpaper, just like the installed edition.
 They stay on this Windows account when the folder is moved to a USB drive.
-Close the app before changing versions.
+Quit the app before changing versions.
 To update, extract the new ZIP into a new folder and launch it.
 The ZIP and installed editions share settings and a single running instance.
 
 REMOVAL
-Close seeWallpaper, then delete its extracted folder.
+Quit seeWallpaper, then delete its extracted folder.
 Your personal settings are retained. The ZIP adds no shortcuts,
 file associations, or Windows uninstall entry for seeWallpaper.

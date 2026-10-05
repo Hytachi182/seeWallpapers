@@ -2,7 +2,7 @@ using System.IO;
 
 namespace SeeWallpaper.App;
 
-internal sealed record LaunchRequest(bool ShowScreens = false, string? PackagePath = null, bool Minimized = false)
+internal sealed record LaunchRequest(bool ShowScreens = false, string? PackagePath = null, bool Minimized = false, bool ShowOnline = false)
 {
     public static LaunchRequest Parse(IReadOnlyList<string> arguments)
     {
