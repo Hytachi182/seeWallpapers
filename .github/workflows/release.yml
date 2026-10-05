@@ -33,7 +33,7 @@ jobs:
       github.event_name == 'pull_request' && github.event.pull_request.merged == true &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.ref == 'devops'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     outputs:
       required: ${{ steps.plan.outputs.required }}
       version: ${{ steps.plan.outputs.version }}
@@ -142,7 +142,7 @@ jobs:
       always() && needs.package.result == 'success' &&
       (inputs.publish_release == true || github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v'))
     needs: package
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: write
     steps:
