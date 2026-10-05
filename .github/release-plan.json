@@ -1,18 +1,12 @@
 {
   "version": "1.6.0",
   "tag": "v1.6.0",
-  "base_tag": "v1.5.0",
-  "release_required": true,
+  "base_tag": "v1.6.0",
+  "release_required": false,
   "template_count": 26,
-  "added": [
-    "astral-frontier",
-    "neon-ronin",
-    "orbital-earth"
-  ],
-  "updated": [
-    "digital-rain-3d"
-  ],
+  "added": [],
+  "updated": [],
   "removed": [],
   "source_commit": "2b0c804bdad832c39390e9e6bd262e03c1883c20",
-  "title": "Release seeWallpaper 1.6.0"
+  "title": "Sync devops documentation"
 }
