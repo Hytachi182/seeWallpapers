@@ -1,6 +1,6 @@
 # Wallpaper catalogue
 
-**30 built-in wallpapers.** Generated from the scene manifests.
+**31 built-in wallpapers.** Generated from the scene manifests.
 
 | Preview | Wallpaper | Category | Creator | Version |
 | --- | --- | --- | --- | --- |
@@ -10,7 +10,7 @@
 | <img src="../templates/neon-ronin/preview.jpg" alt="Neon Ronin" width="160" /> | **Neon Ronin**<br />A hooded samurai and his cat watching a neon megacity at night, with rain and puddle ripples, flickering signs, a glowing katana, flying traffic, highway light trails, rotating targets, waterfalls, sakura petals and distant lightning. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/ninja-anime/preview.jpg" alt="Ninja Anime" width="160" /> | **Ninja Anime**<br />A masked rooftop guardian, flowing scarf, crimson moon and drifting cherry blossoms. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/orange-ninja/preview.jpg" alt="Orange Ninja" width="160" /> | **Orange Ninja**<br />An original orange-cloaked ninja overlooking a golden mountain valley, with wind-blown leaves. | Anime | seeWallpaper | 1.0.0 |
-| <img src="../templates/pirate-cove/preview.jpg" alt="Pirate Cove" width="160" /> | **Pirate Cove**<br />A young pirate overlooking a sunset cove, with a rocking galleon and its wake, a flapping red banner and cloak, swaying foliage, a flickering lantern, harbour lights, waterfalls, glittering sea and gliding seagulls. | Anime | seeWallpaper | 1.0.0 |
+| <img src="../templates/pirate-cove/preview.jpg" alt="Pirate Cove" width="160" /> | **Pirate Cove**<br />A young pirate overlooking a sunset cove, with gentle folds in the red banner, scarf and cloak, a flickering lantern, warm harbour lights, flowing waterfalls, sea reflections and distant gliding seagulls. | Anime | seeWallpaper | 1.0.1 |
 | <img src="../templates/shinobi-energy/preview.jpg" alt="Shinobi Energy" width="160" /> | **Shinobi Energy**<br />A standing shinobi surrounded by rotating energy seals, rising sparks and luminous ribbons. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/neon-tetris/preview.jpg" alt="Neon Tetris" width="160" /> | **Neon Tetris**<br />A neon falling-blocks game that plays itself: an AI places every piece, clears lines with particles, chains combos, levels up and starts a new game when it tops out. | Games | seeWallpaper | 1.1.0 |
 | <img src="../templates/rainy-window/preview.jpg" alt="Rainy Window" width="160" /> | **Rainy Window**<br />A cinematic neon skyline through rain-streaked glass, with refracted droplets and city reflections. | Manga | seeWallpaper | 1.1.0 |
@@ -18,6 +18,7 @@
 | <img src="../templates/data-tunnel/preview.jpg" alt="Data Tunnel" width="160" /> | **Data Tunnel**<br />An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry. | Matrix | seeWallpaper | 1.1.0 |
 | <img src="../templates/digital-rain-3d/preview.jpg" alt="Digital Rain 3D" width="160" /> | **Digital Rain 3D**<br />Matrix code rain in three depth planes with focus blur, mirrored glyphs that mutate as they fall, a clock revealed by the rain, CRT scanlines and occasional glitches. | Matrix | seeWallpaper | 2.0.0 |
 | <img src="../templates/aurora-borealis/preview.jpg" alt="Aurora Borealis" width="160" /> | **Aurora Borealis**<br />Northern lights ripple above a silent mountain range and a crisp star field. | Nature | seeWallpaper | 1.0.0 |
+| <img src="../templates/biker-road/preview.jpg" alt="Biker Road" width="160" /> | **Biker Road**<br />A coastal motorcycle ride at sunset, with perspective road trails, drifting clouds, golden sea reflections and a breathing tail light. Based on the supplied biker_road_wallpaper.svg artwork. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/firefly-grove/preview.jpg" alt="Firefly Grove" width="160" /> | **Firefly Grove**<br />Fireflies drift between shadowed trees and soft shafts of light in a misty grove. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/moonlit-dunes/preview.jpg" alt="Moonlit Dunes" width="160" /> | **Moonlit Dunes**<br />Sculpted dunes, wind-blown sand and a crescent moon in a quiet desert night. | Nature | seeWallpaper | 1.0.0 |
 | <img src="../templates/ocean-dusk/preview.jpg" alt="Ocean Dusk" width="160" /> | **Ocean Dusk**<br />A low sun, slowly rolling waves and a shimmering golden reflection across the ocean. | Nature | seeWallpaper | 1.0.0 |
