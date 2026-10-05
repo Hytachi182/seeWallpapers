@@ -35,6 +35,7 @@ Built-in catalogue: **23 wallpapers**.
 
 #### Development changes
 
+- Align installer validation with persisted startup and start promotion CI
 - Automate devops promotion, release metadata and verified publication
 - Add community wallpaper submissions and creator guides
 - améliorations
