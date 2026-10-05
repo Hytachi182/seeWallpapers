@@ -4,10 +4,10 @@ import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const runtime = await readFile(path.join(root, 'build/template-scene.js'), 'utf8');
+// Digital Rain 3D is hand-maintained in templates/digital-rain-3d and is not generated here.
 const descriptions = {
   'ai-core': 'A holographic reactor with a rotating spherical lattice, orbital machinery and a pulsing energy core.',
   'data-tunnel': 'An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry.',
-  'digital-rain-3d': 'Three layers of animated Matrix glyphs with luminous heads, independent depth and dark desktop space.',
   'neural-network': 'A rotating three-dimensional neural constellation with connected nodes and traveling synaptic pulses.',
   'sakura-night': 'A moonlit Japanese landscape with a branching cherry canopy, mountain silhouettes, a torii and drifting petals.',
   'rainy-window': 'A cinematic neon skyline through rain-streaked glass, with refracted droplets and city reflections.',

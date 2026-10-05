@@ -1,6 +1,6 @@
 # Template artwork
 
-The built-in pack contains twenty-three wallpapers: eighteen original procedural scenes and five animated illustrations. Each directory is an independent package: its HTML, JavaScript, manifest and preview stay inside the template root so import, duplication and export keep working offline.
+The built-in pack contains twenty-six wallpapers: eighteen original procedural scenes and eight animated illustrations. Each directory is an independent package: its HTML, JavaScript, manifest and preview stay inside the template root so import, duplication and export keep working offline.
 
 | Template | Artwork |
 | --- | --- |
@@ -14,6 +14,9 @@ The built-in pack contains twenty-three wallpapers: eighteen original procedural
 | Lunar Silence | Layered vector artwork (`layers/*.svg`) with a rotating Earth, breathing astronaut, visor glint, twinkling and shooting stars, satellite and moon dust |
 | Solar System | Layered vector artwork with a turning Sun, prominences, rotating planets, orbiting moons, moving asteroid belt, orbit lights and a comet |
 | Robot Workshop | Layered vector hangar with three articulated robots (head, arms, breathing), blinking eyes, welding sparks, flickering lights, fog and dust |
+| Astral Frontier | Bundled illustration (`artwork.jpg`) animated with a sunrise flare, atmosphere rim, city lights, galaxy stars, star flares, meteors, asteroid glints and suit lights |
+| Neon Ronin | Bundled illustration (`artwork.jpg`) animated with rain, puddle ripples, neon flicker, katana glow, flying traffic, light trails, holographic targets, petals and lightning |
+| Orbital Earth | Bundled illustration (`artwork.jpg`) animated with a sunrise flare, atmosphere, city lights, orbiting satellites with occlusion, beacons, radar pings and data links |
 | Aurora Borealis | Layered green aurora curtains, stars and a dark mountain ridge |
 | Ocean Dusk | Sunset atmosphere, perspective waves and a moving gold reflection |
 | Moonlit Dunes | Layered moon-lit dunes, sand ripples and drifting dust |
@@ -22,7 +25,7 @@ The built-in pack contains twenty-three wallpapers: eighteen original procedural
 | Spectral Forge | Ray-marched, slowly deforming metal torus with iridescent reflections |
 | AI Core | Projected spherical lattice and segmented orbital machinery |
 | Data Tunnel | Octagonal perspective tunnel and moving light trails |
-| Digital Rain 3D | Three glyph layers with luminous heads and independent speeds |
+| Digital Rain 3D | Mirrored glyph rain in three depth planes with focus blur, mutating symbols, a rain-revealed clock, CRT scanlines and glitches |
 | Neural Network | Projected rotating network with traveling edge pulses |
 | Sakura Night | Moon, mountains, branching blossom canopy, torii and drifting petals |
 | Rainy Window | Layered neon skyline, reflections and foreground glass droplets |
@@ -45,7 +48,7 @@ Operations Center only graphs CPU and memory samples received from the system SD
 
 Crimson Valley and Pure Cosmos are hand-maintained in their own `scene.js` and are not produced by a generator. It cover-fits `artwork.jpg` and positions every overlay in normalized artwork coordinates, so effects stay on the painted waterfalls, pagodas, galaxy and planet at any aspect ratio. It uses the same frame scheduling, pixel cap and SDK hooks as the Anime renderer.
 
-Lunar Silence is also hand-maintained. Its source SVG is split into `layers/` (Earth, Earth surface, terminator shade, ground, astronaut); the 560 original stars are inlined in `index.html`. Each layer is rasterized into its own bitmap only on resize, then composed per frame: the Earth surface scrolls under a circular clip, and the astronaut breathes around its boots. Solar System uses the same approach: the backdrop, Sun and each planet (base, surface, shade or rings) are separate layers. Rocky planets scroll their surface under a clip; gas giants keep their bands still and show drifting cloud wisps (and Jupiter's moving spot) to avoid seams. Stars and asteroid-belt data are inlined in its index.html. Robot Workshop rigs its robot: the shared robot design is split into base, torso, two arms and head, rasterized at each robot's scale, then posed per frame around shoulder and neck pivots. The translucent back robot is composited off-screen first so its parts do not show through each other.
+Lunar Silence is also hand-maintained. Its source SVG is split into `layers/` (Earth, Earth surface, terminator shade, ground, astronaut); the 560 original stars are inlined in `index.html`. Each layer is rasterized into its own bitmap only on resize, then composed per frame: the Earth surface scrolls under a circular clip, and the astronaut breathes around its boots. Solar System uses the same approach: the backdrop, Sun and each planet (base, surface, shade or rings) are separate layers. Rocky planets scroll their surface under a clip; gas giants keep their bands still and show drifting cloud wisps (and Jupiter's moving spot) to avoid seams. Stars and asteroid-belt data are inlined in its index.html. Robot Workshop rigs its robot: the shared robot design is split into base, torso, two arms and head, rasterized at each robot's scale, then posed per frame around shoulder and neck pivots. The translucent back robot is composited off-screen first so its parts do not show through each other. Digital Rain 3D is hand-maintained in its own `scene.js` (no longer generated by `generate-template-scenes.mjs`). Glyphs are pre-rendered into one atlas per depth plane, rebuilt only when the colour, glow or scale changes; the clock is a text mask sampled on the focus plane's grid.
 
 ## Capture previews and check rendering
 
