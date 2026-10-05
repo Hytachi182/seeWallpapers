@@ -1,18 +1,18 @@
 {
-  "version": "1.5.0",
-  "tag": "v1.5.0",
-  "base_tag": "v1.4.0",
+  "version": "1.6.0",
+  "tag": "v1.6.0",
+  "base_tag": "v1.5.0",
   "release_required": true,
-  "template_count": 23,
+  "template_count": 26,
   "added": [
-    "crimson-valley",
-    "lunar-silence",
-    "pure-cosmos",
-    "robot-workshop",
-    "solar-system"
+    "astral-frontier",
+    "neon-ronin",
+    "orbital-earth"
   ],
-  "updated": [],
+  "updated": [
+    "digital-rain-3d"
+  ],
   "removed": [],
-  "source_commit": "2545ccfc20c3e342cbf38d7cd77df8c5525cd5d4",
-  "title": "Release seeWallpaper 1.5.0"
+  "source_commit": "2b0c804bdad832c39390e9e6bd262e03c1883c20",
+  "title": "Release seeWallpaper 1.6.0"
 }

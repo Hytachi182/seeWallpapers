@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+## 1.6.0 - 2026-10-05
+
+<!-- generated-release:start -->
+### Changes since v1.5.0
+
+Built-in catalogue: **26 wallpapers**.
+
+#### New wallpapers
+
+- **Astral Frontier** (`astral-frontier`): An astronaut on a rocky ridge facing a spiral galaxy, a ringed giant and a night-side Earth, with a sunrise flare, glowing atmosphere, twinkling city lights, drifting asteroids and shooting stars.
+- **Neon Ronin** (`neon-ronin`): A hooded samurai and his cat watching a neon megacity at night, with rain and puddle ripples, flickering signs, a glowing katana, flying traffic, highway light trails, rotating targets, waterfalls, sakura petals and distant lightning.
+- **Orbital Earth** (`orbital-earth`): The Earth surrounded by satellites, with a sunrise on its limb, glowing atmosphere, twinkling city lights, orbiting satellites, radar pings and data links beamed down to the surface.
+
+#### Updated wallpapers
+
+- **Digital Rain 3D** (`digital-rain-3d`): Matrix code rain in three depth planes with focus blur, mirrored glyphs that mutate as they fall, a clock revealed by the rain, CRT scanlines and occasional glitches.
+
+#### Development changes
+
+- améliorations
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.5.0...v1.6.0)
+<!-- generated-release:end -->
+
 - Neon Ronin: an illustrated cyberpunk wallpaper with a hooded samurai and his cat, animated with rain and puddle ripples, flickering neon signs, a pulsing katana with a running glint, flying traffic, highway light trails, rotating holographic targets, waterfalls, mist, sakura petals, and distant lightning. Katana color, speed, neon intensity, and rain are adjustable.
 - Orbital Earth: an illustrated Space wallpaper of the Earth and its satellites, animated with a sunrise flare, a breathing atmosphere, city lights, satellites orbiting in front of and behind the globe, beacons and panel glints, radar pings, and data links beamed to the surface. Signal color, speed, glow intensity, and star density are adjustable.
 - Astral Frontier: an illustrated Space wallpaper with an astronaut facing a galaxy and a night-side Earth, animated with a sunrise flare and lens ghosts, a breathing atmosphere rim, twinkling city lights, orbiting galaxy stars, star flares, shooting stars, drifting asteroids, and pulsing suit lights. Atmosphere color, speed, glow intensity, and star density are adjustable.
