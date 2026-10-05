@@ -3,6 +3,12 @@ name: CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      check_ref:
+        description: Immutable promotion commit to check
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -12,6 +18,21 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify dispatched promotion commit
+        if: github.event_name == 'workflow_dispatch'
+        shell: pwsh
+        env:
+          EXPECTED_SHA: ${{ inputs.check_ref }}
+        run: |
+          if ($env:EXPECTED_SHA -ne $env:GITHUB_SHA) { throw 'Promotion branch changed before dispatch; check the latest promotion commit.' }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test release automation
+        run: python -m unittest discover -s build/tests -p 'test_release_automation.py'
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x

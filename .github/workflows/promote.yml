@@ -1,0 +1,108 @@
+name: Promote devops to main
+
+on:
+  push:
+    branches: [devops]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version increment (auto detects new wallpapers and conventional feature commits)
+        type: choice
+        options: [auto, patch, minor, major]
+        default: auto
+      dry_run:
+        description: Preview metadata without creating a PR, tag, or release
+        type: boolean
+        default: false
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: promotion-${{ github.event_name == 'pull_request' && 'publish' || 'prepare' }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare release metadata and promotion PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          BUMP: ${{ inputs.bump || 'auto' }}
+          DRY_RUN: ${{ inputs.dry_run || false }}
+          MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          args=(--repository "$REPOSITORY" --bump "$BUMP")
+          if [ "$DRY_RUN" = 'true' ]; then args+=(--dry-run); fi
+          if [ "$MANUAL" = 'true' ]; then args+=(--manual); fi
+          python build/promote_release.py "${args[@]}"
+      - name: Upload prepared metadata for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: promotion-metadata
+          path: |
+            .github/release-plan.json
+            docs/releases/*.md
+            docs/template-catalogue.md
+          if-no-files-found: ignore
+
+  publication-plan:
+    if: >-
+      github.event_name == 'pull_request' && github.event.pull_request.merged == true &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'release/devops-to-main'
+    runs-on: ubuntu-latest
+    outputs:
+      required: ${{ steps.plan.outputs.required }}
+      version: ${{ steps.plan.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          persist-credentials: false
+      - name: Read the reviewed release plan
+        id: plan
+        run: |
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          plan = json.loads(Path('.github/release-plan.json').read_text())
+          assert re.fullmatch(r'\d+\.\d+\.\d+', plan['version'])
+          assert plan['tag'] == 'v' + plan['version']
+          assert isinstance(plan['release_required'], bool)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('required=' + str(plan['release_required']).lower() + '\n')
+              output.write('version=' + plan['version'] + '\n')
+          PY
+
+  publish:
+    needs: publication-plan
+    if: needs.publication-plan.outputs.required == 'true'
+    permissions:
+      contents: write
+      actions: write
+    uses: ./.github/workflows/release.yml
+    with:
+      release_ref: ${{ github.event.pull_request.merge_commit_sha }}
+      release_version: ${{ needs.publication-plan.outputs.version }}
+      publish_release: true

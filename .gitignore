@@ -24,3 +24,7 @@ build/cache/
 # Distribution files live in GitHub Releases, not Git history
 dist/
 build/visual-review/
+
+# Release automation Python caches
+__pycache__/
+*.pyc
