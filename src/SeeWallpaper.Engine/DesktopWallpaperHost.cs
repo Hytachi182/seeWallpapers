@@ -63,11 +63,11 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
         return ApplyAssignmentsAsync([new WallpaperAssignment("span", template, settings, new WallpaperBounds(left, top, right - left, bottom - top))], cancellationToken);
     }
 
-    public Task StopAsync(CancellationToken cancellationToken = default)
+    public async Task StopAsync(CancellationToken cancellationToken = default)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        StopCore();
-        return Task.CompletedTask;
+        await _operationLock.WaitAsync(cancellationToken);
+        try { StopCore(); }
+        finally { _operationLock.Release(); }
     }
 
     public async Task StopDisplayAsync(string displayId, CancellationToken cancellationToken = default)
@@ -85,20 +85,19 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
     {
         cancellationToken.ThrowIfCancellationRequested();
         _isPaused = isPaused;
-        foreach (WebWallpaperWindow window in _wallpaperWindows.Values) await window.SetPausedAsync(isPaused);
+        foreach (WebWallpaperWindow window in _wallpaperWindows.Values.ToArray()) await window.SetPausedAsync(isPaused);
     }
 
     public async Task SetPerformanceProfileAsync(WallpaperPerformanceProfile profile, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         _performanceProfile = profile;
-        foreach (WebWallpaperWindow window in _wallpaperWindows.Values) await window.SetPerformanceProfileAsync(profile);
+        foreach (WebWallpaperWindow window in _wallpaperWindows.Values.ToArray()) await window.SetPerformanceProfileAsync(profile);
     }
 
-    public ValueTask DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
-        StopCore();
-        return ValueTask.CompletedTask;
+        await StopAsync();
     }
 
     private void StopCore()

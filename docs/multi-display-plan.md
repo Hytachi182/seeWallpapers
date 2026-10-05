@@ -1,7 +1,7 @@
 # Plan: choose a different wallpaper for each display
 
 Date: 4 October 2026
-Status: partially implemented, including the simplified display-selection flow. The complete physical acceptance checklist and automatic reconciliation of display changes remain outstanding.
+Status: partially implemented, including the simplified display-selection flow. Automatic display reconciliation is implemented in 1.5.0. The complete physical acceptance checklist remains outstanding; see release-readiness.md.
 
 ### Simplified flow delivery - 4 October 2026
 
@@ -12,7 +12,7 @@ Status: partially implemented, including the simplified display-selection flow. 
 - Initial validation: clean build and 16 passing tests, including four assignment-service tests and one WPF target-selection test. WPF renders were checked under `build/visual-review/screen-*.png`; no real monitor wallpaper was applied during this initial validation.
 - Initial Release output: `dist/screen-selection/win-x64/SeeWallpaper.App.exe`. The open app was using `dist/latest`, so that location was retained.
 
-The initial state and unchecked items below record the original detailed plan. They do not certify every planned feature. Windows events refresh the interface, but the engine does not yet reconcile connections, resolutions, and DPI automatically.
+The initial state and unchecked items below record the original detailed plan. They do not certify every planned feature. Since 1.5.0, Windows events reconcile connections and geometry automatically. Physical docking, port changes, and DPI/scaling acceptance remains outstanding.
 
 ### WorkerW fix - 4 October 2026
 

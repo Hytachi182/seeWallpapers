@@ -98,7 +98,7 @@ end;
 
 function WebViewInstalled(): Boolean;
 begin
-  Result := RuntimeVersionExists(HKCU) or RuntimeVersionExists(HKLM32);
+  Result := RuntimeVersionExists(HKCU) or RuntimeVersionExists(HKLM32) or RuntimeVersionExists(HKLM64);
 end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;

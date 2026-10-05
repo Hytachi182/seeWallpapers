@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "robot-workshop",
+  "name": "Robot Workshop",
+  "description": "Three articulated robots in a quiet hangar: one keeps watch, one welds in a shower of sparks, one scans the hall, under flickering lights, drifting fog and floating dust.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Tech",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Eye light",
+      "default": "#8ae6ff"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "intensity",
+      "type": "slider",
+      "label": "Light intensity",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "dustDensity",
+      "type": "slider",
+      "label": "Dust density",
+      "min": 0.2,
+      "max": 3,
+      "step": 0.1,
+      "default": 1
+    }
+  ]
+}

@@ -11,6 +11,7 @@
           <Button Content="Favorites" Click="Favorites_Click"/><Button Content="Create" Click="Create_Click"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom">
+          <Button x:Name="CheckUpdateButton" Content="Check update" Click="CheckUpdate_Click" ToolTip="Compare your version with GitHub main"/>
           <Button x:Name="AboutButton" Content="About" Click="About_Click"/>
           <Button Content="Settings" Click="Settings_Click"/>
         </StackPanel>
@@ -19,6 +20,16 @@
     <Grid Grid.Column="1" Margin="30,26">
       <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
       <StackPanel>
+        <Border x:Name="UpdateBanner" Visibility="Collapsed" Background="#2A2238" BorderBrush="#F5B84B" BorderThickness="1" CornerRadius="10" Padding="16,12" Margin="0,0,0,18" AutomationProperties.LiveSetting="Polite">
+          <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+              <TextBlock x:Name="UpdateTitle" Text="Application updates" FontWeight="SemiBold" Foreground="#F5B84B" TextWrapping="Wrap"/>
+              <TextBlock x:Name="UpdateDescription" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+            </StackPanel>
+            <Button x:Name="DownloadUpdateButton" Grid.Column="1" Content="Download update" Click="DownloadUpdate_Click" Background="{StaticResource Accent}" VerticalAlignment="Center" Margin="0" Visibility="Collapsed"/>
+          </Grid>
+        </Border>
         <Border x:Name="StartupBanner" Visibility="Collapsed" Background="#2A2238" BorderBrush="#F5B84B" BorderThickness="1" CornerRadius="10" Padding="16,12" Margin="0,0,0,18">
           <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>

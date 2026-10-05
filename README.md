@@ -16,12 +16,17 @@
   <a href="https://github.com/Hytachi182/seeWallpapers/releases/latest/download/seeWallpaper-Portable-x64.zip"><img src="https://img.shields.io/badge/Download-Portable%20ZIP-292e40?style=for-the-badge" alt="Download the portable ZIP" /></a>
 </p>
 <p align="center">
+  <a href="https://buymeacoffee.com/hytachi182"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-Support%20the%20project-FFDD00?style=for-the-badge&amp;logo=buymeacoffee&amp;logoColor=black" alt="Buy Michael a coffee and support seeWallpaper" /></a>
+</p>
+<p align="center">
   <a href="#get-started">Get started</a> · <a href="#features">Features</a> · <a href="#the-scenes">Previews</a> · <a href="docs/template-format.md">SDK</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/Hytachi182/seeWallpapers/issues/new/choose">Report an issue</a>
 </p>
 
 ![seeWallpaper gallery with scene previews and per-display application](docs/images/gallery.png)
 
 ## Get started
+
+The repository now targets **1.5.0**. Until that release is published, the download buttons deliver the previous stable version; the additional scenes, Online page, background operation, and display recovery described here belong to 1.5.0.
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
 
@@ -67,7 +72,7 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 
 ## The scenes
 
-Twenty-two wallpapers are included. The images below are captured from the actual scenes.
+Twenty-three wallpapers are included. The images below are captured from the actual scenes.
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
 
@@ -82,8 +87,8 @@ Twenty-two wallpapers are included. The images below are captured from the actua
 | Pure Cosmos | Lunar Silence |
 | --- | --- |
 | ![Spiral galaxy and giant planet over a mirror sea](templates/pure-cosmos/preview.jpg) | ![Astronaut on the Moon beneath a blue Earth](templates/lunar-silence/preview.jpg) |
-| Solar System | |
-| ![The Sun and the eight planets](templates/solar-system/preview.jpg) | |
+| Solar System | Robot Workshop |
+| ![The Sun and the eight planets](templates/solar-system/preview.jpg) | ![Three robots in a quiet hangar](templates/robot-workshop/preview.jpg) |
 
 | Aurora Borealis | Ocean Dusk |
 | --- | --- |
@@ -146,7 +151,9 @@ The English **1.3.0** edition passed **22 local .NET tests**, **25 installer che
 
 The **1.4.0** Anime edition passed **27 local .NET tests**, **25 installer checks**, and **33 ZIP checks**. All five new scenes passed desktop/narrow rendering, customization, and pause/resume checks. Ninja Anime was also loaded on three real monitors, including replacement, duplication, spanning, and DPI-context changes.
 
-Known limits: automatic reconciliation after disconnecting a display is still planned; WebView2 installation on a Windows machine entirely without that runtime still needs clean-machine validation. GPU performance depends on hardware and the number of active scenes.
+The **1.5.0** source adds automatic reconciliation when displays connect, disconnect, or change geometry. Monitor assignments use the Windows monitor device interface. Upgrading from earlier independent assignments requires selecting each monitor's wallpaper once; changing ports or docks can also require a new selection. Personal scenes and customization remain available.
+
+Known limits: physical unplug/replug and dock/port acceptance for 1.5.0 remains pending; WebView2 installation on a Windows machine entirely without that runtime still needs clean-machine validation. GPU performance depends on hardware and the number of active scenes.
 
 </details>
 
@@ -155,6 +162,8 @@ Known limits: automatic reconciliation after disconnecting a display is still pl
 Have a scene idea or an improvement? [Request a feature](https://github.com/Hytachi182/seeWallpapers/issues/new/choose), [report a bug](https://github.com/Hytachi182/seeWallpapers/issues/new/choose), or read the [contribution guide](CONTRIBUTING.md).
 
 If you enjoy seeWallpaper, a [star on GitHub](https://github.com/Hytachi182/seeWallpapers/stargazers) helps others discover the project.
+
+> ☕ **Enjoying seeWallpaper?** Help keep new scenes and improvements coming: [buy Michael a coffee](https://buymeacoffee.com/hytachi182).
 
 ## Creator and license
 

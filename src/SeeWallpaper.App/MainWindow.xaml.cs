@@ -37,6 +37,8 @@ public partial class MainWindow : Window
     private bool _changingWallpapers;
     private IReadOnlyList<SeeWallpaper.Platform.DisplayInfo> _displaySnapshot = [];
     private readonly TaskCompletionSource _initialized = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private readonly System.Windows.Threading.DispatcherTimer _displayChangeTimer = new() { Interval = TimeSpan.FromMilliseconds(750) };
+    private readonly CancellationTokenSource _displayChangeLifetime = new();
     private readonly SemaphoreSlim _launchGate = new(1, 1);
     private readonly TrayIcon _trayIcon;
     private bool _quitting;
@@ -50,6 +52,64 @@ public partial class MainWindow : Window
     private bool _checkingOnline;
     private readonly StartupRegistration _startup = new();
     private bool _startupBannerDismissed;
+    private readonly ApplicationUpdateService _applicationUpdates = new(OnlineHttp);
+    private Uri? _updateReleaseUrl;
+
+    private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
+    {
+        if (!CheckUpdateButton.IsEnabled) return;
+        CheckUpdateButton.IsEnabled = false;
+        CheckUpdateButton.Content = "Checking...";
+        UpdateBanner.Visibility = Visibility.Visible;
+        UpdateTitle.Text = "Checking for updates";
+        UpdateDescription.Text = "Comparing your installed version with GitHub main...";
+        DownloadUpdateButton.Visibility = Visibility.Collapsed;
+        _updateReleaseUrl = null;
+        try
+        {
+            Version installed = typeof(MainWindow).Assembly.GetName().Version ?? throw new InvalidOperationException("Installed version unavailable.");
+            ApplicationUpdateResult result = await _applicationUpdates.CheckAsync(installed);
+            if (result.UpdateAvailable)
+            {
+                UpdateTitle.Text = $"Update available: {result.MainVersion.ToString(3)}";
+                _updateReleaseUrl = result.ReleaseUrl;
+                UpdateDescription.Text = result.ReleaseUrl is null
+                    ? $"You have {result.InstalledVersion.ToString(3)}. The newer version on main has no published Windows download yet. Check again later."
+                    : $"You have {result.InstalledVersion.ToString(3)}. Download the installer or ZIP from the official release. Before updating, choose 'Quit and remove wallpapers' from the tray menu. Your settings are kept.";
+                DownloadUpdateButton.Visibility = result.ReleaseUrl is null ? Visibility.Collapsed : Visibility.Visible;
+            }
+            else
+            {
+                UpdateTitle.Text = "You are up to date";
+                UpdateDescription.Text = $"Installed: {result.InstalledVersion.ToString(3)}. GitHub main: {result.MainVersion.ToString(3)}. No newer version is available.";
+            }
+        }
+        catch (Exception exception)
+        {
+            UpdateTitle.Text = "Update check failed";
+            UpdateDescription.Text = "Could not verify updates on GitHub. Check your connection and click Check update to retry.";
+            await _logger.ErrorAsync("Application update check failed.", exception);
+        }
+        finally
+        {
+            CheckUpdateButton.Content = "Check update";
+            CheckUpdateButton.IsEnabled = true;
+        }
+    }
+
+    private async void DownloadUpdate_Click(object sender, RoutedEventArgs e)
+    {
+        if (_updateReleaseUrl is null) return;
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(_updateReleaseUrl.AbsoluteUri) { UseShellExecute = true });
+        }
+        catch (Exception exception)
+        {
+            UpdateDescription.Text = $"Could not open your browser. Visit {_updateReleaseUrl.AbsoluteUri} to download the update.";
+            await _logger.ErrorAsync("Could not open the application release page.", exception);
+        }
+    }
 
     /// <summary>Starts hidden in the notification area, used by the sign-in startup entry.</summary>
     internal bool StartHidden { get; init; }
@@ -71,6 +131,7 @@ public partial class MainWindow : Window
             template => _settingsStore.LoadAsync(template.Manifest.Id, template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default)));
         SystemEvents.SessionSwitch += OnSessionSwitch;
         SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
+        _displayChangeTimer.Tick += async (_, _) => await ReconcileDisplayChangesAsync();
         _environmentMonitor.StateChanged += OnEnvironmentStateChanged;
         _trayIcon = new TrayIcon(() => _ = HandleLaunchAsync(new()), () => _ = HandleLaunchAsync(new(ShowScreens: true)), Quit);
         Loaded += OnLoaded;
@@ -96,6 +157,11 @@ public partial class MainWindow : Window
             RefreshScreens();
             RefreshStartupBanner();
             DisplayStatus.Text = $"{_displaySnapshot.Count} display(s) detected. Choose a scene to apply.";
+            if (_assignmentService.RestoreWarnings.Count > 0)
+            {
+                DisplayStatus.Text = string.Join(" ", _assignmentService.RestoreWarnings);
+                await _logger.InfoAsync("Wallpaper restoration incomplete: " + DisplayStatus.Text);
+            }
             await _logger.InfoAsync($"Started with {_templates.Count} local templates.");
             _onlineTimer.Tick += async (_, _) => await CheckOnlineAsync(notify: true);
             _onlineTimer.Start();
@@ -426,8 +492,8 @@ public partial class MainWindow : Window
         }
         base.OnClosing(e);
     }
-    private void Quit() { _quitting = true; Close(); }
-    protected override async void OnClosed(EventArgs e) { _onlineTimer.Stop(); _trayIcon.Dispose(); SystemEvents.SessionSwitch -= OnSessionSwitch; SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged; _environmentMonitor.StateChanged -= OnEnvironmentStateChanged; _environmentMonitor.Dispose(); await _wallpaperHost.DisposeAsync(); base.OnClosed(e); }
+    private void Quit() { _quitting = true; _displayChangeLifetime.Cancel(); Close(); }
+    protected override async void OnClosed(EventArgs e) { _displayChangeTimer.Stop(); _onlineTimer.Stop(); _trayIcon.Dispose(); SystemEvents.SessionSwitch -= OnSessionSwitch; SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged; _environmentMonitor.StateChanged -= OnEnvironmentStateChanged; _environmentMonitor.Dispose(); await _wallpaperHost.DisposeAsync(); base.OnClosed(e); }
     private static IReadOnlyDictionary<string, object?> CreateDefaultSettings(TemplateCardViewModel template) => template.Template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default);
     private Task<IReadOnlyDictionary<string, object?>> LoadSettingsAsync(TemplateCardViewModel template) => _settingsStore.LoadAsync(template.Template.Manifest.Id, CreateDefaultSettings(template));
     private async Task RefreshTemplatesAsync()
@@ -568,8 +634,35 @@ public partial class MainWindow : Window
         foreach ((SeeWallpaper.Platform.DisplayInfo display, int index) in _displaySnapshot.Select((display, index) => (display, index)))
             new DisplayIdentificationWindow(display, index + 1) { Owner = this }.Show();
     }
-    private void RefreshScreens_Click(object sender, RoutedEventArgs e) => RefreshScreens();
-    private void OnDisplaySettingsChanged(object? sender, EventArgs e) => _ = Dispatcher.InvokeAsync(RefreshScreens);
+    private async void RefreshScreens_Click(object sender, RoutedEventArgs e) => await ReconcileDisplayChangesAsync();
+    private void OnDisplaySettingsChanged(object? sender, EventArgs e) => _ = Dispatcher.InvokeAsync(() =>
+    {
+        if (_quitting) return;
+        _displayChangeTimer.Stop();
+        _displayChangeTimer.Start();
+    });
+
+    private async Task ReconcileDisplayChangesAsync()
+    {
+        _displayChangeTimer.Stop();
+        if (_quitting) return;
+        if (!_initialized.Task.IsCompleted || _changingWallpapers) { _displayChangeTimer.Start(); return; }
+        _changingWallpapers = true;
+        SetWallpaperControlsEnabled(false);
+        try
+        {
+            IReadOnlyList<string> errors = await _assignmentService.ReconcileDisplaysAsync(_displayChangeLifetime.Token);
+            DisplayStatus.Text = errors.Count == 0 ? "Displays updated. Saved wallpapers restored where available." : string.Join(" ", errors);
+            await _logger.InfoAsync(errors.Count == 0 ? "Display topology reconciled." : "Display reconciliation incomplete: " + string.Join("; ", errors));
+        }
+        catch (OperationCanceledException) when (_quitting) { }
+        catch (Exception exception)
+        {
+            DisplayStatus.Text = "Could not restore wallpapers after a display change. Refresh displays to retry.";
+            await _logger.ErrorAsync("Display reconciliation failed.", exception);
+        }
+        finally { _changingWallpapers = false; SetWallpaperControlsEnabled(true); RefreshScreens(); }
+    }
     private void SetWallpaperControlsEnabled(bool enabled) { GalleryView.IsEnabled = enabled; DisplayList.IsEnabled = enabled; }
 
     private async void ApplyToScreen_Click(object sender, RoutedEventArgs e)
