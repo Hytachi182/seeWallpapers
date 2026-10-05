@@ -54,11 +54,12 @@ def run(root, repository, bump="auto", dry_run=False, expected_source=None):
                 dispatch_validation(repository, source)
             return existing
     previous = git(root, "show", "origin/main:.github/release-plan.json", optional=True)
+    comparison_ref = None
     if previous:
         pending = json.loads(previous)
         if pending["release_required"] and version(pending["version"]) > version(base_tag.removeprefix("v")):
-            raise ValueError("main is awaiting publication; rerun preparation after that release finishes")
-    plan = prepare(root, base_tag, repository, bump=bump, source_commit=source)
+            comparison_ref = "origin/main"
+    plan = prepare(root, base_tag, repository, bump=bump, source_commit=source, comparison_ref=comparison_ref)
     print(json.dumps(plan, indent=2))
     if dry_run:
         print("Dry run: no branch push, PR, tag or release")

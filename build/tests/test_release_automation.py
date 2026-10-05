@@ -272,10 +272,34 @@ class ReleaseMetadataTests(unittest.TestCase):
     def test_preparation_refuses_a_main_release_still_awaiting_publication(self):
         pending = json.dumps({"release_required": True, "version": "1.1.0"})
         latest = json.dumps({"tag_name": "v1.0.0", "draft": False, "prerelease": False})
-        with patch("promote_release.git", side_effect=["", "source\n", "", pending]) as git_call, patch("promote_release.gh", return_value=latest):
+        with patch("promote_release.git", side_effect=["", "source\n", "", pending]) as git_call, patch("promote_release.gh", return_value=latest), patch("promote_release.prepare", side_effect=ValueError("main is awaiting publication")):
             with self.assertRaisesRegex(ValueError, "awaiting publication"):
                 prepare_devops(self.root, "owner/repo")
             self.assertFalse(any(call.args[1] == "push" for call in git_call.call_args_list))
+
+    def test_pipeline_metadata_can_be_prepared_while_main_release_is_pending(self):
+        self.write("src/SeeWallpaper.App/SeeWallpaper.App.csproj", "<Project><Version>1.1.0</Version></Project>")
+        self.scene("new-wallpaper")
+        self.commit("feat: pending release")
+        self.git("branch", "pending-main")
+        self.write("build/release-helper.py", "pipeline change")
+        self.commit("Fix pipeline")
+        plan = prepare(self.root, "v1.0.0", "owner/repo", comparison_ref="pending-main")
+        self.assertFalse(plan["release_required"])
+        self.assertEqual("1.1.0", plan["version"])
+        self.assertEqual([], plan["added"])
+        self.assertFalse((self.root / "docs/releases/v1.1.1.md").exists())
+        self.write("templates/new-wallpaper/index.html", "new animation")
+        self.commit("Change packaged scene")
+        with self.assertRaisesRegex(ValueError, "awaiting publication"):
+            prepare(self.root, "v1.0.0", "owner/repo", comparison_ref="pending-main")
+
+    def test_manual_bump_cannot_bypass_a_pending_publication(self):
+        self.git("branch", "pending-main")
+        self.write("docs/help.md", "Help")
+        self.commit("Docs")
+        with self.assertRaisesRegex(ValueError, "awaiting publication"):
+            prepare(self.root, "v1.0.0", "owner/repo", bump="minor", comparison_ref="pending-main")
 
     def test_unprepared_pr_waits_without_issuing_required_validation(self):
         ready, message = readiness(self.root, True, "HEAD")
