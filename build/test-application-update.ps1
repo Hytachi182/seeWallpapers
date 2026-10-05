@@ -2,6 +2,7 @@
 param([string]$CompileProbe)
 $ErrorActionPreference = 'Stop'
 if ($CompileProbe) {
+    Import-Module (Join-Path $PSHOME 'Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
     Add-Type -OutputAssembly $CompileProbe -OutputType ConsoleApplication -TypeDefinition @'
 using System;
 using System.IO;
@@ -44,7 +45,9 @@ try {
     $success = New-Fixture 'success'
     $process = Start-Runner $success
     Assert-Update ($process.WaitForExit(15000)) 'Success helper timed out.'
-    Assert-Update ($process.ExitCode -eq 0) 'Success helper failed.'
+    $helperLog = Join-Path $success.Work 'update.log'
+    $helperDetails = if (Test-Path -LiteralPath $helperLog) { Get-Content -LiteralPath $helperLog -Raw } else { 'No update log was written.' }
+    Assert-Update ($process.ExitCode -eq 0) "Success helper failed (exit code: $($process.ExitCode)). $helperDetails"
     Assert-Update ((Get-Content -LiteralPath (Join-Path $success.Target 'a.txt') -Raw).Trim() -eq 'new') 'Portable application was not updated.'
     Assert-Update ((Get-Content -LiteralPath (Join-Path $success.Target 'user.txt') -Raw).Trim() -eq 'user data') 'User files were changed.'
     Assert-Update (Test-Path -LiteralPath (Join-Path $success.Work 'backup\a.txt')) 'Backup is missing.'
