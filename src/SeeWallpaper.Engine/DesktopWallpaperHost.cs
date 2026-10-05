@@ -1,5 +1,6 @@
 using System.Windows;
 using SeeWallpaper.Core;
+using SeeWallpaper.Engine.Windows;
 
 namespace SeeWallpaper.Engine;
 
@@ -9,6 +10,10 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
     private WallpaperPerformanceProfile _performanceProfile = WallpaperPerformanceProfile.Balanced;
     private bool _isPaused;
     private readonly SemaphoreSlim _operationLock = new(1, 1);
+    private readonly Dictionary<WebWallpaperWindow, DateTime> _coveredSince = [];
+    private DesktopOcclusionWatcher? _occlusionWatcher;
+    // Hiding is confirmed briefly before pausing; revealing resumes on the next check.
+    private static readonly TimeSpan OcclusionConfirmation = TimeSpan.FromMilliseconds(400);
 
     public IReadOnlyCollection<string> ActiveDisplayIds => _wallpaperWindows.Keys.ToArray();
 
@@ -42,6 +47,7 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
             catch { foreach ((_, WebWallpaperWindow window) in prepared) window.Close(); throw; }
             StopCore();
             foreach ((WallpaperAssignment assignment, WebWallpaperWindow window) in prepared) _wallpaperWindows.Add(assignment.DisplayId, window);
+            UpdateOcclusionWatcher();
         }
         finally { _operationLock.Release(); }
     }
@@ -77,6 +83,7 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
         try
         {
             if (_wallpaperWindows.Remove(displayId, out WebWallpaperWindow? window)) window.Close();
+            UpdateOcclusionWatcher();
         }
         finally { _operationLock.Release(); }
     }
@@ -104,6 +111,57 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
     {
         foreach (WebWallpaperWindow window in _wallpaperWindows.Values) window.Close();
         _wallpaperWindows.Clear();
+        UpdateOcclusionWatcher();
+    }
+
+    private void UpdateOcclusionWatcher()
+    {
+        foreach (WebWallpaperWindow window in _coveredSince.Keys.Except(_wallpaperWindows.Values).ToArray()) _coveredSince.Remove(window);
+        if (_wallpaperWindows.Count == 0)
+        {
+            _occlusionWatcher?.Dispose();
+            _occlusionWatcher = null;
+            return;
+        }
+        _occlusionWatcher ??= new DesktopOcclusionWatcher(CheckOcclusion);
+        _occlusionWatcher.RequestCheck();
+    }
+
+    private async void CheckOcclusion()
+    {
+        try
+        {
+            var desktop = DesktopOcclusion.CaptureDesktop();
+            DateTime now = DateTime.UtcNow;
+            bool confirmLater = false;
+            foreach (WebWallpaperWindow window in _wallpaperWindows.Values.ToArray())
+            {
+                bool hidden = desktop is { } snapshot && window.IsAttachedToDesktop
+                    && DesktopOcclusion.TryGetWindowBounds(window.Handle, out ScreenRect bounds)
+                    && DesktopOcclusion.IsWallpaperHidden(bounds, snapshot.Monitors, snapshot.Covers);
+                if (!hidden)
+                {
+                    _coveredSince.Remove(window);
+                    await window.SetOccludedAsync(false);
+                    continue;
+                }
+                if (!_coveredSince.TryGetValue(window, out DateTime since)) _coveredSince[window] = since = now;
+                if (now - since >= OcclusionConfirmation) await window.SetOccludedAsync(true);
+                else confirmLater = true;
+            }
+            if (confirmLater) _occlusionWatcher?.RequestCheck();
+        }
+        catch (Exception exception)
+        {
+            // Occlusion only saves resources; a failed check must never stop a wallpaper.
+            global::System.Diagnostics.Trace.TraceError($"Wallpaper occlusion check failed: {exception}");
+            _coveredSince.Clear();
+            foreach (WebWallpaperWindow window in _wallpaperWindows.Values.ToArray())
+            {
+                try { await window.SetOccludedAsync(false); }
+                catch (Exception) { }
+            }
+        }
     }
 
     private async Task ApplyOneAsync(WallpaperAssignment assignment, CancellationToken cancellationToken)
@@ -115,6 +173,7 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
             WebWallpaperWindow wallpaperWindow = await CreateReadyWindowAsync(assignment, cancellationToken);
             if (_wallpaperWindows.Remove(assignment.DisplayId, out WebWallpaperWindow? existing)) existing.Close();
             _wallpaperWindows.Add(assignment.DisplayId, wallpaperWindow);
+            UpdateOcclusionWatcher();
         }
         finally { _operationLock.Release(); }
     }
