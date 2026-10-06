@@ -342,5 +342,7 @@
   "ApplicationUpdateFailed": "Aggiornamento non riuscito",
   "ApplicationUpdateAccessDenied": "Impossibile aggiornare questa cartella. Controlla i permessi di scrittura e riprova.",
   "ApplicationUpdateOfficialEditionRequired": "Gli aggiornamenti automatici richiedono l’edizione installata o portatile ufficiale. Installa prima la versione ufficiale.",
-  "AutomaticUpdateFailedAfterExit": "L’aggiornamento non è riuscito. L’app verrà riaperta. Consulta il registro per i dettagli."
+  "AutomaticUpdateFailedAfterExit": "L’aggiornamento non è riuscito. L’app verrà riaperta. Consulta il registro per i dettagli.",
+  "DownloadApplicationUpdateOnGitHub": "Scarica da GitHub",
+  "ManualApplicationUpdateReady": "Scarica la versione portatile da GitHub. Chiudi l’app prima di sostituire i suoi file."
 }

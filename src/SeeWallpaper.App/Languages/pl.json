@@ -342,5 +342,7 @@
   "ApplicationUpdateFailed": "Aktualizacja nie powiodła się",
   "ApplicationUpdateAccessDenied": "Nie można zaktualizować tego folderu. Sprawdź uprawnienia do zapisu i spróbuj ponownie.",
   "ApplicationUpdateOfficialEditionRequired": "Aktualizacje automatyczne wymagają zainstalowanej lub oficjalnej przenośnej wersji. Najpierw zainstaluj oficjalną wersję.",
-  "AutomaticUpdateFailedAfterExit": "Aktualizacja nie powiodła się. Aplikacja otworzy się ponownie. Szczegóły znajdziesz w dzienniku."
+  "AutomaticUpdateFailedAfterExit": "Aktualizacja nie powiodła się. Aplikacja otworzy się ponownie. Szczegóły znajdziesz w dzienniku.",
+  "DownloadApplicationUpdateOnGitHub": "Pobierz z GitHub",
+  "ManualApplicationUpdateReady": "Pobierz wersję przenośną z GitHub. Zamknij aplikację przed zastąpieniem jej plików."
 }
