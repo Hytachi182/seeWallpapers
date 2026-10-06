@@ -77,7 +77,12 @@ def generated_block(text, body):
     return text.rstrip() + "\n\n" + block + "\n"
 
 
-def prepare(root, base_ref, repository, bump="auto", date=None, source_commit=None):
+def is_release_path(path):
+    return (path.startswith(("src/", "templates/", "installer/")) or path == "Directory.Build.props"
+            or (path.startswith("build/") and path.endswith(".ps1")))
+
+
+def prepare(root, base_ref, repository, bump="auto", date=None, source_commit=None, comparison_ref=None):
     root = Path(root).resolve()
     if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
         raise ValueError("Expected owner/repository")
@@ -85,23 +90,29 @@ def prepare(root, base_ref, repository, bump="auto", date=None, source_commit=No
         raise ValueError("The baseline must be a stable vX.Y.Z tag")
     base_version = base_ref[1:]
     version(base_version)
-    changed = git(root, "diff", "--name-only", base_ref, "HEAD").splitlines()
-    old, scenes = load_manifests(root, base_ref), load_manifests(root)
+    baseline = comparison_ref or base_ref
+    if comparison_ref:
+        base_version = read_project_version(git(root, "show", f"{baseline}:{PROJECT.as_posix()}"))
+    changed = git(root, "diff", "--name-only", baseline, "HEAD").splitlines()
+    old, scenes = load_manifests(root, baseline), load_manifests(root)
     added, removed = sorted(scenes.keys() - old.keys()), sorted(old.keys() - scenes.keys())
     updated = sorted(scene_id for scene_id in scenes.keys() & old.keys()
                      if any(p.startswith(f"templates/{scene_id}/") for p in changed))
     project_text = (root / PROJECT).read_text(encoding="utf-8-sig")
     current_version = read_project_version(project_text)
+    # Pipeline/documentation promotion can proceed while main's packages await
+    # publication, but it must not prepare another application release.
+    if comparison_ref and (bump != "auto" or current_version != base_version or any(map(is_release_path, changed))):
+        raise ValueError("main is awaiting publication; application/package changes must wait for that release")
     if version(current_version) < version(base_version):
         raise ValueError("Application version is older than the latest published release")
-    messages = git(root, "log", "--format=%s", f"{base_ref}..HEAD").splitlines()
+    messages = git(root, "log", "--format=%s", f"{baseline}..HEAD").splitlines()
     messages = list(dict.fromkeys(m for m in messages if not m.startswith(("Merge ", "chore(release):"))))
     release_required = (version(current_version) > version(base_version) or
-                        any(p.startswith(("src/", "templates/", "installer/")) or p == "Directory.Build.props"
-                            or (p.startswith("build/") and p.endswith(".ps1")) for p in changed))
+                        any(map(is_release_path, changed)))
     if bump != "auto":
         release_required = True
-    bodies = git(root, "log", "--format=%B", f"{base_ref}..HEAD")
+    bodies = git(root, "log", "--format=%B", f"{baseline}..HEAD")
     detected_bump = ("major" if "BREAKING CHANGE:" in bodies or re.search(r"(?m)^\w+(?:\([^\n]+\))?!:", bodies)
                      else "minor" if added or any(re.match(r"feat(?:\([^)]*\))?:", m) for m in messages) else "patch")
     requested = increment(base_version, detected_bump if bump == "auto" else bump)
