@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+## 1.11.0 - 2026-10-06
+
+<!-- generated-release:start -->
+### Changes since v1.10.0
+
+Built-in catalogue: **51 wallpapers**.
+
+#### New wallpapers
+
+- **Galactic Battle** (`galactic-battle`): An original cinematic orbital battle above a blue planet. Nine curved-hull interceptors and asymmetric raiders cross the sky with ion-engine light, laser salvos, distant explosions and drifting debris around an immense ring-shaped cruiser. Generated artwork, entirely offline.
+
+#### Updated wallpapers
+
+- **War Front** (`war-front`): A burning harbour at sunset brought to life with billowing smoke, animated flames, rising embers, frequent tracer salvos and distant city explosions. Pulsing jet exhaust, helicopter rotors and shimmering water complete the supplied illustration. Original soldiers remain stable; entirely offline.
+
+#### Development changes
+
+- feat: add original Galactic Battle and strengthen War Front animation
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.10.0...v1.11.0)
+<!-- generated-release:end -->
+
+- Add Galactic Battle: an original photographic orbital scene with nine moving curved-hull interceptors and asymmetric raiders, red/green laser salvos, engine light, distant explosions and drifting debris. Generated artwork, offline and host-controlled.
+
+
+- War Front 1.1.0: strengthen rising smoke, animated flame tongues and ember streams, lengthen and increase tracer salvos, add six distant city impact sites with sparks and smoke, and support zero animation speed. Original soldiers remain stable.
+
+
 ## 1.10.0 - 2026-10-06
 
 <!-- generated-release:start -->
