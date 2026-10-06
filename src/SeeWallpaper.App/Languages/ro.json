@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "Actualizările automate necesită ediția instalată sau portabilă oficială. Instalează mai întâi versiunea oficială.",
   "AutomaticUpdateFailedAfterExit": "Actualizarea a eșuat. Aplicația se va redeschide. Consultă jurnalul pentru detalii.",
   "DownloadApplicationUpdateOnGitHub": "Descarcă de pe GitHub",
-  "ManualApplicationUpdateReady": "Descărcați versiunea portabilă de pe GitHub. Închideți aplicația înainte de a înlocui fișierele sale."
+  "ManualApplicationUpdateReady": "Descărcați versiunea portabilă de pe GitHub. Închideți aplicația înainte de a înlocui fișierele sale.",
+  "SearchWallpapers": "Caută imagini de fundal",
+  "ClearSearch": "Șterge căutarea",
+  "NoMatchingWallpapers": "Nicio imagine de fundal nu corespunde căutării."
 }

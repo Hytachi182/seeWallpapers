@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Underwater Blue</title>
+<style>:root{color-scheme:dark}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#064869}canvas{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}#fallback{position:fixed;inset:0;background:#064869 url('background.jpg') center/cover no-repeat}#fallback p{position:absolute;bottom:24px;left:24px;right:24px;margin:0;padding:14px 18px;background:#06334aee;color:#e7f3f7;font:14px/1.5 'Segoe UI',sans-serif}[hidden]{display:none!important}::selection{background:#afe5ed;color:#064869}</style></head>
+<body><canvas id="sea" aria-label="Living photographic underwater reef with swimming tropical fish, shoaling fish, bubble streams, sunlight and seabed reflections"></canvas><canvas id="life" aria-hidden="true"></canvas><div id="fallback"><p id="error" hidden>Enable graphics acceleration to animate this underwater scene.</p></div>
+<script id="defaults" type="application/json">{"speed":1,"light":1,"refraction":0.6,"rays":true,"caustics":true,"particles":true,"bubbleStreams":true,"fish":true,"school":true}</script>
+<script id="fragment" type="x-shader/x-fragment">
+precision highp float;
+uniform sampler2D photograph;
+uniform vec2 resolution;
+uniform vec2 imageSize;
+uniform float time;
+uniform float illumination;
+uniform float refraction;
+uniform float rays;
+uniform float caustics;
+vec2 photoUV(vec2 uv){float a=resolution.x/resolution.y,b=imageSize.x/imageSize.y;return (uv-.5)*vec2(min(1.,a/b),min(1.,b/a))+.5;}
+void main(){
+  vec2 uv=gl_FragCoord.xy/resolution,p=photoUV(uv);
+  float water=smoothstep(.25,.8,p.y);
+  vec2 bend=vec2(sin(p.y*25.+sin(p.x*12.+time*.22)+time*.35),cos(p.x*22.+sin(p.y*13.-time*.18)+time*.30));
+  // Surface motion affects open water most; bottom rocks retain their original shape.
+  vec2 shifted=p+bend*refraction*(.00035+.0016*water);
+  vec3 col=texture2D(photograph,shifted).rgb;
+  float depth=1.-p.y;
+  vec2 q=p*vec2(16.,11.);q+=vec2(sin(q.y*.43+time*.16),cos(q.x*.39-time*.14))*.28;
+  float wave=sin(q.x*2.4+time*.4)+sin((q.x+q.y)*2.0-time*.32)+sin((q.x-q.y)*2.3+time*.27);
+  float filaments=pow(max(0.,1.-abs(wave)*.72),9.);
+  float floorMask=1.-smoothstep(.25,.48,p.y);
+  col+=vec3(.15,.23,.19)*filaments*floorMask*caustics*illumination*.45;
+  col*=1.+floorMask*caustics*.022*sin(q.x+q.y+time*.3);
+  float angle=(p.x-.53)/(1.18-p.y);
+  float shaft=pow(max(0.,sin(angle*23.+sin(angle*8.+time*.14)*.65)),14.);
+  float beam=shaft*smoothstep(.0,.18,depth)*exp(-depth*1.65)*rays;
+  col+=vec3(.11,.21,.24)*beam*illumination*.40;
+  col*=mix(.76,1.10,clamp((illumination-.3)/1.5,0.,1.));
+  gl_FragColor=vec4(col,1.);
+}
+</script><script src="background.js"></script><script src="scene.js"></script></body></html>

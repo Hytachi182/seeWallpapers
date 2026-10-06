@@ -53,7 +53,18 @@
           <Button Content="{local:Translate Key=ImportSeewall}" Click="Import_Click" Margin="0"/>
         </StackPanel>
       </StackPanel>
-      <ScrollViewer x:Name="GalleryView" Grid.Row="1" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto">
+      <Grid x:Name="GalleryView" Grid.Row="1" Margin="0,24,0,0">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+        <StackPanel Margin="0,0,0,18">
+          <Label Target="{Binding ElementName=GallerySearch}" Content="{local:Translate Key=SearchWallpapers}" Foreground="{StaticResource Muted}" Padding="0,0,0,6"/>
+          <Grid MaxWidth="600" HorizontalAlignment="Left" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=StackPanel}}">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBox x:Name="GallerySearch" TextChanged="GallerySearch_TextChanged" MinHeight="40" Padding="12,8" FontSize="15" VerticalContentAlignment="Center" Background="{StaticResource Panel}" Foreground="White" CaretBrush="White" BorderBrush="{StaticResource Muted}" BorderThickness="1" AutomationProperties.Name="{local:Translate Key=SearchWallpapers}"/>
+            <Button x:Name="ClearGallerySearch" Grid.Column="1" Content="{local:Translate Key=ClearSearch}" Click="ClearGallerySearch_Click" IsEnabled="False" Margin="8,0,0,0"/>
+          </Grid>
+          <TextBlock x:Name="GallerySearchEmpty" Text="{local:Translate Key=NoMatchingWallpapers}" Foreground="{StaticResource Muted}" Margin="0,12,0,0" TextWrapping="Wrap" Visibility="Collapsed" AutomationProperties.LiveSetting="Polite"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
         <ItemsControl x:Name="TemplateList">
           <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
@@ -82,7 +93,8 @@
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
-      </ScrollViewer>
+        </ScrollViewer>
+      </Grid>
       <ScrollViewer x:Name="OnlineView" Grid.Row="1" Visibility="Collapsed" Margin="0,24,0,0" VerticalScrollBarVisibility="Auto">
         <StackPanel>
           <StackPanel Orientation="Horizontal" Margin="0,0,0,16">

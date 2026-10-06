@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T16:43:43Z",
+  "title": "Design System: Alpine Thunderstorm",
+  "extensions": {
+    "colorMeta": {
+      "storm-background": { "role": "neutral", "displayName": "Charcoal-blue storm" },
+      "rain": { "role": "primary", "displayName": "Translucent cool rain" },
+      "lightning": { "role": "secondary", "displayName": "Icy discharge core" }
+    },
+    "motion": [
+      { "name": "rain-depth", "value": "3 layers; 465 drops at default; 1163 maximum", "purpose": "Wind-driven rain with bounded particle storage." },
+      { "name": "cloud-discharge", "value": "1 channel; 5 branches; 110 vertices; lifetime 0.9s", "purpose": "Irregular hierarchical intra-cloud lightning with measured illumination and masked reflection." },
+      { "name": "strike-interval", "value": "6â€“30s setting, randomized by 0.8â€“1.2", "purpose": "Occasional flashes rather than a repeating visual beat." },
+      { "name": "lifecycle", "value": "Host pause/resume, visibility, FPS profiles; speed 0 freezes simulation", "purpose": "Respect host resource controls and explicit stillness." },
+      { "name": "reduced-motion", "value": "Initially paused; lightning always suppressed; FPS capped at 15", "purpose": "Preserve reduced-motion behavior after explicit resume." }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "The Alpine Storm Window",
+    "overview": "A fixed, original alpine lake photograph under heavy charcoal-blue clouds gains depth through layered rain, thin moving haze, lake ripples and occasional procedural lightning. Illumination is restrained and the landscape remains readable.",
+    "keyCharacteristics": ["Photographic landscape", "Fixed centered cover crop", "Bounded layered weather", "Offline and silent"],
+    "rules": [{ "name": "Fixed photograph", "body": "Animate weather while preserving the original landscape and sky/lake coordinate masks.", "section": "layout" }],
+    "dos": ["Keep rain, wind, lightning, interval, brightness, haze and water adjustable through the host.", "Respect pause, visibility, speed zero and reduced motion."],
+    "donts": ["Do not bake foreground rain or lightning into the source photograph.", "Do not add HUD, audio, external dependencies or unbounded particle storage."]
+  }
+}

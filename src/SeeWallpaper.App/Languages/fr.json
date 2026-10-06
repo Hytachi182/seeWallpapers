@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "La mise à jour automatique nécessite l’édition installée ou portable officielle. Installez d’abord la version officielle.",
   "AutomaticUpdateFailedAfterExit": "La mise à jour a échoué. L’application va se rouvrir. Consultez le journal pour les détails.",
   "DownloadApplicationUpdateOnGitHub": "Télécharger sur GitHub",
-  "ManualApplicationUpdateReady": "Téléchargez la version portable sur GitHub. Fermez l’application avant de remplacer ses fichiers."
+  "ManualApplicationUpdateReady": "Téléchargez la version portable sur GitHub. Fermez l’application avant de remplacer ses fichiers.",
+  "SearchWallpapers": "Rechercher un thème",
+  "ClearSearch": "Effacer la recherche",
+  "NoMatchingWallpapers": "Aucun thème ne correspond à votre recherche."
 }

@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "Aktualizacje automatyczne wymagają zainstalowanej lub oficjalnej przenośnej wersji. Najpierw zainstaluj oficjalną wersję.",
   "AutomaticUpdateFailedAfterExit": "Aktualizacja nie powiodła się. Aplikacja otworzy się ponownie. Szczegóły znajdziesz w dzienniku.",
   "DownloadApplicationUpdateOnGitHub": "Pobierz z GitHub",
-  "ManualApplicationUpdateReady": "Pobierz wersję przenośną z GitHub. Zamknij aplikację przed zastąpieniem jej plików."
+  "ManualApplicationUpdateReady": "Pobierz wersję przenośną z GitHub. Zamknij aplikację przed zastąpieniem jej plików.",
+  "SearchWallpapers": "Szukaj tapet",
+  "ClearSearch": "Wyczyść wyszukiwanie",
+  "NoMatchingWallpapers": "Brak tapet pasujących do wyszukiwania."
 }

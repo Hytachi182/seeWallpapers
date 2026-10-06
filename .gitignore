@@ -28,3 +28,6 @@ build/visual-review/
 # Release automation Python caches
 __pycache__/
 *.pyc
+
+# Local interface review captures
+.impeccable/review/

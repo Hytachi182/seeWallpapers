@@ -1,0 +1,15 @@
+{
+  "schemaVersion":1,"id":"alpine-thunderstorm","name":"Alpine Thunderstorm",
+  "description":"A photographic alpine lake beneath rolling storm clouds, with layered wind-driven rain, drifting moisture haze, lake ripples and occasional branched lightning illuminating the clouds and water. Original offline scenery with adjustable lightning frequency and flash brightness.",
+  "author":"seeWallpaper","version":"1.0.0","category":"Nature","engine":"web","entry":"index.html","preview":"preview.jpg","performance":"medium",
+  "settings":[
+    {"id":"rain","type":"slider","label":"Rain intensity","min":0,"max":2.5,"step":0.1,"default":1},
+    {"id":"speed","type":"slider","label":"Weather speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"wind","type":"slider","label":"Wind direction and strength","min":-2,"max":2,"step":0.1,"default":0.7},
+    {"id":"lightning","type":"boolean","label":"Lightning and sky illumination","default":true},
+    {"id":"interval","type":"slider","label":"Seconds between lightning flashes","min":6,"max":30,"step":1,"default":14},
+    {"id":"flash","type":"slider","label":"Lightning brightness","min":0.1,"max":1,"step":0.1,"default":0.55},
+    {"id":"mist","type":"boolean","label":"Drifting moisture haze","default":true},
+    {"id":"water","type":"boolean","label":"Lake ripples and lightning reflections","default":true}
+  ]
+}

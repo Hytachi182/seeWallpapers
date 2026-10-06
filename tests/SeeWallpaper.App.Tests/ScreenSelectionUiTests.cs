@@ -65,6 +65,23 @@ public sealed class ScreenSelectionUiTests
                         .Select(template => new TemplateCardViewModel(template, Brushes.Black, false)).ToArray();
                     typeof(MainWindow).GetField("_templates", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.SetValue(main, templates);
                     ((ItemsControl)main.FindName("TemplateList")).ItemsSource = templates;
+                    typeof(MainWindow).GetMethod("Gallery_Click", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(main, [main, new RoutedEventArgs()]);
+                    var search = (TextBox)main.FindName("GallerySearch");
+                    var galleryList = (ItemsControl)main.FindName("TemplateList");
+                    var noMatches = (TextBlock)main.FindName("GallerySearchEmpty");
+                    Capture((FrameworkElement)main.Content, "gallery-search-all.png", 1240, 750);
+                    search.Text = "rain";
+                    Assert.NotEmpty(galleryList.Items.Cast<TemplateCardViewModel>());
+                    Assert.All(galleryList.Items.Cast<TemplateCardViewModel>(), card => Assert.Contains("rain", card.Name, StringComparison.OrdinalIgnoreCase));
+                    Capture((FrameworkElement)main.Content, "gallery-search-filtered.png", 980, 600);
+                    search.Text = "NO-THEME-MATCHES-THIS";
+                    Assert.Empty(galleryList.Items);
+                    Assert.Equal(Visibility.Visible, noMatches.Visibility);
+                    Capture((FrameworkElement)main.Content, "gallery-search-empty.png", 980, 600);
+                    ((Button)main.FindName("ClearGallerySearch")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    Assert.Equal("", search.Text);
+                    Assert.Equal(templates.Length, galleryList.Items.Count);
+                    Assert.Equal(Visibility.Collapsed, noMatches.Visibility);
                     // Inspect the real update banner without downloading or installing anything.
                     Border updateBanner = (Border)main.FindName("UpdateBanner");
                     Button installUpdate = (Button)main.FindName("DownloadUpdateButton");
@@ -106,7 +123,7 @@ public sealed class ScreenSelectionUiTests
                     Capture((FrameworkElement)main.Content, "about-features.png", 980, 600);
                     Descendants((DependencyObject)main.FindName("AboutView")).OfType<Button>().Single(button => Equals(button.Content, "Explore wallpapers")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     Assert.Equal(Visibility.Collapsed, ((ScrollViewer)main.FindName("AboutView")).Visibility);
-                    Assert.Equal(Visibility.Visible, ((ScrollViewer)main.FindName("GalleryView")).Visibility);
+                    Assert.Equal(Visibility.Visible, ((FrameworkElement)main.FindName("GalleryView")).Visibility);
                     try
                     {
                         Localization.Current.ChangeLanguage("fr");

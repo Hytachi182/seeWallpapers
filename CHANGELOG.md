@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- Gallery: filter wallpaper names as you type, with case/accent-insensitive matching, clear search and an empty-result message in all eight interface languages.
+
+- Update Underwater Blue to 1.1.0: add 12 swimming fish with animated tails, a distant shoal and 54 visible rising bubbles enabled by default; strengthen current motion and preserve lifecycle controls.
+
+- Add Underwater Blue: original photographic sea scenery with animated water refraction, sun shafts, seabed light, marine particles and optional bubbles.
+
+- Add Alpine Thunderstorm: photographic storm scenery with layered rain, gusts, occasional branching lightning, atmospheric illumination and lake effects.
+
+- Add Winter Snowfall: an original photographic winter theme with layered falling snow, directional wind, nearby defocused flakes and adjustable intensity/speed/size.
+
+- Add Particle Nexus, an offline particles.js theme with adjustable particle density/colors, proximity links, soft light and host-controlled movement.
+
+- Add War Front, an offline animated adaptation of the supplied war_game_wallpaper.svg with smoke, fire, aircraft effects, distant tracers and water reflections.
+
 ## 1.9.0 - 2026-10-06
 
 <!-- generated-release:start -->

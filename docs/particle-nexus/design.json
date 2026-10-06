@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T00:00:00Z",
+  "title": "Design System: Particle Nexus",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Ice cyan" },
+      "background": { "role": "neutral", "displayName": "Deep navy" }
+    },
+    "motion": [
+      { "name": "particle-drift", "value": "speed 0–2; default 0.7", "purpose": "Elapsed-time-scaled autonomous movement under the sole host adapter timer/RAF schedule." },
+      { "name": "still-frame", "value": "host pause, hidden page, reduced-motion opening", "purpose": "Stop scheduled drawing; pointer events never redraw a host-paused frame." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Particle field background",
+      "kind": "custom",
+      "description": "The actual atmospheric container treatment; animated nodes and links are drawn by the bundled Canvas 2D library, not this CSS snippet.",
+      "html": "<div class=\"ds-particle-field\" role=\"img\" aria-label=\"Particle field background\"></div>",
+      "css": ".ds-particle-field{width:100%;height:240px;background-color:#08121c;background-image:radial-gradient(ellipse at 75% 22%,rgba(140,220,240,.055),transparent 65%),radial-gradient(ellipse at 14% 85%,rgba(140,220,240,.035),transparent 55%)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A quiet constellation",
+    "overview": "Luminous nodes drift through generous dark space, joining with fine lines as they approach. The wallpaper is an ambient Canvas 2D scene without text or a HUD; settings belong to the existing wallpaper host.",
+    "keyCharacteristics": [
+      "Ice-cyan light against deep navy.",
+      "Small circular nodes, subtle links and optional soft light.",
+      "Autonomous drift with optional pointer connections."
+    ],
+    "rules": [],
+    "dos": [
+      "Do retain generous dark space and fine distance-faded links.",
+      "Do preserve selected count across resizing and host pause across FPS changes.",
+      "Do keep settings in the wallpaper host and bundle the library with its MIT license."
+    ],
+    "donts": [
+      "Don't add a HUD or text overlay to the particle field.",
+      "Don't enable the library's native animation loop alongside the host adapter.",
+      "Don't treat pointer delivery behind desktop icons as guaranteed."
+    ]
+  }
+}
