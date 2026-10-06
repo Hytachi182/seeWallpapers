@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Add Meteor Shower: an original photographic night sky with automatic shooting stars, occasional fireballs, lingering atmospheric trails and adjustable density/speed/light settings.
+
+- Add Rain on Glass: a photographic offline rain theme with merging droplets, gravity-driven runs, fading trails, WebGL refraction and adjustable rain/softness settings.
+
+- Add seven original offline automatic pixel themes: Pixel Defender, Castle Raid, Tiny City, Dungeon Loop, Pixel Island, Robot Factory and Tower Climber, with settings, previews and host lifecycle support.
+
 ## 1.8.0 - 2026-10-05
 
 <!-- generated-release:start -->

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T00:00:00Z",
+  "title": "Design System: Automatic Pixel Worlds",
+  "extensions": {
+    "scope": "Seven original offline Canvas Games themes; no change to application identity.",
+    "sourceOwnership": {
+      "simulationAndDrawing": "build/pixel-worlds.js",
+      "metadataAndHtml": "build/generate-pixel-worlds.mjs",
+      "generatedDirectories": ["pixel-defender", "castle-raid", "tiny-city", "dungeon-loop", "pixel-island", "robot-factory", "tower-climber"],
+      "documentation": "docs/pixel-worlds.md"
+    },
+    "layout": {
+      "logicalCanvas": { "width": 640, "height": 360 },
+      "backingCanvas": { "height": 360, "minimumWidth": 160, "maximumWidth": 1920 },
+      "fit": "contain, centered, letterboxed, clipped to the full logical scene",
+      "portrait": "Complete scene remains visible at a deliberately smaller scale.",
+      "smoothing": false,
+      "cssImageRendering": "pixelated",
+      "progressStrip": { "x": 16, "y": 15, "width": 608, "height": 28, "textY": 24, "leftTextX": 26, "rightTextX": 614 }
+    },
+    "typographyMeta": {
+      "label": { "displayName": "Progress label", "purpose": "Uppercase scene title and right-aligned simulation counters; Canvas textBaseline top." },
+      "station-label": { "displayName": "Station label", "purpose": "Robot Factory's CHASSIS, CORE and ACTIVATE labels." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "simulation-step", "value": "1/60 second", "purpose": "Fixed-step autonomous simulation; speed multiplier 0.3–2, default 1." },
+      { "name": "render-limit", "value": "30 FPS default; host range 1–60 FPS", "purpose": "Timer and requestAnimationFrame scheduling respect the host performance setting." }
+    ],
+    "lifecycle": {
+      "pause": "Cancel timer and animation frame; reset timing accumulator.",
+      "visibility": "Stop while hidden; restart when visible if not paused.",
+      "reducedMotion": "Initially render a still frame after 12 simulated seconds; explicit host resume permits animation.",
+      "preview": "Deterministic seeded still frame using ?preview=<seconds>, clamped to 0–120 seconds.",
+      "settings": "Merge host settings, redraw immediately, clear existing sparks when particles are disabled.",
+      "sparkLimit": 100
+    },
+    "package": {
+      "category": "Games",
+      "engine": "web",
+      "performance": "low",
+      "archiveRootFiles": ["manifest.json", "index.html", "scene.js", "preview.jpg"],
+      "settings": ["color", "speed", "particles", "stats"],
+      "offline": true
+    }
+  },
+  "components": [
+    { "name": "Pixel scene", "kind": "custom", "description": "Code-drawn 640 × 360 autonomous world fitted to the viewport." },
+    { "name": "Progress strip", "kind": "custom", "refersTo": "progress-strip", "description": "Optional Canvas title and live counters; square corners and no interactive states." },
+    { "name": "Original sprite", "kind": "custom", "description": "Small character-grid silhouette drawn with rounded rectangle coordinates and scene-local scale." }
+  ],
+  "narrative": {
+    "overview": "Extend the existing Canvas Games visual world with original small sprites, recognizable environments, restrained palettes and an optional compact progress strip.",
+    "keyCharacteristics": ["Original code-drawn pixel artwork", "Autonomous continuous play", "Whole-scene desktop composition", "Entirely offline"],
+    "dos": ["Edit shared source and regenerate templates.", "Keep effects bounded and honor host pause, visibility and performance settings.", "Preserve the whole logical scene in portrait."],
+    "donts": ["Do not hand-maintain generated scene copies.", "Do not require keyboard input or downloaded assets.", "Do not establish a new application identity for this collection."]
+  }
+}

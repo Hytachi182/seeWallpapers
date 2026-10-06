@@ -87,7 +87,7 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 ## The scenes
 
 <!-- template-summary:start -->
-**31 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**45 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -131,6 +131,12 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Rooftop Rivals** is an original self-playing arcade robot fight with punches, kicks, guards, jumps, energy pulses and best-of-three matches on a rooftop at dusk. [Theme details](docs/rooftop-rivals.md).
 
 **Neon Rally** is a self-playing retro paddle duel with predictive autopilots, spin, accelerating rallies, mint/coral lighting and first-to-seven matches. [Theme details](docs/neon-rally.md).
+
+Seven more automatic pixel worlds are included: **Pixel Defender**, **Castle Raid**, **Tiny City**, **Dungeon Loop**, **Pixel Island**, **Robot Factory**, and **Tower Climber**. Watch drone battles, fortress raids, city life, dungeon exploration, island construction, robot production and endless climbing. [Theme details](docs/pixel-worlds.md).
+
+**Rain on Glass** adds realistic water over an original city photograph: droplets settle, merge, refract the scenery and slide down the glass with fading wet trails. [Theme details](docs/rain-on-glass.md).
+
+**Meteor Shower** brings a photographic Milky Way above a mountain lake, with automatic shooting stars, fine luminous trails, subtle scintillation and occasional brighter fireballs. [Theme details](docs/meteor-shower.md).
 
 ## Create a wallpaper
 

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Rain on Glass</title>
+<style>:root{color-scheme:dark}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#17222d}canvas{display:block;width:100%;height:100%}#fallback{position:fixed;inset:0;background:#17222d url('background.jpg') center/cover no-repeat}#fallback p{position:absolute;bottom:24px;left:24px;right:24px;margin:0;padding:14px 18px;background:#14202dee;color:#f1f4f5;font:14px/1.5 'Segoe UI',sans-serif}[hidden]{display:none!important}::selection{background:#d2dce2;color:#17222d}</style></head>
+<body><canvas aria-label="Realistic rain on glass: refracting water drops merging and flowing over a city photograph"></canvas><div id="fallback" hidden><p id="error">Enable graphics acceleration to animate the water on this glass.</p></div>
+<script id="defaults" type="application/json">{"rain":1,"speed":1,"refraction":1,"blur":4,"color":"#c9d5df","trails":true}</script>
+<script id="fragment" type="x-shader/x-fragment">
+precision highp float;
+uniform sampler2D backdrop;
+uniform sampler2D blurredBackdrop;
+uniform sampler2D water;
+uniform vec2 resolution;
+uniform vec2 waterSize;
+uniform vec2 imageSize;
+uniform float softness;
+uniform float refraction;
+uniform vec3 tint;
+
+vec2 photoUV(vec2 uv) {
+  float viewAspect=resolution.x/resolution.y;
+  float photoAspect=imageSize.x/imageSize.y;
+  vec2 crop=vec2(min(1.,viewAspect/photoAspect),min(1.,photoAspect/viewAspect));
+  return (uv-.5)*crop+.5;
+}
+vec3 photo(vec2 uv,float blur) {
+  vec2 p=photoUV(uv);
+  return mix(texture2D(backdrop,p).rgb,texture2D(blurredBackdrop,p).rgb,clamp(blur/max(.001,softness*3.),0.,1.));
+}
+void main() {
+  vec2 uv=gl_FragCoord.xy/resolution;
+  vec2 px=1./waterSize;
+  float h=texture2D(water,uv).r;
+  vec2 slope=vec2(texture2D(water,uv+vec2(px.x,0.)).r-texture2D(water,uv-vec2(px.x,0.)).r,
+                  texture2D(water,uv+vec2(0.,px.y)).r-texture2D(water,uv-vec2(0.,px.y)).r);
+  vec3 normal=normalize(vec3(-slope*5.,1.));
+  float wet=smoothstep(.015,.14,h);
+  vec2 bend=normal.xy*vec2(.022,.022*resolution.x/resolution.y)*refraction;
+  // Convex water acts as a lens: sharper scenery inside, softly blurred outside.
+  vec3 dry=photo(uv,softness*3.);
+  vec3 through=photo(uv+bend,softness*.30);
+  float fresnel=pow(1.-normal.z,2.);
+  vec3 reflected=photo(vec2(uv.x,.88-uv.y*.5)+normal.xy*.16,softness*2.);
+  vec3 liquid=mix(through,reflected*tint,fresnel*.55);
+  // Broad cold sky reflection and a much smaller warm light catch on the curved rim.
+  vec3 light=normalize(vec3(-.42,.65,1.));
+  float spec=pow(max(0.,dot(normal,light)),70.);
+  float rim=smoothstep(.015,.13,h)*(1.-smoothstep(.16,.35,h));
+  liquid*=1.-rim*.30;
+  liquid+=tint*spec*.65+vec3(.20,.24,.26)*max(0.,normal.y)*fresnel*.25;
+  vec3 col=mix(dry,liquid,wet);
+  col*=mix(vec3(1.),tint,.08);
+  float vignette=smoothstep(.15,.85,length((uv-.5)*vec2(1.,.8)));
+  col*=1.-vignette*.18;
+  gl_FragColor=vec4(col,1.);
+}
+</script><script src="background.js"></script><script src="scene.js"></script></body></html>

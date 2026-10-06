@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "tower-climber",
+  "name": "Tower Climber",
+  "description": "An original pixel explorer automatically jumps between procedurally generated ledges on an endless tower. A scrolling camera follows the ascent with safe fall recovery. Procedural artwork, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Scene accent",
+      "default": "#e9b878"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Simulation speed",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "particles",
+      "type": "boolean",
+      "label": "Action particles",
+      "default": true
+    },
+    {
+      "id": "stats",
+      "type": "boolean",
+      "label": "Show simulation progress",
+      "default": true
+    }
+  ]
+}

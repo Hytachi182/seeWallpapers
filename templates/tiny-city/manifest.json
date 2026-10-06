@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "tiny-city",
+  "name": "Tiny City",
+  "description": "A living pixel city with two-way traffic, walking residents, illuminated windows, drifting clouds, rain and a continuous day/night cycle. Procedural artwork, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Scene accent",
+      "default": "#f3cf91"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Simulation speed",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "particles",
+      "type": "boolean",
+      "label": "Weather particles",
+      "default": true
+    },
+    {
+      "id": "stats",
+      "type": "boolean",
+      "label": "Show simulation progress",
+      "default": true
+    }
+  ]
+}

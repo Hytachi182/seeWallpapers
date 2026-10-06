@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "meteor-shower",
+  "name": "Meteor Shower",
+  "description": "A photographic Milky Way above an alpine lake, crossed by a continuous automatic shower of shooting stars. Fine white-hot meteor heads, tapered luminous trails, subtle star scintillation and occasional brighter fireballs with fading atmospheric trains. Original offline artwork.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Space",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    { "id": "density", "type": "slider", "label": "Meteor shower intensity", "min": 0.2, "max": 3, "step": 0.1, "default": 1 },
+    { "id": "speed", "type": "slider", "label": "Meteor speed", "min": 0.3, "max": 2, "step": 0.1, "default": 1 },
+    { "id": "intensity", "type": "slider", "label": "Meteor brightness", "min": 0.3, "max": 2, "step": 0.1, "default": 1 },
+    { "id": "color", "type": "color", "label": "Meteor light tint", "default": "#d9e9ff" },
+    { "id": "trains", "type": "boolean", "label": "Lingering atmospheric trails", "default": true },
+    { "id": "twinkle", "type": "boolean", "label": "Subtle star scintillation", "default": true }
+  ]
+}
