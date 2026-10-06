@@ -2,6 +2,46 @@
 
 ## Unreleased
 
+## 1.9.0 - 2026-10-06
+
+<!-- generated-release:start -->
+### Changes since v1.8.0
+
+Built-in catalogue: **45 wallpapers**.
+
+#### New wallpapers
+
+- **Amber Maze** (`amber-maze`): An original self-playing maze chase. A lantern robot gathers shards through changing labyrinths, avoids angular sentinels and uses temporary overcharge to disable pursuers. Real scores, lives, new mazes and automatic restarts. Procedural pixel art, entirely offline.
+- **Castle Raid** (`castle-raid`): Original tiny pixel knights march on a fortress, brave defensive arrows and break the gate. Each victory launches a fresh automatic raid. Procedural artwork, entirely offline.
+- **Crystal Run** (`crystal-run`): An original pixel-art platform adventure that plays itself. A little explorer robot leaps between floating ruins, collects crystals, avoids clockwork beetles and reaches the beacon. New trails alternate between dawn, twilight and moonlight. Entirely procedural and offline.
+- **Dungeon Loop** (`dungeon-loop`): An original adventurer automatically explores connected dungeon corridors, fights stone sentries, opens treasure chests and descends to the next floor. Procedural artwork, entirely offline.
+- **Meteor Shower** (`meteor-shower`): A photographic Milky Way above an alpine lake, crossed by a continuous automatic shower of shooting stars. Fine white-hot meteor heads, tapered luminous trails, subtle star scintillation and occasional brighter fireballs with fading atmospheric trains. Original offline artwork.
+- **Neon Rally** (`neon-rally`): A self-playing retro paddle duel with mint and coral opponents. Autopilots predict wall rebounds, react imperfectly, add spin and exchange accelerating rallies. Real scoring, first-to-seven matches and automatic restarts. Original procedural visuals, entirely offline.
+- **Orbital Defender** (`orbital-defender`): An original self-playing retro space shooter. An autopilot intercepts waves of geometric drones, dodges fire and defends an orbital outpost behind destructible shields. Includes scores, escalating waves and automatic game restarts. Original procedural pixel art, entirely offline.
+- **Pixel Defender** (`pixel-defender`): Futuristic turrets automatically track and intercept waves of drones over a pixel outpost. Guided shots, shield damage and endless escalating waves. Procedural artwork, entirely offline.
+- **Pixel Island** (`pixel-island`): Tiny island settlers gather wood and carry it to construction sites. Five homes rise from foundations, a sailboat circles the coast and settlement cycles repeat. Procedural artwork, entirely offline.
+- **Rain on Glass** (`rain-on-glass`): Photographic blue-hour rain on a pane of glass: droplets settle, grow, merge and slide under gravity, leaving fading wet trails. Real-time refraction, curved reflections and tiny beads over an original city photograph. Entirely offline.
+- **Robot Factory** (`robot-factory`): A self-running robot assembly line. Mechanical stations fit chassis, install cores and activate robots on moving conveyor belts in continuous production. Procedural artwork, entirely offline.
+- **Rooftop Rivals** (`rooftop-rivals`): An original self-playing arcade robot fight on an industrial rooftop at dusk. Two autonomous fighters exchange punches, kicks, jumps, guards and energy pulses. Real health, combos, timed rounds and best-of-three matches restart automatically. Procedural pixel art, entirely offline.
+- **Tiny City** (`tiny-city`): A living pixel city with two-way traffic, walking residents, illuminated windows, drifting clouds, rain and a continuous day/night cycle. Procedural artwork, entirely offline.
+- **Tower Climber** (`tower-climber`): An original pixel explorer automatically jumps between procedurally generated ledges on an endless tower. A scrolling camera follows the ascent with safe fall recovery. Procedural artwork, entirely offline.
+
+#### Updated wallpapers
+
+- **Biker Road** (`biker-road`): A coastal motorcycle ride at sunset, with moving asphalt, drifting clouds, golden sea reflections, passing birds, exhaust smoke, roadside dust, moving sun rays and a pulsing tail light. Based on the supplied biker_road_wallpaper.svg artwork.
+
+#### Development changes
+
+- feat: add nine autonomous pixel and photographic weather themes
+- fix: offer GitHub downloads for portable and development builds
+- ci: use supported ARM Linux runners for release orchestration
+- fix(ci): validate pipeline changes while a release awaits publication
+- ci: separate version preparation, validation and Windows publication
+- améliorations
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.8.0...v1.9.0)
+<!-- generated-release:end -->
+
 - Add Meteor Shower: an original photographic night sky with automatic shooting stars, occasional fireballs, lingering atmospheric trails and adjustable density/speed/light settings.
 
 - Add Rain on Glass: a photographic offline rain theme with merging droplets, gravity-driven runs, fading trails, WebGL refraction and adjustable rain/softness settings.
