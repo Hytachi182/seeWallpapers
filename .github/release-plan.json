@@ -1,18 +1,16 @@
 {
-  "version": "1.10.0",
-  "tag": "v1.10.0",
-  "base_tag": "v1.9.0",
+  "version": "1.11.0",
+  "tag": "v1.11.0",
+  "base_tag": "v1.10.0",
   "release_required": true,
-  "template_count": 50,
+  "template_count": 51,
   "added": [
-    "alpine-thunderstorm",
-    "particle-nexus",
-    "underwater-blue",
-    "war-front",
-    "winter-snowfall"
+    "galactic-battle"
   ],
-  "updated": [],
+  "updated": [
+    "war-front"
+  ],
   "removed": [],
-  "source_commit": "b3a7b6e5b4413b502efaf288fbd026a291029b82",
-  "title": "Release seeWallpaper 1.10.0"
+  "source_commit": "97b6ae778553f4cbf60d827d1e13785f4f1a0808",
+  "title": "Release seeWallpaper 1.11.0"
 }
