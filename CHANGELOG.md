@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Add Galactic Battle: an original photographic orbital scene with nine moving curved-hull interceptors and asymmetric raiders, red/green laser salvos, engine light, distant explosions and drifting debris. Generated artwork, offline and host-controlled.
+
+
+- War Front 1.1.0: strengthen rising smoke, animated flame tongues and ember streams, lengthen and increase tracer salvos, add six distant city impact sites with sparks and smoke, and support zero animation speed. Original soldiers remain stable.
+
+
 ## 1.10.0 - 2026-10-06
 
 <!-- generated-release:start -->

@@ -1,6 +1,6 @@
 # Wallpaper catalogue
 
-**50 built-in wallpapers.** Generated from the scene manifests.
+**51 built-in wallpapers.** Generated from the scene manifests.
 
 | Preview | Wallpaper | Category | Creator | Version |
 | --- | --- | --- | --- | --- |
@@ -12,7 +12,8 @@
 | <img src="../templates/orange-ninja/preview.jpg" alt="Orange Ninja" width="160" /> | **Orange Ninja**<br />An original orange-cloaked ninja overlooking a golden mountain valley, with wind-blown leaves. | Anime | seeWallpaper | 1.0.0 |
 | <img src="../templates/pirate-cove/preview.jpg" alt="Pirate Cove" width="160" /> | **Pirate Cove**<br />A young pirate overlooking a sunset cove, with gentle folds in the red banner, scarf and cloak, a flickering lantern, warm harbour lights, flowing waterfalls, sea reflections and distant gliding seagulls. | Anime | seeWallpaper | 1.0.1 |
 | <img src="../templates/shinobi-energy/preview.jpg" alt="Shinobi Energy" width="160" /> | **Shinobi Energy**<br />A standing shinobi surrounded by rotating energy seals, rising sparks and luminous ribbons. | Anime | seeWallpaper | 1.0.0 |
-| <img src="../templates/war-front/preview.jpg" alt="War Front" width="160" /> | **War Front**<br />The supplied war_game_wallpaper.svg brought to life: drifting smoke above a burning city, flickering fires and airborne embers, distant tracer fire, pulsing jet exhaust, helicopter rotor motion and shimmering harbour reflections. The original soldiers and composition stay fixed. Entirely offline. | Cinematic | seeWallpaper | 1.0.0 |
+| <img src="../templates/galactic-battle/preview.jpg" alt="Galactic Battle" width="160" /> | **Galactic Battle**<br />An original cinematic orbital battle above a blue planet. Nine curved-hull interceptors and asymmetric raiders cross the sky with ion-engine light, laser salvos, distant explosions and drifting debris around an immense ring-shaped cruiser. Generated artwork, entirely offline. | Cinematic | seeWallpaper | 1.1.0 |
+| <img src="../templates/war-front/preview.jpg" alt="War Front" width="160" /> | **War Front**<br />A burning harbour at sunset brought to life with billowing smoke, animated flames, rising embers, frequent tracer salvos and distant city explosions. Pulsing jet exhaust, helicopter rotors and shimmering water complete the supplied illustration. Original soldiers remain stable; entirely offline. | Cinematic | seeWallpaper | 1.1.0 |
 | <img src="../templates/amber-maze/preview.jpg" alt="Amber Maze" width="160" /> | **Amber Maze**<br />An original self-playing maze chase. A lantern robot gathers shards through changing labyrinths, avoids angular sentinels and uses temporary overcharge to disable pursuers. Real scores, lives, new mazes and automatic restarts. Procedural pixel art, entirely offline. | Games | seeWallpaper | 1.0.0 |
 | <img src="../templates/castle-raid/preview.jpg" alt="Castle Raid" width="160" /> | **Castle Raid**<br />Original tiny pixel knights march on a fortress, brave defensive arrows and break the gate. Each victory launches a fresh automatic raid. Procedural artwork, entirely offline. | Games | seeWallpaper | 1.0.0 |
 | <img src="../templates/crystal-run/preview.jpg" alt="Crystal Run" width="160" /> | **Crystal Run**<br />An original pixel-art platform adventure that plays itself. A little explorer robot leaps between floating ruins, collects crystals, avoids clockwork beetles and reaches the beacon. New trails alternate between dawn, twilight and moonlight. Entirely procedural and offline. | Games | seeWallpaper | 1.0.0 |

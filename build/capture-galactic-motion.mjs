@@ -7,8 +7,8 @@ const output=path.resolve('build/visual-review');await mkdir(output,{recursive:t
 const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1280,height:720},recordVideo:{dir:output,size:{width:1280,height:720}}});
- await page.addInitScript(()=>{window.seeWallpaper={getSettings:()=>({}),onPause:()=>{},onResume:cb=>window.resumeWar=cb,onSettingsChanged:()=>{},onPerformanceChanged:()=>{}};});
- await page.goto(pathToFileURL(path.resolve('templates/war-front/index.html')).href+'?preview=12');await page.evaluate(()=>window.resumeWar());await page.waitForTimeout(10000);
- const video=page.video();await page.close();await rename(await video.path(),path.join(output,'war-front-active-motion.webm'));
- console.log('War Front: ten seconds of actual motion captured');
+ await page.addInitScript(()=>{window.seeWallpaper={getSettings:()=>({}),onPause:()=>{},onResume:cb=>window.resumeGalactic=cb,onSettingsChanged:()=>{},onPerformanceChanged:()=>{}};});
+ await page.goto(pathToFileURL(path.resolve('templates/galactic-battle/index.html')).href+'?preview=12');await page.evaluate(()=>window.resumeGalactic());await page.waitForTimeout(10000);
+ const video=page.video();await page.close();await rename(await video.path(),path.join(output,'galactic-battle-original-motion.webm'));
+ console.log('Galactic Battle: ten seconds of actual motion captured');
 }finally{await browser.close();}

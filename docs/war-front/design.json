@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-06T15:37:29Z",
+  "generatedAt": "2026-10-06T20:08:43Z",
   "title": "Design System: War Front",
   "extensions": {
     "colorMeta": {
@@ -14,9 +14,10 @@
       "recovery": { "displayName": "Recovery message", "purpose": "Artwork load failure only; no scene typography." }
     },
     "motion": [
-      { "name": "smoke", "value": "5 feathered sky crops, 2 phases each", "purpose": "Small local drift using supplied sky pixels." },
-      { "name": "fire", "value": "12 sources, 7 embers per source", "purpose": "Restrained screen-blended firelight and staggered sparks." },
-      { "name": "tracers", "value": "9 paths; visible during 0.17 of each cycle", "purpose": "Short distant passages clipped away from foreground silhouettes." },
+      { "name": "smoke", "value": "20 overlapping sheets from 5 cached feathered sky crops", "purpose": "Visible rise and drift using supplied sky pixels." },
+      { "name": "fire", "value": "12 sources, 84 flame tongues, 168 rising embers", "purpose": "Screen-blended firelight, moving flames and staggered ember streams attached to the burning districts." },
+      { "name": "tracers", "value": "18 paths; visible during 0.26 of each cycle", "purpose": "Longer, frequent distant salvos clipped away from foreground silhouettes." },
+      { "name": "impacts", "value": "6 sites, 18 sparks each, rising photographed smoke", "purpose": "Local city explosions enabled by default with an optional host toggle." },
       { "name": "aircraft", "value": "Fixed bodies, pulsing exhaust and short rotor sweeps", "purpose": "Animate activity without moving painted aircraft." },
       { "name": "water", "value": "115 strokes within harbour polygon", "purpose": "Local reflection shimmer." }
     ],
@@ -37,6 +38,9 @@
       "pause": "Stops timer and animation frame scheduling.",
       "visibility": "Stops while hidden and restarts when visible if not paused.",
       "reducedMotion": "Starts paused with a still frame; host resume remains available.",
+      "speedRange": [0, 2],
+      "zeroSpeed": "Freezes effect time.",
+      "intensityRange": [0, 2],
       "zeroIntensity": "Draws source artwork only.",
       "loadFailure": "Stops playback and shows reinstall message over CSS image fallback."
     },
@@ -47,15 +51,20 @@
       "rights": "User-supplied source; no copyright transfer inferred.",
       "effectOwner": "templates/war-front/scene.js"
     },
-    "offlinePack": ["manifest.json", "index.html", "scene.js", "artwork.svg", "preview.jpg"]
+    "offlinePack": ["manifest.json", "index.html", "scene.js", "artwork.svg", "preview.jpg"],
+    "validation": {
+      "visualReview": "Desktop and portrait support shipping without a material fix; video frames at 2 and 7 seconds show stronger rendered changes.",
+      "passedChecks": ["Isolated effect motion", "Pause/FPS", "Reduced motion", "Exact original heads/torso preservation", "Zero speed", "Zero intensity"],
+      "limits": "Continuous playback was not inspected in the visual review; CPU/GPU performance and desktop attachment on the user's monitors remain unvalidated."
+    }
   },
   "components": [],
   "narrative": {
     "northStar": "The supplied illustration, alive.",
-    "overview": "The existing Cinematic identity inherits the user's battle illustration. Local environmental motion preserves its composition and fixed foreground soldiers.",
-    "keyCharacteristics": ["Fullbleed supplied artwork", "Local atmospheric motion", "Protected silhouettes", "Offline host-controlled playback"],
+    "overview": "The Cinematic identity comes from the user's `E:/Downloads/war_game_wallpaper.svg`: a burning harbour at sunset, foreground soldiers and airborne aircraft. This SVG contains one embedded PNG. `templates/war-front/artwork.svg` preserves it byte for byte; the theme adds environmental motion without regenerating the artwork. Provenance records the supplied source, not a claim of transferred copyright.\n\nVisible smoke, flames, embers, tracer salvos and distant city explosions bring the battle to life. Activity remains attached to the painted harbour and sky; foreground soldiers and aircraft bodies stay fixed.",
+    "keyCharacteristics": ["Fullbleed supplied artwork", "Visible atmospheric battle activity", "Protected silhouettes", "Offline host-controlled playback"],
     "rules": [],
-    "dos": ["Preserve the supplied source and silhouettes.", "Keep environmental motion local and rendering bounded.", "Retain host settings and the five-file offline pack."],
-    "donts": ["Do not move the whole painting or duplicate aircraft bodies.", "Do not add a HUD, network dependencies or audio.", "Do not infer device performance from a preview."]
+    "dos": ["Do preserve the supplied artwork and original silhouettes.", "Do keep visible battle activity local to smoke, flames, embers, distant tracers, city explosions, engines, rotors and water.", "Do retain host controls, offline packaging and bounded rendering."],
+    "donts": ["Don't move the whole painting, duplicate aircraft bodies or add interface overlays.", "Don't treat the preview as proof of CPU/GPU performance on every monitor."]
   }
 }

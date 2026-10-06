@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T00:00:00Z",
+  "title": "Design System: Galactic Battle",
+  "extensions": {
+    "scope": "Theme-local documentation; primitives are normative in DESIGN.md frontmatter. Existing product architecture and controls are inherited.",
+    "motion": [
+      { "name": "fixed-view", "value": "Stable background; nine moving sprite actors", "purpose": "Cruiser and planet retain their viewpoint." },
+      { "name": "speed", "value": "0–2; default 1", "purpose": "Zero freezes every scene effect." },
+      { "name": "still-frame", "value": "Deterministic preview and prefers-reduced-motion", "purpose": "Open a still scene; host pause and hidden pages stop the single timer/RAF loop." }
+    ],
+    "rendering": {
+      "backgroundSizing": "centered cover",
+      "paths": "viewport coordinates",
+      "pixelBudget": 2073600,
+      "lowFpsPixelBudget": 921600,
+      "lowFpsThreshold": 15,
+      "devicePixelRatioCap": 1.5,
+      "actors": { "lightFighters": 6, "darkAdversaries": 3, "laserSlots": 27, "burstSites": 4, "sparksPerBurst": 28, "debris": 40, "stars": 70, "cachedGlows": 2 },
+      "lighting": "Photographic backdrop, small-first sprite ordering, screen-composited blue and orange cached radial lights."
+    },
+    "controls": {
+      "light": { "min": 0.3, "max": 1.6, "default": 1 },
+      "toggles": ["fighters", "engines", "lasers", "explosions", "stars", "debris"],
+      "toggleDefault": true,
+      "engineScope": "Light interceptors only; blue glow aligned with their single rear exhaust slot"
+    },
+    "assets": {
+      "version": "1.1.0",
+      "provenance": "Three independently generated photographic assets with distinct ring, curved-body and asymmetric nacelle designs. Generation provenance does not establish legal clearance or guarantee third-party rights.",
+      "silhouettes": { "background": "Toroidal copper-and-teal cruiser with a thick open ring, offset habitat drums and curved truss ribs", "fighter": "Curved ivory ceramic interceptor with unequal rounded swept tips and a single turquoise exhaust slot", "enemy": "Asymmetric raider with three offset flattened graphite oval nacelles, curved copper arms and an inset rectangular cockpit window" },
+      "prompts": ["background-prompt.txt", "fighter-prompt.txt", "enemy-prompt.txt"],
+      "metadata": "Generation prompts embedded in image metadata",
+      "encoding": "JPEG backdrop encoded from generated bitmap; PNG sprite alpha retained",
+      "packageFiles": ["manifest.json", "index.html", "scene.js", "background.jpg", "fighter.png", "enemy.png", "preview.jpg"],
+      "preview": "Actual Edge rendering"
+    },
+    "validation": {
+      "screenshots": ["../../build/visual-review/galactic-battle-desktop.png", "../../build/visual-review/galactic-battle-mobile.png"],
+      "videoFrames": ["../../build/visual-review/galactic-battle-original-frame-2.png", "../../build/visual-review/galactic-battle-original-frame-7.png"],
+      "video": "../../build/visual-review/galactic-battle-original-motion.mp4",
+      "videoWebm": "../../build/visual-review/galactic-battle-original-motion.webm",
+      "reviewVerdict": "No blocking silhouette or integration issue; visual review does not establish legal clearance",
+      "browserChecks": ["motion", "pause", "reduced motion", "speed zero", "offline use"],
+      "templateChecksPassed": 63,
+      "compilation": "Passed",
+      "videoDurationSeconds": 10.56,
+      "package": "Seven files; CRC and byte equality verified",
+      "liveImport": "Installed version 1.1.0 matched all seven source-file hashes and appeared in the running WPF gallery search",
+      "limitations": ["Visual review inspected extracted frames without continuous video playback", "Headless evidence does not establish physical-monitor frame rate or Windows desktop attachment"]
+    }
+  },
+  "components": [
+    {
+      "name": "Artwork error",
+      "kind": "custom",
+      "html": "<p class=\"ds-artwork-error\">The scene artwork could not be loaded. Reinstall this wallpaper to restore it.</p>",
+      "css": ".ds-artwork-error{margin:24px;padding:14px 18px;color:#e4f2ff;background:#101c2dee;font:14px/1.5 'Segoe UI',sans-serif}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Fixed View of an Orbital Battle",
+    "overview": "Galactic Battle 1.1.0 is a narrow Cinematic gallery theme extension using the existing manifest, host controls, preview and offline package architecture. Its world is photographic and cinematic: a copper-and-teal toroidal cruiser with offset habitat drums, blue planetary atmosphere and warm upper-left sunlight anchor moving spacecraft. The cruiser and planet remain stable while ceramic interceptors, asymmetric raiders, laser salvos and local bursts provide activity.",
+    "keyCharacteristics": ["Generated photographic backdrop and transparent spacecraft sprites.", "Clear light-fighter and dark-adversary silhouettes at several apparent distances.", "Bounded layered motion with a stable viewpoint.", "Offline rendering and existing host controls."],
+    "rules": [{ "name": "The Stable View Rule", "body": "Preserve the cruiser and planet viewpoint while animating the foreground actors.", "section": "elevation" }],
+    "dos": ["Do preserve photographic lighting, sprite alpha and recognizable spacecraft silhouettes.", "Do retain the stable cruiser viewpoint and centered cover crop across aspect ratios.", "Do keep actor counts, cached glow textures and canvas pixel budgets bounded.", "Do preserve still-frame, pause and offline behavior through the existing host contract."],
+    "donts": ["Don't add baked-in laser beams, explosions or fighters to the backdrop.", "Don't add persistent HUD, audio or network dependencies to this theme.", "Don't promote this theme's palette or composition into root product design rules."]
+  }
+}

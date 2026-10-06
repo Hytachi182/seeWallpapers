@@ -17,6 +17,17 @@ try {
   for(const t of [2,12,28]){await p.goto(`${url}?preview=${t}`);assert.equal(await p.locator('#fallback').isVisible(),false);shots.push({head:await p.screenshot({clip:head}),torso:await p.screenshot({clip:torso}),whole:await p.screenshot()});}
   assert.ok(shots.every(s=>s.head.equals(shots[0].head)&&s.torso.equals(shots[0].torso)),'Original soldier head and torso stay pixel-stable');
   assert.ok(shots.some(s=>!s.whole.equals(shots[0].whole)),'Scene animates around fixed soldiers');
+  // Canvas contains file-origin artwork, so use actual screenshots for isolated layers.
+  for(const effect of ['smoke','fires','tracers','impacts']) {
+    const settings={smoke:false,fires:false,tracers:false,aircraft:false,water:false,impacts:false,intensity:1,speed:1,[effect]:true};
+    await p.evaluate(v=>window.callbacks.settings(v),settings);const before=await p.screenshot();
+    await p.evaluate(()=>window.callbacks.resume());await p.waitForTimeout(600);await p.evaluate(()=>window.callbacks.pause());
+    assert.ok(!before.equals(await p.screenshot()),`${effect} moves independently`);
+  }
+  await p.evaluate(()=>window.callbacks.settings({speed:0}));const zeroSpeed=await p.screenshot();
+  await p.evaluate(()=>window.callbacks.resume());await p.waitForTimeout(180);await p.evaluate(()=>window.callbacks.pause());
+  assert.ok(zeroSpeed.equals(await p.screenshot()),'Zero speed freezes active effects');
+  await p.evaluate(()=>window.callbacks.settings({speed:1,smoke:true,fires:true,tracers:true,impacts:true,aircraft:true,water:true}));
   await p.evaluate(()=>window.callbacks.settings({intensity:0}));const still=await p.screenshot();await p.evaluate(()=>window.callbacks.resume());await p.waitForTimeout(220);await p.evaluate(()=>window.callbacks.pause());assert.ok(still.equals(await p.screenshot()),'Zero atmosphere restores unchanged original');
   await p.evaluate(()=>window.callbacks.settings({intensity:1}));const paused=await p.screenshot();await p.evaluate(()=>window.callbacks.fps(15));const qualityFrame=await p.screenshot();await p.waitForTimeout(150);assert.ok(qualityFrame.equals(await p.screenshot()),'Quality change cannot resume a paused theme');assert.ok(await p.evaluate(()=>document.querySelector('canvas').width*document.querySelector('canvas').height<=921600));
   await p.emulateMedia({reducedMotion:'reduce'});await p.goto(url);const reduced=await p.screenshot();await p.waitForTimeout(180);assert.ok(reduced.equals(await p.screenshot()));
