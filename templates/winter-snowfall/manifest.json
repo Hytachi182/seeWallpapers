@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "winter-snowfall",
+  "name": "Winter Snowfall",
+  "description": "Photographic snowfall in a quiet alpine forest at blue hour. Fine distant snow, drifting midground flakes and softly defocused foreground snow fall at different speeds with gentle wind gusts over an original snowy chalet photograph. Entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Nature",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"density","type":"slider","label":"Snowfall intensity","min":0.2,"max":2.5,"step":0.1,"default":1},
+    {"id":"speed","type":"slider","label":"Snowfall speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"wind","type":"slider","label":"Wind direction and strength","min":-2,"max":2,"step":0.1,"default":0.35},
+    {"id":"size","type":"slider","label":"Flake size","min":0.5,"max":1.8,"step":0.1,"default":1},
+    {"id":"foreground","type":"boolean","label":"Nearby snowflakes","default":true},
+    {"id":"focus","type":"boolean","label":"Photographic depth of field","default":true}
+  ]
+}

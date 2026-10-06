@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "Automatic updates require the installed or official portable edition. Install the official release first.",
   "AutomaticUpdateFailedAfterExit": "The update failed. The application will reopen. See the log for details.",
   "DownloadApplicationUpdateOnGitHub": "Download on GitHub",
-  "ManualApplicationUpdateReady": "Download the portable version from GitHub. Close the app before replacing its files."
+  "ManualApplicationUpdateReady": "Download the portable version from GitHub. Close the app before replacing its files.",
+  "SearchWallpapers": "Search wallpapers",
+  "ClearSearch": "Clear search",
+  "NoMatchingWallpapers": "No wallpapers match your search."
 }

@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "Automatische Updates benötigen die installierte oder offizielle portable Ausgabe. Installieren Sie zuerst die offizielle Version.",
   "AutomaticUpdateFailedAfterExit": "Das Update ist fehlgeschlagen. Die App wird erneut geöffnet. Details finden Sie im Protokoll.",
   "DownloadApplicationUpdateOnGitHub": "Auf GitHub herunterladen",
-  "ManualApplicationUpdateReady": "Laden Sie die portable Version von GitHub herunter. Schließen Sie die App, bevor Sie ihre Dateien ersetzen."
+  "ManualApplicationUpdateReady": "Laden Sie die portable Version von GitHub herunter. Schließen Sie die App, bevor Sie ihre Dateien ersetzen.",
+  "SearchWallpapers": "Hintergrundbilder suchen",
+  "ClearSearch": "Suche löschen",
+  "NoMatchingWallpapers": "Keine Hintergrundbilder entsprechen Ihrer Suche."
 }

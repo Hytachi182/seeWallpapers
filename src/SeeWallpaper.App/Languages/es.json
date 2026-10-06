@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "Las actualizaciones automáticas requieren la edición instalada o portátil oficial. Instale primero la versión oficial.",
   "AutomaticUpdateFailedAfterExit": "La actualización falló. La aplicación volverá a abrirse. Consulte el registro para obtener detalles.",
   "DownloadApplicationUpdateOnGitHub": "Descargar en GitHub",
-  "ManualApplicationUpdateReady": "Descargue la versión portátil desde GitHub. Cierre la aplicación antes de reemplazar sus archivos."
+  "ManualApplicationUpdateReady": "Descargue la versión portátil desde GitHub. Cierre la aplicación antes de reemplazar sus archivos.",
+  "SearchWallpapers": "Buscar fondos de pantalla",
+  "ClearSearch": "Borrar búsqueda",
+  "NoMatchingWallpapers": "Ningún fondo de pantalla coincide con la búsqueda."
 }

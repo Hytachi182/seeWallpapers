@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T15:37:29Z",
+  "title": "Design System: War Front",
+  "extensions": {
+    "colorMeta": {
+      "backdrop": { "role": "neutral", "displayName": "Loading backdrop" },
+      "recovery-text": { "role": "neutral", "displayName": "Recovery text" },
+      "recovery-surface": { "role": "neutral", "displayName": "Recovery surface" },
+      "selection": { "role": "primary", "displayName": "Warm selection" },
+      "selection-text": { "role": "neutral", "displayName": "Selection text" }
+    },
+    "typographyMeta": {
+      "recovery": { "displayName": "Recovery message", "purpose": "Artwork load failure only; no scene typography." }
+    },
+    "motion": [
+      { "name": "smoke", "value": "5 feathered sky crops, 2 phases each", "purpose": "Small local drift using supplied sky pixels." },
+      { "name": "fire", "value": "12 sources, 7 embers per source", "purpose": "Restrained screen-blended firelight and staggered sparks." },
+      { "name": "tracers", "value": "9 paths; visible during 0.17 of each cycle", "purpose": "Short distant passages clipped away from foreground silhouettes." },
+      { "name": "aircraft", "value": "Fixed bodies, pulsing exhaust and short rotor sweeps", "purpose": "Animate activity without moving painted aircraft." },
+      { "name": "water", "value": "115 strokes within harbour polygon", "purpose": "Local reflection shimmer." }
+    ],
+    "rendering": {
+      "sourceSize": [1672, 941],
+      "fit": "cover",
+      "horizontalOverflowPosition": { "portrait": 0.36, "other": 0.5 },
+      "verticalOverflowPosition": 0.5,
+      "maximumDevicePixelRatio": 1.5,
+      "maximumBackingPixels": 2073600,
+      "maximumBackingPixelsAt15FpsOrBelow": 921600,
+      "defaultFps": 30,
+      "hostFpsRange": [1, 60],
+      "reducedMotionFpsRange": [1, 15],
+      "foregroundProtection": "Even-odd silhouette exclusion clip applied to all effects."
+    },
+    "lifecycle": {
+      "pause": "Stops timer and animation frame scheduling.",
+      "visibility": "Stops while hidden and restarts when visible if not paused.",
+      "reducedMotion": "Starts paused with a still frame; host resume remains available.",
+      "zeroIntensity": "Draws source artwork only.",
+      "loadFailure": "Stops playback and shows reinstall message over CSS image fallback."
+    },
+    "sourceOwnership": {
+      "source": "E:/Downloads/war_game_wallpaper.svg",
+      "localAsset": "templates/war-front/artwork.svg",
+      "preservation": "Byte-identical supplied SVG containing one embedded PNG.",
+      "rights": "User-supplied source; no copyright transfer inferred.",
+      "effectOwner": "templates/war-front/scene.js"
+    },
+    "offlinePack": ["manifest.json", "index.html", "scene.js", "artwork.svg", "preview.jpg"]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "The supplied illustration, alive.",
+    "overview": "The existing Cinematic identity inherits the user's battle illustration. Local environmental motion preserves its composition and fixed foreground soldiers.",
+    "keyCharacteristics": ["Fullbleed supplied artwork", "Local atmospheric motion", "Protected silhouettes", "Offline host-controlled playback"],
+    "rules": [],
+    "dos": ["Preserve the supplied source and silhouettes.", "Keep environmental motion local and rendering bounded.", "Retain host settings and the five-file offline pack."],
+    "donts": ["Do not move the whole painting or duplicate aircraft bodies.", "Do not add a HUD, network dependencies or audio.", "Do not infer device performance from a preview."]
+  }
+}

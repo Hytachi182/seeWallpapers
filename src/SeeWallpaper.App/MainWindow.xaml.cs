@@ -25,6 +25,7 @@ public partial class MainWindow : Window
     private readonly DisplayManagerContract _displayManager = new DisplayManager();
     private readonly WallpaperAssignmentService _assignmentService;
     private IReadOnlyList<TemplateCardViewModel> _templates = Array.Empty<TemplateCardViewModel>();
+    private IReadOnlyList<TemplateCardViewModel> _galleryTemplates = [];
     private readonly string _templatesRoot;
     private WallpaperPerformanceProfile _performanceProfile = WallpaperPerformanceProfile.Balanced;
     private readonly SeeWallpaper.Platform.WindowsEnvironmentMonitor _environmentMonitor = new();
@@ -269,7 +270,7 @@ public partial class MainWindow : Window
             IReadOnlyList<SeeWallpaper.Core.InstalledTemplate> discovered = await _catalog.DiscoverAsync(_templatesRoot);
             Brush[] visuals = [new LinearGradientBrush(Color.FromRgb(0, 28, 17), Color.FromRgb(0, 160, 94), 25), new LinearGradientBrush(Color.FromRgb(23, 14, 46), Color.FromRgb(173, 71, 121), 35), new LinearGradientBrush(Color.FromRgb(8, 27, 54), Color.FromRgb(82, 67, 218), 45)];
             _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length], _favoriteTemplateIds.Contains(template.Manifest.Id))).ToArray();
-            TemplateList.ItemsSource = _templates;
+            ShowCurrentPage();
             await _assignmentService.RestoreAsync(discovered.ToDictionary(template => template.Manifest.Id, StringComparer.OrdinalIgnoreCase), template => _settingsStore.LoadAsync(template.Manifest.Id, template.Manifest.Settings.ToDictionary(setting => setting.Id, setting => setting.Default)));
             RefreshScreens();
             RefreshStartupBanner();
@@ -591,7 +592,29 @@ public partial class MainWindow : Window
             MessageBox.Show(exception.Message, Localization.T("UninstallFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    private void ShowPage(string title, string description, IReadOnlyList<TemplateCardViewModel> templates) { GalleryView.Visibility = Visibility.Visible; ScreensView.Visibility = Visibility.Collapsed; OnlineView.Visibility = Visibility.Collapsed; AboutView.Visibility = Visibility.Collapsed; RotationView.Visibility = Visibility.Collapsed; PageActions.Visibility = Visibility.Visible; DisplayStatus.Visibility = Visibility.Visible; Localization.Set(PageTitle, System.Windows.Controls.TextBlock.TextProperty, () => title); Localization.Set(PageDescription, System.Windows.Controls.TextBlock.TextProperty, () => description); TemplateList.ItemsSource = templates; }
+    private void ShowPage(string title, string description, IReadOnlyList<TemplateCardViewModel> templates) { GalleryView.Visibility = Visibility.Visible; ScreensView.Visibility = Visibility.Collapsed; OnlineView.Visibility = Visibility.Collapsed; AboutView.Visibility = Visibility.Collapsed; RotationView.Visibility = Visibility.Collapsed; PageActions.Visibility = Visibility.Visible; DisplayStatus.Visibility = Visibility.Visible; Localization.Set(PageTitle, System.Windows.Controls.TextBlock.TextProperty, () => title); Localization.Set(PageDescription, System.Windows.Controls.TextBlock.TextProperty, () => description); _galleryTemplates = templates; ApplyGallerySearch(); }
+    private void GallerySearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        // TextChanged can run while InitializeComponent is still creating controls.
+        if (TemplateList is not null && ClearGallerySearch is not null && GallerySearchEmpty is not null)
+            ApplyGallerySearch();
+    }
+
+    private void ApplyGallerySearch()
+    {
+        string query = GallerySearch.Text.Trim();
+        var matches = _galleryTemplates.Where(template => GallerySearchFilter.Matches(template.Name, query)).ToArray();
+        TemplateList.ItemsSource = matches;
+        ClearGallerySearch.IsEnabled = GallerySearch.Text.Length > 0;
+        GallerySearchEmpty.Visibility = query.Length > 0 && matches.Length == 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private void ClearGallerySearch_Click(object sender, RoutedEventArgs e)
+    {
+        GallerySearch.Clear();
+        GallerySearch.Focus();
+    }
+
     private void About_Click(object sender, RoutedEventArgs e) { _currentPage = "about"; ShowAbout(); }
     private void ShowAbout()
     {
@@ -625,7 +648,7 @@ public partial class MainWindow : Window
         IReadOnlyList<SeeWallpaper.Core.InstalledTemplate> discovered = await _catalog.DiscoverAsync(_templatesRoot);
         Brush[] visuals = [new LinearGradientBrush(Color.FromRgb(0, 28, 17), Color.FromRgb(0, 160, 94), 25), new LinearGradientBrush(Color.FromRgb(23, 14, 46), Color.FromRgb(173, 71, 121), 35), new LinearGradientBrush(Color.FromRgb(8, 27, 54), Color.FromRgb(82, 67, 218), 45)];
         _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length], _favoriteTemplateIds.Contains(template.Manifest.Id))).ToArray();
-        TemplateList.ItemsSource = _templates;
+        ShowCurrentPage();
         RefreshScreens();
     }
     private async Task EnsureStarterTemplatesAsync()

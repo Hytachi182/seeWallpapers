@@ -31,7 +31,7 @@ try {
       };
     });
     const url = pathToFileURL(path.join(root, 'templates', id, 'index.html')).href;
-    const previewSeconds = { 'pixel-defender': 5, 'castle-raid': 22, 'pixel-island': 75, 'robot-factory': 24, 'meteor-shower': 6.1 }[id] ?? 12;
+    const previewSeconds = { 'pixel-defender': 5, 'castle-raid': 22, 'pixel-island': 75, 'robot-factory': 24, 'meteor-shower': 6.1, 'alpine-thunderstorm': 12.08 }[id] ?? 12;
     await page.goto(`${url}?preview=${previewSeconds}`);
     if (await page.locator('#fallback').count()) assert.equal(await page.locator('#fallback').isVisible(), false, `${id}: WebGL renderer failed`);
     await page.screenshot({ path: path.join(output, `${id}-desktop.png`) });
@@ -54,6 +54,11 @@ try {
       await page.evaluate(() => window.callbacks.settings({ showGraph: true }));
     }
     for (const setting of manifest.settings) {
+      if (id === 'alpine-thunderstorm' && ['lightning', 'flash'].includes(setting.id)) await page.goto(`${url}?preview=12.08`);
+      if (id === 'particle-nexus' && setting.id === 'interactive') {
+        await page.mouse.move(480, 270);
+        await page.evaluate(() => window.callbacks.settings({ interactive: true }));
+      }
       // Atmospheric trains only become visible after a bright meteor has completed its passage.
       if (id === 'meteor-shower' && setting.id === 'trains') {
         await page.evaluate(() => window.callbacks.resume());
@@ -63,7 +68,7 @@ try {
       const before = await page.screenshot();
       const alternative = setting.type === 'color' ? '#ff4455' : setting.type === 'boolean' ? !setting.default : setting.max;
       await page.evaluate(([id, value]) => window.callbacks.settings({ [id]: value }), [setting.id, alternative]);
-      if (setting.id === 'speed' || (id === 'neon-tetris' && setting.id === 'skill') || (id === 'rain-on-glass' && setting.id === 'rain') || (id === 'meteor-shower' && setting.id === 'density')) {
+      if (setting.id === 'speed' || (id === 'neon-tetris' && setting.id === 'skill') || (id === 'rain-on-glass' && setting.id === 'rain') || (id === 'meteor-shower' && setting.id === 'density') || (id === 'winter-snowfall' && setting.id === 'wind') || (id === 'alpine-thunderstorm' && setting.id === 'interval')) {
         await page.evaluate(() => window.callbacks.resume());
         await page.waitForTimeout(id === 'neon-tetris' || id === 'rain-on-glass' ? 350 : 120);
         await page.evaluate(() => window.callbacks.pause());

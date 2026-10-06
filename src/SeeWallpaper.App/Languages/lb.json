@@ -344,5 +344,8 @@
   "ApplicationUpdateOfficialEditionRequired": "Automatesch Updates brauchen déi installéiert oder offiziell portabel Editioun. Installéiert fir d’éischt déi offiziell Versioun.",
   "AutomaticUpdateFailedAfterExit": "Den Update ass feelgeschloen. D’App gëtt nees opgemaach. Detailer fannt Dir am Protokoll.",
   "DownloadApplicationUpdateOnGitHub": "Op GitHub eroflueden",
-  "ManualApplicationUpdateReady": "Luet déi portabel Versioun vu GitHub erof. Maacht d’App zou, ier Dir hir Dateien ersetzt."
+  "ManualApplicationUpdateReady": "Luet déi portabel Versioun vu GitHub erof. Maacht d’App zou, ier Dir hir Dateien ersetzt.",
+  "SearchWallpapers": "Hannergrondbiller sichen",
+  "ClearSearch": "Sich läschen",
+  "NoMatchingWallpapers": "Keng Hannergrondbiller passen op Är Sich."
 }

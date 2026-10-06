@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.9.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.10.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -87,7 +87,7 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 ## The scenes
 
 <!-- template-summary:start -->
-**45 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**50 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -137,6 +137,16 @@ Seven more automatic pixel worlds are included: **Pixel Defender**, **Castle Rai
 **Rain on Glass** adds realistic water over an original city photograph: droplets settle, merge, refract the scenery and slide down the glass with fading wet trails. [Theme details](docs/rain-on-glass.md).
 
 **Meteor Shower** brings a photographic Milky Way above a mountain lake, with automatic shooting stars, fine luminous trails, subtle scintillation and occasional brighter fireballs. [Theme details](docs/meteor-shower.md).
+
+**War Front** animates the supplied battle illustration with drifting smoke, flickering fires and embers, distant tracers, jet exhaust, helicopter rotors and harbour reflections. The original soldiers stay fixed. [Theme details](docs/war-front.md).
+
+**Particle Nexus** uses the bundled particles.js library for luminous drifting nodes, fine proximity links and optional pointer connections, with adjustable colors, density and speed. [Theme details](docs/particle-nexus.md).
+
+**Winter Snowfall** adds photographic alpine winter scenery with three depths of animated snow, softly defocused nearby flakes and gentle directional wind. [Theme details](docs/winter-snowfall.md).
+
+**Alpine Thunderstorm** brings photographic storm scenery with layered wind-driven rain, drifting haze, lake ripples and branching lightning illuminating the clouds and water. [Theme details](docs/alpine-thunderstorm.md).
+
+**Underwater Blue** brings a living photographic reef with swimming tropical fish, animated tails, a distant shoal and rising bubble streams, alongside moving sunlight, seabed reflections and suspended particles. [Theme details](docs/underwater-blue.md).
 
 ## Create a wallpaper
 

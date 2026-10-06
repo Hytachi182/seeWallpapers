@@ -1,29 +1,18 @@
 {
-  "version": "1.9.0",
-  "tag": "v1.9.0",
-  "base_tag": "v1.8.0",
+  "version": "1.10.0",
+  "tag": "v1.10.0",
+  "base_tag": "v1.9.0",
   "release_required": true,
-  "template_count": 45,
+  "template_count": 50,
   "added": [
-    "amber-maze",
-    "castle-raid",
-    "crystal-run",
-    "dungeon-loop",
-    "meteor-shower",
-    "neon-rally",
-    "orbital-defender",
-    "pixel-defender",
-    "pixel-island",
-    "rain-on-glass",
-    "robot-factory",
-    "rooftop-rivals",
-    "tiny-city",
-    "tower-climber"
+    "alpine-thunderstorm",
+    "particle-nexus",
+    "underwater-blue",
+    "war-front",
+    "winter-snowfall"
   ],
-  "updated": [
-    "biker-road"
-  ],
+  "updated": [],
   "removed": [],
-  "source_commit": "524f48046134986265e196ce3453646c67109310",
-  "title": "Release seeWallpaper 1.9.0"
+  "source_commit": "b3a7b6e5b4413b502efaf288fbd026a291029b82",
+  "title": "Release seeWallpaper 1.10.0"
 }

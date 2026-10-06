@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T17:31:08Z",
+  "title": "Design System: Underwater Blue",
+  "extensions": {
+    "colorMeta": {
+      "sea-fallback": {
+        "role": "primary",
+        "displayName": "Deep sea fallback"
+      },
+      "marine-speck": {
+        "role": "secondary",
+        "displayName": "Pale marine speck"
+      },
+      "recovery-surface": {
+        "role": "neutral",
+        "displayName": "Translucent recovery surface"
+      },
+      "recovery-text": {
+        "role": "neutral",
+        "displayName": "Recovery text"
+      }
+    },
+    "typographyMeta": {
+      "recovery": {
+        "displayName": "Recovery message",
+        "purpose": "Graphics-recovery guidance only."
+      }
+    },
+    "motion": [
+      {
+        "name": "current-speed",
+        "value": "0-2; default 1",
+        "purpose": "Shared shader and foreground scene time; zero freezes both layers."
+      },
+      {
+        "name": "water-refraction",
+        "value": "0-2; default 0.6",
+        "purpose": "Gentle open-water distortion while preserving terrain detail."
+      },
+      {
+        "name": "foreground-population",
+        "value": "4 larger fish; 8 distant shoal fish; 105 specks; 54 bubbles in 3 streams",
+        "purpose": "Bounded time-derived foreground positions with visibly swimming fish, current-borne specks and rising bubbles."
+      },
+      {
+        "name": "fish-tail-beat",
+        "value": "24 cached 512 by 288 pixel raster frames",
+        "purpose": "Rear-body and tail deformation keeps the head stable and reuses the unchanged transparent Imagegen source."
+      }
+    ],
+    "rendering": {
+      "layout": "Viewport fill; centered cover crop in desktop and portrait.",
+      "layers": [
+        "WebGL photograph, refraction, sun shafts and caustics",
+        "Transparent Canvas 2D distant shoal, current-borne specks, larger fish and bubble streams"
+      ],
+      "pixelCapPerCanvas": 2073600,
+      "pixelCapAt15FpsOrBelow": 921600,
+      "reducedMotion": "Initially paused still frame.",
+      "contextLoss": "JPEG fallback visible; foreground hidden; restoration preserves time and pause state.",
+      "offlinePackage": [
+        "manifest.json",
+        "index.html",
+        "scene.js",
+        "background.jpg",
+        "background.js",
+        "fish.png",
+        "preview.jpg"
+      ],
+      "marineLifeControls": {
+        "fish": true,
+        "school": true,
+        "bubbleStreams": true
+      },
+      "bubbleSettingMigration": "bubbleStreams defaults on independently of the former bubbles: false setting.",
+      "imageProvenance": "Original Imagegen background and transparent fish; exact prompts retained in documentation and image metadata; both images embedded in background.js."
+    }
+  },
+  "components": [
+    {
+      "name": "Graphics recovery message",
+      "html": "<p class=\"ds-recovery\">Enable graphics acceleration to animate this underwater scene.</p>",
+      "css": ".ds-recovery{margin:0;padding:14px 18px;background:#06334aee;color:#e7f3f7;font:14px/1.5 'Segoe UI',sans-serif}",
+      "description": "Visible only when the photographic fallback needs recovery guidance."
+    }
+  ],
+  "narrative": {
+    "northStar": "Sunlit submerged life",
+    "overview": "A photographic sandy reef sets the scene. Swimming tropical fish, a distant shoal, rising bubble streams and current-borne particles make the water visibly alive while gentle optics sustain its calm blue atmosphere. The original Imagegen background supplies all terrain; a separate original transparent Imagegen fish supplies the animated marine life.",
+    "keyCharacteristics": [
+      "Photographic turquoise water, sand and reef.",
+      "Visible swimming fish, beating tails and rising bubble streams.",
+      "Restrained refraction, sun shafts and seabed-light filaments.",
+      "Uninterrupted, silent immersion."
+    ],
+    "rules": [],
+    "dos": [
+      "Do preserve the photographic reef, centered cover crop and calm blue atmosphere.",
+      "Do keep fish swimming, tails beating and bubbles rising visibly by default.",
+      "Do keep fish, bubbles and current-borne particles bounded, with cached tail animation.",
+      "Do retain the static photograph during graphics recovery."
+    ],
+    "donts": [
+      "Don't add a HUD, audio, human figures or network dependencies to this scene.",
+      "Don't describe the artistic optics and marine animation as a physical simulation."
+    ]
+  }
+}

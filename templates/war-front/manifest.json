@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "war-front",
+  "name": "War Front",
+  "description": "The supplied war_game_wallpaper.svg brought to life: drifting smoke above a burning city, flickering fires and airborne embers, distant tracer fire, pulsing jet exhaust, helicopter rotor motion and shimmering harbour reflections. The original soldiers and composition stay fixed. Entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    { "id": "speed", "type": "slider", "label": "Animation speed", "min": 0.1, "max": 2, "step": 0.1, "default": 1 },
+    { "id": "intensity", "type": "slider", "label": "Atmosphere intensity", "min": 0, "max": 2, "step": 0.1, "default": 1 },
+    { "id": "smoke", "type": "boolean", "label": "Drifting smoke", "default": true },
+    { "id": "fires", "type": "boolean", "label": "Flickering fire and embers", "default": true },
+    { "id": "tracers", "type": "boolean", "label": "Distant tracer fire", "default": true },
+    { "id": "aircraft", "type": "boolean", "label": "Jet exhaust and helicopter rotors", "default": true },
+    { "id": "water", "type": "boolean", "label": "Harbour reflections", "default": true }
+  ]
+}

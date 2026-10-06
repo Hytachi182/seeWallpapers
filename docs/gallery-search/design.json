@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T17:48:01.333Z",
+  "title": "Design System: Gallery Search",
+  "extensions": {
+    "scope": "Gallery-search addition only; inherits the incumbent WPF gallery.",
+    "sourceOwnership": {
+      "layout": "src/SeeWallpaper.App/MainWindow.xaml",
+      "behavior": "src/SeeWallpaper.App/MainWindow.xaml.cs",
+      "matching": "src/SeeWallpaper.App/GallerySearchFilter.cs",
+      "brushesAndButtons": "src/SeeWallpaper.App/App.xaml"
+    },
+    "colorMeta": {
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas"
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent"
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "White text"
+      },
+      "button": {
+        "role": "neutral",
+        "displayName": "Existing button surface"
+      }
+    },
+    "typographyMeta": {
+      "search": {
+        "displayName": "Search query",
+        "purpose": "Explicit 15-unit WPF text size; other field typography inherits native defaults."
+      },
+      "page-title": {
+        "displayName": "Page title",
+        "purpose": "Incumbent gallery heading."
+      },
+      "card-title": {
+        "displayName": "Wallpaper name",
+        "purpose": "Incumbent card name."
+      }
+    },
+    "layout": {
+      "unit": "WPF device-independent unit",
+      "searchMaxWidth": 600,
+      "fieldMinHeight": 40,
+      "labelIsPersistent": true,
+      "cardScrollAreaIsSeparate": true
+    },
+    "behavior": {
+      "update": "Every TextChanged event",
+      "scope": "Current page's template names only",
+      "match": "InvariantCulture.CompareInfo.IndexOf with IgnoreCase | IgnoreNonSpace",
+      "query": "Trimmed for matching; original field text retained",
+      "clearEnabled": "Raw field text length > 0",
+      "clear": "Empty field and return focus",
+      "noMatch": "Trimmed query nonempty and zero matches",
+      "refresh": "Retain field text and reapply within current page subset"
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [],
+    "previewAuthority": "HTML/CSS snippets are portable documentation illustrations. Native WPF templates determine actual hover, focus and disabled states.",
+    "review": {
+      "verdict": "ship",
+      "captures": [
+        ".impeccable/review/gallery-search/gallery-search-all.png",
+        ".impeccable/review/gallery-search/gallery-search-filtered.png",
+        ".impeccable/review/gallery-search/gallery-search-empty.png"
+      ],
+      "validation": {
+        "reportedBy": "Implementing session",
+        "fullSuitePassed": 168,
+        "fullSuiteSkipped": 2,
+        "optInWpfSearch": "passed separately",
+        "documentationReranTests": false
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Search field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Persistent visible label and name query.",
+      "html": "<div class=\"ds-search\"><label for=\"ds-gallery-query\">Search wallpapers</label><input id=\"ds-gallery-query\" type=\"text\" value=\"rain\" aria-label=\"Search wallpapers\"></div>",
+      "css": ".ds-search{max-width:600px;font:12px 'Segoe UI',sans-serif}.ds-search label{display:block;color:#AEB7C9;padding-bottom:6px}.ds-search input{width:calc(100% - 26px);min-height:22px;padding:8px 12px;font:15px 'Segoe UI',sans-serif;color:#fff;background:#181B26;border:1px solid #AEB7C9;caret-color:#fff;border-radius:0}.ds-search input:hover{border-color:#AEB7C9}.ds-search input:focus-visible{outline:1px solid #fff;outline-offset:1px}"
+    },
+    {
+      "name": "Clear search",
+      "kind": "button",
+      "refersTo": "clear-button",
+      "description": "Enabled for any raw text; clearing returns focus to the WPF field.",
+      "html": "<button class=\"ds-button\" type=\"button\">Clear search</button>",
+      "css": ".ds-button{font:12px 'Segoe UI',sans-serif;color:#fff;background:#292E40;border:1px solid transparent;padding:9px 14px;cursor:pointer}.ds-button:hover{border-color:#AEB7C9}.ds-button:focus-visible{outline:1px dotted #fff;outline-offset:-4px}.ds-button:active{filter:brightness(.9)}.ds-button:disabled{background:#f4f4f4;color:#777;border-color:#ccc;cursor:default}"
+    },
+    {
+      "name": "No matches",
+      "kind": "custom",
+      "refersTo": "no-match",
+      "description": "Polite feedback for a nonempty query with no matching names.",
+      "html": "<p class=\"ds-empty\" role=\"status\" aria-live=\"polite\">No wallpapers match your search.</p>",
+      "css": ".ds-empty{font:12px 'Segoe UI',sans-serif;color:#AEB7C9;margin:12px 0 0}"
+    },
+    {
+      "name": "Wallpaper card",
+      "kind": "card",
+      "refersTo": "wallpaper-card",
+      "description": "Existing card treatment retained by filtering; imagery is represented by a neutral preview slot.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-preview\" aria-label=\"Wallpaper preview\"></div><div class=\"ds-details\"><h3>Rain on Glass</h3><p>Photographic blue-hour rain on a pane of glass.</p></div></article>",
+      "css": ".ds-card{width:290px;background:#181B26;color:#fff;border-radius:14px;overflow:hidden;font:12px 'Segoe UI',sans-serif}.ds-preview{height:155px;background:#10121A}.ds-details{padding:16px}.ds-details h3{margin:0;font-size:19px;font-weight:600}.ds-details p{color:#AEB7C9;margin:6px 0 12px}"
+    },
+    {
+      "name": "Apply action",
+      "kind": "button",
+      "refersTo": "apply-button",
+      "description": "Existing violet primary card action.",
+      "html": "<button class=\"ds-button ds-apply\" type=\"button\">Apply to my displays</button>",
+      "css": ".ds-button{font:12px 'Segoe UI',sans-serif;color:#fff;background:#292E40;border:1px solid transparent;padding:9px 14px;cursor:pointer}.ds-button:hover{border-color:#AEB7C9}.ds-button:focus-visible{outline:1px dotted #fff;outline-offset:-4px}.ds-button:active{filter:brightness(.9)}.ds-button:disabled{background:#f4f4f4;color:#777;border-color:#ccc;cursor:default}.ds-apply{background:#8B7CFF}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Incumbent dark WPF gallery",
+    "overview": "Gallery search extends the existing dark WPF wallpaper gallery with a quiet, persistent way to find a scene. The installed application palette, card hierarchy and native controls remain the visual authority. This document covers that addition only; it does not establish a new application identity.\n\nThe labeled field sits above the scrollable cards, so the query and recovery action remain available while browsing. Filtering changes the visible list immediately and retains the existing card actions. Native WPF rendering, rather than the sidecar's HTML illustrations, is the ground truth.",
+    "keyCharacteristics": [
+      "Incumbent dark WPF surfaces",
+      "Persistent labeled search above scrollable cards",
+      "Immediate name-only filtering",
+      "Clear action and polite no-match feedback"
+    ],
+    "rules": [],
+    "dos": [
+      "Do retain the current page's template subset before applying the query.",
+      "Do preserve the query when the library refreshes or a gallery page changes.",
+      "Do keep the label, clear action and no-match feedback outside the card scroll area.",
+      "Do use translated labels and keep keyboard focus available after clearing."
+    ],
+    "donts": [
+      "Don't search descriptions, categories or identifiers.",
+      "Don't replace contiguous substring matching with fuzzy matching.",
+      "Don't show the no-match message for an empty or whitespace-only query.",
+      "Don't introduce a new visual identity or custom animation for this field."
+    ]
+  }
+}

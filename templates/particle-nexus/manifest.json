@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "particle-nexus",
+  "name": "Particle Nexus",
+  "description": "A particles.js wallpaper with drifting luminous nodes, fine proximity links and a quiet atmospheric background. Adjustable density, light color, movement, connection distance and optional pointer interaction. All library files are bundled for offline use.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Tech",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"color","type":"color","label":"Particle and link color","default":"#8cdcf0"},
+    {"id":"background","type":"color","label":"Background color","default":"#08121c"},
+    {"id":"density","type":"slider","label":"Particle count","min":35,"max":180,"step":5,"default":110},
+    {"id":"speed","type":"slider","label":"Movement speed","min":0,"max":2,"step":0.1,"default":0.7},
+    {"id":"distance","type":"slider","label":"Connection distance","min":80,"max":320,"step":10,"default":210},
+    {"id":"links","type":"boolean","label":"Proximity links","default":true},
+    {"id":"glow","type":"boolean","label":"Soft particle light","default":true},
+    {"id":"interactive","type":"boolean","label":"Pointer connections in preview","default":true}
+  ]
+}

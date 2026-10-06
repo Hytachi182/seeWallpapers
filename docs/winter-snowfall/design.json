@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T16:04:01Z",
+  "title": "Design System: Winter Snowfall",
+  "extensions": {
+    "colorMeta": {
+      "cold-background": { "role": "neutral", "displayName": "Cold Background", "tonalRamp": ["oklch(15% 0.04 250)", "oklch(27% 0.04 250)", "oklch(38% 0.04 250)", "oklch(50% 0.04 250)", "oklch(61% 0.04 250)", "oklch(73% 0.04 250)", "oklch(84% 0.04 250)", "oklch(95% 0.04 250)"] },
+      "pale-snow": { "role": "neutral", "displayName": "Pale Snow", "tonalRamp": ["oklch(15% 0.007 250)", "oklch(27% 0.007 250)", "oklch(38% 0.007 250)", "oklch(50% 0.007 250)", "oklch(61% 0.007 250)", "oklch(73% 0.007 250)", "oklch(84% 0.007 250)", "oklch(95% 0.007 250)"] },
+      "recovery-text": { "role": "neutral", "displayName": "Recovery Text", "tonalRamp": ["oklch(15% 0.012 250)", "oklch(27% 0.012 250)", "oklch(38% 0.012 250)", "oklch(50% 0.012 250)", "oklch(61% 0.012 250)", "oklch(73% 0.012 250)", "oklch(84% 0.012 250)", "oklch(95% 0.012 250)"] },
+      "recovery-surface": { "role": "neutral", "displayName": "Recovery Surface", "tonalRamp": ["oklch(15% 0.04 250)", "oklch(27% 0.04 250)", "oklch(38% 0.04 250)", "oklch(50% 0.04 250)", "oklch(61% 0.04 250)", "oklch(73% 0.04 250)", "oklch(84% 0.04 250)", "oklch(95% 0.04 250)"] }
+    },
+    "typographyMeta": { "recovery": { "displayName": "Recovery Message", "purpose": "Background-image loading failure only." } },
+    "motion": [
+      { "name": "layered-snowfall", "value": "Three depth layers; 356 default flakes, 71–890 bounded; signed wind and flutter", "purpose": "Photographic movement in front of the fixed image." },
+      { "name": "photographic-focus", "value": "Three cached 64px sprites; blur 0px, 1.8px and 4.5px", "purpose": "Distant softness, crisp midground and defocused nearby snow." },
+      { "name": "still-frame", "value": "Host pause, document visibility, reduced-motion still frame and speed zero", "purpose": "Respect lifecycle and motion preferences." }
+    ],
+    "shadows": [],
+    "breakpoints": []
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "A Quiet Alpine Blue Hour",
+    "overview": "Ultra realistic animated snow falls over an original Imagegen winter photograph. The alpine forest, chalet and warm windows establish a calm photographic scene; movement belongs to snow suspended in front of the fixed image.",
+    "keyCharacteristics": ["Cold blue hour with warm chalet windows.", "Three depths of irregular falling flakes.", "Soft foreground defocus and gentle wind flutter.", "An uninterrupted wallpaper without a HUD."],
+    "rules": [{ "name": "The Fixed Photograph Rule", "body": "Keep the photographic background still; animate only the snowfall.", "section": "layout" }],
+    "dos": ["Do preserve the original photograph and centered cover crop.", "Do keep three snowfall depths with varied clumps, drift and photographic defocus.", "Do honor pause, visibility, reduced motion and bounded rendering budgets."],
+    "donts": ["Don't add a HUD or normal-operation text overlay.", "Don't animate the photograph or accumulate snow on the ground.", "Don't replace clumps with decorative snowflake icons or add per-frame blur filters."]
+  }
+}
