@@ -342,5 +342,7 @@
   "ApplicationUpdateFailed": "Update fehlgeschlagen",
   "ApplicationUpdateAccessDenied": "Dieser Ordner kann nicht aktualisiert werden. Prüfen Sie die Schreibrechte und versuchen Sie es erneut.",
   "ApplicationUpdateOfficialEditionRequired": "Automatische Updates benötigen die installierte oder offizielle portable Ausgabe. Installieren Sie zuerst die offizielle Version.",
-  "AutomaticUpdateFailedAfterExit": "Das Update ist fehlgeschlagen. Die App wird erneut geöffnet. Details finden Sie im Protokoll."
+  "AutomaticUpdateFailedAfterExit": "Das Update ist fehlgeschlagen. Die App wird erneut geöffnet. Details finden Sie im Protokoll.",
+  "DownloadApplicationUpdateOnGitHub": "Auf GitHub herunterladen",
+  "ManualApplicationUpdateReady": "Laden Sie die portable Version von GitHub herunter. Schließen Sie die App, bevor Sie ihre Dateien ersetzen."
 }

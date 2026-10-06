@@ -342,5 +342,7 @@
   "ApplicationUpdateFailed": "Error de actualización",
   "ApplicationUpdateAccessDenied": "No se puede actualizar esta carpeta. Compruebe los permisos de escritura y vuelva a intentarlo.",
   "ApplicationUpdateOfficialEditionRequired": "Las actualizaciones automáticas requieren la edición instalada o portátil oficial. Instale primero la versión oficial.",
-  "AutomaticUpdateFailedAfterExit": "La actualización falló. La aplicación volverá a abrirse. Consulte el registro para obtener detalles."
+  "AutomaticUpdateFailedAfterExit": "La actualización falló. La aplicación volverá a abrirse. Consulte el registro para obtener detalles.",
+  "DownloadApplicationUpdateOnGitHub": "Descargar en GitHub",
+  "ManualApplicationUpdateReady": "Descargue la versión portátil desde GitHub. Cierre la aplicación antes de reemplazar sus archivos."
 }

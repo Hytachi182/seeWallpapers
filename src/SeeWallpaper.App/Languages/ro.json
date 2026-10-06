@@ -342,5 +342,7 @@
   "ApplicationUpdateFailed": "Actualizarea a eșuat",
   "ApplicationUpdateAccessDenied": "Acest dosar nu poate fi actualizat. Verifică drepturile de scriere și încearcă din nou.",
   "ApplicationUpdateOfficialEditionRequired": "Actualizările automate necesită ediția instalată sau portabilă oficială. Instalează mai întâi versiunea oficială.",
-  "AutomaticUpdateFailedAfterExit": "Actualizarea a eșuat. Aplicația se va redeschide. Consultă jurnalul pentru detalii."
+  "AutomaticUpdateFailedAfterExit": "Actualizarea a eșuat. Aplicația se va redeschide. Consultă jurnalul pentru detalii.",
+  "DownloadApplicationUpdateOnGitHub": "Descarcă de pe GitHub",
+  "ManualApplicationUpdateReady": "Descărcați versiunea portabilă de pe GitHub. Închideți aplicația înainte de a înlocui fișierele sale."
 }

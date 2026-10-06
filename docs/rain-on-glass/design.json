@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T00:00:00Z",
+  "title": "Design System: Rain on Glass",
+  "extensions": {
+    "scope": "Rain on Glass Nature wallpaper only.",
+    "sourceOwnership": {
+      "simulationAndLifecycle": "templates/rain-on-glass/scene.js",
+      "shaderAndLayout": "templates/rain-on-glass/index.html",
+      "settings": "templates/rain-on-glass/manifest.json",
+      "photograph": "templates/rain-on-glass/background.jpg",
+      "embeddedPhotographGenerator": "build/generate-rain-texture.mjs"
+    },
+    "layout": {
+      "canvas": "Full viewport, overflow hidden",
+      "photograph": "Centered cover crop in desktop and portrait",
+      "simulationArea": 518400,
+      "renderPixelBudget": 2073600,
+      "renderPixelBudgetAt15FpsOrBelow": 921600,
+      "fallbackParagraphInset": "24px left, right and bottom"
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "simulation-step", "value": "1/60 second", "purpose": "Autonomous settling, adhesion, gravity, volume-conserving coalescence and drainage." },
+      { "name": "trail-fade", "value": "1 - exp(-dt * 0.085)", "purpose": "Gradual erasure of slender wet residue." },
+      { "name": "render-limit", "value": "30 FPS default; host range 1–60, maximum 15 with reduced motion", "purpose": "Bound rendering work while honoring host performance settings." }
+    ],
+    "rendering": {
+      "technique": "WebGL height-field refraction with curved reflections and directional highlights",
+      "backgroundBlur": "Cached Canvas blur, recalculated only when softness changes",
+      "dropLimit": 420,
+      "fineBeadLimit": 1200,
+      "contextLoss": "Show bundled photograph; rebuild GPU resources on restoration without resetting simulated drops",
+      "reducedMotion": "Still frame after 12 simulated seconds; explicit host resume permits animation",
+      "visibility": "Stop scheduling while hidden; resume when visible if not paused",
+      "preview": "Seeded still frame through ?preview=<seconds>, clamped to 0–120"
+    },
+    "package": {
+      "category": "Nature",
+      "engine": "web",
+      "performance": "medium",
+      "archiveRootFiles": ["manifest.json", "index.html", "scene.js", "background.jpg", "background.js", "preview.jpg"],
+      "settings": ["rain", "speed", "refraction", "blur", "color", "trails"],
+      "offline": true,
+      "textureSource": "Local photograph embedded as a data URL in background.js for safe host file-origin upload"
+    },
+    "approvedCaptures": ["build/visual-review/rain-on-glass-desktop.png", "build/visual-review/rain-on-glass-mobile.png"]
+  },
+  "components": [
+    { "name": "Wet glass scene", "kind": "custom", "description": "Sharp varied water beads over a muted blue-hour city photograph; no HUD or embedded controls." },
+    { "name": "Graphics fallback", "kind": "custom", "refersTo": "fallback-paragraph", "description": "Full viewport bundled photograph with a bottom recovery message." }
+  ],
+  "narrative": {
+    "overview": "Realistic autonomous rain settles, merges and flows over glass. Crisp foreground water refracts original blue-grey and amber photographic scenery, with cached background blur and fading slender trails.",
+    "keyCharacteristics": ["Original bundled photograph", "Sharp foreground water", "Muted blue and amber atmosphere", "Centered full viewport cover crop", "Offline WebGL"],
+    "dos": ["Preserve restrained reflections and cached blur.", "Keep settings in the host and honor renderer lifecycle.", "Regenerate background.js when replacing the photograph."],
+    "donts": ["Do not add a HUD or embedded controls.", "Do not introduce network dependencies.", "Do not present the wallpaper as a live desktop capture or window overlay."]
+  }
+}

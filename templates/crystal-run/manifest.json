@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "crystal-run",
+  "name": "Crystal Run",
+  "description": "An original pixel-art platform adventure that plays itself. A little explorer robot leaps between floating ruins, collects crystals, avoids clockwork beetles and reaches the beacon. New trails alternate between dawn, twilight and moonlight. Entirely procedural and offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Robot and crystal color","default":"#68ebcb"},
+    {"id":"speed","type":"slider","label":"Adventure speed","min":0.3,"max":2,"step":0.1,"default":1},
+    {"id":"parallax","type":"boolean","label":"Landscape parallax","default":true},
+    {"id":"particles","type":"boolean","label":"Crystal sparkles and footsteps","default":true},
+    {"id":"stats","type":"boolean","label":"Show adventure progress","default":true}
+  ]
+}

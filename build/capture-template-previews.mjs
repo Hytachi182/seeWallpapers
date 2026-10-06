@@ -31,7 +31,8 @@ try {
       };
     });
     const url = pathToFileURL(path.join(root, 'templates', id, 'index.html')).href;
-    await page.goto(`${url}?preview=12`);
+    const previewSeconds = { 'pixel-defender': 5, 'castle-raid': 22, 'pixel-island': 75, 'robot-factory': 24, 'meteor-shower': 6.1 }[id] ?? 12;
+    await page.goto(`${url}?preview=${previewSeconds}`);
     if (await page.locator('#fallback').count()) assert.equal(await page.locator('#fallback').isVisible(), false, `${id}: WebGL renderer failed`);
     await page.screenshot({ path: path.join(output, `${id}-desktop.png`) });
     await page.setViewportSize({ width: 960, height: 540 });
@@ -53,12 +54,18 @@ try {
       await page.evaluate(() => window.callbacks.settings({ showGraph: true }));
     }
     for (const setting of manifest.settings) {
+      // Atmospheric trains only become visible after a bright meteor has completed its passage.
+      if (id === 'meteor-shower' && setting.id === 'trains') {
+        await page.evaluate(() => window.callbacks.resume());
+        await page.waitForTimeout(1200);
+        await page.evaluate(() => window.callbacks.pause());
+      }
       const before = await page.screenshot();
       const alternative = setting.type === 'color' ? '#ff4455' : setting.type === 'boolean' ? !setting.default : setting.max;
       await page.evaluate(([id, value]) => window.callbacks.settings({ [id]: value }), [setting.id, alternative]);
-      if (setting.id === 'speed' || (id === 'neon-tetris' && setting.id === 'skill')) {
+      if (setting.id === 'speed' || (id === 'neon-tetris' && setting.id === 'skill') || (id === 'rain-on-glass' && setting.id === 'rain') || (id === 'meteor-shower' && setting.id === 'density')) {
         await page.evaluate(() => window.callbacks.resume());
-        await page.waitForTimeout(id === 'neon-tetris' ? 350 : 120);
+        await page.waitForTimeout(id === 'neon-tetris' || id === 'rain-on-glass' ? 350 : 120);
         await page.evaluate(() => window.callbacks.pause());
       }
       const after = await page.screenshot();

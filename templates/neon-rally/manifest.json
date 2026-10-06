@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "neon-rally",
+  "name": "Neon Rally",
+  "description": "A self-playing retro paddle duel with mint and coral opponents. Autopilots predict wall rebounds, react imperfectly, add spin and exchange accelerating rallies. Real scoring, first-to-seven matches and automatic restarts. Original procedural visuals, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Left paddle and court accent","default":"#77ead5"},
+    {"id":"speed","type":"slider","label":"Match speed","min":0.3,"max":2,"step":0.1,"default":1},
+    {"id":"trail","type":"boolean","label":"Ball trail","default":true},
+    {"id":"glow","type":"boolean","label":"Paddle and court lighting","default":true},
+    {"id":"stats","type":"boolean","label":"Show score and match details","default":true}
+  ]
+}

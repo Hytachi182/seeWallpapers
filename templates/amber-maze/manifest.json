@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "amber-maze",
+  "name": "Amber Maze",
+  "description": "An original self-playing maze chase. A lantern robot gathers shards through changing labyrinths, avoids angular sentinels and uses temporary overcharge to disable pursuers. Real scores, lives, new mazes and automatic restarts. Procedural pixel art, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Lantern and maze accent","default":"#f2bc76"},
+    {"id":"speed","type":"slider","label":"Game speed","min":0.3,"max":2,"step":0.1,"default":1},
+    {"id":"glow","type":"boolean","label":"Illuminated maze edges","default":true},
+    {"id":"trail","type":"boolean","label":"Lantern movement trail","default":true},
+    {"id":"stats","type":"boolean","label":"Show score and lives","default":true}
+  ]
+}

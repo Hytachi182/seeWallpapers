@@ -342,5 +342,7 @@
   "ApplicationUpdateFailed": "Update failed",
   "ApplicationUpdateAccessDenied": "This folder cannot be updated. Check write access, then try again.",
   "ApplicationUpdateOfficialEditionRequired": "Automatic updates require the installed or official portable edition. Install the official release first.",
-  "AutomaticUpdateFailedAfterExit": "The update failed. The application will reopen. See the log for details."
+  "AutomaticUpdateFailedAfterExit": "The update failed. The application will reopen. See the log for details.",
+  "DownloadApplicationUpdateOnGitHub": "Download on GitHub",
+  "ManualApplicationUpdateReady": "Download the portable version from GitHub. Close the app before replacing its files."
 }

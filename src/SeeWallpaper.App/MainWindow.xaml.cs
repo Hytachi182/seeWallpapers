@@ -54,6 +54,7 @@ public partial class MainWindow : Window
     private bool _startupBannerDismissed;
     private readonly ApplicationUpdateService _applicationUpdates = new(OnlineHttp);
     private ApplicationUpdateResult? _availableUpdate;
+    private bool _manualApplicationUpdate;
     private CancellationTokenSource? _updateDownload;
 
     private void Language_Click(object sender, RoutedEventArgs e)
@@ -122,7 +123,11 @@ public partial class MainWindow : Window
             {
                 Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.F("UpdateAvailableFormat", result.MainVersion.ToString(3)));
                 _availableUpdate = result;
-                Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("AutomaticUpdateReady"));
+                _manualApplicationUpdate = !ApplicationUpdateInstaller.IsInstalled(AppContext.BaseDirectory);
+                Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T(
+                    _manualApplicationUpdate ? "ManualApplicationUpdateReady" : "AutomaticUpdateReady"));
+                Localization.Set(DownloadUpdateButton, System.Windows.Controls.ContentControl.ContentProperty, () => Localization.T(
+                    _manualApplicationUpdate ? "DownloadApplicationUpdateOnGitHub" : "InstallApplicationUpdate"));
                 DownloadUpdateButton.Visibility = result.ReleaseUrl is null ? Visibility.Collapsed : Visibility.Visible;
             }
             else
@@ -147,6 +152,22 @@ public partial class MainWindow : Window
     private async void DownloadUpdate_Click(object sender, RoutedEventArgs e)
     {
         if (_availableUpdate is null || _updateDownload is not null) return;
+        if (_manualApplicationUpdate)
+        {
+            Uri? download = _availableUpdate.Portable?.Url ?? _availableUpdate.ReleaseUrl;
+            if (download is null) return;
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(download.AbsoluteUri) { UseShellExecute = true });
+            }
+            catch (Exception exception)
+            {
+                Localization.Set(UpdateTitle, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ApplicationUpdateFailed"));
+                Localization.Set(UpdateDescription, System.Windows.Controls.TextBlock.TextProperty, () => Localization.T("ApplicationUpdateRetry"));
+                await _logger.ErrorAsync("Could not open the GitHub update download.", exception);
+            }
+            return;
+        }
         using CancellationTokenSource lifetime = new(TimeSpan.FromMinutes(15));
         _updateDownload = lifetime;
         CheckUpdateButton.IsEnabled = false;

@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.8.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.9.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -87,7 +87,7 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 ## The scenes
 
 <!-- template-summary:start -->
-**31 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**45 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -121,6 +121,22 @@ Numbers match the app's identification labels. **Duplicate** and **Span** replac
 Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digital Rain 3D**, **Data Tunnel**, **Rainy Window**, **AI Core**, **Neural Network**, and **Operations Center**. The last displays CPU, memory, battery, and uptime measurements received from the system.
 
 [Explore the scenes and rendering tools](docs/template-artwork.md)
+
+**Crystal Run** is an original self-playing pixel platform adventure: a survey robot jumps between floating ruins, collects crystals and reaches beacons across dawn, twilight and moonlight trails. [Theme details](docs/crystal-run.md).
+
+**Orbital Defender** is an original self-playing retro space shooter with drone formations, dodging autopilot, destructible shields and escalating waves. [Theme details](docs/orbital-defender.md).
+
+**Amber Maze** is an original self-playing maze chase with a lantern robot, collectible shards, patrolling sentinels, overcharge bonuses and freshly generated labyrinths. [Theme details](docs/amber-maze.md).
+
+**Rooftop Rivals** is an original self-playing arcade robot fight with punches, kicks, guards, jumps, energy pulses and best-of-three matches on a rooftop at dusk. [Theme details](docs/rooftop-rivals.md).
+
+**Neon Rally** is a self-playing retro paddle duel with predictive autopilots, spin, accelerating rallies, mint/coral lighting and first-to-seven matches. [Theme details](docs/neon-rally.md).
+
+Seven more automatic pixel worlds are included: **Pixel Defender**, **Castle Raid**, **Tiny City**, **Dungeon Loop**, **Pixel Island**, **Robot Factory**, and **Tower Climber**. Watch drone battles, fortress raids, city life, dungeon exploration, island construction, robot production and endless climbing. [Theme details](docs/pixel-worlds.md).
+
+**Rain on Glass** adds realistic water over an original city photograph: droplets settle, merge, refract the scenery and slide down the glass with fading wet trails. [Theme details](docs/rain-on-glass.md).
+
+**Meteor Shower** brings a photographic Milky Way above a mountain lake, with automatic shooting stars, fine luminous trails, subtle scintillation and occasional brighter fireballs. [Theme details](docs/meteor-shower.md).
 
 ## Create a wallpaper
 

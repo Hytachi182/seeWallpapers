@@ -1,12 +1,29 @@
 {
-  "version": "1.8.0",
-  "tag": "v1.8.0",
+  "version": "1.9.0",
+  "tag": "v1.9.0",
   "base_tag": "v1.8.0",
-  "release_required": false,
-  "template_count": 31,
-  "added": [],
-  "updated": [],
+  "release_required": true,
+  "template_count": 45,
+  "added": [
+    "amber-maze",
+    "castle-raid",
+    "crystal-run",
+    "dungeon-loop",
+    "meteor-shower",
+    "neon-rally",
+    "orbital-defender",
+    "pixel-defender",
+    "pixel-island",
+    "rain-on-glass",
+    "robot-factory",
+    "rooftop-rivals",
+    "tiny-city",
+    "tower-climber"
+  ],
+  "updated": [
+    "biker-road"
+  ],
   "removed": [],
-  "source_commit": "4024643088f1ab333186a85a742816125da4358f",
-  "title": "Sync devops documentation"
+  "source_commit": "524f48046134986265e196ce3453646c67109310",
+  "title": "Release seeWallpaper 1.9.0"
 }

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T00:00:00Z",
+  "title": "Design System: Meteor Shower",
+  "extensions": {
+    "scope": "Meteor Shower Space wallpaper only.",
+    "sourceOwnership": {
+      "simulationRenderingLifecycle": "templates/meteor-shower/scene.js",
+      "layoutAndFallback": "templates/meteor-shower/index.html",
+      "settings": "templates/meteor-shower/manifest.json",
+      "photograph": "templates/meteor-shower/background.jpg",
+      "imagePrompt": "docs/meteor-shower/background-prompt.txt"
+    },
+    "layout": {
+      "canvas": "Full viewport, overflow hidden",
+      "photograph": "Centered cover crop on desktop and portrait",
+      "movingLightClip": "Above the photographic horizon",
+      "renderPixelBudget": 2073600,
+      "renderPixelBudgetAt15FpsOrBelow": 921600,
+      "devicePixelRatioCap": 1.5,
+      "fallbackParagraphInset": "24px left, right and bottom"
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "simulation-step", "value": "1/120 second", "purpose": "Continuous meteor travel and train decay; speed multiplier 0.3–2." },
+      { "name": "render-limit", "value": "30 FPS default; host range 1–60, reduced-motion maximum 15", "purpose": "Honor host performance settings with bounded backing pixels." },
+      { "name": "atmospheric-train", "value": "1.4 seconds ordinary, 3.8 seconds fireball", "purpose": "Quadratically fading residue with subtle lateral drift." }
+    ],
+    "rendering": {
+      "technique": "Canvas 2D photograph plus procedural screen-blended meteor cores, glow and scintillation",
+      "radiant": { "x": -0.35, "y": -0.65 },
+      "meteorLimit": 18,
+      "trainLimit": 48,
+      "scintillationPoints": 115,
+      "pauseAndVisibility": "Cancel timer and animation frame while paused or hidden; restart when allowed",
+      "reducedMotion": "Still frame after 12 simulated seconds; explicit host resume permits animation",
+      "preview": "Seeded still frame through ?preview=<seconds>, clamped to 0–120",
+      "cataloguePreviewSeconds": 6.1,
+      "fallback": "Bundled photograph during loading, with recovery paragraph if photograph loading fails"
+    },
+    "package": {
+      "category": "Space",
+      "engine": "web",
+      "performance": "medium",
+      "archiveRootFiles": ["manifest.json", "index.html", "scene.js", "background.jpg", "preview.jpg"],
+      "settings": ["density", "speed", "intensity", "color", "trains", "twinkle"],
+      "offline": true
+    }
+  },
+  "components": [
+    { "name": "Meteor sky", "kind": "custom", "description": "Original Milky Way over dark alpine scenery with narrow meteor cores, occasional fireballs and atmospheric trains." },
+    { "name": "Photograph fallback", "kind": "custom", "refersTo": "fallback-paragraph", "description": "Centered cover photograph with a bottom recovery message on image-load failure." }
+  ],
+  "narrative": {
+    "overview": "An original photographic night sky provides a quiet backdrop for a realistic artistic meteor shower. Fine bright cores, restrained bloom and subtle stars preserve the night-photography atmosphere.",
+    "keyCharacteristics": ["Original astrophotography-style landscape", "Shared offscreen radiant", "Fine procedural light", "Full viewport centered cover crop", "Offline autonomous scene"],
+    "dos": ["Preserve narrow cores and restrained bloom.", "Keep all controls in the host.", "Honor bounded actors, pixel budgets and renderer lifecycle."],
+    "donts": ["Do not add a HUD or embedded controls.", "Do not bake shooting stars into the photograph.", "Do not present the scene as an astronomical observation or forecast."]
+  }
+}

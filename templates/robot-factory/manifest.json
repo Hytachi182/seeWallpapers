@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "robot-factory",
+  "name": "Robot Factory",
+  "description": "A self-running robot assembly line. Mechanical stations fit chassis, install cores and activate robots on moving conveyor belts in continuous production. Procedural artwork, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {
+      "id": "color",
+      "type": "color",
+      "label": "Scene accent",
+      "default": "#86ded0"
+    },
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Simulation speed",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "particles",
+      "type": "boolean",
+      "label": "Action particles",
+      "default": true
+    },
+    {
+      "id": "stats",
+      "type": "boolean",
+      "label": "Show simulation progress",
+      "default": true
+    }
+  ]
+}
