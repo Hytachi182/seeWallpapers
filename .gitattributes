@@ -1,0 +1,2 @@
+# Preserve the pinned upstream library byte-for-byte on Windows checkouts.
+templates/particle-nexus/particles.js -text
