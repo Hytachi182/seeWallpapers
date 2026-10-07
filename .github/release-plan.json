@@ -1,16 +1,17 @@
 {
-  "version": "1.11.0",
-  "tag": "v1.11.0",
-  "base_tag": "v1.10.0",
+  "version": "1.12.0",
+  "tag": "v1.12.0",
+  "base_tag": "v1.11.0",
   "release_required": true,
-  "template_count": 51,
+  "template_count": 55,
   "added": [
-    "galactic-battle"
+    "burrow-battle",
+    "copper-current",
+    "rose-riviera",
+    "velvet-circuit"
   ],
-  "updated": [
-    "war-front"
-  ],
+  "updated": [],
   "removed": [],
-  "source_commit": "97b6ae778553f4cbf60d827d1e13785f4f1a0808",
-  "title": "Release seeWallpaper 1.11.0"
+  "source_commit": "e946bbdd41103c0355f57f8c6ff8faf3851d7a63",
+  "title": "Release seeWallpaper 1.12.0"
 }
