@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "velvet-circuit",
+  "name": "Velvet Circuit",
+  "description": "An original self-playing pinball machine in an atmospheric arcade. A chrome ball rolls under gravity, collides with rails, posts, pop bumpers and slingshots, and is struck by reactive mechanical flippers. Automatic spring launches, three-ball games, scoring, target banks and persistent session high scores. Procedural perspective rendering with lacquer, metal and glass materials, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"color","type":"color","label":"Playfield illumination","default":"#efb969"},
+    {"id":"speed","type":"slider","label":"Simulation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"lights","type":"boolean","label":"Bumper and insert lights","default":true},
+    {"id":"glass","type":"boolean","label":"Protective glass reflections","default":true},
+    {"id":"stats","type":"boolean","label":"Score display","default":true}
+  ]
+}

@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F91C3458
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeWallpaper.App.Tests", "tests\SeeWallpaper.App.Tests\SeeWallpaper.App.Tests.csproj", "{3D916B82-443B-456F-83D8-4FC48BE4518D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E2CE8AA1-870C-4E97-A037-E7216B05641B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopCheck", "build\desktop-check\DesktopCheck.csproj", "{9D57356C-044E-4C9F-A985-BA9A5318B044}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,8 +62,13 @@ Global
 		{3D916B82-443B-456F-83D8-4FC48BE4518D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D916B82-443B-456F-83D8-4FC48BE4518D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D916B82-443B-456F-83D8-4FC48BE4518D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D57356C-044E-4C9F-A985-BA9A5318B044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D57356C-044E-4C9F-A985-BA9A5318B044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D57356C-044E-4C9F-A985-BA9A5318B044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D57356C-044E-4C9F-A985-BA9A5318B044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3D916B82-443B-456F-83D8-4FC48BE4518D} = {F91C3458-AEC3-41C0-A6DE-3551EA4E9056}
+		{9D57356C-044E-4C9F-A985-BA9A5318B044} = {E2CE8AA1-870C-4E97-A037-E7216B05641B}
 	EndGlobalSection
 EndGlobal

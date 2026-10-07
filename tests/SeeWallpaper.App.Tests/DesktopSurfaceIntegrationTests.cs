@@ -27,6 +27,7 @@ public sealed class DesktopSurfaceIntegrationTests
                     try
                     {
                         DesktopSurface.AttachBehindDesktopIcons(window, new WallpaperBounds(display.X, display.Y, display.Width, display.Height), showWindow: false);
+                        using DisplayDpiContext dpi = DisplayDpiContext.PhysicalPixels();
                         Assert.Equal(host, GetParent(window));
                         Assert.True(GetWindowRect(window, out NativeRect rectangle));
                         Assert.Equal(display.X, rectangle.Left);

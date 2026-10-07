@@ -1,0 +1,11 @@
+# Velvet Circuit
+
+An original autonomous pinball wallpaper, drawn entirely in Canvas without downloaded assets, libraries or network requests. The machine uses a perspective playfield, dark lacquer cabinet, metal guide rails, raised bumper caps, rubber-tipped mechanical flippers, glass reflections and a shaded chrome ball. The rendering is procedural 2.5D, rather than a photographic scene.
+
+The ball follows an inclined-table gravity model with 240 fixed simulation steps per second. Collision capsules model rails, targets and flippers; circular contacts model posts and pop bumpers. Flipper collisions include the velocity of the rotating surface at the point of contact. Agents anticipate a descending ball, make short strokes and release the bats. The centre gap is wider than the ball so genuine drains remain possible. There are no pre-recorded ball paths or ball relocations during play.
+
+A spring launcher starts each ball. Pop bumpers award 100 points, slingshots 10, targets 250 and upper rollovers 50, before the bonus multiplier. Completing a target bank or the rollover lanes increases the multiplier, capped at 5. A completed target bank resets after a short delay. Three drained balls end a game; a fresh game starts automatically. High scores persist within the wallpaper session. A small physical cabinet nudge can release a ball that has been almost motionless for 2.5 seconds.
+
+Settings control playfield illumination color, simulation speed, bumper/insert lighting, glass reflections and score display. Speed zero freezes simulation. Host pause/resume, frame-rate limits, visibility suspension and reduced-motion stills are supported. Portrait screens preserve the whole machine. Effects are bounded and backing resolution is limited to 1920 x 1080; physical desktop performance still needs hardware validation.
+
+Import `dist/velvet-circuit.seewall`, or build the application to include the folder through its existing template content glob. `index.html?preview=12` advances the real simulation deterministically and freezes a preview. Verify rules and sustained autonomous play with `node build/check-velvet-circuit.mjs`. The shared Edge preview tool validates desktop/portrait rendering, settings and pause/resume.

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "copper-current",
+  "name": "Copper Current",
+  "description": "An original macro circuit-board wallpaper: deep green solder mask, copper traces, plated vias, graphite chips, metal pins and miniature electronic components. Gentle luminous signals follow the routed traces and status LEDs breathe softly. Procedural artwork, customizable illumination and entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Tech",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Signal and LED color","default":"#7eeacb"},
+    {"id":"speed","type":"slider","label":"Signal speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"pulses","type":"boolean","label":"Signals along copper traces","default":true},
+    {"id":"leds","type":"boolean","label":"Status LEDs","default":true},
+    {"id":"details","type":"boolean","label":"Printed component labels","default":true}
+  ]
+}

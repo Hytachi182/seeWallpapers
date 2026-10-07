@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>..\..\assets\seewallpaper.ico</ApplicationIcon>
-    <Version>1.11.0</Version>
+    <Version>1.12.0</Version>
     <Authors>Michael Ruffenach</Authors>
   </PropertyGroup>
   <ItemGroup>
@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="SeeWallpaper.App.Tests" />
+    <InternalsVisibleTo Include="DesktopCheck" />
     <ProjectReference Include="..\SeeWallpaper.Core\SeeWallpaper.Core.csproj" />
     <ProjectReference Include="..\SeeWallpaper.TemplateEngine\SeeWallpaper.TemplateEngine.csproj" />
     <ProjectReference Include="..\SeeWallpaper.Infrastructure\SeeWallpaper.Infrastructure.csproj" />

@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+## 1.12.0 - 2026-10-07
+
+<!-- generated-release:start -->
+### Changes since v1.11.0
+
+Built-in catalogue: **55 wallpapers**.
+
+#### New wallpapers
+
+- **Burrow Battle** (`burrow-battle`): An original self-playing artillery battle between two teams of tiny burrowers on floating meadow islands. Wind-driven rockets and grenades carve real craters, blast opponents into the sea, and decide alternating turns. Health, team scores and automatic rematches. Original procedural cartoon art, entirely offline.
+- **Copper Current** (`copper-current`): An original macro circuit-board wallpaper: deep green solder mask, copper traces, plated vias, graphite chips, metal pins and miniature electronic components. Gentle luminous signals follow the routed traces and status LEDs breathe softly. Procedural artwork, customizable illumination and entirely offline.
+- **Rose Riviera** (`rose-riviera`): An original rose-pink fashion miniature overlooking the sea: a curved coastal villa, turquoise pool, tropical garden, pearlescent convertible and original adult fashion figurines. Animated water reflections, drifting bougainvillea petals, champagne lights and delicate glints. Generated original artwork, entirely offline.
+- **Velvet Circuit** (`velvet-circuit`): An original self-playing pinball machine in an atmospheric arcade. A chrome ball rolls under gravity, collides with rails, posts, pop bumpers and slingshots, and is struck by reactive mechanical flippers. Automatic spring launches, three-ball games, scoring, target banks and persistent session high scores. Procedural perspective rendering with lacquer, metal and glass materials, entirely offline.
+
+#### Development changes
+
+- feat: add four wallpapers and fix multi-monitor DPI scaling
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.11.0...v1.12.0)
+<!-- generated-release:end -->
+
+- Add five opt-in functional desktop scenarios for three real monitors, using the actual assignment service, native wallpaper windows and WebView rendering: independent scenes/replacement/removal/failure preservation, clone/span/local transitions, persisted restoration, DPI contexts and simulated disconnect/reconnect. Capture and check rendered edge pixels, physical viewport sizes and correct scene identity. Support testing binaries extracted from a portable ZIP, with PNG, JSON and TRX evidence.
+
+- Fix mixed-DPI multi-monitor geometry: detect fresh native monitor rectangles in physical pixels, share those rectangles between independent/duplicate/span modes, and convert desktop coordinates after Explorer attachment. Prepare WebView windows on their target monitor before initialization. Add current-mode/DPI regression checks and verify both native window bounds and WebView viewport dimensions on the real desktop.
+
+- Add **Copper Current**: a procedural dark green circuit-board wallpaper with copper traces, graphite chips, metal pins, passive components, moving signals and softly glowing LEDs. Cached static artwork, customizable settings and offline operation.
+
+- Add **Velvet Circuit**: an original autonomous pinball machine with a chrome ball, physical rail/bumper/target contacts, reactive rotating flippers, spring launches, three-ball games, bonus multipliers and session high scores. Offline perspective rendering with metal, lacquer and glass materials.
+
+- Add **Rose Riviera**: an original rose-pink coastal fashion miniature with generated artwork, pool reflections, drifting bougainvillea petals, champagne lights and subtle glints. Offline, with speed-zero and reduced-motion stills. No branded names, logos or character assets.
+
+- Add **Burrow Battle**: an original self-playing artillery game with two burrower crews, wind-driven rockets and grenades, destructible meadow terrain, blast knockback, drowning, crew health and automatic rematches. Offline, with host-controlled settings and lifecycle.
+
 ## 1.11.0 - 2026-10-06
 
 <!-- generated-release:start -->
