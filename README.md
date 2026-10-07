@@ -82,12 +82,16 @@ Choose **Apply to my displays**, select your monitors, and click **Apply**. The 
 
 Numbers match the app's identification labels. **Duplicate** and **Span** replace all instances. Applying to one display after spanning restores independent assignments.
 
+Screen sizes are detected from Windows in physical pixels; Windows scaling does not change the wallpaper's target rectangle. Use **Duplicate** for a complete copy of the same scene on each screen, or **Span** for one panorama across the desktop. [Multi-monitor scaling notes](docs/multi-display-scaling.md).
+
+Three-monitor functional tests can be run with `build/test-multi-display-functional.ps1`, including against an extracted portable ZIP. They check actual rendered content, edge coverage, DPI contexts, assignment transitions and persistence. [Test instructions](docs/multi-display-scaling.md#repeatable-functional-tests).
+
 </details>
 
 ## The scenes
 
 <!-- template-summary:start -->
-**51 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**55 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -129,6 +133,14 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Amber Maze** is an original self-playing maze chase with a lantern robot, collectible shards, patrolling sentinels, overcharge bonuses and freshly generated labyrinths. [Theme details](docs/amber-maze.md).
 
 **Rooftop Rivals** is an original self-playing arcade robot fight with punches, kicks, guards, jumps, energy pulses and best-of-three matches on a rooftop at dusk. [Theme details](docs/rooftop-rivals.md).
+
+**Burrow Battle** is an original self-playing artillery battle with tiny burrower crews, wind-driven shots, destructible islands, blast knockback and automatic rematches. [Theme details](docs/burrow-battle.md).
+
+**Rose Riviera** is an original rose-pink coastal fashion miniature with a turquoise pool, tropical flowers, a pearlescent convertible, drifting petals and warm lights. [Theme details](docs/rose-riviera.md).
+
+**Velvet Circuit** is an original self-playing pinball machine with a chrome ball, reactive mechanical flippers, physical collisions, spring launches, illuminated bumpers, target banks and three-ball games. [Theme details](docs/velvet-circuit.md).
+
+**Copper Current** is a detailed dark green circuit board with copper traces, chip packages, tiny components, moving light signals and softly glowing LEDs. [Theme details](docs/copper-current.md).
 
 **Neon Rally** is a self-playing retro paddle duel with predictive autopilots, spin, accelerating rallies, mint/coral lighting and first-to-seven matches. [Theme details](docs/neon-rally.md).
 

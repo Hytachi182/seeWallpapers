@@ -25,6 +25,7 @@ internal sealed class DisplayIdentificationWindow : Window
         timer.Tick += (_, _) => Close();
         Loaded += (_, _) =>
         {
+            using DisplayDpiContext dpi = DisplayDpiContext.PhysicalPixels();
             SetWindowPos(new WindowInteropHelper(this).Handle, new IntPtr(-1), display.X + (display.Width - 240) / 2, display.Y + (display.Height - 150) / 2, 240, 150, 0x0010);
             timer.Start();
         };

@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Add five opt-in functional desktop scenarios for three real monitors, using the actual assignment service, native wallpaper windows and WebView rendering: independent scenes/replacement/removal/failure preservation, clone/span/local transitions, persisted restoration, DPI contexts and simulated disconnect/reconnect. Capture and check rendered edge pixels, physical viewport sizes and correct scene identity. Support testing binaries extracted from a portable ZIP, with PNG, JSON and TRX evidence.
+
+- Fix mixed-DPI multi-monitor geometry: detect fresh native monitor rectangles in physical pixels, share those rectangles between independent/duplicate/span modes, and convert desktop coordinates after Explorer attachment. Prepare WebView windows on their target monitor before initialization. Add current-mode/DPI regression checks and verify both native window bounds and WebView viewport dimensions on the real desktop.
+
+- Add **Copper Current**: a procedural dark green circuit-board wallpaper with copper traces, graphite chips, metal pins, passive components, moving signals and softly glowing LEDs. Cached static artwork, customizable settings and offline operation.
+
+- Add **Velvet Circuit**: an original autonomous pinball machine with a chrome ball, physical rail/bumper/target contacts, reactive rotating flippers, spring launches, three-ball games, bonus multipliers and session high scores. Offline perspective rendering with metal, lacquer and glass materials.
+
+- Add **Rose Riviera**: an original rose-pink coastal fashion miniature with generated artwork, pool reflections, drifting bougainvillea petals, champagne lights and subtle glints. Offline, with speed-zero and reduced-motion stills. No branded names, logos or character assets.
+
+- Add **Burrow Battle**: an original self-playing artillery game with two burrower crews, wind-driven rockets and grenades, destructible meadow terrain, blast knockback, drowning, crew health and automatic rematches. Offline, with host-controlled settings and lifecycle.
+
 ## 1.11.0 - 2026-10-06
 
 <!-- generated-release:start -->

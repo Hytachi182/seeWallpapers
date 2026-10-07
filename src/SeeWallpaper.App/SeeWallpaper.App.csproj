@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="SeeWallpaper.App.Tests" />
+    <InternalsVisibleTo Include="DesktopCheck" />
     <ProjectReference Include="..\SeeWallpaper.Core\SeeWallpaper.Core.csproj" />
     <ProjectReference Include="..\SeeWallpaper.TemplateEngine\SeeWallpaper.TemplateEngine.csproj" />
     <ProjectReference Include="..\SeeWallpaper.Infrastructure\SeeWallpaper.Infrastructure.csproj" />

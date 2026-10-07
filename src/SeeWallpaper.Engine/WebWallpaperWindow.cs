@@ -5,6 +5,7 @@ using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using SeeWallpaper.Core;
 using SeeWallpaper.Engine.Windows;
+using SeeWallpaper.Platform;
 
 namespace SeeWallpaper.Engine;
 
@@ -39,6 +40,8 @@ public class WebWallpaperWindow : Window
         ResizeMode = ResizeMode.NoResize;
         ShowInTaskbar = !attachToDesktop;
         Background = System.Windows.Media.Brushes.Black;
+        if (attachToDesktop && desktopBounds is not null)
+            SourceInitialized += (_, _) => DesktopSurface.PositionInPhysicalPixels(new System.Windows.Interop.WindowInteropHelper(this).Handle, desktopBounds);
         Loaded += OnLoaded;
         Closed += (_, _) =>
         {
@@ -83,7 +86,10 @@ public class WebWallpaperWindow : Window
             if (_attachToDesktop)
             {
                 IntPtr handle = new System.Windows.Interop.WindowInteropHelper(this).Handle;
-                DesktopSurface.AttachBehindDesktopIcons(handle, _desktopBounds ?? new WallpaperBounds(0, 0, (int)SystemParameters.PrimaryScreenWidth, (int)SystemParameters.PrimaryScreenHeight));
+                DisplayInfo? primary = _desktopBounds is null ? new WindowsDisplayManager().GetDisplays().FirstOrDefault(display => display.IsPrimary) : null;
+                WallpaperBounds bounds = _desktopBounds ?? (primary is not null ? WallpaperBounds.FromDisplay(primary) : throw new InvalidOperationException("No primary display is available."));
+                DesktopSurface.AttachBehindDesktopIcons(handle, bounds);
+                UpdateLayout();
             }
             _ready.TrySetResult();
         }

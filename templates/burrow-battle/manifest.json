@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "burrow-battle",
+  "name": "Burrow Battle",
+  "description": "An original self-playing artillery battle between two teams of tiny burrowers on floating meadow islands. Wind-driven rockets and grenades carve real craters, blast opponents into the sea, and decide alternating turns. Health, team scores and automatic rematches. Original procedural cartoon art, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"color","type":"color","label":"Meadow team color","default":"#79e0be"},
+    {"id":"speed","type":"slider","label":"Battle speed","min":0.3,"max":2,"step":0.1,"default":1},
+    {"id":"effects","type":"boolean","label":"Explosion sparks and projectile trails","default":true},
+    {"id":"clouds","type":"boolean","label":"Drifting clouds","default":true},
+    {"id":"stats","type":"boolean","label":"Show team health, wind and turn","default":true}
+  ]
+}

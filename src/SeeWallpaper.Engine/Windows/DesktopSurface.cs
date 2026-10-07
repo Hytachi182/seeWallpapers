@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using SeeWallpaper.Platform;
 
 namespace SeeWallpaper.Engine.Windows;
 
@@ -17,8 +18,6 @@ internal static class DesktopSurface
     public static void AttachBehindDesktopIcons(IntPtr wallpaperHandle, WallpaperBounds bounds, bool showWindow = true)
     {
         IntPtr host = GetWallpaperHost();
-        Point position = new() { X = bounds.X, Y = bounds.Y };
-        if (!ScreenToClient(host, ref position)) throw NativeFailure("Convert the display position");
 
         long style = GetWindowLongPtr(wallpaperHandle, GwlStyle).ToInt64();
         Marshal.SetLastPInvokeError(0);
@@ -28,9 +27,21 @@ internal static class DesktopSurface
         IntPtr previousParent = SetParent(wallpaperHandle, host);
         if (previousParent == IntPtr.Zero && Marshal.GetLastPInvokeError() != 0) throw NativeFailure("Attach the wallpaper to the Windows desktop");
         if (GetParent(wallpaperHandle) != host) throw new InvalidOperationException("Windows did not confirm that the wallpaper was attached to the desktop.");
+        // SetParent can reset DPI awareness. Convert and place AFTER it, with
+        // origins and sizes in physical pixels on every monitor.
+        using DisplayDpiContext dpi = DisplayDpiContext.PhysicalPixels();
+        Point position = new() { X = bounds.X, Y = bounds.Y };
+        if (!ScreenToClient(host, ref position)) throw NativeFailure("Convert the display position");
         uint flags = SwpNoActivate | SwpFrameChanged | (showWindow ? SwpShowWindow : 0);
         if (!SetWindowPos(wallpaperHandle, IntPtr.Zero, position.X, position.Y, bounds.Width, bounds.Height, flags))
             throw NativeFailure("Position the wallpaper on the selected display");
+    }
+
+    internal static void PositionInPhysicalPixels(IntPtr window, WallpaperBounds bounds)
+    {
+        using DisplayDpiContext dpi = DisplayDpiContext.PhysicalPixels();
+        if (!SetWindowPos(window, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width, bounds.Height, SwpNoActivate | 0x0004))
+            throw NativeFailure("Prepare the wallpaper at the selected display bounds");
     }
 
     internal static IntPtr GetWallpaperHost()
