@@ -39,6 +39,12 @@ Uninstall removes program files, shortcuts, context menu, `.seewall` ProgID, sta
 
 Live wallpapers are drawn by the running app. Closing the window hides it in the notification area and keeps wallpapers active; click the icon to reopen it, or right-click it and choose **Quit and remove wallpapers** to stop.
 
+Clicking the Windows desktop does not trigger the fullscreen pause option. Fullscreen and battery status are read before saved wallpapers are restored, so the configured pause rules also apply at sign-in.
+
+If a wallpaper window closes or loses its desktop attachment, open **Displays** and refresh the displays to restore the saved selection, including **Clone** and **Span** modes. Recovery does not require changing the monitor layout.
+
+An unreadable performance-settings file no longer prevents the gallery or saved wallpapers from loading. Invalid JSON in `%LocalAppData%\seeWallpaper\configuration\performance.json` is preserved as `performance.json.invalid-*`, and default performance settings are used. A temporarily inaccessible file is retained for a later retry.
+
 Shell commands use one instance per Windows user/session. A second launch forwards its request over a user-restricted local channel. Packages are imported after catalog initialization using the same validation as imports from the interface.
 
 ## Build and verify

@@ -72,10 +72,18 @@ internal static class FunctionalScenarios
                     foreach (DisplayInfo display in displays) expected[display.Id] = fixtures[0];
                     await VerifyAsync(host, displays, expected, "duplicate-full-scenes");
                     Require((await store.LoadAsync()).Mode == WallpaperAssignmentMode.Clone, "Clone state was not persisted");
+                    Windows(host)[displays[0].Id].Close();
+                    Require(!host.ActiveDisplayIds.Contains(displays[0].Id), "A closed clone window must not be reported as active");
+                    Require((await service.ReconcileDisplaysAsync()).Count == 0, "Clone recovery returned errors");
+                    await VerifyAsync(host, displays, expected, "recover-closed-clone-window");
                     await service.ApplyGlobalAsync(fixtures[0].Template, Settings, WallpaperAssignmentMode.Span);
                     expected.Clear(); expected["span"] = fixtures[0];
                     await VerifyAsync(host, displays, expected, "single-panorama");
                     Require((await store.LoadAsync()).Mode == WallpaperAssignmentMode.Span, "Span state was not persisted");
+                    Windows(host)["span"].Close();
+                    Require(!host.ActiveDisplayIds.Contains("span"), "A closed span window must not be reported as active");
+                    Require((await service.ReconcileDisplaysAsync()).Count == 0, "Span recovery returned errors");
+                    await VerifyAsync(host, displays, expected, "recover-closed-span-window");
                     await service.ApplyAsync(fixtures[1].Template, displays[0], Settings);
                     expected.Clear(); foreach (DisplayInfo display in displays) expected[display.Id] = fixtures[0]; expected[displays[0].Id] = fixtures[1];
                     await VerifyAsync(host, displays, expected, "local-selection-exits-panorama");

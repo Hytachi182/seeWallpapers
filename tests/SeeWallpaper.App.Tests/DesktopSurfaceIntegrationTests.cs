@@ -26,7 +26,9 @@ public sealed class DesktopSurfaceIntegrationTests
                     Assert.NotEqual(IntPtr.Zero, window);
                     try
                     {
+                        Assert.False(DesktopSurface.IsWallpaperAttached(window));
                         DesktopSurface.AttachBehindDesktopIcons(window, new WallpaperBounds(display.X, display.Y, display.Width, display.Height), showWindow: false);
+                        Assert.True(DesktopSurface.IsWallpaperAttached(window));
                         using DisplayDpiContext dpi = DisplayDpiContext.PhysicalPixels();
                         Assert.Equal(host, GetParent(window));
                         Assert.True(GetWindowRect(window, out NativeRect rectangle));
@@ -35,8 +37,11 @@ public sealed class DesktopSurfaceIntegrationTests
                         Assert.Equal(display.Width, rectangle.Right - rectangle.Left);
                         Assert.Equal(display.Height, rectangle.Bottom - rectangle.Top);
                         Assert.False(IsWindowVisible(window));
+                        Assert.Equal(host, SetParent(window, IntPtr.Zero));
+                        Assert.False(DesktopSurface.IsWallpaperAttached(window));
                     }
                     finally { DestroyWindow(window); }
+                    Assert.False(DesktopSurface.IsWallpaperAttached(window));
                 }
             }
             catch (Exception exception) { failure = exception; }
@@ -57,6 +62,7 @@ public sealed class DesktopSurfaceIntegrationTests
     }
     [StructLayout(LayoutKind.Sequential)] private struct NativeRect { public int Left; public int Top; public int Right; public int Bottom; }
     [DllImport("user32.dll")] private static extern IntPtr GetParent(IntPtr child);
+    [DllImport("user32.dll")] private static extern IntPtr SetParent(IntPtr child, IntPtr parent);
     [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr window, out NativeRect rectangle);
     [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr window);
     [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)] private static extern IntPtr CreateWindowEx(uint extendedStyle, string className, string title, uint style, int x, int y, int width, int height, IntPtr parent, IntPtr menu, IntPtr instance, IntPtr parameter);

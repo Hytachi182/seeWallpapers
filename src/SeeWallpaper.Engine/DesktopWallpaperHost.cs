@@ -16,7 +16,8 @@ public sealed class DesktopWallpaperHost : IWallpaperHost
     // Hiding is confirmed briefly before pausing; revealing resumes on the next check.
     private static readonly TimeSpan OcclusionConfirmation = TimeSpan.FromMilliseconds(400);
 
-    public IReadOnlyCollection<string> ActiveDisplayIds => _wallpaperWindows.Keys.ToArray();
+    public IReadOnlyCollection<string> ActiveDisplayIds => _wallpaperWindows
+        .Where(item => item.Value.IsAttachedToDesktop).Select(item => item.Key).ToArray();
 
     public async Task UpdateTemplateSettingsAsync(string templateId, IReadOnlyDictionary<string, object?> settings)
     {

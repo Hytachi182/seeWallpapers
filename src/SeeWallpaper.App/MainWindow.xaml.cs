@@ -267,6 +267,8 @@ public partial class MainWindow : Window
             _pauseOnFullscreen = configuration.PauseOnFullscreen;
             _pauseOnBattery = configuration.PauseOnBattery;
             await _wallpaperHost.SetPerformanceProfileAsync(_performanceProfile);
+            _environmentState = _environmentMonitor.Start();
+            await ApplyPauseStateAsync();
             IReadOnlyList<SeeWallpaper.Core.InstalledTemplate> discovered = await _catalog.DiscoverAsync(_templatesRoot);
             Brush[] visuals = [new LinearGradientBrush(Color.FromRgb(0, 28, 17), Color.FromRgb(0, 160, 94), 25), new LinearGradientBrush(Color.FromRgb(23, 14, 46), Color.FromRgb(173, 71, 121), 35), new LinearGradientBrush(Color.FromRgb(8, 27, 54), Color.FromRgb(82, 67, 218), 45)];
             _templates = discovered.Select((template, index) => new TemplateCardViewModel(template, visuals[index % visuals.Length], _favoriteTemplateIds.Contains(template.Manifest.Id))).ToArray();

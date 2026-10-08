@@ -139,6 +139,25 @@ public sealed class WallpaperAssignmentServiceTests : IDisposable
 
     private static WallpaperAssignmentService Create(FakeHost host, WallpaperAssignmentsStore store) => new(host, new FakeDisplays(), store, id => Scene(id), _ => Task.FromResult(Settings));
 
+    [Theory]
+    [InlineData(WallpaperAssignmentMode.Clone, "clone", "two")]
+    [InlineData(WallpaperAssignmentMode.Span, "span", "span")]
+    public async Task Global_modes_restore_missing_windows_without_a_topology_change(WallpaperAssignmentMode mode, string operation, string missing)
+    {
+        FakeHost host = new();
+        WallpaperAssignmentService service = Create(host, new(_root));
+        await service.ApplyGlobalAsync(Scene("rain"), Settings, mode);
+        await host.StopDisplayAsync(missing);
+        host.Operations.Clear();
+
+        Assert.Empty(await service.ReconcileDisplaysAsync());
+        Assert.Equal(new[] { operation }, host.Operations);
+        Assert.Contains(missing, host.ActiveDisplayIds);
+        host.Operations.Clear();
+        Assert.Empty(await service.ReconcileDisplaysAsync());
+        Assert.Empty(host.Operations);
+    }
+
     [Fact]
     public async Task Explicit_selection_replaces_the_legacy_record_without_repeated_upgrade_warnings()
     {
@@ -212,10 +231,10 @@ public sealed class WallpaperAssignmentServiceTests : IDisposable
             _active.Add(displayId);
             Operations.Add($"apply:{displayId}:{template.Manifest.Id}"); return Task.CompletedTask;
         }
-        public Task ApplyCloneAsync(InstalledTemplate template, IReadOnlyDictionary<string, object?> settings, CancellationToken cancellationToken = default) { Operations.Add("clone"); return Task.CompletedTask; }
-        public Task ApplySpanAsync(InstalledTemplate template, IReadOnlyDictionary<string, object?> settings, CancellationToken cancellationToken = default) { Operations.Add("span"); return Task.CompletedTask; }
+        public Task ApplyCloneAsync(InstalledTemplate template, IReadOnlyDictionary<string, object?> settings, CancellationToken cancellationToken = default) { _active.Clear(); foreach (DisplayInfo display in Displays) _active.Add(display.Id); Operations.Add("clone"); return Task.CompletedTask; }
+        public Task ApplySpanAsync(InstalledTemplate template, IReadOnlyDictionary<string, object?> settings, CancellationToken cancellationToken = default) { _active.Clear(); _active.Add("span"); Operations.Add("span"); return Task.CompletedTask; }
         public Task StopDisplayAsync(string displayId, CancellationToken cancellationToken = default) { _active.Remove(displayId); Operations.Add($"stop:{displayId}"); return Task.CompletedTask; }
-        public Task StopAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task StopAsync(CancellationToken cancellationToken = default) { _active.Clear(); return Task.CompletedTask; }
         public Task SetPausedAsync(bool isPaused, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task SetPerformanceProfileAsync(WallpaperPerformanceProfile profile, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
