@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T18:46:15.694691+00:00",
+  "title": "Design System: Rose Riviera",
+  "extensions": {
+    "motion": [
+      {
+        "name": "scene-materials",
+        "value": "Source-row pool/coastal refraction, coherent pool caustics, gust-driven petals, lantern candle silhouettes and bonnet sheen",
+        "purpose": "Move the setting while preserving original subjects and material boundaries."
+      },
+      {
+        "name": "default-rate",
+        "value": "30 FPS",
+        "purpose": "Host-controlled requestAnimationFrame budget clamped to 1-60 FPS; pause, hidden document, reduced motion and speed zero stop the loop."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Rose Riviera",
+    "overview": "This record applies only to Rose Riviera. A rose-pink coastal villa, original adult fashion figurines and a pearlescent convertible overlook turquoise water at sunset. The original raster supplies the composition and material depth; motion belongs to water, petals, candlelight and a restrained lacquer highlight.",
+    "keyCharacteristics": [
+      "Full-bleed original raster miniature.",
+      "Coherent water and material motion.",
+      "Offline rendering with host-controlled lifecycle."
+    ],
+    "rules": [
+      {
+        "name": "The Scene-Preserving Crop Rule",
+        "body": "Fill the viewport with a cover crop centered horizontally on landscape screens and positioned at 68% horizontally on portrait screens; keep the vertical crop centered.",
+        "section": "layout"
+      },
+      {
+        "name": "The Stable Subjects Rule",
+        "body": "Keep figurines, architecture and the car undeformed. Clip source-row refraction to the pool and coastal water; clip the moving lacquer sheen to the bonnet.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep water motion inside the illustrated water boundaries.",
+      "Do preserve the original artwork and its provenance record.",
+      "Do respect pause, visibility, reduced motion and speed zero."
+    ],
+    "donts": [
+      "Don't add a HUD or deform the figurines, car or architecture.",
+      "Don't substitute branded characters, logos or promotional artwork.",
+      "Don't describe generation provenance as legal clearance."
+    ]
+  }
+}

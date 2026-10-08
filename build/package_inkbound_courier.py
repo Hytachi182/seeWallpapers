@@ -4,7 +4,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 root = Path(__file__).resolve().parent.parent
 source = root / "templates" / "inkbound-courier"
-files = ("manifest.json", "index.html", "scene.js", "artwork.jpg", "preview.jpg")
+files = ("manifest.json", "index.html", "scene.js", "motion.js", "artwork.jpg", "preview.jpg")
 output = root / "dist" / "inkbound-courier.seewall"
 output.parent.mkdir(exist_ok=True)
 with ZipFile(output, "w", ZIP_DEFLATED) as archive:

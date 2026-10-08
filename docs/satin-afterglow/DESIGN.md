@@ -3,7 +3,7 @@ name: Satin Afterglow
 description: Original adult manga fashion glamour with quiet twilight atmosphere.
 colors:
   plum-fallback: "#322434"
-  rose-petal: "#b95277"
+  rose-petal: "#b75b7c"
   warm-glimmer: "#ffe5bb"
 ---
 
@@ -47,7 +47,7 @@ The canvas has no margins or scrollbars. Render dimensions are bounded to 1920 p
 
 ## Elevation & Depth
 
-The raster's overlapping plants, chair, terrace rail and distant city convey depth without CSS shadows. Three petal depths, distant haze, tiny sky glimmers and localized lantern glows reinforce the illustrated setting.
+The raster's overlapping plants, chair, terrace rail and distant city convey depth without CSS shadows. Three petal depths share a gust-driven drift. Small flame silhouettes flicker at the painted candle positions, with restrained local illumination; distant haze and tiny sky glimmers complete the setting.
 
 **The Stable Figure Rule.** Keep the face, body and clothing undeformed. Animate the surrounding atmosphere.
 
@@ -59,7 +59,7 @@ A single image-backed Canvas surface carries an accessible image description. Th
 
 Respect host pause/resume, visibility and FPS changes. Animation defaults to 30 FPS, with host rates clamped to 1–60 FPS. Reduced motion and speed zero show the unmodified illustration. Keep assets local, without external libraries, fonts or network requests.
 
-The [verification and packaging instructions](../satin-afterglow.md#verification-and-packaging) describe the checks. The 2026-10-08 delivery passed desktop/portrait settings and lifecycle checks, stable figure pixels, a 24-hour preview, reduced motion, speed zero, bounded 4K rendering and offline loading. All 58 manifest-validator tests passed, and package CRC and byte equality were verified. Actual desktop attachment and GPU frame-time performance remain unmeasured.
+The [verification and packaging instructions](../satin-afterglow.md#verification-and-packaging) describe the checks. The shared offline motion helper is bundled as `motion.js`. Its requestAnimationFrame clock accumulates elapsed time once and respects the host frame-rate budget. Deterministic desktop/portrait captures and figure-stability checks cover the refinement; they do not establish subjective continuous-playback quality or physical desktop performance.
 
 ## Do's and Don'ts
 

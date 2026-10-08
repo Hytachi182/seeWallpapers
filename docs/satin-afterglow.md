@@ -4,7 +4,7 @@ An original manga fashion wallpaper in the Anime collection. A clearly adult wom
 
 The scene follows a restrained fashion-editorial brief: adult proportions, a mature face, a fully covered chest, a dress below the knee and a relaxed seated pose. It includes no nudity, lingerie, sexual activity, school-uniform imagery or franchise characters.
 
-Rose petals drift at three depths, lanterns gently brighten, distant city haze moves and tiny stars glimmer in the sky. The character's face, body and clothing are not deformed. No audio or text overlays are included.
+Rose petals drift at three depths, lantern flames lean and flicker with their warm light, distant city haze moves and tiny stars glimmer in the sky. The character's face, body and clothing are not deformed. No audio or text overlays are included.
 
 ## Settings and runtime
 
@@ -29,3 +29,5 @@ python build/package_satin_afterglow.py
 ```
 
 The shared capture checks desktop/portrait rendering, each setting and pause/resume. The scene check covers stable character pixels with petals disabled, a 24-hour preview, reduced motion, speed zero, the 4K render budget and offline loading. Packaging verifies archive integrity and byte equality. Browser verification does not establish real desktop attachment or performance on every GPU.
+
+Animation revision 1.0.1 uses the shared offline motion helper, bundled as `motion.js` in each package. Its requestAnimationFrame clock honors 15/30/60 FPS budgets without recounting elapsed time. Regenerate identical helper copies with `python build/sync-living-scene-motion.py`; verify scheduling with `node build/check-living-scene-clock.mjs`.
