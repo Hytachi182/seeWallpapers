@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+## 1.13.0 - 2026-10-08
+
+Explorer desktop and taskbar clicks no longer trigger fullscreen pause, and pause rules apply before saved wallpapers are restored at startup. Display refresh recovers closed or detached Clone/Span wallpaper windows without a monitor-layout change. Damaged or inaccessible performance settings use safe defaults without blocking startup.
+
+Validation and remaining desktop/packaging checks are recorded in [the release notes](docs/releases/v1.13.0.md).
+
+<!-- generated-release:start -->
+### Changes since v1.12.0
+
+Built-in catalogue: **57 wallpapers**.
+
+#### New wallpapers
+
+- **Inkbound Courier** (`inkbound-courier`): An original manga illustration in midnight ink, ivory paper and vermilion: an adult rooftop messenger above a fictional coastal town. Wind-borne petals, drifting harbor mist and breathing window lights. Original generated artwork; no franchise characters or external assets. Entirely offline.
+- **Satin Afterglow** (`satin-afterglow`): An original manga fashion scene: an adult woman in an opaque burgundy evening dress on a rose-framed terrace at twilight. Drifting rose petals, gentle lantern lights, distant haze and star glimmers. Tasteful, fully clothed glamour with original generated artwork. Entirely offline.
+
+#### Development changes
+
+- feat: add two original animated manga wallpapers
+- fix: restore desktop wallpapers reliably and honor startup pause rules
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.12.0...v1.13.0)
+<!-- generated-release:end -->
+
 ## 1.12.0 - 2026-10-07
 
 <!-- generated-release:start -->

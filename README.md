@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.12.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.13.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**55 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**57 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -137,6 +137,10 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Burrow Battle** is an original self-playing artillery battle with tiny burrower crews, wind-driven shots, destructible islands, blast knockback and automatic rematches. [Theme details](docs/burrow-battle.md).
 
 **Rose Riviera** is an original rose-pink coastal fashion miniature with a turquoise pool, tropical flowers, a pearlescent convertible, drifting petals and warm lights. [Theme details](docs/rose-riviera.md).
+
+**Inkbound Courier** is an original manga rooftop scene in ivory, midnight ink and vermilion, with an adult messenger overlooking a coastal town, wind-borne petals, drifting harbor mist and softly glowing windows. [Theme details](docs/inkbound-courier.md).
+
+**Satin Afterglow** is an original, fully clothed adult manga fashion scene on a twilight terrace, with a burgundy evening dress, rose petals, warm lanterns, distant city haze and gentle star glimmers. [Theme details](docs/satin-afterglow.md).
 
 **Velvet Circuit** is an original self-playing pinball machine with a chrome ball, reactive mechanical flippers, physical collisions, spring launches, illuminated bumpers, target banks and three-ball games. [Theme details](docs/velvet-circuit.md).
 

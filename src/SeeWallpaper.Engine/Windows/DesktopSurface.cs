@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Text;
 using SeeWallpaper.Platform;
 
 namespace SeeWallpaper.Engine.Windows;
@@ -14,6 +15,16 @@ internal static class DesktopSurface
     private const uint SwpNoActivate = 0x0010;
     private const uint SwpFrameChanged = 0x0020;
     private const uint SwpShowWindow = 0x0040;
+
+    internal static bool IsWallpaperAttached(IntPtr wallpaperHandle)
+    {
+        if (!IsWindow(wallpaperHandle)) return false;
+        IntPtr parent = GetParent(wallpaperHandle);
+        if (parent == IntPtr.Zero || !IsWindow(parent)) return false;
+        StringBuilder className = new(256);
+        return GetClassName(parent, className, className.Capacity) > 0
+            && className.ToString() == "WorkerW" && IsWallpaperSurface(parent);
+    }
 
     public static void AttachBehindDesktopIcons(IntPtr wallpaperHandle, WallpaperBounds bounds, bool showWindow = true)
     {
@@ -98,6 +109,8 @@ internal static class DesktopSurface
     [DllImport("user32.dll")] private static extern bool EnumWindows(EnumWindowsProc callback, IntPtr lParam);
     [DllImport("user32.dll", SetLastError = true)] private static extern IntPtr SetParent(IntPtr child, IntPtr newParent);
     [DllImport("user32.dll")] private static extern IntPtr GetParent(IntPtr child);
+    [DllImport("user32.dll")] private static extern bool IsWindow(IntPtr window);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] private static extern int GetClassName(IntPtr window, StringBuilder className, int maxCount);
     [DllImport("user32.dll", SetLastError = true)] private static extern bool SetWindowPos(IntPtr hWnd, IntPtr insertAfter, int x, int y, int cx, int cy, uint flags);
     [DllImport("user32.dll", SetLastError = true)] private static extern bool ScreenToClient(IntPtr hWnd, ref Point point);
     [DllImport("user32.dll", SetLastError = true)] private static extern bool GetWindowRect(IntPtr hWnd, out Rect rectangle);

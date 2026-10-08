@@ -132,7 +132,8 @@ public class WebWallpaperWindow : Window
         return ApplyPauseStateAsync();
     }
 
-    internal bool IsAttachedToDesktop => _attachToDesktop && _ready.Task.IsCompletedSuccessfully;
+    internal bool IsAttachedToDesktop => _attachToDesktop && !_lifetime.IsCancellationRequested
+        && _ready.Task.IsCompletedSuccessfully && DesktopSurface.IsWallpaperAttached(Handle);
     internal string TemplateId => _template.Manifest.Id;
 
     internal IntPtr Handle => new System.Windows.Interop.WindowInteropHelper(this).Handle;

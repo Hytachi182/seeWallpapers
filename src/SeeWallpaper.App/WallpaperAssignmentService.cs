@@ -36,7 +36,11 @@ internal sealed class WallpaperAssignmentService
             if (_state.Mode is WallpaperAssignmentMode.Clone or WallpaperAssignmentMode.Span)
             {
                 if (connected.Length == 0) { await _host.StopAsync(cancellationToken); _activeDisplays.Clear(); return errors; }
-                if (connected.Length == _activeDisplays.Count && connected.All(display => _activeDisplays.TryGetValue(display.Id, out DisplayInfo? previous) && previous == display)) return errors;
+                IReadOnlyCollection<string> active = _host.ActiveDisplayIds;
+                bool wallpapersActive = _state.Mode == WallpaperAssignmentMode.Span
+                    ? active.Contains("span")
+                    : connected.All(display => active.Contains(display.Id));
+                if (wallpapersActive && connected.Length == _activeDisplays.Count && connected.All(display => _activeDisplays.TryGetValue(display.Id, out DisplayInfo? previous) && previous == display)) return errors;
                 InstalledTemplate? global = _state.GlobalTemplateId is null ? null : _templateResolver(_state.GlobalTemplateId);
                 if (global is null) { errors.Add("The saved global wallpaper is no longer installed."); return errors; }
                 if (_state.Mode == WallpaperAssignmentMode.Clone) await _host.ApplyCloneAsync(global, await _settingsLoader(global), cancellationToken);

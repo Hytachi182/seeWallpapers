@@ -1,0 +1,53 @@
+{
+    "schemaVersion":  2,
+    "generatedAt":  "2026-10-08T18:04:40.0896761+00:00",
+    "title":  "Design System: Satin Afterglow",
+    "extensions":  {
+                       "motion":  [
+                                      {
+                                          "name":  "atmosphere-only",
+                                          "value":  "Canvas rose petals, lantern lights, sky glimmers and city haze",
+                                          "purpose":  "Animate the setting without deforming the figure or dress."
+                                      },
+                                      {
+                                          "name":  "default-rate",
+                                          "value":  "30 FPS",
+                                          "purpose":  "Host-controlled rate clamped to 1–60 FPS; pause, hidden document, reduced motion and speed zero stop the loop."
+                                      }
+                                  ]
+                   },
+    "components":  [
+
+                   ],
+    "narrative":  {
+                      "northStar":  "Satin Afterglow",
+                      "overview":  "This record applies only to this wallpaper theme. A mature adult woman in an opaque asymmetric burgundy evening dress sits on a rose-framed terrace above a fictional twilight city. The mood is restrained fashion glamour; the illustration remains steady while the atmosphere moves.",
+                      "keyCharacteristics":  [
+                                                 "Full-bleed painted manga illustration.",
+                                                 "Mature, fully clothed evening fashion.",
+                                                 "Quiet atmospheric animation and offline rendering."
+                                             ],
+                      "rules":  [
+                                    {
+                                        "name":  "The Face-Preserving Crop Rule",
+                                        "body":  "Use a full-viewport cover crop positioned at 66% horizontally and 50% vertically. Desktop retains the quiet city to the left and seated figure to the right; portrait retains the face and most of the seated figure while cropping peripheral scenery.",
+                                        "section":  "layout"
+                                    },
+                                    {
+                                        "name":  "The Stable Figure Rule",
+                                        "body":  "Keep the face, body and clothing undeformed. Animate the surrounding atmosphere.",
+                                        "section":  "elevation"
+                                    }
+                                ],
+                      "dos":  [
+                                  "Do preserve the mature face and fully clothed fashion presentation.",
+                                  "Do keep motion restrained and respect host lifecycle and reduced motion.",
+                                  "Do retain the prompt and provenance record with the original raster."
+                              ],
+                      "donts":  [
+                                    "Don\u0027t add nudity, sexual action, franchise imagery or a HUD.",
+                                    "Don\u0027t deform the figure or clothing to create motion.",
+                                    "Don\u0027t describe generation provenance as legal clearance."
+                                ]
+                  }
+}
