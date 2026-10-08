@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>..\..\assets\seewallpaper.ico</ApplicationIcon>
-    <Version>1.13.0</Version>
+    <Version>1.13.1</Version>
     <Authors>Michael Ruffenach</Authors>
   </PropertyGroup>
   <ItemGroup>

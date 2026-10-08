@@ -1,15 +1,16 @@
 {
-  "version": "1.13.0",
-  "tag": "v1.13.0",
-  "base_tag": "v1.12.0",
+  "version": "1.13.1",
+  "tag": "v1.13.1",
+  "base_tag": "v1.13.0",
   "release_required": true,
   "template_count": 57,
-  "added": [
+  "added": [],
+  "updated": [
     "inkbound-courier",
+    "rose-riviera",
     "satin-afterglow"
   ],
-  "updated": [],
   "removed": [],
-  "source_commit": "fe0d1b758d1ac21a8f9ab134d03b37f9c10f0762",
-  "title": "Release seeWallpaper 1.13.0"
+  "source_commit": "31f4e30a07c08b48200e2c54810041270a7359b3",
+  "title": "Release seeWallpaper 1.13.1"
 }
