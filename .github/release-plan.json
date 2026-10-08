@@ -1,17 +1,15 @@
 {
-  "version": "1.12.0",
-  "tag": "v1.12.0",
-  "base_tag": "v1.11.0",
+  "version": "1.13.0",
+  "tag": "v1.13.0",
+  "base_tag": "v1.12.0",
   "release_required": true,
-  "template_count": 55,
+  "template_count": 57,
   "added": [
-    "burrow-battle",
-    "copper-current",
-    "rose-riviera",
-    "velvet-circuit"
+    "inkbound-courier",
+    "satin-afterglow"
   ],
   "updated": [],
   "removed": [],
-  "source_commit": "e946bbdd41103c0355f57f8c6ff8faf3851d7a63",
-  "title": "Release seeWallpaper 1.12.0"
+  "source_commit": "fe0d1b758d1ac21a8f9ab134d03b37f9c10f0762",
+  "title": "Release seeWallpaper 1.13.0"
 }
