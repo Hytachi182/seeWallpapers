@@ -138,6 +138,10 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Rose Riviera** is an original rose-pink coastal fashion miniature with a turquoise pool, tropical flowers, a pearlescent convertible, drifting petals and warm lights. [Theme details](docs/rose-riviera.md).
 
+**Inkbound Courier** is an original manga rooftop scene in ivory, midnight ink and vermilion, with an adult messenger overlooking a coastal town, wind-borne petals, drifting harbor mist and softly glowing windows. [Theme details](docs/inkbound-courier.md).
+
+**Satin Afterglow** is an original, fully clothed adult manga fashion scene on a twilight terrace, with a burgundy evening dress, rose petals, warm lanterns, distant city haze and gentle star glimmers. [Theme details](docs/satin-afterglow.md).
+
 **Velvet Circuit** is an original self-playing pinball machine with a chrome ball, reactive mechanical flippers, physical collisions, spring launches, illuminated bumpers, target banks and three-ball games. [Theme details](docs/velvet-circuit.md).
 
 **Copper Current** is a detailed dark green circuit board with copper traces, chip packages, tiny components, moving light signals and softly glowing LEDs. [Theme details](docs/copper-current.md).
