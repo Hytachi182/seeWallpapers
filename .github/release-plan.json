@@ -1,16 +1,24 @@
 {
-  "version": "1.13.1",
-  "tag": "v1.13.1",
+  "version": "1.14.0",
+  "tag": "v1.14.0",
   "base_tag": "v1.13.0",
   "release_required": true,
-  "template_count": 57,
-  "added": [],
+  "template_count": 61,
+  "added": [
+    "emberwatch-knight",
+    "gilded-court",
+    "hollow-lantern",
+    "stratos-flight"
+  ],
   "updated": [
     "inkbound-courier",
+    "lunar-silence",
+    "moonlit-dunes",
+    "pirate-cove",
     "rose-riviera",
     "satin-afterglow"
   ],
   "removed": [],
-  "source_commit": "31f4e30a07c08b48200e2c54810041270a7359b3",
-  "title": "Release seeWallpaper 1.13.1"
+  "source_commit": "da70d617f7d28e9dea76e8b6a8109fb8f4f03992",
+  "title": "Release seeWallpaper 1.14.0"
 }

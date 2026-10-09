@@ -2,24 +2,35 @@
 
 ## Unreleased
 
-## 1.13.1 - 2026-10-08
+## 1.14.0 - 2026-10-09
 
 <!-- generated-release:start -->
 ### Changes since v1.13.0
 
-Built-in catalogue: **57 wallpapers**.
+Built-in catalogue: **61 wallpapers**.
+
+#### New wallpapers
+
+- **Emberwatch Knight** (`emberwatch-knight`): An original articulated armored knight patrols a twilight castle terrace, raises a shield and practices sword flourishes. Separate armor pieces, moving joints, wind-driven teal cape, torches, mist and embers. Original generated artwork, entirely offline.
+- **Gilded Court** (`gilded-court`): An original ivory-and-gold palace with an adult sapphire-robed sovereign, marching articulated guards, flowing gown and banners, animated fountain jets and ripples, warm palace illumination and drifting rose petals. Original generated artwork, entirely offline.
+- **Hollow Lantern** (`hollow-lantern`): An original Halloween manor beneath a violet moon, with flickering jack-o-lanterns, a floating cloth ghost, wing-beating bats, low mist and autumn leaves. Friendly eerie fantasy, no gore. Original generated artwork and animated character, entirely offline.
+- **Stratos Flight** (`stratos-flight`): Original fictional combat jets fly in layered formations above a golden cloud sea. Moving aircraft, gentle banking, trajectory-following contrails, restrained engine glow and foreground cloud vapor. Original generated background and transparent sprites, entirely offline.
 
 #### Updated wallpapers
 
 - **Inkbound Courier** (`inkbound-courier`): An original manga illustration in midnight ink, ivory paper and vermilion: an adult rooftop messenger above a fictional coastal town. Wind-borne petals, drifting harbor mist and breathing window lights. Original generated artwork; no franchise characters or external assets. Entirely offline.
+- **Lunar Silence** (`lunar-silence`): A lone astronaut on the lunar surface beneath a slowly turning blue Earth, with twinkling stars, shooting stars, a passing satellite and drifting moon dust.
+- **Moonlit Dunes** (`moonlit-dunes`): Sculpted dunes, wind-blown sand and a crescent moon in a quiet desert night.
+- **Pirate Cove** (`pirate-cove`): A young pirate overlooking a sunset cove, with gentle folds in the red banner, scarf and cloak, a flickering lantern, warm harbour lights, flowing waterfalls, sea reflections and distant gliding seagulls.
 - **Rose Riviera** (`rose-riviera`): An original rose-pink fashion miniature overlooking the sea: a curved coastal villa, turquoise pool, tropical garden, pearlescent convertible and original adult fashion figurines. Animated water reflections, drifting bougainvillea petals, champagne lights and delicate glints. Generated original artwork, entirely offline.
 - **Satin Afterglow** (`satin-afterglow`): An original manga fashion scene: an adult woman in an opaque burgundy evening dress on a rose-framed terrace at twilight. Drifting rose petals, gentle lantern lights, distant haze and star glimmers. Tasteful, fully clothed glamour with original generated artwork. Entirely offline.
 
 #### Development changes
 
+- feat: add four animated wallpapers and strengthen quiet scenes
 - fix: refine manga and Rose Riviera material animations
 
-[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.13.0...v1.13.1)
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.13.0...v1.14.0)
 <!-- generated-release:end -->
 
 ## 1.13.0 - 2026-10-08

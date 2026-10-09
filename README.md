@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.13.1**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.14.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**57 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**61 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
