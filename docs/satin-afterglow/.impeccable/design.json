@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-08T18:45:36.591389+00:00",
+  "generatedAt": "2026-10-09T07:18:23.148765+00:00",
   "title": "Design System: Satin Afterglow",
   "extensions": {
     "motion": [
       {
         "name": "atmosphere-only",
-        "value": "Canvas gust-driven rose petals, candle flame silhouettes at illustrated lanterns, local illumination, sky glimmers and city haze",
+        "value": "Gust-driven rose petals, candle flame silhouettes, localized pulsing terrace reflections, faster broader city haze and sky glimmers",
         "purpose": "Animate the setting without deforming the figure or dress."
       },
       {

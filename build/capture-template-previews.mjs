@@ -31,7 +31,7 @@ try {
       };
     });
     const url = pathToFileURL(path.join(root, 'templates', id, 'index.html')).href;
-    const previewSeconds = { 'pixel-defender': 5, 'castle-raid': 22, 'pixel-island': 75, 'robot-factory': 24, 'meteor-shower': 6.1, 'alpine-thunderstorm': 12.08 }[id] ?? 12;
+    const previewSeconds = { 'pixel-defender': 5, 'castle-raid': 22, 'pixel-island': 75, 'robot-factory': 24, 'meteor-shower': 6.1, 'alpine-thunderstorm': 12.08, 'stratos-flight': 4, 'emberwatch-knight': 12.8 }[id] ?? 12;
     await page.goto(`${url}?preview=${previewSeconds}`);
     if (await page.locator('#fallback').count()) assert.equal(await page.locator('#fallback').isVisible(), false, `${id}: WebGL renderer failed`);
     await page.screenshot({ path: path.join(output, `${id}-desktop.png`) });

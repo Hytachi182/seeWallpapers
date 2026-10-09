@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T07:17:13.050964+00:00",
+  "title": "Design System: Pirate Cove",
+  "extensions": {
+    "motion": [
+      {
+        "name": "scene-motion",
+        "value": "Actual source-row sea texture refraction remains inside established channel masks. Gull passages are more frequent; existing fabric masks, lights and waterfalls remain.",
+        "purpose": "Keep water refraction inside established safe channels. Preserve the head and neck, and retain artwork-derived fabric masks and their anchors."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Pirate Cove",
+    "overview": "A painted coastal adventure scene with an original character overlooking a sunset harbor.",
+    "rules": [
+      {
+        "name": "The Safe Channel Rule",
+        "body": "Keep water refraction inside established safe channels. Preserve the head and neck, and retain artwork-derived fabric masks and their anchors.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve established scene materials and motion boundaries."
+    ],
+    "donts": [
+      "Don't add whole-image zoom to inflate motion measurements."
+    ]
+  }
+}

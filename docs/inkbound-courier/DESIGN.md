@@ -47,7 +47,7 @@ The canvas fills the viewport without margins or scrollbars. Render dimensions a
 
 ## Elevation & Depth
 
-Depth comes from the raster's layered rooftops, harbor and mountains, not CSS shadows. Three petal depths share a gust-driven drift. Source-pixel row refraction moves the distant harbor water; small coastal birds cross the open sky. Harbor-local mist and window glows complete the setting without replacing its illustrated materials.
+Depth comes from the raster's layered rooftops, harbor and mountains, not CSS shadows. Three petal depths share a gust-driven drift. Stronger source-pixel row refraction moves the distant harbor water; coastal birds cross the open sky more frequently. Broader, faster harbor-local mist and window glows complete the setting without replacing its illustrated materials.
 
 **The Stable Illustration Rule.** Keep the character, clothing, scarf and buildings undeformed. Motion belongs to the atmospheric overlays.
 

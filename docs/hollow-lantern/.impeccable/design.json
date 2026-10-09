@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T20:02:17.369471+00:00",
+  "title": "Design System: Hollow Lantern",
+  "extensions": {
+    "motion": [
+      {
+        "name": "independent-ghost",
+        "value": "Horizontal oscillation, vertical bobbing, rigid rotation and lower-cloth flutter",
+        "purpose": "Provide visible character motion while retaining facial geometry and continuous translucent cloth."
+      },
+      {
+        "name": "sky-bats",
+        "value": "Seven viewport-traversing bat silhouettes with separate wing phases",
+        "purpose": "Supply secondary character motion above the clearing."
+      },
+      {
+        "name": "default-rate",
+        "value": "30 FPS",
+        "purpose": "One host-controlled requestAnimationFrame clock clamped to 1-60 FPS; pause, hidden document, speed zero and reduced motion freeze the scene."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Hollow Lantern",
+    "overview": "This record applies only to Hollow Lantern. An original friendly ghost floats through a violet moonlit clearing beneath a crooked manor, with warm carved pumpkins and autumn foliage. The independent transparent character supplies visible motion while the painted background keeps its composition and texture.",
+    "keyCharacteristics": [
+      "Original friendly eerie Halloween imagery without gore.",
+      "Independent floating ghost and animated flying bats.",
+      "Offline scene with host-controlled motion."
+    ],
+    "rules": [
+      {
+        "name": "The Rigid Face Rule",
+        "body": "Keep the ghost face and upper cloth rigid. Compose lower-cloth flutter on integer offscreen rows before rotating the complete character, avoiding overlapping translucent strip bands.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Clearing Flight Rule",
+        "body": "Cover-crop the background independently while ghost and bats follow viewport paths. Keep the ghost near the center on portrait screens and retain its complete silhouette.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do keep ghost motion independent of bats, mist, leaves and pumpkin glow.",
+      "Do preserve the original prompts and artwork provenance.",
+      "Do honor pause, visibility, reduced motion and host frame-rate changes."
+    ],
+    "donts": [
+      "Don't distort the ghost face or introduce cloth strip banding.",
+      "Don't add gore, franchise characters, logos or a HUD.",
+      "Don't present generated-asset provenance as legal clearance."
+    ]
+  }
+}

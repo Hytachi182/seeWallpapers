@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-08T18:45:36.590392+00:00",
+  "generatedAt": "2026-10-09T07:17:13.050964+00:00",
   "title": "Design System: Inkbound Courier",
   "extensions": {
     "motion": [
       {
         "name": "atmosphere-only",
-        "value": "Canvas gust-driven petals, distant harbor source-row refraction, coastal birds, harbor mist and window light",
+        "value": "Gust-driven petals, stronger harbor source-row refraction, faster coastal birds, broader advecting harbor mist and window light",
         "purpose": "Move the atmosphere while preserving the original character and buildings."
       },
       {

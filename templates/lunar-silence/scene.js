@@ -5,7 +5,7 @@
   let settings = { ...JSON.parse(document.getElementById('defaults').textContent), ...window.seeWallpaper?.getSettings?.() };
   const stars = JSON.parse(document.getElementById('stars').textContent);
   let w, h, ratio = 1, t = 0, last = 0, frame = 0, timer = 0, paused = false;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');let reduced=motionQuery.matches;
   let fps = reduced ? 15 : 30;
   const TAU = Math.PI * 2, rnd = n => { const v = Math.sin(n * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
   const tint = () => /^#[\da-f]{6}$/i.test(settings.color) ? settings.color : '#64d2ee';
@@ -54,7 +54,7 @@
   }
 
   function starField() {
-    const time = t * speed(), count = Math.round(stars.length * Math.min(1, Math.max(0.1, num(settings.starDensity, 1))));
+    const time = (reduced?0:t * speed()), count = Math.round(stars.length * Math.min(1, Math.max(0.1, num(settings.starDensity, 1))));
     const drift = time * 0.6;
     for (let i = 0; i < count; i++) {
       const [sx, y, r, a] = stars[i];
@@ -74,7 +74,7 @@
   }
 
   function meteors() {
-    const time = t * speed();
+    const time = (reduced?0:t * speed());
     for (let i = 0; i < 2; i++) {
       const cycle = 11 + i * 6, p = ((time + i * 5) % cycle) / 1.2;
       if (p > 1) continue;
@@ -88,27 +88,48 @@
 
   // A satellite crossing the sky with a blinking beacon.
   function satellite() {
-    const time = t * speed(), cycle = 60, p = (time % cycle) / cycle;
+    const time = (reduced?0:t * speed()), cycle = 60, p = (time % cycle) / cycle;
     const x = -40 + p * 2000, y = 330 - p * 220;
     c.fillStyle = 'rgba(220,230,240,.8)'; c.fillRect(x - 1.2, y - 1.2, 2.4, 2.4);
     if (Math.sin(time * 4) > 0.7) glow(x, y, 7, '#ff8a7a', 0.8);
   }
 
   function earth() {
-    const time = t * speed(), pulse = 0.8 + Math.sin(time * 0.5) * 0.2;
+    const time = (reduced?0:t * speed()), pulse = 0.8 + Math.sin(time * 0.5) * 0.2;
     glow(1390, 282, 235, tint(), 0.22 * pulse * intensity());
     glow(1390, 282, 150, tint(), 0.1 * pulse * intensity());
     layer('earth');
     // Rotation: the surface scrolls eastward under the clipped globe and wraps.
-    const period = 240, dx = (time * 4) % period;
+    const period = 240, dx = (time * 10) % period;
     c.save(); c.beginPath(); c.arc(1390, 282, 119, 0, TAU); c.clip();
     layer('earth-surface', dx); layer('earth-surface', dx - period);
     layer('earth-shade');
     c.restore();
   }
 
+  function rover() {
+    const line=(ax,ay,bx,by,color,width)=>{c.strokeStyle=color;c.lineWidth=width;c.beginPath();c.moveTo(ax,ay);c.lineTo(bx,by);c.stroke();};
+    const circle=(x,y,r,color)=>{c.fillStyle=color;c.beginPath();c.arc(x,y,r,0,TAU);c.fill();};
+    if(settings.rover===false||settings.rover==='false')return;
+    const time=t*speed(),left=-ox/sc,view=w/sc,phase=time*.09;
+    const x=left+view*(.5+.36*Math.sin(phase)),y=1016+Math.sin(phase*4)*4;
+    c.save();c.translate(x,y);c.rotate(Math.cos(phase*4)*.025);
+    c.fillStyle='rgba(8,15,25,.25)';c.beginPath();c.ellipse(0,21,91,12,0,0,TAU);c.fill();
+    c.strokeStyle='#9caab8';c.lineWidth=7;c.beginPath();c.moveTo(-54,6);c.lineTo(-30,-12);c.lineTo(37,-12);c.lineTo(63,6);c.stroke();
+    for(const wx of[-56,0,56]){
+      c.save();c.translate(wx,10);c.fillStyle='#253344';c.beginPath();c.arc(0,0,18,0,TAU);c.fill();
+      c.strokeStyle='#b9c9d8';c.lineWidth=3;c.beginPath();c.arc(0,0,13,0,TAU);c.stroke();
+      c.rotate(Math.sin(phase)*view*.36/18);c.lineWidth=2;
+      for(let i=0;i<4;i++){c.rotate(TAU/4);line(-10,0,10,0,'#73879c',2);}c.restore();
+    }
+    c.fillStyle='#c3ced6';c.beginPath();c.roundRect(-59,-44,118,41,7);c.fill();
+    c.fillStyle='#496982';c.fillRect(-45,-34,42,20);c.fillStyle='#2b4963';c.fillRect(5,-34,39,20);
+    line(-20,-43,-20,-80,'#b9c9d8',4);circle(-20,-82,7,rgba(tint(),.9));
+    glow(-20,-82,16,tint(),(.3+.4*Math.max(0,Math.sin(time*2)))*intensity());c.restore();
+  }
+
   function astronaut() {
-    const time = t * speed();
+    const time = (reduced?0:t * speed());
     // Breathing: a tiny vertical stretch anchored at the boots.
     const breath = 1 + Math.sin(time * 1.1) * 0.006;
     c.save(); c.translate(1212, 893); c.scale(1, breath); c.translate(-1212, -893);
@@ -129,7 +150,7 @@
 
   // Fine regolith dust drifting slowly in the low gravity.
   function dust() {
-    const time = t * speed();
+    const time = (reduced?0:t * speed());
     for (let i = 0; i < 45; i++) {
       const cycle = 18 + rnd(i + 500) * 14, p = ((time + rnd(i + 510) * cycle) % cycle) / cycle;
       const x = rnd(i + 520) * 1920 + Math.sin(time * 0.3 + i) * 12 + p * 40;
@@ -144,7 +165,7 @@
     c.setTransform(ratio * sc, 0, 0, ratio * sc, ratio * ox, ratio * oy);
     sky(); starField(); satellite(); meteors();
     if (ready) { earth(); layer('ground'); astronaut(); }
-    dust();
+    rover();dust();
   }
 
   function resize() {
@@ -152,12 +173,13 @@
     canvas.width = Math.round(w * ratio); canvas.height = Math.round(h * ratio); layout(); rasterize();
   }
   function stop() { clearTimeout(timer); cancelAnimationFrame(frame); last = 0; }
-  function animate(now) { if (paused || document.hidden) { stop(); return; } if (last) t += Math.min(0.1, (now - last) / 1000); last = now; const start = performance.now(); draw(); timer = setTimeout(() => frame = requestAnimationFrame(animate), Math.max(0, 1000 / fps - (performance.now() - start) - 4)); }
-  function start() { stop(); if (!paused && !document.hidden) frame = requestAnimationFrame(animate); }
+  function animate(now) { if (paused || document.hidden || reduced || speed()===0) { stop(); return; } if (last) t += Math.min(0.1, (now - last) / 1000); last = now; const start = performance.now(); draw(); timer = setTimeout(() => frame = requestAnimationFrame(animate), Math.max(0, 1000 / fps - (performance.now() - start) - 4)); }
+  function start() { stop(); if (!paused && !document.hidden && !reduced && speed()>0) frame = requestAnimationFrame(animate); }
   addEventListener('resize', () => { resize(); draw(); }); document.addEventListener('visibilitychange', start);
-  window.seeWallpaper?.onSettingsChanged(value => { settings = { ...settings, ...value }; draw(); });
+  window.seeWallpaper?.onSettingsChanged(value => { settings = { ...settings, ...value }; draw(); start(); });
   window.seeWallpaper?.onPause(() => { paused = true; stop(); }); window.seeWallpaper?.onResume(() => { paused = false; start(); });
   window.seeWallpaper?.onPerformanceChanged(value => { fps = Math.max(1, Math.min(reduced ? 15 : 60, Number(value) || 30)); start(); });
+  motionQuery.addEventListener?.('change',()=>{reduced=motionQuery.matches;draw();start();});
   resize(); const preview = new URLSearchParams(location.search).get('preview');
   if (preview !== null) { paused = true; t = Number(preview) || 12; draw(); } else start();
 })();

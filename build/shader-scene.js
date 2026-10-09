@@ -5,7 +5,7 @@
   const options = JSON.parse(document.getElementById('defaults').textContent);
   let settings = { ...options, ...window.seeWallpaper?.getSettings?.() };
   let gl, program, uniforms, buffer, timer, frame, last = 0, time = 0, paused = false, lost = false;
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');let reducedMotion=motionQuery.matches;
   let fps = reducedMotion ? 15 : 30;
   const vertex = `attribute vec2 position;void main(){gl_Position=vec4(position,0.,1.);}`;
   function compile(type, source) {
@@ -41,21 +41,22 @@
   }
   function stop() { clearTimeout(timer); cancelAnimationFrame(frame); last = 0; }
   function animate(timestamp) {
-    if (paused || lost || document.hidden) { stop(); return; }
+    if (paused || lost || document.hidden || reducedMotion || Number(settings.speed)===0) { stop(); return; }
     if (last) time += Math.min(0.2, (timestamp - last) / 1000) * settings.speed;
     last = timestamp;
     const begin = performance.now(); draw();
     timer = setTimeout(() => { frame = requestAnimationFrame(animate); }, Math.max(0, 1000 / fps - (performance.now() - begin) - 4));
   }
-  function start() { stop(); if (!paused && !lost && !document.hidden && program) frame = requestAnimationFrame(animate); }
+  function start() { stop(); if (!paused && !lost && !document.hidden && !reducedMotion && Number(settings.speed)>0 && program) frame = requestAnimationFrame(animate); }
   addEventListener('resize', () => { resize(); draw(); });
   document.addEventListener('visibilitychange', start);
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; stop(); document.getElementById('fallback').hidden = false; });
   canvas.addEventListener('webglcontextrestored', () => { lost = false; if (initialize()) { draw(); start(); } });
-  window.seeWallpaper?.onSettingsChanged(value => { settings = { ...settings, ...value }; draw(); });
+  window.seeWallpaper?.onSettingsChanged(value => { settings = { ...settings, ...value }; draw(); start(); });
   window.seeWallpaper?.onPause(() => { paused = true; stop(); });
   window.seeWallpaper?.onResume(() => { paused = false; start(); });
   window.seeWallpaper?.onPerformanceChanged(value => { fps = Math.max(1, Math.min(reducedMotion ? 15 : 60, Number(value) || 30)); resize(); draw(); start(); });
+  motionQuery.addEventListener?.('change',()=>{reducedMotion=motionQuery.matches;draw();start();});
   const preview = new URLSearchParams(location.search).get('preview');
   if (preview !== null) { paused = true; time = (Number(preview) || 12) * settings.speed; }
   try { if (initialize()) { draw(); start(); } }

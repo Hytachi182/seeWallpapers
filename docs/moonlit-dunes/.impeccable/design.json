@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T07:17:13.050964+00:00",
+  "title": "Design System: Moonlit Dunes",
+  "extensions": {
+    "motion": [
+      {
+        "name": "scene-motion",
+        "value": "Procedural WebGL dunes with wind-driven sand streams and faster dust/ripple advection. Ridge geometry remains fixed.",
+        "purpose": "Animate sand shading, ripple phase and wind streams without moving dune silhouettes."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Moonlit Dunes",
+    "overview": "Layered moonlit sand ridges beneath a dark crescent sky.",
+    "rules": [
+      {
+        "name": "The Fixed Ridge Rule",
+        "body": "Animate sand shading, ripple phase and wind streams without moving dune silhouettes.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve established scene materials and motion boundaries."
+    ],
+    "donts": [
+      "Don't add whole-image zoom to inflate motion measurements."
+    ]
+  }
+}

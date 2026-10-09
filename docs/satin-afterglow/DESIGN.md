@@ -47,7 +47,7 @@ The canvas has no margins or scrollbars. Render dimensions are bounded to 1920 p
 
 ## Elevation & Depth
 
-The raster's overlapping plants, chair, terrace rail and distant city convey depth without CSS shadows. Three petal depths share a gust-driven drift. Small flame silhouettes flicker at the painted candle positions, with restrained local illumination; distant haze and tiny sky glimmers complete the setting.
+The raster's overlapping plants, chair, terrace rail and distant city convey depth without CSS shadows. Three petal depths share a gust-driven drift. Small flame silhouettes flicker at the painted candle positions, with localized pulsing reflections on the terrace floor. Faster, broader city haze and tiny sky glimmers complete the setting. River, bridge and roof textures remain unmodified.
 
 **The Stable Figure Rule.** Keep the face, body and clothing undeformed. Animate the surrounding atmosphere.
 
@@ -55,7 +55,7 @@ The raster's overlapping plants, chair, terrace rail and distant city convey dep
 
 ### Offline scene
 
-A single image-backed Canvas surface carries an accessible image description. The manifest exposes speed, petal density, haze, lights and stars through the existing `window.seeWallpaper` SDK. The scene adds no local controls or audio.
+A single image-backed Canvas surface carries an accessible image description. The manifest exposes speed, petal density, haze, terrace reflections, lights and stars through the existing `window.seeWallpaper` SDK. The scene adds no local controls or audio.
 
 Respect host pause/resume, visibility and FPS changes. Animation defaults to 30 FPS, with host rates clamped to 1–60 FPS. Reduced motion and speed zero show the unmodified illustration. Keep assets local, without external libraries, fonts or network requests.
 

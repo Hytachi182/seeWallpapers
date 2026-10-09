@@ -30,19 +30,19 @@
 
   function petals() { motion.petals(c,geometry(),time,number('petals',1,0,2),'#a94035'); }
 
-  function wind() { motion.birds(c,geometry(),time,'rgba(34,39,48,.7)'); }
-  function harbor() { motion.water(c,geometry(),artwork,time,[[0,.526],[.33,.512],[.39,.532],[.31,.582],[.05,.595],[0,.58]],{strength:.85,light:'#e4d3aa'}); }
+  function wind() { motion.birds(c,geometry(),time*1.5,'rgba(34,39,48,.85)'); }
+  function harbor() { motion.water(c,geometry(),artwork,time,[[0,.526],[.33,.512],[.39,.532],[.31,.582],[.05,.595],[0,.58]],{strength:2.4,light:'#e4d3aa'}); }
 
   function mist() {
     // Soft ribbons over the distant harbor only; never deform the foreground art.
     c.save();
     c.beginPath(); c.rect(X(0), Y(.44), aw * .49, ah * .27); c.clip();
     for (let i = 0; i < 7; i++) {
-      const x = .22 + Math.sin(time * .085 + i * 2.1) * .1;
+      const x = .22 + Math.sin(time * .27 + i * 2.1) * .14;
       const y = .5 + i * .024, radius = aw * .13;
-      c.save(); c.translate(X(x), Y(y)); c.scale(1, .11);
+      c.save(); c.translate(X(x), Y(y)); c.scale(1, .18);
       const g = c.createRadialGradient(0, 0, 0, 0, 0, radius);
-      g.addColorStop(0, `rgba(241,233,214,${.11 + .035 * Math.sin(time * .25 + i)})`);
+      g.addColorStop(0, `rgba(241,233,214,${.17 + .06 * Math.sin(time * .55 + i)})`);
       g.addColorStop(1, 'rgba(241,233,214,0)');
       c.fillStyle = g; c.fillRect(-radius, -radius, radius * 2, radius * 2); c.restore();
     }

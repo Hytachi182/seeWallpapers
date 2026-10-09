@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "hollow-lantern",
+  "name": "Hollow Lantern",
+  "description": "An original Halloween manor beneath a violet moon, with flickering jack-o-lanterns, a floating cloth ghost, wing-beating bats, low mist and autumn leaves. Friendly eerie fantasy, no gore. Original generated artwork and animated character, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"ghost","type":"boolean","label":"Floating ghost","default":true},
+    {"id":"bats","type":"boolean","label":"Flying bats","default":true},
+    {"id":"pumpkins","type":"boolean","label":"Flickering pumpkin lights","default":true},
+    {"id":"mist","type":"boolean","label":"Drifting ground mist","default":true},
+    {"id":"leaves","type":"boolean","label":"Autumn leaves","default":true}
+  ]
+}

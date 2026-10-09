@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T07:17:13.050964+00:00",
+  "title": "Design System: Lunar Silence",
+  "extensions": {
+    "motion": [
+      {
+        "name": "scene-motion",
+        "value": "A small original Canvas rover follows a viewport route with rotating wheels and a blinking beacon. Earth surface scrolls faster; existing star, astronaut and dust motion remains.",
+        "purpose": "Drive the rover within the visible viewport in portrait and landscape; rotate wheels with travel and preserve the astronaut composition."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Lunar Silence",
+    "overview": "A quiet blue-gray lunar landscape with an astronaut and stylized Earth.",
+    "rules": [
+      {
+        "name": "The Viewport Rover Rule",
+        "body": "Drive the rover within the visible viewport in portrait and landscape; rotate wheels with travel and preserve the astronaut composition.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve established scene materials and motion boundaries."
+    ],
+    "donts": [
+      "Don't add whole-image zoom to inflate motion measurements."
+    ]
+  }
+}

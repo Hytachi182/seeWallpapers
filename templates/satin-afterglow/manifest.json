@@ -4,17 +4,54 @@
   "name": "Satin Afterglow",
   "description": "An original manga fashion scene: an adult woman in an opaque burgundy evening dress on a rose-framed terrace at twilight. Drifting rose petals, gentle lantern lights, distant haze and star glimmers. Tasteful, fully clothed glamour with original generated artwork. Entirely offline.",
   "author": "seeWallpaper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "category": "Anime",
   "engine": "web",
   "entry": "index.html",
   "preview": "preview.jpg",
   "performance": "low",
   "settings": [
-    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
-    {"id":"petals","type":"slider","label":"Drifting rose petals","min":0,"max":2,"step":0.1,"default":1},
-    {"id":"haze","type":"boolean","label":"Twilight city haze","default":true},
-    {"id":"lights","type":"boolean","label":"Warm lantern lights","default":true},
-    {"id":"stars","type":"boolean","label":"Gentle star glimmers","default":true}
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "petals",
+      "type": "slider",
+      "label": "Drifting rose petals",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "haze",
+      "type": "boolean",
+      "label": "Twilight city haze",
+      "default": true
+    },
+    {
+      "id": "lights",
+      "type": "boolean",
+      "label": "Warm lantern lights",
+      "default": true
+    },
+    {
+      "id": "stars",
+      "type": "boolean",
+      "label": "Gentle star glimmers",
+      "default": true
+    },
+    {
+      "id": "reflections",
+      "type": "boolean",
+      "label": "Lantern floor reflections",
+      "default": true
+    }
   ]
 }

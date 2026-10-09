@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "stratos-flight",
+  "name": "Stratos Flight",
+  "description": "Original fictional combat jets fly in layered formations above a golden cloud sea. Moving aircraft, gentle banking, trajectory-following contrails, restrained engine glow and foreground cloud vapor. Original generated background and transparent sprites, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Flight speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"formation","type":"boolean","label":"Formation wingmen","default":true},
+    {"id":"contrails","type":"boolean","label":"Flight path contrails","default":true},
+    {"id":"afterburners","type":"boolean","label":"Engine exhaust glow","default":true},
+    {"id":"clouds","type":"boolean","label":"Foreground cloud vapor","default":true},
+    {"id":"banking","type":"boolean","label":"Gentle banking turns","default":true}
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T20:28:00.409813+00:00",
+  "title": "Design System: Gilded Court",
+  "extensions": {
+    "motion": [
+      {
+        "name": "procession-cycle",
+        "value": "48 seconds",
+        "purpose": "Three independently crossing articulated guards, with gait period derived from stride, scale and world velocity."
+      },
+      {
+        "name": "material-motion",
+        "value": "Lower-gown wave, attached broad-fold banners, fountain droplets/refraction, illumination and petals",
+        "purpose": "Animate cloth and scene materials while preserving rigid facial geometry and calibrated attachment points."
+      },
+      {
+        "name": "default-rate",
+        "value": "30 FPS",
+        "purpose": "One host-controlled requestAnimationFrame clock clamped to 1-60 FPS; pause, hidden document, speed zero and reduced motion freeze the scene."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Gilded Court",
+    "overview": "This record applies only to Gilded Court. An original sapphire-gowned adult sovereign moves before an ivory-and-gold palace while articulated guards cross the terrace. Painted marble, silk and armor supply the material world; character motion, cloth, water and restrained illumination animate it.",
+    "keyCharacteristics": [
+      "Original palace and adult sovereign with sapphire and gold materials.",
+      "Independent procession, gown, banner and fountain animation.",
+      "Offline scene with host-controlled motion."
+    ],
+    "rules": [
+      {
+        "name": "The Planted Foot Rule",
+        "body": "Derive guard gait timing from stride length, viewport scale and procession velocity. Cancel world translation during grounded stance; return each lifted foot with a continuous swing.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Rigid Figure Rule",
+        "body": "Keep the sovereign face and upper body rigid. Compose gown flutter and banners on integer offscreen rows before placement; use broad cloth fold lighting without repeated opacity bands.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Court Placement Rule",
+        "body": "Cover-crop the palace independently while foreground characters follow viewport coordinates. Attach banners to the painted poles and fountain effects to the painted basin and source.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do keep articulated guard motion independent of the other animated elements.",
+      "Do preserve original prompts and the reused armor provenance.",
+      "Do honor pause, visibility, reduced motion and host frame-rate changes."
+    ],
+    "donts": [
+      "Don't let planted feet slide or add repeated cloth strip bands.",
+      "Don't deform the sovereign face or add real monarchy insignia, franchise motifs or a HUD.",
+      "Don't present generated-asset provenance as legal clearance."
+    ]
+  }
+}

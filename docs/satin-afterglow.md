@@ -31,3 +31,9 @@ python build/package_satin_afterglow.py
 The shared capture checks desktop/portrait rendering, each setting and pause/resume. The scene check covers stable character pixels with petals disabled, a 24-hour preview, reduced motion, speed zero, the 4K render budget and offline loading. Packaging verifies archive integrity and byte equality. Browser verification does not establish real desktop attachment or performance on every GPU.
 
 Animation revision 1.0.1 uses the shared offline motion helper, bundled as `motion.js` in each package. Its requestAnimationFrame clock honors 15/30/60 FPS budgets without recounting elapsed time. Regenerate identical helper copies with `python build/sync-living-scene-motion.py`; verify scheduling with `node build/check-living-scene-clock.mjs`.
+
+## 2026-10-09 animation refinement
+
+Faster city haze and localized lantern reflections on the terrace; architecture and character preserved. See the [catalogue animation audit](motion-audit.md) for the sampling method and results.
+
+New control: lantern floor reflections.

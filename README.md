@@ -142,6 +142,14 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Satin Afterglow** is an original, fully clothed adult manga fashion scene on a twilight terrace, with a burgundy evening dress, rose petals, warm lanterns, distant city haze and gentle star glimmers. [Theme details](docs/satin-afterglow.md).
 
+**Stratos Flight** features original fictional combat jets moving in formation above sunlit clouds, with gentle banking, flight-path contrails, engine glow and drifting foreground vapor. [Theme details](docs/stratos-flight.md).
+
+**Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
+
+**Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
+
+**Gilded Court** is an original royal palace with a sapphire-robed sovereign, marching articulated guards, flowing gown and banners, fountain jets and ripples, golden illumination and rose petals. [Theme details](docs/gilded-court.md).
+
 **Velvet Circuit** is an original self-playing pinball machine with a chrome ball, reactive mechanical flippers, physical collisions, spring launches, illuminated bumpers, target banks and three-ball games. [Theme details](docs/velvet-circuit.md).
 
 **Copper Current** is a detailed dark green circuit board with copper traces, chip packages, tiny components, moving light signals and softly glowing LEDs. [Theme details](docs/copper-current.md).

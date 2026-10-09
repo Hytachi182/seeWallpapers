@@ -4,18 +4,54 @@
   "name": "Inkbound Courier",
   "description": "An original manga illustration in midnight ink, ivory paper and vermilion: an adult rooftop messenger above a fictional coastal town. Wind-borne petals, drifting harbor mist and breathing window lights. Original generated artwork; no franchise characters or external assets. Entirely offline.",
   "author": "seeWallpaper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "category": "Anime",
   "engine": "web",
   "entry": "index.html",
   "preview": "preview.jpg",
   "performance": "low",
   "settings": [
-    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
-    {"id":"petals","type":"slider","label":"Wind-borne petals","min":0,"max":2,"step":0.1,"default":1},
-    {"id":"water","type":"boolean","label":"Living harbor water","default":true},
-    {"id":"mist","type":"boolean","label":"Drifting harbor mist","default":true},
-    {"id":"lights","type":"boolean","label":"Town window lights","default":true},
-    {"id":"wind","type":"boolean","label":"Coastal birds","default":true}
+    {
+      "id": "speed",
+      "type": "slider",
+      "label": "Animation speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "petals",
+      "type": "slider",
+      "label": "Wind-borne petals",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "id": "water",
+      "type": "boolean",
+      "label": "Living harbor water",
+      "default": true
+    },
+    {
+      "id": "mist",
+      "type": "boolean",
+      "label": "Drifting harbor mist",
+      "default": true
+    },
+    {
+      "id": "lights",
+      "type": "boolean",
+      "label": "Town window lights",
+      "default": true
+    },
+    {
+      "id": "wind",
+      "type": "boolean",
+      "label": "Coastal birds",
+      "default": true
+    }
   ]
 }

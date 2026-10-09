@@ -9,7 +9,7 @@
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const random = n => { const k = Math.sin(n * 127.1 + 311.7) * 43758.5453; return k - Math.floor(k); };
   const enabled = value => value !== false && value !== 'false';
-  let settings = { speed: 1, petals: 1, haze: true, lights: true, stars: true, ...api?.getSettings?.() };
+  let settings = { speed: 1, petals: 1, haze: true, reflections: true, lights: true, stars: true, ...api?.getSettings?.() };
   const number = (key, fallback, a, b) => Number.isFinite(Number(settings[key])) ? clamp(Number(settings[key]), a, b) : fallback;
   let time = preview ? clamp(Number(params.get('preview')) || 0, 0, 86400) : 0;
   let paused = preview, ready = false, fps = 30;
@@ -53,15 +53,25 @@
     c.save();
     c.beginPath(); c.rect(X(0), Y(.27), aw * .49, ah * .19); c.clip();
     for (let i = 0; i < 7; i++) {
-      const x = .22 + Math.sin(time * .085 + i * 2.1) * .1;
+      const x = .22 + Math.sin(time * .22 + i * 2.1) * .1;
       const y = .30 + i * .023, radius = aw * .13;
-      c.save(); c.translate(X(x), Y(y)); c.scale(1, .11);
+      c.save(); c.translate(X(x), Y(y)); c.scale(1, .15);
       const g = c.createRadialGradient(0, 0, 0, 0, 0, radius);
-      g.addColorStop(0, `rgba(215,174,211,${.11 + .035 * Math.sin(time * .25 + i)})`);
+      g.addColorStop(0, `rgba(215,174,211,${.14 + .04 * Math.sin(time * .25 + i)})`);
       g.addColorStop(1, 'rgba(215,174,211,0)');
       c.fillStyle = g; c.fillRect(-radius, -radius, radius * 2, radius * 2); c.restore();
     }
     c.restore();
+  }
+
+  function reflections() {
+    c.save();c.globalCompositeOperation='screen';
+    for(const [x,y] of [[.101,.87],[.14,.88],[.191,.87]]){
+      const radius=aw*.044,pulse=.15+.07*Math.sin(time*1.3+x*15);
+      c.save();c.translate(X(x),Y(y));c.scale(1,.40);
+      const light=c.createRadialGradient(0,0,0,0,0,radius);light.addColorStop(0,`rgba(255,182,103,${pulse})`);light.addColorStop(1,'rgba(255,168,91,0)');
+      c.fillStyle=light;c.fillRect(-radius,-radius,radius*2,radius*2);c.restore();
+    }c.restore();
   }
 
   function lights() { motion.lanterns(c,geometry(),time,[[.101,.838,.65],[.14,.777,.85],[.191,.815,.6],[.395,.433,.6],[.963,.50,.6]]); }
@@ -70,6 +80,7 @@
     if (!ready) return;
     c.drawImage(artwork, ox, oy, aw, ah);
     if (reduced.matches || number('speed', 1, 0, 2) === 0) return;
+    if (enabled(settings.reflections)) reflections();
     if (enabled(settings.haze)) haze();
     if (enabled(settings.lights)) lights();
     if (enabled(settings.stars)) stars();

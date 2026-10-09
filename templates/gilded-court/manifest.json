@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "gilded-court",
+  "name": "Gilded Court",
+  "description": "An original ivory-and-gold palace with an adult sapphire-robed sovereign, marching articulated guards, flowing gown and banners, animated fountain jets and ripples, warm palace illumination and drifting rose petals. Original generated artwork, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"procession","type":"boolean","label":"Marching royal guards","default":true},
+    {"id":"sovereign","type":"boolean","label":"Royal sovereign","default":true},
+    {"id":"cloth","type":"boolean","label":"Wind in the royal gown","default":true},
+    {"id":"banners","type":"boolean","label":"Flowing palace banners","default":true},
+    {"id":"fountain","type":"boolean","label":"Living fountain","default":true},
+    {"id":"lights","type":"boolean","label":"Golden palace illumination","default":true},
+    {"id":"petals","type":"slider","label":"Drifting rose petals","min":0,"max":2,"step":0.1,"default":1}
+  ]
+}

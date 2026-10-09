@@ -28,3 +28,7 @@ node build/check-inkbound-courier.mjs <temporary-folder>
 The shared capture validates desktop/portrait rendering, every setting and pause/resume. The scene check verifies stable character pixels with petals disabled, a 24-hour deterministic preview, reduced motion, speed zero, the 4K rendering budget and offline loading. These browser checks do not measure performance on every GPU or prove real desktop attachment.
 
 Animation revision 1.0.1 uses the shared offline motion helper, bundled as `motion.js` in each package. Its requestAnimationFrame clock honors 15/30/60 FPS budgets without recounting elapsed time. Regenerate identical helper copies with `python build/sync-living-scene-motion.py`; verify scheduling with `node build/check-living-scene-clock.mjs`.
+
+## 2026-10-09 animation refinement
+
+Stronger harbor texture refraction, broader moving haze and faster coastal birds; character preserved. See the [catalogue animation audit](motion-audit.md) for the sampling method and results.
