@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T19:24:14.389291+00:00",
+  "title": "Design System: Stratos Flight",
+  "extensions": {
+    "motion": [
+      {
+        "name": "rigid-flight-cycle",
+        "value": "26 seconds",
+        "purpose": "Two viewport-traversing formations offset by half a cycle; uniformly scaled rigid sprites with gentle banks."
+      },
+      {
+        "name": "engine-anchored-effects",
+        "value": "Twin nozzle-position contrails and restrained exhaust",
+        "purpose": "Keep effects attached to each transformed aircraft; never join trails across route resets."
+      },
+      {
+        "name": "default-rate",
+        "value": "30 FPS",
+        "purpose": "One host-controlled requestAnimationFrame clock, clamped to 1-60 FPS with pause, visibility and reduced-motion suspension."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Stratos Flight",
+    "overview": "This record applies only to Stratos Flight. Original fictional combat jets cross a blue-and-gold cloud sea in close and distant formations. A photographic cloud background, separate transparent aircraft and independently drifting vapor supply the material depth; rigid airframes carry the motion.",
+    "keyCharacteristics": [
+      "Photographic original background and true-alpha sprites.",
+      "Visible aircraft traversal with gentle banking.",
+      "Offline scene with host-controlled motion."
+    ],
+    "rules": [
+      {
+        "name": "The Rigid Airframe Rule",
+        "body": "Translate, uniformly scale and rotate the transparent aircraft sprite; preserve its wing, cockpit and tail geometry. Attach exhaust and contrails to the same transformed engine anchors.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Viewport Flight Rule",
+        "body": "Cover-crop the background independently while aircraft paths follow the viewport. Aircraft and vapor wrap after leaving view; do not connect contrails across a flight-path reset.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do keep aircraft motion visible independently of trails, exhaust and vapor.",
+      "Do preserve original prompts and artwork provenance.",
+      "Do honor pause, visibility, reduced motion and host frame-rate changes."
+    ],
+    "donts": [
+      "Don't stretch or deform the aircraft to imitate banking.",
+      "Don't add real-unit markings, branded designs or a HUD.",
+      "Don't present generated-asset provenance as legal clearance."
+    ]
+  }
+}

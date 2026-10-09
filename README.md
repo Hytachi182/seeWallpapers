@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.13.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.14.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**57 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**61 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -141,6 +141,14 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Inkbound Courier** is an original manga rooftop scene in ivory, midnight ink and vermilion, with an adult messenger overlooking a coastal town, wind-borne petals, drifting harbor mist and softly glowing windows. [Theme details](docs/inkbound-courier.md).
 
 **Satin Afterglow** is an original, fully clothed adult manga fashion scene on a twilight terrace, with a burgundy evening dress, rose petals, warm lanterns, distant city haze and gentle star glimmers. [Theme details](docs/satin-afterglow.md).
+
+**Stratos Flight** features original fictional combat jets moving in formation above sunlit clouds, with gentle banking, flight-path contrails, engine glow and drifting foreground vapor. [Theme details](docs/stratos-flight.md).
+
+**Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
+
+**Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
+
+**Gilded Court** is an original royal palace with a sapphire-robed sovereign, marching articulated guards, flowing gown and banners, fountain jets and ripples, golden illumination and rose petals. [Theme details](docs/gilded-court.md).
 
 **Velvet Circuit** is an original self-playing pinball machine with a chrome ball, reactive mechanical flippers, physical collisions, spring launches, illuminated bumpers, target banks and three-ball games. [Theme details](docs/velvet-circuit.md).
 

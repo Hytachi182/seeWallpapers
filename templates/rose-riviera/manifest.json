@@ -4,7 +4,7 @@
   "name": "Rose Riviera",
   "description": "An original rose-pink fashion miniature overlooking the sea: a curved coastal villa, turquoise pool, tropical garden, pearlescent convertible and original adult fashion figurines. Animated water reflections, drifting bougainvillea petals, champagne lights and delicate glints. Generated original artwork, entirely offline.",
   "author": "seeWallpaper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "category": "Lifestyle",
   "engine": "web",
   "entry": "index.html",
@@ -13,7 +13,7 @@
   "settings": [
     {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
     {"id":"petals","type":"slider","label":"Drifting rose petals","min":0,"max":2,"step":0.1,"default":1},
-    {"id":"water","type":"boolean","label":"Pool reflections","default":true},
+    {"id":"water","type":"boolean","label":"Pool and coastal water","default":true},
     {"id":"lights","type":"boolean","label":"Champagne lighting","default":true},
     {"id":"glints","type":"boolean","label":"Delicate sparkle","default":true}
   ]

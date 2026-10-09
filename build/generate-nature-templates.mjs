@@ -73,13 +73,16 @@ void main(){
   float slope=clamp((ridge-uv.y)*8.,0.,1.);
   vec3 sand=mix(accent*.11,accent*(.37+.075*f),pow(1.-slope,2.));
   float grains=noise(vec2(p.x*260.,uv.y*240.));
-  float ripples=sin(p.x*105.+uv.y*88.+noise(p*10.)*7.-time*.055);
+  float ripples=sin(p.x*105.+uv.y*88.+noise(p*10.)*7.-time*.85);
   sand*=.90+.10*grains+.04*ripples;
   sand+=accent*exp(-abs(uv.y-ridge)*220.)*.14;
   col=mix(col,sand,1.-smoothstep(ridge-.001,ridge+.001,uv.y));
  }
- float dust=pow(fbm(p*7.+vec2(time*.012,-time*.006)),4.);
- col+=accent*dust*.07*intensity;
+ float dust=pow(fbm(p*7.+vec2(time*.19,-time*.036)),4.);
+ col+=accent*dust*.24*intensity;
+ float windMask=1.-smoothstep(.37,.45,uv.y);
+ float streams=pow(max(0.,sin(p.x*18.+uv.y*58.-time*1.7+noise(vec2(p.x*5.-time*.22,uv.y*9.))*3.)),7.);
+ col+=accent*streams*.085*windMask*intensity;
  gl_FragColor=vec4(finish(col,uv),1.);
 }`;
 const fireflies = `${common}
@@ -117,7 +120,7 @@ const templates = [
 for (const template of templates) {
  const directory=path.join(root,'templates',template.id); await mkdir(directory,{recursive:true});
  const settings=[{id:'color',type:'color',label:'Scene accent',default:template.color},{id:'speed',type:'slider',label:'Animation speed',min:.1,max:2,step:.1,default:1},{id:'intensity',type:'slider',label:'Light intensity',min:.3,max:2,step:.1,default:1}];
- const manifest={schemaVersion:1,id:template.id,name:template.name,description:template.description,author:'seeWallpaper',version:'1.0.0',category:'Nature',engine:'web',entry:'index.html',preview:'preview.jpg',performance:'medium',settings};
+ const manifest={schemaVersion:1,id:template.id,name:template.name,description:template.description,author:'seeWallpaper',version:template.id==='moonlit-dunes'?'1.0.1':'1.0.0',category:'Nature',engine:'web',entry:'index.html',preview:'preview.jpg',performance:'medium',settings};
  await writeFile(path.join(directory,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
  await writeFile(path.join(directory,'scene.js'),runtime);
  await writeFile(path.join(directory,'index.html'),`<!doctype html>

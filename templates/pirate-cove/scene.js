@@ -104,6 +104,9 @@
       points.forEach(([x,y], i) => i ? c.lineTo(X(x),Y(y)) : c.moveTo(X(x),Y(y))); c.closePath();
     }
     c.clip();
+    c.save();c.globalCompositeOperation='source-over';
+    for(const points of channels)window.seeLivingMotion.water(c,{aw,ah,ox,oy},art,time,points,{strength:1.7,light:'#bcecff'});
+    c.restore();
     for (let i = 0; i < 22; i++) {
       const ny = 0.45 + i * 0.01, wobble = Math.sin(time * 2 + i * 1.3) * 0.006, width = S(0.02 + Math.sin(time * 1.5 + i) * 0.006 + i * 0.002);
       c.fillStyle = rgba('#ffd59a', (0.2 - i * 0.007) * intensity()); c.fillRect(X(0.19 + wobble) - width / 2, Y(ny), width, Math.max(1, S(0.0015)));
@@ -141,9 +144,9 @@
   // Seagulls gliding and flapping across the sky.
   function gulls(time) {
     for (let i = 0; i < 3; i++) {
-      const cycle = 40 + rnd(i + 60) * 30, p = ((time + rnd(i + 70) * cycle) % cycle) / cycle, dir = i % 2 ? 1 : -1;
+      const cycle = 24 + rnd(i + 60) * 16, p = ((time + rnd(i + 70) * cycle) % cycle) / cycle, dir = i % 2 ? 1 : -1;
       const nx = dir > 0 ? -0.05 + p * 0.82 : 0.77 - p * 0.82, ny = 0.06 + rnd(i + 80) * 0.2 + Math.sin(p * TAU * 2 + i) * 0.015;
-      const span = S(0.0025 + rnd(i + 90) * 0.0015), flap = Math.sin(time * 5 + i * 2) * span * 0.5;
+      const span = S(0.0045 + rnd(i + 90) * 0.0020), flap = Math.sin(time * 5 + i * 2) * span * 0.5;
       c.beginPath(); c.moveTo(X(nx) - span, Y(ny) - flap); c.quadraticCurveTo(X(nx) - span * 0.4, Y(ny) - span * 0.35, X(nx), Y(ny));
       c.quadraticCurveTo(X(nx) + span * 0.4, Y(ny) - span * 0.35, X(nx) + span, Y(ny) - flap);
       c.strokeStyle = 'rgba(34,45,57,.48)'; c.lineWidth = Math.max(0.65, span * 0.16); c.lineCap = 'round'; c.stroke();

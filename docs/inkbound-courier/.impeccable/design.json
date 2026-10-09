@@ -1,53 +1,51 @@
 {
-    "schemaVersion":  2,
-    "generatedAt":  "2026-10-08T17:56:23.8810575+00:00",
-    "title":  "Design System: Inkbound Courier",
-    "extensions":  {
-                       "motion":  [
-                                      {
-                                          "name":  "atmosphere-only",
-                                          "value":  "Canvas petals, sky trails, harbor mist and window light",
-                                          "purpose":  "Move the atmosphere while preserving the original character and buildings."
-                                      },
-                                      {
-                                          "name":  "default-rate",
-                                          "value":  "30 FPS",
-                                          "purpose":  "Host-controlled rate, clamped to 1â€“60 FPS; pause, hidden document, reduced motion and speed zero stop the loop."
-                                      }
-                                  ]
-                   },
-    "components":  [
-
-                   ],
-    "narrative":  {
-                      "northStar":  "Inkbound Courier",
-                      "overview":  "This document describes this local wallpaper theme only. A detailed adult messenger sits above a fictional coastal town, with fine ink hatching, paper texture and restrained vermilion accents. The illustration remains stable while the surrounding atmosphere moves.",
-                      "keyCharacteristics":  [
-                                                 "Full-bleed raster illustration.",
-                                                 "Quiet motion around a stable character.",
-                                                 "Offline rendering with host-controlled settings."
-                                             ],
-                      "rules":  [
-                                    {
-                                        "name":  "The Face-Preserving Crop Rule",
-                                        "body":  "Fill the viewport with a cover crop positioned at 65% horizontally and 50% vertically. Desktop retains the bay and messenger; portrait retains the face and seated pose while cropping peripheral scenery.",
-                                        "section":  "layout"
-                                    },
-                                    {
-                                        "name":  "The Stable Illustration Rule",
-                                        "body":  "Keep the character, clothing, scarf and buildings undeformed. Motion belongs to the atmospheric overlays.",
-                                        "section":  "elevation"
-                                    }
-                                ],
-                      "dos":  [
-                                  "Do preserve the face in portrait crops.",
-                                  "Do keep animation restrained and controlled by host lifecycle and reduced motion.",
-                                  "Do retain the prompt and provenance record with the original artwork."
-                              ],
-                      "donts":  [
-                                    "Don\u0027t add a HUD or deform the character illustration.",
-                                    "Don\u0027t substitute existing franchise imagery, manga scans or downloaded music.",
-                                    "Don\u0027t present generation provenance as a legal guarantee."
-                                ]
-                  }
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T07:17:13.050964+00:00",
+  "title": "Design System: Inkbound Courier",
+  "extensions": {
+    "motion": [
+      {
+        "name": "atmosphere-only",
+        "value": "Gust-driven petals, stronger harbor source-row refraction, faster coastal birds, broader advecting harbor mist and window light",
+        "purpose": "Move the atmosphere while preserving the original character and buildings."
+      },
+      {
+        "name": "default-rate",
+        "value": "30 FPS",
+        "purpose": "Host-controlled requestAnimationFrame clock clamped to 1-60 FPS; elapsed time is accumulated once. Pause, hidden document, reduced motion and speed zero stop the loop."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Inkbound Courier",
+    "overview": "This document describes this local wallpaper theme only. A detailed adult messenger sits above a fictional coastal town, with fine ink hatching, paper texture and restrained vermilion accents. The illustration remains stable while the surrounding atmosphere moves.",
+    "keyCharacteristics": [
+      "Full-bleed raster illustration.",
+      "Quiet motion around a stable character.",
+      "Offline rendering with host-controlled settings."
+    ],
+    "rules": [
+      {
+        "name": "The Face-Preserving Crop Rule",
+        "body": "Fill the viewport with a cover crop positioned at 65% horizontally and 50% vertically. Desktop retains the bay and messenger; portrait retains the face and seated pose while cropping peripheral scenery.",
+        "section": "layout"
+      },
+      {
+        "name": "The Stable Illustration Rule",
+        "body": "Keep the character, clothing, scarf and buildings undeformed. Motion belongs to the atmospheric overlays.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the face in portrait crops.",
+      "Do keep animation restrained and controlled by host lifecycle and reduced motion.",
+      "Do retain the prompt and provenance record with the original artwork."
+    ],
+    "donts": [
+      "Don't add a HUD or deform the character illustration.",
+      "Don't substitute existing franchise imagery, manga scans or downloaded music.",
+      "Don't present generation provenance as a legal guarantee."
+    ]
+  }
 }

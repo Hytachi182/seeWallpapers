@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T19:50:25.589176+00:00",
+  "title": "Design System: Emberwatch Knight",
+  "extensions": {
+    "motion": [
+      {
+        "name": "patrol-routine",
+        "value": "36 seconds",
+        "purpose": "Two 18-second passages, each comprising 9s walk, 2s guard, 4s sword practice and 3s idle; the second walk returns."
+      },
+      {
+        "name": "jointed-character",
+        "value": "Arm joints, two-bone leg IK and upper-anchored cape strips",
+        "purpose": "Animate body poses independently of the surrounding mist, flames and embers."
+      },
+      {
+        "name": "default-rate",
+        "value": "30 FPS",
+        "purpose": "One host-controlled requestAnimationFrame clock clamped to 1-60 FPS; pause, hidden document, speed zero and reduced motion freeze the scene."
+      }
+    ]
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Emberwatch Knight",
+    "overview": "This record applies only to Emberwatch Knight. An original armored knight patrols a twilight stone terrace, pauses in guard and practices controlled sword movements. Twelve transparent painted atlas pieces supply steel, brass and teal fabric; articulated joints supply character motion independently of the surrounding atmosphere.",
+    "keyCharacteristics": [
+      "Original cinematic courtyard and transparent modular armor.",
+      "Visible patrol, guard, sword practice and idle poses.",
+      "Offline scene with host-controlled motion."
+    ],
+    "rules": [
+      {
+        "name": "The Joined Armor Rule",
+        "body": "Keep atlas components assembled at their shoulder, elbow, hip and knee joints. Preserve the closed helmet and painted armor silhouettes; inspect atlas regions after any asset replacement.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Terrace Patrol Rule",
+        "body": "Cover-crop the background independently while the knight follows viewport ground placement. Shorten the patrol span and scale the figure for portrait, retaining helmet, shield and sword.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do keep body-pose changes independent of flames, mist and embers.",
+      "Do preserve the original prompts and artwork provenance.",
+      "Do honor pause, visibility, reduced motion and host frame-rate changes."
+    ],
+    "donts": [
+      "Don't leave isolated atlas fragments or crop neighboring components into a limb.",
+      "Don't add franchise motifs, logos, real-world heraldry or a HUD.",
+      "Don't present generated-asset provenance as legal clearance."
+    ]
+  }
+}

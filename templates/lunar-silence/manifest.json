@@ -4,7 +4,7 @@
   "name": "Lunar Silence",
   "description": "A lone astronaut on the lunar surface beneath a slowly turning blue Earth, with twinkling stars, shooting stars, a passing satellite and drifting moon dust.",
   "author": "seeWallpaper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "category": "Space",
   "engine": "web",
   "entry": "index.html",
@@ -43,6 +43,12 @@
       "max": 2,
       "step": 0.1,
       "default": 1
+    },
+    {
+      "id": "rover",
+      "type": "boolean",
+      "label": "Patrolling lunar rover",
+      "default": true
     }
   ]
 }

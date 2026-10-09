@@ -3,6 +3,7 @@ name: Inkbound Courier
 description: Original manga rooftop illustration with quiet atmospheric animation.
 colors:
   vermilion: "#b64034"
+  drifting-petal: "#a94035"
   paper-fallback: "#eee4ce"
 ---
 
@@ -26,7 +27,8 @@ The original raster was generated for this theme. Preserve the [generation promp
 
 ### Primary
 
-- **Vermilion:** tumbling petals and the selection accent echo the scarf and flowers in the illustration.
+- **Vermilion:** the selection accent echoes the scarf and flowers in the illustration.
+- **Drifting petal:** the warm red petal overlay follows the same illustrated palette.
 
 ### Neutral
 
@@ -45,7 +47,7 @@ The canvas fills the viewport without margins or scrollbars. Render dimensions a
 
 ## Elevation & Depth
 
-Depth comes from the raster's layered rooftops, harbor and mountains, not CSS shadows. Three petal depths, faint sky trails, harbor-local mist and small window glows add atmosphere without replacing the illustrated materials.
+Depth comes from the raster's layered rooftops, harbor and mountains, not CSS shadows. Three petal depths share a gust-driven drift. Stronger source-pixel row refraction moves the distant harbor water; coastal birds cross the open sky more frequently. Broader, faster harbor-local mist and window glows complete the setting without replacing its illustrated materials.
 
 **The Stable Illustration Rule.** Keep the character, clothing, scarf and buildings undeformed. Motion belongs to the atmospheric overlays.
 
@@ -53,13 +55,13 @@ Depth comes from the raster's layered rooftops, harbor and mountains, not CSS sh
 
 ### Offline scene
 
-The scene is a single image-backed Canvas surface with an accessible image description. It has no local controls. Speed, petal density, mist, lights and wind are exposed through the template manifest and `window.seeWallpaper` SDK.
+The scene is a single image-backed Canvas surface with an accessible image description. It has no local controls. Speed, petal density, harbor water, mist, lights and coastal birds are exposed through the template manifest and `window.seeWallpaper` SDK.
 
 Respect host pause/resume, visibility and FPS changes. The default animation rate is 30 FPS; host rates are clamped to 1–60 FPS. Reduced motion and speed zero render the unmodified illustration. Avoid external fonts, libraries and network assets.
 
 Validation scripts and their invocation are recorded in [Build and verification](../inkbound-courier.md#build-and-verification). They cover desktop/portrait settings and lifecycle, stable character pixels, reduced motion, speed zero, long-running deterministic previews, the 4K rendering budget and offline loading. Browser checks do not establish performance on every GPU or real desktop attachment.
 
-The 2026-10-08 delivery checks passed those browser cases and all 57 manifest-validator tests. Package CRC and file equality were verified; the five installed template files matched SHA256 hashes. Both rasters carried provenance metadata. Actual desktop attachment and frame-time performance remain unmeasured.
+The shared offline motion helper is bundled as `motion.js`. Its requestAnimationFrame clock accumulates elapsed time once and respects the host frame-rate budget. Deterministic desktop/portrait captures and character-stability checks cover the refinement; they do not establish subjective continuous-playback quality or physical desktop performance.
 
 ## Do's and Don'ts
 

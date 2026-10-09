@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "emberwatch-knight",
+  "name": "Emberwatch Knight",
+  "description": "An original articulated armored knight patrols a twilight castle terrace, raises a shield and practices sword flourishes. Separate armor pieces, moving joints, wind-driven teal cape, torches, mist and embers. Original generated artwork, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"training","type":"boolean","label":"Sword and shield practice","default":true},
+    {"id":"cape","type":"boolean","label":"Wind-driven cape","default":true},
+    {"id":"torches","type":"boolean","label":"Torch flames","default":true},
+    {"id":"mist","type":"boolean","label":"Valley mist","default":true},
+    {"id":"embers","type":"boolean","label":"Drifting embers","default":true}
+  ]
+}
