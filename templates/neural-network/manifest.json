@@ -4,7 +4,7 @@
   "name": "Neural Network",
   "description": "A rotating three-dimensional neural constellation with connected nodes and traveling synaptic pulses.",
   "author": "seeWallpaper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "category": "Tech",
   "engine": "web",
   "entry": "index.html",

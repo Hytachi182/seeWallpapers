@@ -213,6 +213,15 @@
     const mx = width * 0.70, my = height * 0.25, mr = Math.min(width, height) * 0.095;
     glow(mx, my, mr * 5, tint, 0.18); circle(mx, my, mr, tint);
     for (let i = 0; i < 24; i++) circle(mx + (random(i + 3) - 0.5) * mr * 1.4, my + (random(i + 9) - 0.5) * mr * 1.4, mr * (0.02 + random(i + 70) * 0.13), '#40395b12');
+    // Thin clouds drift across the moon at different heights and speeds.
+    for (let i = 0; i < 4; i++) {
+      const span = width * 1.8, cx = ((random(i + 500) * span + t * width * (0.006 + i * 0.003)) % span) - width * 0.4, cy = height * (0.16 + i * 0.06);
+      for (let k = 0; k < 5; k++) {
+        const px = cx + (k - 2) * width * 0.045, py = cy + Math.sin(k * 1.7 + i) * height * 0.008, rx = width * (0.05 + random(i * 9 + k) * 0.04);
+        const g = ctx.createRadialGradient(px, py, 0, px, py, rx); g.addColorStop(0, rgba(tint, 0.10)); g.addColorStop(1, rgba(tint, 0));
+        ctx.save(); ctx.translate(px, py); ctx.scale(1, 0.22); ctx.translate(-px, -py); ctx.fillStyle = g; ctx.fillRect(px - rx, py - rx, rx * 2, rx * 2); ctx.restore();
+      }
+    }
     for (let layer = 0; layer < 3; layer++) {
       ctx.fillStyle = ['#1c1d36', '#14192c', '#0a1425'][layer]; ctx.beginPath(); ctx.moveTo(0, height);
       for (let x = 0; x <= width + 20; x += 20) ctx.lineTo(x, height * (0.61 + layer * 0.09) + Math.sin(x / (width * 0.13) + layer * 2) * height * 0.06 + Math.cos(x / (width * 0.28) + layer) * height * 0.05);
@@ -226,14 +235,17 @@
     line(tx - tw * 0.85, ty - tw * 0.09, tx + tw * 0.85, ty - tw * 0.09, '#080d1b', tw * 0.10);
     line(tx - tw * 0.73, ty + tw * 0.13, tx + tw * 0.73, ty + tw * 0.13, '#080d1b', tw * 0.06);
     // Deterministic branching canopy: the branches are never regenerated on a frame.
+    // Night breeze: outer twigs bend more than the trunk, so the canopy sways as one tree.
+    const breeze = Math.sin(t * 0.55) * 0.6 + Math.sin(t * 1.35 + 1) * 0.25;
     function branch(x, y, len, a, depth, seed) {
+      a += breeze * 0.012 * (7 - depth);
       const ex = x + Math.cos(a) * len, ey = y + Math.sin(a) * len;
       line(x, y, ex, ey, depth > 2 ? '#090e1c' : '#282033', Math.max(1, depth * depth * 0.7));
       if (depth > 0) {
         branch(ex, ey, len * 0.73, a - 0.30 - random(seed) * 0.28, depth - 1, seed + 7);
         branch(ex, ey, len * 0.64, a + 0.4 + random(seed + 1) * 0.24, depth - 1, seed + 13);
       } else for (let i = 0; i < 12; i++) {
-        const bx = ex + (random(seed + i * 6) - 0.5) * len * 2.5, by = ey + (random(seed + i * 8) - 0.5) * len * 1.5;
+        const bx = ex + (random(seed + i * 6) - 0.5) * len * 2.5 + Math.sin(t * 1.9 + seed + i) * 1.6, by = ey + (random(seed + i * 8) - 0.5) * len * 1.5 + Math.cos(t * 1.6 + i) * 1.2;
         circle(bx, by, 2 + random(seed + i) * 4, rgba(i % 4 ? '#d992b8' : tint, 0.45 + random(i + seed) * 0.30));
       }
     }
@@ -242,6 +254,14 @@
       const x = (random(i + 300) * (width + 60) + t * (9 + random(i) * 12)) % (width + 60) - 30;
       const y = (random(i + 100) * (height + 60) + t * (6 + random(i + 2) * 12)) % (height + 60) - 30;
       ctx.save(); ctx.translate(x + Math.sin(t * 0.7 + i) * 16, y); ctx.rotate(t * 0.5 + i); ctx.fillStyle = rgba('#efb8d2', 0.25 + random(i) * 0.55); ctx.beginPath(); ctx.ellipse(0, 0, 2 + random(i) * 4, 1.3 + random(i) * 1.5, 0, 0, TAU); ctx.fill(); ctx.restore();
+    }
+    // A periodic gust strips a stream of petals from the canopy towards the torii.
+    const gust = (t / 14) % 1;
+    if (gust < 0.4) for (let i = 0; i < 46 * settings.petalDensity; i++) {
+      const p = gust / 0.4 * 1.3 - random(i + 900) * 0.3; if (p < 0 || p > 1) continue;
+      const x = width * (0.12 + p * 1.0), y = height * (0.22 + random(i + 901) * 0.42) + p * height * 0.12 + Math.sin(p * 9 + i) * height * 0.02;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(t * 2 + i); ctx.fillStyle = rgba('#f4c2da', Math.sin(p * Math.PI) * (0.4 + random(i) * 0.5));
+      ctx.beginPath(); ctx.ellipse(0, 0, 2.5 + random(i + 3) * 3.5, 1.4 + random(i + 4) * 1.3, 0, 0, TAU); ctx.fill(); ctx.restore();
     }
   }
   const hud = document.querySelector('main');

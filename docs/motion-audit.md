@@ -84,6 +84,18 @@ Before/after samples use the same short capture protocol. Results can vary with 
 | Digital Rain 3D | Matrix | 46.487% |
 | Stellar Drift | Space | 63.622% |
 
+## Follow-up audit - 2026-10-11
+
+All 65 themes were sampled again with the same protocol. The low scorers already confirmed over 18 seconds on 2026-10-09 (Meteor Shower, Velvet Circuit, Alpine Thunderstorm, Dungeon Loop, Pixel Defender, and the self-playing games) were left unchanged. Three quiet scenes with little visible motion were strengthened:
+
+| Theme | Before changed pixels | After changed pixels | Change |
+| --- | ---: | ---: | --- |
+| Firefly Grove 1.1.0 | 1.527% | 9.286% | 44 fireflies on looping, darting flight paths with soft halos; light shafts that sweep and breathe; two drifting mist layers; foreground grass bending in gusts. |
+| Sakura Night 1.2.0 | 3.411% | 14.192% | Canopy sways in the night breeze (outer twigs more than the trunk); soft moonlit clouds drift past; a petal gust streams towards the torii every 14 seconds. |
+| Winter Snowfall 1.1.0 | 0.421% | 2.253% | Chimney smoke following the wind setting, flickering fireplace glow in the chalet's five lit windows, valley mist over the lake and snow shed from branches. New `chalet` toggle. |
+
+Sakura Night's change lives in the shared `build/template-scene.js` runtime; the five other scenes using it (AI Core, Data Tunnel, Neural Network, Operations Center, Rainy Window) were re-sampled, with unchanged motion and no errors.
+
 ## Reproduce
 
 ```powershell

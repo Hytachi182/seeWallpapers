@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.14.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.15.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**61 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**65 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -143,6 +143,14 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Satin Afterglow** is an original, fully clothed adult manga fashion scene on a twilight terrace, with a burgundy evening dress, rose petals, warm lanterns, distant city haze and gentle star glimmers. [Theme details](docs/satin-afterglow.md).
 
 **Stratos Flight** features original fictional combat jets moving in formation above sunlit clouds, with gentle banking, flight-path contrails, engine glow and drifting foreground vapor. [Theme details](docs/stratos-flight.md).
+
+**Midnight Drive** follows an original sports coupe along an elevated city highway at dusk, with spinning wheels, live suspension, streetlight reflections on the paint, headlight beams, tail light trails, passing traffic and wet asphalt. Optional moonlit night and rain. [Theme details](docs/midnight-drive.md).
+
+**Lofi Hideaway** is a cozy late-night room with a sleeping cat breathing on the windowsill, rain trickling down the glass over a blurred city, a spinning record with floating notes, a steaming mug, a warm desk lamp, fairy lights and passing car lights. [Theme details](docs/lofi-hideaway.md).
+
+**Snowglow Village** is a snowy Christmas village at night with a decorated tree and glowing star, a toy train circling it, chasing roof lights, chimney smoke, a snowman, falling snow and Santa's sleigh crossing the moon. [Theme details](docs/snowglow-village.md).
+
+**Stormwatch Lighthouse** braves a night storm at sea: a rotating lantern beam sweeps the waves, layered swells burst into spray against the cliff, lightning forks through racing clouds, rain lashes sideways and a fishing boat rides the swell. [Theme details](docs/stormwatch-lighthouse.md).
 
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 

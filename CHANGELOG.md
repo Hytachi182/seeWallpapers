@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+## 1.15.0 - 2026-10-11
+
+<!-- generated-release:start -->
+### Changes since v1.14.0
+
+Built-in catalogue: **65 wallpapers**.
+
+#### New wallpapers
+
+- **Lofi Hideaway** (`lofi-hideaway`): A cozy late-night room for focus: a sleeping cat breathing on the windowsill, rain trickling down the glass over a blurred city, a spinning vinyl record with floating notes, a steaming mug, a warm desk lamp, twinkling fairy lights, swaying plants and passing car lights. Code-drawn, entirely offline.
+- **Midnight Drive** (`midnight-drive`): An original fictional sports coupe cruising an elevated city highway at dusk. Spinning wheels, live suspension, streetlight reflections gliding along the paintwork, headlight beams, long-exposure tail light trails, passing traffic, a parallax skyline and wet asphalt. Optional moonlit night and rain. Code-drawn, entirely offline.
+- **Snowglow Village** (`snowglow-village`): A snowy Christmas village at night: a towering decorated tree with twinkling lights and a glowing star, a toy train circling it, chasing roof lights, warm windows, chimney smoke, a snowman, street lamps, layered snowfall and Santa's sleigh crossing the moonlit sky. Code-drawn, entirely offline.
+- **Stormwatch Lighthouse** (`stormwatch-lighthouse`): A striped lighthouse on a sea cliff holds its ground through a night storm. A rotating lantern beam sweeps over the waves and flares toward the viewer, layered swells roll in, waves burst into spray against the rocks, lightning splits racing clouds, rain lashes sideways and a fishing boat rides the swell. Code-drawn, entirely offline.
+
+#### Updated wallpapers
+
+- **AI Core** (`ai-core`): A holographic reactor with a rotating spherical lattice, orbital machinery and a pulsing energy core.
+- **Data Tunnel** (`data-tunnel`): An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry.
+- **Firefly Grove** (`firefly-grove`): Fireflies loop and dart between shadowed trees, with breathing shafts of light, two layers of drifting mist and foreground grass bending in the breeze.
+- **Neural Network** (`neural-network`): A rotating three-dimensional neural constellation with connected nodes and traveling synaptic pulses.
+- **Operations Center** (`operations-center`): A holographic operations wallpaper with a live clock, real CPU / RAM history, uptime and power status.
+- **Rainy Window** (`rainy-window`): A cinematic neon skyline through rain-streaked glass, with refracted droplets and city reflections.
+- **Sakura Night** (`sakura-night`): A moonlit Japanese landscape with a branching cherry canopy, mountain silhouettes, a torii and drifting petals. The canopy sways in the night breeze, thin clouds cross the moon and periodic gusts sweep streams of petals towards the torii.
+- **Winter Snowfall** (`winter-snowfall`): Photographic snowfall in a quiet alpine forest at blue hour. Fine distant snow, drifting midground flakes and softly defocused foreground snow fall at different speeds with gentle wind gusts over an original snowy chalet photograph, with chimney smoke, flickering fireplace windows, valley mist and snow shed from branches. Entirely offline.
+
+#### Development changes
+
+- feat: add Stormwatch Lighthouse wallpaper
+- feat: strengthen motion in Firefly Grove, Sakura Night and Winter Snowfall
+- feat: add Midnight Drive, Lofi Hideaway and Snowglow Village wallpapers
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.14.0...v1.15.0)
+<!-- generated-release:end -->
+
 ## 1.14.0 - 2026-10-09
 
 <!-- generated-release:start -->
