@@ -51,6 +51,7 @@
     if(!ready||failed)return;c.globalAlpha=1;
     const cover=Math.max(w/photo.naturalWidth,h/photo.naturalHeight),aw=photo.naturalWidth*cover,ah=photo.naturalHeight*cover;
     c.drawImage(photo,(w-aw)/2,(h-ah)/2,aw,ah);
+    if(on(settings.chalet))chalet((w-aw)/2,(h-ah)/2,aw,ah);
     const scale=Math.max(.35,Math.min(w,h)/1080),size=num(settings.size,1,.5,1.8),focus=on(settings.focus);
     for(const f of flakes){
       if(f.layer===2&&!on(settings.foreground))continue;
@@ -60,6 +61,42 @@
       const r=f.r*scale*size,stamp=focus?(f.layer===2?near:f.layer===0?soft:crisp):crisp;
       c.drawImage(stamp,f.x*w-r*2,f.y*h-r*2,r*4,r*4);
     }c.globalAlpha=1;
+  }
+  // Chalet life, mapped onto the photograph: chimney top and lit window centres in image fractions.
+  const CHIMNEY=[.481,.475],WINDOWS=[[.433,.599,.016,.032],[.502,.579,.012,.028],[.529,.575,.012,.028],[.502,.645,.019,.03],[.557,.635,.009,.028]];
+  const BRANCHES=[[.09,.31],[.04,.6],[.93,.44],[.72,.33]];
+  function chalet(ox,oy,aw,ah){
+    const wind=num(settings.wind,.35,-2,2),X=x=>ox+x*aw,Y=y=>oy+y*ah;
+    c.save();c.globalCompositeOperation='screen';
+    WINDOWS.forEach(([x,y,ww,wh],i)=>{
+      const flicker=.55+.25*Math.sin(time*6.3+i*2.1)+.15*Math.sin(time*11.7+i)+.1*Math.sin(time*2.1+i*4);
+      const r=Math.max(ww,wh)*aw*1.6,g=c.createRadialGradient(X(x),Y(y),0,X(x),Y(y),r);
+      g.addColorStop(0,`rgba(255,170,80,${.32*flicker})`);g.addColorStop(1,'rgba(255,150,60,0)');c.fillStyle=g;c.fillRect(X(x)-r,Y(y)-r,r*2,r*2);
+    });
+    // Valley mist drifting slowly across the lake.
+    for(let i=0;i<4;i++){
+      const phase=((time*(.012+i*.004)+i*.27)%1.4+1.4)%1.4-.2,mx=X(phase),my=Y(.455+i*.012),rx=aw*(.18+i*.05),ry=ah*.018;
+      const g=c.createRadialGradient(mx,my,0,mx,my,rx);g.addColorStop(0,'rgba(170,190,220,.10)');g.addColorStop(1,'rgba(170,190,220,0)');
+      c.fillStyle=g;c.save();c.translate(mx,my);c.scale(1,ry/rx);c.translate(-mx,-my);c.fillRect(mx-rx,my-rx,rx*2,rx*2);c.restore();
+    }
+    c.restore();
+    const unit=ah/941;
+    for(let j=0;j<14;j++){
+      const p=((time*.09)+j/14)%1,r=(7+p*36)*unit;
+      const sx=X(CHIMNEY[0])+(wind*.6+.25)*p*120*unit+Math.sin(time*.9+j*1.7)*6*unit*p,sy=Y(CHIMNEY[1])-p*190*unit;
+      c.globalAlpha=.34*(1-p)*Math.min(1,p*8);c.fillStyle='#d3dbe8';c.beginPath();c.ellipse(sx,sy,r,r*.8,0,0,Math.PI*2);c.fill();
+    }
+    // Every few seconds a branch somewhere sheds a clump of snow.
+    BRANCHES.forEach(([bx,by],i)=>{
+      const period=9+i*2.7,p=((time+i*3.1)/period)%1;if(p>.3)return;
+      const t=p*period;
+      for(let k=0;k<22;k++){
+        const a=(k*2.399)%6.283,spread=(.4+((k*37)%11)/11)*18*unit;
+        const px=X(bx)+Math.cos(a)*spread*t+wind*t*12*unit,py=Y(by)+Math.sin(a)*spread*.4*t+t*t*140*unit;
+        c.globalAlpha=Math.max(0,.75*(1-t/(period*.3)));c.fillStyle='#eef3fa';c.beginPath();c.arc(px,py,(1.2+(k%3))*unit*1.4,0,Math.PI*2);c.fill();
+      }
+    });
+    c.globalAlpha=1;
   }
   function stop(){clearTimeout(timer);cancelAnimationFrame(frame);last=0;accumulator=0;}
   function animate(now){

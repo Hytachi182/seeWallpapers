@@ -9,7 +9,7 @@ const descriptions = {
   'ai-core': 'A holographic reactor with a rotating spherical lattice, orbital machinery and a pulsing energy core.',
   'data-tunnel': 'An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry.',
   'neural-network': 'A rotating three-dimensional neural constellation with connected nodes and traveling synaptic pulses.',
-  'sakura-night': 'A moonlit Japanese landscape with a branching cherry canopy, mountain silhouettes, a torii and drifting petals.',
+  'sakura-night': 'A moonlit Japanese landscape with a branching cherry canopy, mountain silhouettes, a torii and drifting petals. The canopy sways in the night breeze, thin clouds cross the moon and periodic gusts sweep streams of petals towards the torii.',
   'rainy-window': 'A cinematic neon skyline through rain-streaked glass, with refracted droplets and city reflections.',
   'operations-center': 'A holographic operations wallpaper with a live clock, real CPU / RAM history, uptime and power status.'
 };
@@ -23,7 +23,7 @@ const hud = `<main aria-label="Live system metrics">
 for (const [id, description] of Object.entries(descriptions)) {
   const directory = path.join(root, 'templates', id);
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'));
-  manifest.description = description; manifest.version = '1.1.0'; manifest.performance = 'medium';
+  manifest.description = description; manifest.version = id === 'sakura-night' ? '1.2.0' : '1.1.0'; manifest.performance = 'medium';
   const defaults = Object.fromEntries(manifest.settings.map(setting => [setting.id, setting.default]));
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
