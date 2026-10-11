@@ -4,7 +4,7 @@
   "name": "Data Tunnel",
   "description": "An octagonal data tunnel with perspective, moving light trails and cyan / coral circuitry.",
   "author": "seeWallpaper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "category": "Matrix",
   "engine": "web",
   "entry": "index.html",

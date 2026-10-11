@@ -23,7 +23,7 @@ const hud = `<main aria-label="Live system metrics">
 for (const [id, description] of Object.entries(descriptions)) {
   const directory = path.join(root, 'templates', id);
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'));
-  manifest.description = description; manifest.version = id === 'sakura-night' ? '1.2.0' : '1.1.0'; manifest.performance = 'medium';
+  manifest.description = description; manifest.version = id === 'sakura-night' ? '1.2.0' : '1.1.1'; manifest.performance = 'medium';
   const defaults = Object.fromEntries(manifest.settings.map(setting => [setting.id, setting.default]));
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

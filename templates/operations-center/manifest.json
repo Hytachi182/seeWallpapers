@@ -4,7 +4,7 @@
   "name": "Operations Center",
   "description": "A holographic operations wallpaper with a live clock, real CPU / RAM history, uptime and power status.",
   "author": "seeWallpaper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "category": "Tech",
   "engine": "web",
   "entry": "index.html",

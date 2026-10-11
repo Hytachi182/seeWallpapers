@@ -3,14 +3,24 @@
   "tag": "v1.15.0",
   "base_tag": "v1.14.0",
   "release_required": true,
-  "template_count": 64,
+  "template_count": 65,
   "added": [
     "lofi-hideaway",
     "midnight-drive",
-    "snowglow-village"
+    "snowglow-village",
+    "stormwatch-lighthouse"
   ],
-  "updated": [],
+  "updated": [
+    "ai-core",
+    "data-tunnel",
+    "firefly-grove",
+    "neural-network",
+    "operations-center",
+    "rainy-window",
+    "sakura-night",
+    "winter-snowfall"
+  ],
   "removed": [],
-  "source_commit": "2e5b98d44cfc6cd2422e6f9e9745554d31d9478f",
+  "source_commit": "b6da9f693db39b9b30c5d6ec3bbab6979573252e",
   "title": "Release seeWallpaper 1.15.0"
 }

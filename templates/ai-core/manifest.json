@@ -4,7 +4,7 @@
   "name": "AI Core",
   "description": "A holographic reactor with a rotating spherical lattice, orbital machinery and a pulsing energy core.",
   "author": "seeWallpaper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "category": "Tech",
   "engine": "web",
   "entry": "index.html",
