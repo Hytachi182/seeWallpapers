@@ -55,6 +55,7 @@ try {
     }
     for (const setting of manifest.settings) {
       if (id === 'alpine-thunderstorm' && ['lightning', 'flash'].includes(setting.id)) await page.goto(`${url}?preview=12.08`);
+      if (id === 'stormwatch-lighthouse' && setting.id === 'lightning') await page.goto(`${url}?preview=9.563`);
       if (id === 'particle-nexus' && setting.id === 'interactive') {
         await page.mouse.move(480, 270);
         await page.evaluate(() => window.callbacks.settings({ interactive: true }));

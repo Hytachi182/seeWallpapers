@@ -150,6 +150,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Snowglow Village** is a snowy Christmas village at night with a decorated tree and glowing star, a toy train circling it, chasing roof lights, chimney smoke, a snowman, falling snow and Santa's sleigh crossing the moon. [Theme details](docs/snowglow-village.md).
 
+**Stormwatch Lighthouse** braves a night storm at sea: a rotating lantern beam sweeps the waves, layered swells burst into spray against the cliff, lightning forks through racing clouds, rain lashes sideways and a fishing boat rides the swell. [Theme details](docs/stormwatch-lighthouse.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).

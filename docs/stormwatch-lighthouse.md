@@ -1,0 +1,11 @@
+# Stormwatch Lighthouse
+
+A night storm at sea in **Nature**. A red-and-white striped lighthouse stands on a dark cliff beside the keeper's cottage, whose windows glow and whose chimney smoke is torn sideways by the wind. The lantern turns once every seven seconds or so. Its twin beams lengthen when they point along the coast and shorten as they swing toward or away from the viewer, and the lantern flares when the light faces the viewer. Where a beam grazes the sea, the swell glitters.
+
+Five layers of swell roll toward the cliff. Each is a sum of sines that is taller, steeper and slower closer to the viewer, with foam lines and whitecaps on the highest crests. Waves burst against the cliff base and the foreground rocks on staggered cycles, throwing particles of spray and a rising veil of mist. Two layers of storm cloud race across the sky. In some seven-second windows, a lightning strike forks down to the horizon with a stuttering double flash that briefly lights the clouds, sea, rock and tower. Rain lashes in at a slant, and a small fishing boat with lit cabin windows and a blinking masthead light rides and rolls on the swell.
+
+Settings control animation speed, storm intensity (wave height, rain density, cloud speed and spray force), beam colour, and toggles for lightning, rain, spray and the boat. Everything is drawn in code: no images, fonts or network requests. Lightning flashes are brief, moderate in brightness and several seconds apart, and they can be turned off.
+
+Portrait screens move the cliff toward the centre so that the tower, beam and boat stay in frame. Host pause/resume, visibility and frame-rate callbacks are supported. A speed of zero freezes the scene; the reduced-motion preference shows a still frame. The render buffer is bounded to 1920 × 1080.
+
+`index.html?preview=12` generates a deterministic still, and `?preview=9.563` lands on a lightning strike. `build/check-stormwatch-lighthouse.mjs` verifies core motion with every optional effect disabled, settings, reduced motion, zero speed, pause, 4K bounding, portrait layout and offline loading. `build/capture-template-previews.mjs` checks real Edge rendering and that each setting has a visible effect.
