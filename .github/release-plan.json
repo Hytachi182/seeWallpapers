@@ -1,24 +1,16 @@
 {
-  "version": "1.14.0",
-  "tag": "v1.14.0",
-  "base_tag": "v1.13.0",
+  "version": "1.15.0",
+  "tag": "v1.15.0",
+  "base_tag": "v1.14.0",
   "release_required": true,
-  "template_count": 61,
+  "template_count": 64,
   "added": [
-    "emberwatch-knight",
-    "gilded-court",
-    "hollow-lantern",
-    "stratos-flight"
+    "lofi-hideaway",
+    "midnight-drive",
+    "snowglow-village"
   ],
-  "updated": [
-    "inkbound-courier",
-    "lunar-silence",
-    "moonlit-dunes",
-    "pirate-cove",
-    "rose-riviera",
-    "satin-afterglow"
-  ],
+  "updated": [],
   "removed": [],
-  "source_commit": "da70d617f7d28e9dea76e8b6a8109fb8f4f03992",
-  "title": "Release seeWallpaper 1.14.0"
+  "source_commit": "2e5b98d44cfc6cd2422e6f9e9745554d31d9478f",
+  "title": "Release seeWallpaper 1.15.0"
 }
