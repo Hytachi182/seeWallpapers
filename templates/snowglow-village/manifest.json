@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "snowglow-village",
+  "name": "Snowglow Village",
+  "description": "A snowy Christmas village at night: a towering decorated tree with twinkling lights and a glowing star, a toy train circling it, chasing roof lights, warm windows, chimney smoke, a snowman, street lamps, layered snowfall and Santa's sleigh crossing the moonlit sky. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Lifestyle",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"snowfall","type":"slider","label":"Snowfall density","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"multicolor","type":"boolean","label":"Multicolor lights (off: warm white)","default":true},
+    {"id":"train","type":"boolean","label":"Toy train around the tree","default":true},
+    {"id":"sleigh","type":"boolean","label":"Santa's sleigh fly-by","default":true},
+    {"id":"smoke","type":"boolean","label":"Chimney smoke","default":true}
+  ]
+}

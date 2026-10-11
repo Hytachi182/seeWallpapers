@@ -144,6 +144,12 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Stratos Flight** features original fictional combat jets moving in formation above sunlit clouds, with gentle banking, flight-path contrails, engine glow and drifting foreground vapor. [Theme details](docs/stratos-flight.md).
 
+**Midnight Drive** follows an original sports coupe along an elevated city highway at dusk, with spinning wheels, live suspension, streetlight reflections on the paint, headlight beams, tail light trails, passing traffic and wet asphalt. Optional moonlit night and rain. [Theme details](docs/midnight-drive.md).
+
+**Lofi Hideaway** is a cozy late-night room with a sleeping cat breathing on the windowsill, rain trickling down the glass over a blurred city, a spinning record with floating notes, a steaming mug, a warm desk lamp, fairy lights and passing car lights. [Theme details](docs/lofi-hideaway.md).
+
+**Snowglow Village** is a snowy Christmas village at night with a decorated tree and glowing star, a toy train circling it, chasing roof lights, chimney smoke, a snowman, falling snow and Santa's sleigh crossing the moon. [Theme details](docs/snowglow-village.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).

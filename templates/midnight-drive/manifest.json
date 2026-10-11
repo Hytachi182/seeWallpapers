@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "midnight-drive",
+  "name": "Midnight Drive",
+  "description": "An original fictional sports coupe cruising an elevated city highway at dusk. Spinning wheels, live suspension, streetlight reflections gliding along the paintwork, headlight beams, long-exposure tail light trails, passing traffic, a parallax skyline and wet asphalt. Optional moonlit night and rain. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"color","type":"color","label":"Car paint","default":"#c8102e"},
+    {"id":"speed","type":"slider","label":"Driving speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"night","type":"boolean","label":"Moonlit night instead of dusk","default":false},
+    {"id":"traffic","type":"boolean","label":"Passing traffic","default":true},
+    {"id":"headlights","type":"boolean","label":"Headlight beams","default":true},
+    {"id":"lightTrails","type":"boolean","label":"Tail light trails","default":true},
+    {"id":"reflections","type":"boolean","label":"Wet road and paint reflections","default":true},
+    {"id":"rain","type":"boolean","label":"Rain","default":false}
+  ]
+}
