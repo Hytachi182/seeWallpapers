@@ -156,6 +156,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Floodlight Derby** is a night football match that plays itself: two teams pass, tackle, cross and shoot in a simulated game, keepers dive, shots ring off the post, and goals set off flares in the packed stands, followed by a broadcast camera and a live scoreboard. [Theme details](docs/floodlight-derby.md).
 
+**Clockwork Observatory** is a steampunk observatory at night: a brass telescope tracks the stars through the turning dome, interlocking gears drive the machinery, a long-case clock shows the real time and rings an automaton bell, an orrery shows today's planets, and steam hisses from a valve. [Theme details](docs/clockwork-observatory.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).

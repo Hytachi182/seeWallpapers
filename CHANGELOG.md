@@ -4,6 +4,7 @@
 
 - **Koi Autumn Pond** (`koi-autumn-pond`): new top-down Japanese garden pond in golden autumn light, with koi that dive and rise to sip at the surface, falling maple leaves that ripple the water, sun rays, lily pads and a red bridge. Optional dusk lanterns and rain. Entirely offline.
 - **Floodlight Derby** (`floodlight-derby`): new night football match that plays itself, with a deterministic simulation (passes, tackles, headers, shots, keeper dives, posts, set pieces, goals and full time), a broadcast camera, packed stands, flares and a scoreboard. Team colours, attacking style, rain and snow are adjustable. Entirely offline.
+- **Clockwork Observatory** (`clockwork-observatory`): new steampunk observatory with a rotating dome, a tracking telescope, interlocking gears, a real-time clock with an automaton bell, an orrery started from today's planet positions, and steam. Selectable metal finish and night to dawn. Entirely offline.
 - **Iron Vanguard** (`iron-vanguard`): new procedural military outpost wallpaper with a firing tank, impacts, tracers, sweeping searchlights, helicopters, paratroopers, an animated lookout and patrol, and a waving flag. Entirely offline.
 
 ## 1.15.0 - 2026-10-11

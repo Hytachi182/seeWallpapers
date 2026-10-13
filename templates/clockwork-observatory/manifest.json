@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "clockwork-observatory",
+  "name": "Clockwork Observatory",
+  "description": "A steampunk observatory at night. A brass telescope tracks the sky through the dome's open slit while the dome turns on its rail, meshed gears whose teeth truly interlock drive the machinery, a long-case clock swings its pendulum and rings an automaton bell every quarter hour, an orrery shows the planets in today's positions, oil lamps flicker, steam hisses from a valve and meteors cross the Milky Way. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Mechanism speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"metal","type":"slider","label":"Metal finish (brass, copper, blued steel)","min":0,"max":2,"step":0.1,"default":0},
+    {"id":"dawn","type":"slider","label":"Night to dawn","min":0,"max":1,"step":0.05,"default":0},
+    {"id":"realTime","type":"boolean","label":"Real time on the clock and orrery","default":true},
+    {"id":"meteors","type":"boolean","label":"Shooting stars","default":true},
+    {"id":"steam","type":"boolean","label":"Steam valve","default":true},
+    {"id":"dome","type":"boolean","label":"Rotating dome","default":true}
+  ]
+}
