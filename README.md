@@ -152,6 +152,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Stormwatch Lighthouse** braves a night storm at sea: a rotating lantern beam sweeps the waves, layered swells burst into spray against the cliff, lightning forks through racing clouds, rain lashes sideways and a fishing boat rides the swell. [Theme details](docs/stormwatch-lighthouse.md).
 
+**Koi Autumn Pond** looks down on a Japanese garden pond in golden autumn light: koi glide, dive and rise to sip at the surface, maple leaves tumble down and ripple the water, sun rays play over the pebbled floor, and a red bridge crosses between mossy stones, with optional dusk lanterns and rain. [Theme details](docs/koi-autumn-pond.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).

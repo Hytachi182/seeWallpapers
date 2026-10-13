@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Koi Autumn Pond** (`koi-autumn-pond`): new top-down Japanese garden pond in golden autumn light, with koi that dive and rise to sip at the surface, falling maple leaves that ripple the water, sun rays, lily pads and a red bridge. Optional dusk lanterns and rain. Entirely offline.
 - **Iron Vanguard** (`iron-vanguard`): new procedural military outpost wallpaper with a firing tank, impacts, tracers, sweeping searchlights, helicopters, paratroopers, an animated lookout and patrol, and a waving flag. Entirely offline.
 
 ## 1.15.0 - 2026-10-11
