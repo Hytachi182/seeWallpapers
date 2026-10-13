@@ -154,6 +154,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Koi Autumn Pond** looks down on a Japanese garden pond in golden autumn light: koi glide, dive and rise to sip at the surface, maple leaves tumble down and ripple the water, sun rays play over the pebbled floor, and a red bridge crosses between mossy stones, with optional dusk lanterns and rain. [Theme details](docs/koi-autumn-pond.md).
 
+**Floodlight Derby** is a night football match that plays itself: two teams pass, tackle, cross and shoot in a simulated game, keepers dive, shots ring off the post, and goals set off flares in the packed stands, followed by a broadcast camera and a live scoreboard. [Theme details](docs/floodlight-derby.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
