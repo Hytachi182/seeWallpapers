@@ -172,6 +172,8 @@ Seven more automatic pixel worlds are included: **Pixel Defender**, **Castle Rai
 
 **War Front** animates the supplied battle illustration with drifting smoke, flickering fires and embers, distant tracers, jet exhaust, helicopter rotors and harbour reflections. The original soldiers stay fixed. [Theme details](docs/war-front.md).
 
+**Iron Vanguard** is an original procedural military outpost at dusk: a tank fires with recoil, muzzle flash and smoke, searchlights sweep the sky, helicopters and paratroopers cross the horizon, a lookout raises binoculars, a soldier patrols and a flag waves. [Theme details](docs/iron-vanguard.md).
+
 **Particle Nexus** uses the bundled particles.js library for luminous drifting nodes, fine proximity links and optional pointer connections, with adjustable colors, density and speed. [Theme details](docs/particle-nexus.md).
 
 **Winter Snowfall** adds photographic alpine winter scenery with three depths of animated snow, softly defocused nearby flakes and gentle directional wind. [Theme details](docs/winter-snowfall.md).

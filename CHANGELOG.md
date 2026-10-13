@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Iron Vanguard** (`iron-vanguard`): new procedural military outpost wallpaper with a firing tank, impacts, tracers, sweeping searchlights, helicopters, paratroopers, an animated lookout and patrol, and a waving flag. Entirely offline.
+
 ## 1.15.0 - 2026-10-11
 
 <!-- generated-release:start -->
