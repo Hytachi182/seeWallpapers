@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "floodlight-derby",
+  "name": "Floodlight Derby",
+  "description": "A night football derby that plays itself under stadium floodlights. Two fictional teams pass, dribble, tackle, cross and shoot in a simulated match, keepers dive to save, shots ring off the post, goals bulge the net and set off flares and phone flashes in the packed stands, while a broadcast camera follows the ball and a scoreboard keeps time. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Game speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"homeColor","type":"color","label":"Home team colour","default":"#d7263d"},
+    {"id":"awayColor","type":"color","label":"Away team colour","default":"#1e88e5"},
+    {"id":"attack","type":"slider","label":"Attacking style (more shots and goals)","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"rain","type":"boolean","label":"Rain","default":false},
+    {"id":"snow","type":"boolean","label":"Snow","default":false},
+    {"id":"fans","type":"boolean","label":"Flags, flares and phone flashes","default":true},
+    {"id":"hud","type":"boolean","label":"Scoreboard and banners","default":true}
+  ]
+}

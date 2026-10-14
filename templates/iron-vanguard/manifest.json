@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "iron-vanguard",
+  "name": "Iron Vanguard",
+  "description": "An original military outpost at dusk: a battle tank fires with recoil, muzzle flash and smoke, searchlights sweep the sky, helicopters and a transport drop paratroopers, a lookout raises binoculars, a soldier patrols and a flag waves. Fully procedural, no insignia, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    { "id": "color", "type": "color", "label": "Horizon glow", "default": "#ff9a4d" },
+    { "id": "speed", "type": "slider", "label": "Animation speed", "min": 0, "max": 2, "step": 0.1, "default": 1 },
+    { "id": "intensity", "type": "slider", "label": "Light intensity", "min": 0, "max": 2, "step": 0.1, "default": 1 },
+    { "id": "artillery", "type": "boolean", "label": "Tank fire, impacts and tracers", "default": true },
+    { "id": "searchlights", "type": "boolean", "label": "Sweeping searchlights", "default": true },
+    { "id": "aircraft", "type": "boolean", "label": "Helicopters and paratroopers", "default": true },
+    { "id": "smoke", "type": "boolean", "label": "Smoke, dust and embers", "default": true },
+    { "id": "patrol", "type": "boolean", "label": "Patrol, lookout and waving flag", "default": true }
+  ]
+}

@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.15.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.16.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**65 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**69 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -152,6 +152,12 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Stormwatch Lighthouse** braves a night storm at sea: a rotating lantern beam sweeps the waves, layered swells burst into spray against the cliff, lightning forks through racing clouds, rain lashes sideways and a fishing boat rides the swell. [Theme details](docs/stormwatch-lighthouse.md).
 
+**Koi Autumn Pond** looks down on a Japanese garden pond in golden autumn light: koi glide, dive and rise to sip at the surface, maple leaves tumble down and ripple the water, sun rays play over the pebbled floor, and a red bridge crosses between mossy stones, with optional dusk lanterns and rain. [Theme details](docs/koi-autumn-pond.md).
+
+**Floodlight Derby** is a night football match that plays itself: two teams pass, tackle, cross and shoot in a simulated game, keepers dive, shots ring off the post, and goals set off flares in the packed stands, followed by a broadcast camera and a live scoreboard. [Theme details](docs/floodlight-derby.md).
+
+**Clockwork Observatory** is a steampunk observatory at night: a brass telescope tracks the stars through the turning dome, interlocking gears drive the machinery, a long-case clock shows the real time and rings an automaton bell, an orrery shows today's planets, and steam hisses from a valve. [Theme details](docs/clockwork-observatory.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
@@ -171,6 +177,8 @@ Seven more automatic pixel worlds are included: **Pixel Defender**, **Castle Rai
 **Meteor Shower** brings a photographic Milky Way above a mountain lake, with automatic shooting stars, fine luminous trails, subtle scintillation and occasional brighter fireballs. [Theme details](docs/meteor-shower.md).
 
 **War Front** animates the supplied battle illustration with drifting smoke, flickering fires and embers, distant tracers, jet exhaust, helicopter rotors and harbour reflections. The original soldiers stay fixed. [Theme details](docs/war-front.md).
+
+**Iron Vanguard** is an original procedural military outpost at dusk: a tank fires with recoil, muzzle flash and smoke, searchlights sweep the sky, helicopters and paratroopers cross the horizon, a lookout raises binoculars, a soldier patrols and a flag waves. [Theme details](docs/iron-vanguard.md).
 
 **Particle Nexus** uses the bundled particles.js library for luminous drifting nodes, fine proximity links and optional pointer connections, with adjustable colors, density and speed. [Theme details](docs/particle-nexus.md).
 

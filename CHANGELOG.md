@@ -2,6 +2,35 @@
 
 ## Unreleased
 
+## 1.16.0 - 2026-10-13
+
+<!-- generated-release:start -->
+### Changes since v1.15.0
+
+Built-in catalogue: **69 wallpapers**.
+
+#### New wallpapers
+
+- **Clockwork Observatory** (`clockwork-observatory`): A steampunk observatory at night. A brass telescope tracks the sky through the dome's open slit while the dome turns on its rail, meshed gears whose teeth truly interlock drive the machinery, a long-case clock swings its pendulum and rings an automaton bell every quarter hour, an orrery shows the planets in today's positions, oil lamps flicker, steam hisses from a valve and meteors cross the Milky Way. Code-drawn, entirely offline.
+- **Floodlight Derby** (`floodlight-derby`): A night football derby that plays itself under stadium floodlights. Two fictional teams pass, dribble, tackle, cross and shoot in a simulated match, keepers dive to save, shots ring off the post, goals bulge the net and set off flares and phone flashes in the packed stands, while a broadcast camera follows the ball and a scoreboard keeps time. Code-drawn, entirely offline.
+- **Iron Vanguard** (`iron-vanguard`): An original military outpost at dusk: a battle tank fires with recoil, muzzle flash and smoke, searchlights sweep the sky, helicopters and a transport drop paratroopers, a lookout raises binoculars, a soldier patrols and a flag waves. Fully procedural, no insignia, entirely offline.
+- **Koi Autumn Pond** (`koi-autumn-pond`): A Japanese garden pond seen from above in golden autumn light. Koi glide in slow loops, dive and rise to sip at the surface, maple leaves tumble down and ripple the water before drifting and sinking, sun rays and caustics play over the pebbled floor, and a red wooden bridge crosses between mossy stones. Optional dusk with glowing stone lanterns and light rain. Code-drawn, entirely offline.
+
+#### Development changes
+
+- feat: add Clockwork Observatory wallpaper
+- feat: add Floodlight Derby wallpaper
+- feat: add Koi Autumn Pond wallpaper
+- feat: add Iron Vanguard wallpaper
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.15.0...v1.16.0)
+<!-- generated-release:end -->
+
+- **Koi Autumn Pond** (`koi-autumn-pond`): new top-down Japanese garden pond in golden autumn light, with koi that dive and rise to sip at the surface, falling maple leaves that ripple the water, sun rays, lily pads and a red bridge. Optional dusk lanterns and rain. Entirely offline.
+- **Floodlight Derby** (`floodlight-derby`): new night football match that plays itself, with a deterministic simulation (passes, tackles, headers, shots, keeper dives, posts, set pieces, goals and full time), a broadcast camera, packed stands, flares and a scoreboard. Team colours, attacking style, rain and snow are adjustable. Entirely offline.
+- **Clockwork Observatory** (`clockwork-observatory`): new steampunk observatory with a rotating dome, a tracking telescope, interlocking gears, a real-time clock with an automaton bell, an orrery started from today's planet positions, and steam. Selectable metal finish and night to dawn. Entirely offline.
+- **Iron Vanguard** (`iron-vanguard`): new procedural military outpost wallpaper with a firing tank, impacts, tracers, sweeping searchlights, helicopters, paratroopers, an animated lookout and patrol, and a waving flag. Entirely offline.
+
 ## 1.15.0 - 2026-10-11
 
 <!-- generated-release:start -->
