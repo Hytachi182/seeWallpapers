@@ -158,6 +158,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Clockwork Observatory** is a steampunk observatory at night: a brass telescope tracks the stars through the turning dome, interlocking gears drive the machinery, a long-case clock shows the real time and rings an automaton bell, an orrery shows today's planets, and steam hisses from a valve. [Theme details](docs/clockwork-observatory.md).
 
+**Night Train Viaduct** follows a night train across a tall stone viaduct above a moonlit river: the steam locomotive's wheels and side rods turn, passengers sit in the lit carriages, the headlamp sweeps the rails, a signal turns red as the train passes, and a mountain village glows under the stars, with optional snowfall and blue hour. [Theme details](docs/night-train-viaduct.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).

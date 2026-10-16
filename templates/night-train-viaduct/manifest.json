@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "night-train-viaduct",
+  "name": "Night Train Viaduct",
+  "description": "A night train crosses a tall stone viaduct above a moonlit river. A steam locomotive with turning wheels and side rods pulls carriages whose lit windows show passengers, its headlamp sweeps the rails ahead and a plume of steam trails behind, a signal turns red as it passes, and a mountain village glows on the hillside under the stars. Optional snowfall and blue hour. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Cinematic",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"cars","type":"slider","label":"Number of carriages","min":3,"max":10,"step":1,"default":6},
+    {"id":"hour","type":"slider","label":"Night to blue hour","min":0,"max":1,"step":0.05,"default":0},
+    {"id":"steam","type":"boolean","label":"Steam plume","default":true},
+    {"id":"snow","type":"boolean","label":"Snowfall","default":false},
+    {"id":"village","type":"boolean","label":"Village lights","default":true}
+  ]
+}

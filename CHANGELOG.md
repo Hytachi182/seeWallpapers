@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Night Train Viaduct** (`night-train-viaduct`): new night train crossing a stone viaduct above a moonlit river, with a steam locomotive whose wheels and side rods turn, lit carriages with passengers, a headlamp beam, a steam plume, a block signal and a glowing mountain village. Adjustable train length, blue hour and snowfall. Entirely offline.
+
 ## 1.16.0 - 2026-10-13
 
 <!-- generated-release:start -->
