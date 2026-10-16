@@ -160,6 +160,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Night Train Viaduct** follows a night train across a tall stone viaduct above a moonlit river: the steam locomotive's wheels and side rods turn, passengers sit in the lit carriages, the headlamp sweeps the rails, a signal turns red as the train passes, and a mountain village glows under the stars, with optional snowfall and blue hour. [Theme details](docs/night-train-viaduct.md).
 
+**Bioluminescent Tide** is a moonless beach where every breaking wave lights up electric blue: the glow peels along each crest, runs up the wet sand and drains away in sparks, while a night walker leaves flashing footprints, jellyfish pulse under the swell and the Milky Way arches overhead. [Theme details](docs/bioluminescent-tide.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
