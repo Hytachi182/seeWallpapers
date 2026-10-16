@@ -4,6 +4,7 @@
 
 - **Night Train Viaduct** (`night-train-viaduct`): new night train crossing a stone viaduct above a moonlit river, with a steam locomotive whose wheels and side rods turn, lit carriages with passengers, a headlamp beam, a steam plume, a block signal and a glowing mountain village. Adjustable train length, blue hour and snowfall. Entirely offline.
 - **Bioluminescent Tide** (`bioluminescent-tide`): new moonless beach where breaking waves glow as they peel, run up the sand and drain away in sparks, with a night walker leaving glowing footprints, jellyfish, spray against a headland, a fishing boat lantern and the Milky Way. Adjustable glow intensity and colour. Entirely offline.
+- **Glasshouse Conservatory** (`glasshouse-conservatory`): new Victorian glasshouse in the rain, with raindrops running down the curved panes, palms, ferns, banana plants and monstera along a tiled aisle, a fountain, butterflies, rising mist, sunbeams between showers and pendant lamps. Adjustable rain and afternoon to dusk. Entirely offline.
 
 ## 1.16.0 - 2026-10-13
 

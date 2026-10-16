@@ -162,6 +162,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Bioluminescent Tide** is a moonless beach where every breaking wave lights up electric blue: the glow peels along each crest, runs up the wet sand and drains away in sparks, while a night walker leaves flashing footprints, jellyfish pulse under the swell and the Milky Way arches overhead. [Theme details](docs/bioluminescent-tide.md).
 
+**Glasshouse Conservatory** is a Victorian glasshouse on a rainy afternoon: raindrops run down the iron-ribbed vault, palms, ferns and monstera line a tiled aisle with a splashing fountain, butterflies flutter, mist rises and sunbeams break through between showers, with pendant lamps glowing towards dusk. [Theme details](docs/glasshouse-conservatory.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
