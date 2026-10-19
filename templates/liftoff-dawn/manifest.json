@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "liftoff-dawn",
+  "name": "Liftoff Dawn",
+  "description": "A rocket waits on a seaside launch pad at dawn. The countdown runs, the engines ignite in a billow of smoke, the rocket climbs on a long exhaust trail through the clouds while the camera follows, drops its first stage and vanishes into the stars, then the next vehicle rolls out. Adjustable time of day. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Space",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"daylight","type":"slider","label":"Night to day","min":0,"max":1,"step":0.05,"default":0.3},
+    {"id":"clouds","type":"boolean","label":"Clouds","default":true},
+    {"id":"stars","type":"boolean","label":"Stars","default":true},
+    {"id":"clock","type":"boolean","label":"Mission clock","default":true}
+  ]
+}
