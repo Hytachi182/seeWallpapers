@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "pocket-quest",
+  "name": "Pocket Quest",
+  "description": "A handheld console plays a monster-collecting adventure all by itself. The hero walks out of the village, wades through tall grass and a wild creature appears: the screen flashes, a turn-based battle plays out with menus, attacks, health bars and typed messages, then the next encounter ends with a throw of the ball. Four screen palettes, pixel grid and room glow. Every sprite, tile and letter is drawn in code, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "low",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Game speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"palette","type":"slider","label":"Screen palette (0 green, 1 grey, 2 blue, 3 amber)","min":0,"max":3,"step":1,"default":0},
+    {"id":"frame","type":"boolean","label":"Show console","default":true},
+    {"id":"grid","type":"boolean","label":"Pixel grid","default":true},
+    {"id":"glow","type":"boolean","label":"Screen glow","default":true}
+  ]
+}
