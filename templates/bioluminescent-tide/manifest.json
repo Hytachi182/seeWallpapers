@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bioluminescent-tide",
+  "name": "Bioluminescent Tide",
+  "description": "A moonless beach where the surf comes alive with light. Each wave rolls in from the horizon and lights up as it breaks, peeling along the crest, then runs up the wet sand and leaves glittering sparks as it drains away. A night walker leaves footprints that flash and ripple, jellyfish pulse beneath the swell, spray glows against a rocky headland, a fishing boat's lantern bobs on the horizon and the Milky Way arches overhead. Selectable glow colour. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Nature",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"glow","type":"slider","label":"Bioluminescence intensity","min":0.2,"max":2,"step":0.1,"default":1},
+    {"id":"hue","type":"slider","label":"Glow colour (cyan, green, violet)","min":0,"max":2,"step":0.1,"default":0},
+    {"id":"footprints","type":"boolean","label":"Night walker and glowing footprints","default":true},
+    {"id":"jellyfish","type":"boolean","label":"Jellyfish","default":true},
+    {"id":"milkyway","type":"boolean","label":"Milky Way","default":true}
+  ]
+}

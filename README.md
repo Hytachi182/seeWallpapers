@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.16.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.17.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**69 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**75 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -157,6 +157,18 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Floodlight Derby** is a night football match that plays itself: two teams pass, tackle, cross and shoot in a simulated game, keepers dive, shots ring off the post, and goals set off flares in the packed stands, followed by a broadcast camera and a live scoreboard. [Theme details](docs/floodlight-derby.md).
 
 **Clockwork Observatory** is a steampunk observatory at night: a brass telescope tracks the stars through the turning dome, interlocking gears drive the machinery, a long-case clock shows the real time and rings an automaton bell, an orrery shows today's planets, and steam hisses from a valve. [Theme details](docs/clockwork-observatory.md).
+
+**Night Train Viaduct** follows a night train across a tall stone viaduct above a moonlit river: the steam locomotive's wheels and side rods turn, passengers sit in the lit carriages, the headlamp sweeps the rails, a signal turns red as the train passes, and a mountain village glows under the stars, with optional snowfall and blue hour. [Theme details](docs/night-train-viaduct.md).
+
+**Bioluminescent Tide** is a moonless beach where every breaking wave lights up electric blue: the glow peels along each crest, runs up the wet sand and drains away in sparks, while a night walker leaves flashing footprints, jellyfish pulse under the swell and the Milky Way arches overhead. [Theme details](docs/bioluminescent-tide.md).
+
+**Glasshouse Conservatory** is a Victorian glasshouse on a rainy afternoon: raindrops run down the iron-ribbed vault, palms, ferns and monstera line a tiled aisle with a splashing fountain, butterflies flutter, mist rises and sunbeams break through between showers, with pendant lamps glowing towards dusk. [Theme details](docs/glasshouse-conservatory.md).
+
+**Liftoff Dawn** is a rocket launch on a seaside pad: the countdown runs, the tower arms swing away, the engines light in a billow of smoke and the rocket climbs on a long exhaust trail through the clouds into starry space, dropping its first stage before the next launch fades in. [Theme details](docs/liftoff-dawn.md).
+
+**Drifting Jellyfish** fills the deep blue with jellyfish of every size that pulse and wander across the whole screen, their bells glowing, tentacles and frilly arms trailing, while marine snow sinks through slow shafts of light. [Theme details](docs/drifting-jellyfish.md).
+
+**Pocket Quest** is a handheld console playing a monster-collecting adventure by itself: the hero crosses a village and tall grass, a wild creature appears, a turn-based battle plays out on the four-shade screen, and the next creature is caught with a ball. [Theme details](docs/pocket-quest.md).
 
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 

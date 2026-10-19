@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "drifting-jellyfish",
+  "name": "Drifting Jellyfish",
+  "description": "Jellyfish of every size pulse and drift across the whole screen through deep blue water. Bells contract and relax, ruffled rims and glowing organs shine, long tentacles and frilly arms trail and sway behind them, near ones pass slowly in front while small distant ones glow in the haze, marine snow sinks through slow shafts of light. Adjustable number of jellyfish, glow and tint colour. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Nature",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"count","type":"slider","label":"Number of jellyfish","min":3,"max":18,"step":1,"default":11},
+    {"id":"glow","type":"slider","label":"Glow","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"tint","type":"color","label":"Tint colour","default":"#5fd8ff"},
+    {"id":"snow","type":"boolean","label":"Marine snow","default":true},
+    {"id":"rays","type":"boolean","label":"Light shafts","default":true}
+  ]
+}
