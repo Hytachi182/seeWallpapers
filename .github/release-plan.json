@@ -1,17 +1,19 @@
 {
-  "version": "1.16.0",
-  "tag": "v1.16.0",
-  "base_tag": "v1.15.0",
+  "version": "1.17.0",
+  "tag": "v1.17.0",
+  "base_tag": "v1.16.0",
   "release_required": true,
-  "template_count": 69,
+  "template_count": 75,
   "added": [
-    "clockwork-observatory",
-    "floodlight-derby",
-    "iron-vanguard",
-    "koi-autumn-pond"
+    "bioluminescent-tide",
+    "drifting-jellyfish",
+    "glasshouse-conservatory",
+    "liftoff-dawn",
+    "night-train-viaduct",
+    "pocket-quest"
   ],
   "updated": [],
   "removed": [],
-  "source_commit": "ddd9dbad9c07aa18a24e892b0ed5f23509e19cc7",
-  "title": "Release seeWallpaper 1.16.0"
+  "source_commit": "114478d60b079103243ef3e6347ebbcec71daa59",
+  "title": "Release seeWallpaper 1.17.0"
 }
