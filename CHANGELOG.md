@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 1.18.0 - 2026-10-21
+
+<!-- generated-release:start -->
+### Changes since v1.17.0
+
+Built-in catalogue: **76 wallpapers**.
+
+#### New wallpapers
+
+- **Lantern Fairground** (`lantern-fairground`): A night fair on the shore of a pond. A great Ferris wheel turns with swinging gondolas and spoke lights that pulse, sweep and sparkle, a carousel spins its galloping horses under a striped roof, a big top and game stalls glow, strings of bulbs chase between poles, visitors stroll with balloons, sky lanterns drift up and fireworks burst over the hills, everything mirrored in the rippling water. Adjustable wheel speed, fireworks, lanterns and bulb colour. Code-drawn, entirely offline.
+
+#### Development changes
+
+- feat: add Lantern Fairground wallpaper
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.17.0...v1.18.0)
+<!-- generated-release:end -->
+
 - **Lantern Fairground** (`lantern-fairground`): new night fair on the shore of a pond, with a turning Ferris wheel whose spoke lights pulse, sweep and sparkle, a carousel of galloping horses under a striped roof, a big top, game stalls, chasing bulb garlands, strolling visitors with balloons, rising sky lanterns and fireworks, all mirrored in the rippling water. Adjustable wheel speed, fireworks, lanterns and bulb colour. Entirely offline.
 
 ## 1.17.0 - 2026-10-19
