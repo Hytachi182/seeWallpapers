@@ -170,6 +170,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Pocket Quest** is a handheld console playing a monster-collecting adventure by itself: the hero crosses a village and tall grass, a wild creature appears, a turn-based battle plays out on the four-shade screen, and the next creature is caught with a ball. [Theme details](docs/pocket-quest.md).
 
+**Lantern Fairground** is a night fair on the shore of a pond: a great Ferris wheel turns with swinging gondolas and patterned spoke lights, a carousel gallops under its striped roof, strings of bulbs chase between the stalls and the big top, sky lanterns drift up and fireworks burst over the hills, all mirrored in the rippling water. [Theme details](docs/lantern-fairground.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).

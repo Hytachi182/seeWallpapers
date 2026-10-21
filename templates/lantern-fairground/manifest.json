@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "lantern-fairground",
+  "name": "Lantern Fairground",
+  "description": "A night fair on the shore of a pond. A great Ferris wheel turns with swinging gondolas and spoke lights that pulse, sweep and sparkle, a carousel spins its galloping horses under a striped roof, a big top and game stalls glow, strings of bulbs chase between poles, visitors stroll with balloons, sky lanterns drift up and fireworks burst over the hills, everything mirrored in the rippling water. Adjustable wheel speed, fireworks, lanterns and bulb colour. Code-drawn, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Lifestyle",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Animation speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"wheel","type":"slider","label":"Ferris wheel speed","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"fireworks","type":"slider","label":"Fireworks","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"lanterns","type":"slider","label":"Sky lanterns","min":0,"max":30,"step":1,"default":14},
+    {"id":"lights","type":"color","label":"Bulb colour","default":"#ffc46b"},
+    {"id":"reflection","type":"boolean","label":"Pond reflection","default":true}
+  ]
+}

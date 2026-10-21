@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Lantern Fairground** (`lantern-fairground`): new night fair on the shore of a pond, with a turning Ferris wheel whose spoke lights pulse, sweep and sparkle, a carousel of galloping horses under a striped roof, a big top, game stalls, chasing bulb garlands, strolling visitors with balloons, rising sky lanterns and fireworks, all mirrored in the rippling water. Adjustable wheel speed, fireworks, lanterns and bulb colour. Entirely offline.
+
 ## 1.17.0 - 2026-10-19
 
 <!-- generated-release:start -->
