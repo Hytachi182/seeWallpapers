@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Balloon Valley Sunrise** (`balloon-valley-sunrise`): new mountain valley at sunrise where hot-air balloons drift on the wind, their striped envelopes turning slowly and glowing from inside when the pilots fire the burners, over layered ridges fading into the haze, drifting valley mist, fanning sun rays, gliding clouds and passing birds. Adjustable number of balloons, time of day, mist and wind. Entirely offline.
+
 ## 1.18.0 - 2026-10-21
 
 <!-- generated-release:start -->

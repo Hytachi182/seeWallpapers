@@ -172,6 +172,8 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Lantern Fairground** is a night fair on the shore of a pond: a great Ferris wheel turns with swinging gondolas and patterned spoke lights, a carousel gallops under its striped roof, strings of bulbs chase between the stalls and the big top, sky lanterns drift up and fireworks burst over the hills, all mirrored in the rippling water. [Theme details](docs/lantern-fairground.md).
 
+**Balloon Valley Sunrise** watches hot-air balloons drift over a misty mountain valley at dawn: striped envelopes turn slowly in the low sun, burners flare and light them from inside, mist drifts between ridges that fade into the haze, and sun rays fan out across the sky. [Theme details](docs/balloon-valley-sunrise.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
