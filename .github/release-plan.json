@@ -1,14 +1,14 @@
 {
-  "version": "1.18.0",
-  "tag": "v1.18.0",
-  "base_tag": "v1.17.0",
+  "version": "1.19.0",
+  "tag": "v1.19.0",
+  "base_tag": "v1.18.0",
   "release_required": true,
-  "template_count": 76,
+  "template_count": 77,
   "added": [
-    "lantern-fairground"
+    "balloon-valley-sunrise"
   ],
   "updated": [],
   "removed": [],
-  "source_commit": "576d06253fd4813fcdaf1527ad76f67e53654836",
-  "title": "Release seeWallpaper 1.18.0"
+  "source_commit": "16ccf7770c4781cb7a8696b9b792e93e34eb9939",
+  "title": "Release seeWallpaper 1.19.0"
 }

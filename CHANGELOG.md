@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+## 1.19.0 - 2026-11-09
+
+<!-- generated-release:start -->
+### Changes since v1.18.0
+
+Built-in catalogue: **77 wallpapers**.
+
+#### New wallpapers
+
+- **Balloon Valley Sunrise** (`balloon-valley-sunrise`): Hot-air balloons drift over a misty mountain valley at sunrise. Striped and banded envelopes turn slowly as they ride the wind, lit on the sun side and shaded on the other, and each pilot fires the burner in bursts that light the envelope from inside and lift the balloon. Layered ridges fade into the haze, mist drifts along the valleys, sun rays fan out, clouds glide and a flock of birds passes by. Adjustable number of balloons, time of day, mist, wind and sun rays. Code-drawn, entirely offline.
+
+#### Development changes
+
+- feat: add Balloon Valley Sunrise wallpaper
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.18.0...v1.19.0)
+<!-- generated-release:end -->
+
+- **Balloon Valley Sunrise** (`balloon-valley-sunrise`): new mountain valley at sunrise where hot-air balloons drift on the wind, their striped envelopes turning slowly and glowing from inside when the pilots fire the burners, over layered ridges fading into the haze, drifting valley mist, fanning sun rays, gliding clouds and passing birds. Adjustable number of balloons, time of day, mist and wind. Entirely offline.
+
 ## 1.18.0 - 2026-10-21
 
 <!-- generated-release:start -->
