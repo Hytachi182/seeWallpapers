@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- **Comet Pinball** (`comet-pinball`): new self-playing neon space pinball table with real ball physics, AI flippers that occasionally miss, pop bumpers, slingshots, a drop-target bank that triggers multiball, an orbit lane, rollover lamps, plunger launches, scoring popups and three-ball games that restart after game over. Adjustable game speed, neon accent, ball trail, multiball and score display. Entirely offline.
+- **Harvest Hollow** (`harvest-hollow`): new self-playing pixel farm where a farmer tills, plants, waters and harvests carrots, sunflowers and pumpkins and ships them for coins, with a day/night cycle, lit windows and fireflies at night, rotating seasons with falling leaves and snow, ice fishing in winter and wandering chickens. Adjustable speed, day length, season rotation, starting season, animals and HUD. Entirely offline.
+
 ## 1.19.0 - 2026-11-09
 
 <!-- generated-release:start -->

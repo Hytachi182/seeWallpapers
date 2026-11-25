@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "harvest-hollow",
+  "name": "Harvest Hollow",
+  "description": "A small pixel-art farm runs itself through the seasons. The farmer tills, plants, waters and harvests a field of carrots, sunflowers and pumpkins, carries the crops to the shipping crate and watches the coin count climb. Crops grow in visible stages over in-game days, the farmer sleeps in a lit farmhouse at night, fireflies rise, and spring, summer, autumn and winter change the grass, trees and weather. Every sprite and tile is drawn in code, entirely offline.",
+  "author": "seeWallpaper",
+  "version": "1.0.0",
+  "category": "Games",
+  "engine": "web",
+  "entry": "index.html",
+  "preview": "preview.jpg",
+  "performance": "medium",
+  "settings": [
+    {"id":"speed","type":"slider","label":"Farm speed (0 freezes)","min":0,"max":2,"step":0.1,"default":1},
+    {"id":"dayLength","type":"slider","label":"Seconds per in-game day","min":30,"max":240,"step":5,"default":90},
+    {"id":"seasons","type":"boolean","label":"Seasons rotate every few days","default":true},
+    {"id":"startSeason","type":"slider","label":"Starting season (0 spring, 1 summer, 2 autumn, 3 winter)","min":0,"max":3,"step":1,"default":0},
+    {"id":"animals","type":"boolean","label":"Wandering chickens","default":true},
+    {"id":"hud","type":"boolean","label":"Day, season, clock and coins","default":true}
+  ]
+}

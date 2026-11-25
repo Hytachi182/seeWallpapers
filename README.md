@@ -174,6 +174,10 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 
 **Balloon Valley Sunrise** watches hot-air balloons drift over a misty mountain valley at dawn: striped envelopes turn slowly in the low sun, burners flare and light them from inside, mist drifts between ridges that fade into the haze, and sun rays fan out across the sky. [Theme details](docs/balloon-valley-sunrise.md).
 
+**Comet Pinball** is an original neon space pinball table that plays itself: real ball physics, AI flippers that sometimes miss, pop bumpers, slingshots, drop targets, an orbit lane, multiball and three-ball games that restart automatically. [Theme details](docs/comet-pinball.md).
+
+**Harvest Hollow** is a cozy self-playing pixel farm: a farmer tills, sows, waters and harvests carrots, sunflowers and pumpkins, ships them for coins, sleeps through the night and fishes on the frozen pond in winter as the seasons turn. [Theme details](docs/harvest-hollow.md).
+
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
 **Hollow Lantern** is an original Halloween manor scene with a floating cloth ghost, wing-beating bats, flickering jack-o-lanterns, drifting ground mist and autumn leaves. [Theme details](docs/hollow-lantern.md).
