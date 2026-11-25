@@ -35,7 +35,7 @@
 **System metrics (unreleased):** open a scene's **Customize** window and enable **System metrics**. Choose CPU, RAM, uptime, power and computer name, then adjust position, values/gauges/history graphs, color, size, panel opacity and edge spacing. Changes appear in the preview and on displays already using that scene, and are saved per scene. Theme-specific widgets retain their own controls. Network, disk, GPU and temperature collectors are not included yet.
 
 <!-- release-info:start -->
-Source version: **1.19.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
+Source version: **1.20.0**. Download buttons follow the latest published stable release. A newer source version becomes available for download only after its Windows packages are published.
 <!-- release-info:end -->
 
 The download buttons always point to the **latest stable release**, with no GitHub account required. Find all versions and their checksums in [Releases](https://github.com/Hytachi182/seeWallpapers/releases).
@@ -91,7 +91,7 @@ Three-monitor functional tests can be run with `build/test-multi-display-functio
 ## The scenes
 
 <!-- template-summary:start -->
-**77 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
+**79 wallpapers are included.** Browse the [complete catalogue](docs/template-catalogue.md) for scene names, previews, creators, and versions.
 <!-- template-summary:end -->
 
 **New Anime collection:** five original scenes with adjustable energy color, animation speed, and atmosphere intensity. They work offline and can be assigned independently to your displays.
@@ -173,6 +173,10 @@ Also included: **Moonlit Dunes**, **Firefly Grove**, **Spectral Forge**, **Digit
 **Lantern Fairground** is a night fair on the shore of a pond: a great Ferris wheel turns with swinging gondolas and patterned spoke lights, a carousel gallops under its striped roof, strings of bulbs chase between the stalls and the big top, sky lanterns drift up and fireworks burst over the hills, all mirrored in the rippling water. [Theme details](docs/lantern-fairground.md).
 
 **Balloon Valley Sunrise** watches hot-air balloons drift over a misty mountain valley at dawn: striped envelopes turn slowly in the low sun, burners flare and light them from inside, mist drifts between ridges that fade into the haze, and sun rays fan out across the sky. [Theme details](docs/balloon-valley-sunrise.md).
+
+**Comet Pinball** is an original neon space pinball table that plays itself: real ball physics, AI flippers that sometimes miss, pop bumpers, slingshots, drop targets, an orbit lane, multiball and three-ball games that restart automatically. [Theme details](docs/comet-pinball.md).
+
+**Harvest Hollow** is a cozy self-playing pixel farm: a farmer tills, sows, waters and harvests carrots, sunflowers and pumpkins, ships them for coins, sleeps through the night and fishes on the frozen pond in winter as the seasons turn. [Theme details](docs/harvest-hollow.md).
 
 **Emberwatch Knight** features an articulated armored knight patrolling a twilight castle terrace, raising a shield and practicing sword movements, with a flowing teal cape, torches, mist and embers. [Theme details](docs/emberwatch-knight.md).
 
