@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+## 1.20.0 - 2026-11-25
+
+<!-- generated-release:start -->
+### Changes since v1.19.0
+
+Built-in catalogue: **79 wallpapers**.
+
+#### New wallpapers
+
+- **Comet Pinball** (`comet-pinball`): An original neon space pinball table that plays itself. Real ball physics with gravity, flippers, pop bumpers, slingshots, drop targets, an orbit lane and a plunger launch each ball. The AI flips at the right moment but not always, so balls are sometimes lost. Three balls per game, multiball when the drop targets are cleared, and an automatic restart after game over. Code-drawn, entirely offline.
+- **Harvest Hollow** (`harvest-hollow`): A small pixel-art farm runs itself through the seasons. The farmer tills, plants, waters and harvests a field of carrots, sunflowers and pumpkins, carries the crops to the shipping crate and watches the coin count climb. Crops grow in visible stages over in-game days, the farmer sleeps in a lit farmhouse at night, fireflies rise, and spring, summer, autumn and winter change the grass, trees and weather. Every sprite and tile is drawn in code, entirely offline.
+
+#### Development changes
+
+- feat: add Comet Pinball and Harvest Hollow wallpapers
+
+[Full comparison](https://github.com/Hytachi182/seeWallpapers/compare/v1.19.0...v1.20.0)
+<!-- generated-release:end -->
+
 - **Comet Pinball** (`comet-pinball`): new self-playing neon space pinball table with real ball physics, AI flippers that occasionally miss, pop bumpers, slingshots, a drop-target bank that triggers multiball, an orbit lane, rollover lamps, plunger launches, scoring popups and three-ball games that restart after game over. Adjustable game speed, neon accent, ball trail, multiball and score display. Entirely offline.
 - **Harvest Hollow** (`harvest-hollow`): new self-playing pixel farm where a farmer tills, plants, waters and harvests carrots, sunflowers and pumpkins and ships them for coins, with a day/night cycle, lit windows and fireflies at night, rotating seasons with falling leaves and snow, ice fishing in winter and wandering chickens. Adjustable speed, day length, season rotation, starting season, animals and HUD. Entirely offline.
 

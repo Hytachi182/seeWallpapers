@@ -1,14 +1,15 @@
 {
-  "version": "1.19.0",
-  "tag": "v1.19.0",
-  "base_tag": "v1.18.0",
+  "version": "1.20.0",
+  "tag": "v1.20.0",
+  "base_tag": "v1.19.0",
   "release_required": true,
-  "template_count": 77,
+  "template_count": 79,
   "added": [
-    "balloon-valley-sunrise"
+    "comet-pinball",
+    "harvest-hollow"
   ],
   "updated": [],
   "removed": [],
-  "source_commit": "16ccf7770c4781cb7a8696b9b792e93e34eb9939",
-  "title": "Release seeWallpaper 1.19.0"
+  "source_commit": "258981daaa627cc9ee9833a82a297e9178abfb12",
+  "title": "Release seeWallpaper 1.20.0"
 }
